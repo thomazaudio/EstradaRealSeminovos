@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+
+
+
+
+
+<class name="util.Item" table="Item">
+
+
+
+<id name="id" column="ID_ITEM" type="long">
+
+<generator class="native"></generator>
+
+</id>
+
+
+
+<property name="item" column="ITEM"/>
+
+<property name="tipo" column="TIPO_ITEM"/>
+
+</class>
+
+<class name="util.Veiculo" table="VEICULO">
+
+ 
+
+<id name="id" column="ID_VEICULO" type="long" >
+
+
+<generator class="identity"></generator>
+</id>
+
+<discriminator column="TIPO_VEICULO" type="string"/>
+
+<property name="nome" column="NOME" type="string"></property>
+<property name="titulo" column="TITULO" type="string"></property>
+<property name="cor" column="COR"/>
+<property name="anoFabricacao" column="ANO_FABRICACAO"/>
+<property name="anoModelo" column="ANO_MODELO"/>
+<property name="preco" column="PRECO"/>
+<property name="preco_negociavel" column="PRECO_NEGOCIAVEL"/>
+<property name="troca" column="TROCA"/>
+<property name="placa" column="PLACA"/>
+<property name="quilometragem" column="QUILOMETRAGEM"/>
+<property name="combustivel" column="COMBUSTIVEL"/>
+<property name="observacao" column="OBSERVACAO"/>
+<property name="condicaoTroca" column="CONDICAO_TROCA"/>
+<property name="status" column="STATUS"/>
+<property name="prioridade_anuncio" column="PRIORIDADE_ANUNCIO"/>
+<property name="modelo" column="MODELO"/>
+<property name="cod_fabricante" column="COD_FABRICANTE"/>
+<property name="img" column="IMG" type="blob" />
+<property name="fumante" column="FUMANTE"/>
+<property name="sexo_condutor" column="SEXO_CONDUTOR"/>
+<property name="cod_estado" column="COD_ESTADO"/>
+<property name="cod_cidade" column="COD_CIDADE"/>
+<property name="descricao" column="DESCRICAO"/>
+<property name="tipoVenda" column="TIPO_VENDA"/>
+<property name="estadoConservacao" column="ESTADO_CONSERVACAO"></property>
+<property name="statusValidacao" column="STATUS_VALIDACAO"/>
+<property name="statusPagamento" column="STATUS_PAGAMENTO"/>
+
+<property name="codModelo" column="COD_MODELO"/>
+
+<many-to-one name="contato" class="util.Contato" fetch="select">
+        <column name="ID_CONTATO" not-null="true" />
+</many-to-one>
+
+<set name="itens" table="ITENS">
+        <key column="ID_VEICULO"/>
+        <many-to-many column="ID_ITEM"
+            class="util.Item"/>
+    </set>
+
+
+<subclass name="util.Carro" discriminator-value="CARRO">
+<property name="quantPortas" column="QUANT_PORTAS"/>
+<property name="transmissao" column="TRANSMISSAO"></property>
+<property name="motor" column="MOTOR"/>
+<property name="quantValvulas" column="QUANT_VALVULAS"/>
+<property name="versao" column="VERSAO"/>
+</subclass>
+
+
+ 
+</class>
+
+
+
+
+</hibernate-mapping>

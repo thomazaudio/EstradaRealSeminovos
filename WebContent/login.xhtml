@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+
+<h:head>
+</h:head>
+<h:body>
+<p:panelGrid>
+
+
+<h:form>
+<p:outputLabel for="email" value="Email:"></p:outputLabel>
+<p:inputText name="email" id="email" ></p:inputText>
+
+<p:outputLabel for="senha" value="Senha:"></p:outputLabel>
+<p:inputText name="senha" id="senha" type="password"></p:inputText>
+
+<input type="hidden" name="SOLI" value="2"/>
+<h:commandButton action="ServEmpresa" ></h:commandButton>
+</h:form>
+
+</p:panelGrid>
+
+</h:body>
+</html>

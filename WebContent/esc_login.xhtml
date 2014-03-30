@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<!-- Page Title -->
+	<title>Estrada Real - Seminovos</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style980.css" />
+	<link rel="stylesheet" type="text/css" href="css/style800.css" />
+	<link rel="stylesheet" type="text/css" href="css/style700.css" />
+	<link rel="stylesheet" type="text/css" href="css/style600.css" />
+	<link rel="stylesheet" type="text/css" href="css/style500.css" />
+	<link rel="stylesheet" type="text/css" href="css/style400.css" />
+	<link rel="stylesheet" type="text/css"
+		href="css/jquery.fancybox-1.3.4.css" media="screen" />
+	<!--[if IE]>
+	<link href="css/style_ie.css" rel="stylesheet" type="text/css">
+	<![endif]-->
+
+
+<link rel="shortcut icon" href="images/favicon.ico" />
+   <link rel="icon" type="image/gif" href="images/animated_favicon1.gif" />
+</h:head>
+<h:body>
+
+
+       <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+    <f:facet name="start">  
+        <h:graphicImage value="images/loading.gif" />  
+    </f:facet>  
+      
+    <f:facet name="complete">  
+        <h:outputText value="" />  
+    </f:facet>  
+</p:ajaxStatus>  
+	 <ui:param name="page" value="#{loginBean.pagepos}"></ui:param>
+	 
+	
+
+	<ui:include src="header.xhtml"></ui:include>
+	<div id="content">
+		<div class="content">
+
+
+			<div class="main_wrapper">
+
+				<div class="message">
+					.
+					<p>Seja bem vindo ao Estrada Real seminovos, para continuar escolha uma
+						opção abaixo.</p>
+				</div>
+				<div class="car_characteristics">
+
+
+
+					<div class="clear"></div>
+				
+					 
+					  <h:form prependId="false">
+
+						<p:growl id="msgs2"></p:growl>
+                      
+                      
+                         <h:inputHidden id="page_pos" value="#{page}" ></h:inputHidden>
+                        
+						<p:panel header="Já possui cadastro?">
+							<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+
+                             
+								<h:outputText value="Email: " />
+
+								<p:inputText id="email" />
+
+								<h:outputText value="Senha: " />
+
+								<p:inputText type="password" id="senha">
+								</p:inputText>
+
+								<p:commandButton update="msgs2" action="#{loginBean.logar}" value="Logar"></p:commandButton>
+							</h:panelGrid>
+						</p:panel>
+						
+						</h:form>
+				</div>
+				<div class="car_characteristics">
+                   
+                   <h:form prependId="false">
+                
+                    <h:inputHidden id="page_pos2" value="#{page}" ></h:inputHidden>
+					<p:growl id="msgs"></p:growl>
+					<p:growl id="msg_temp"></p:growl>
+					
+					
+					<p:panel header="Não possue cadastro?" >
+						<h:panelGrid columns="2" columnClasses="column" cellpadding="5" >
+							<h:outputText value="Cnpj ou cpf: " />
+
+							<p:inputText  id="doc" >
+							<p:ajax   event="keyup" listener="#{validacaoBean.validacpftemp}" update="msgs" ></p:ajax>
+							</p:inputText>
+
+							<h:outputText value="Telefone para contato: " />
+
+							<p:inputText validator="#{validacaoBean.validaNumero}"
+								 type="number" id="tel" />
+
+							<p:commandButton update="msgs" action="#{cadastroBean.cad}"
+								value="Cadastrar"></p:commandButton>
+						</h:panelGrid>
+
+					</p:panel>
+					
+					</h:form>
+
+				</div>
+				
+				<div class="clear"></div>
+
+				<div class="clear"></div>
+				<div class="message">
+				<p>Em caso de dúvidas utilize uma das formas de contato do site.</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<ui:include src="rodape.xhtml"></ui:include>
+
+
+</h:body>
+</html>

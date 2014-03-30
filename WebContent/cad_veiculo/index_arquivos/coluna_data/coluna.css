@@ -1,0 +1,56 @@
+﻿
+/* revista */
+*{margin:0;	padding:0; list-style:none; text-decoration:nome; border:none; font-family:Arial, Helvetica, sans-serif; font-size:12px;color:#333333;}	
+#revista{width:239px; height:523px; background-image:url(_img/fundo-revista.gif); background-repeat:no-repeat; padding-top:10px; padding-left:13px;}
+#tituloRevista{width:144px; height:14px; background-image:url(_img/revista-webmotors.gif); background-repeat:no-repeat; text-indent:-999px;}
+#labelSecoes{color:#1c458f; font-size:10px; float:left; margin-top:10px;}
+#cboRevista{margin-left:5px; margin-top:7px; border:1px solid #7f9db9; height:18px; font-size:11px;}
+.cboRevistaLargura{width:159px;}
+#divVersao{Z-INDEX:1;}
+.tituloMateria {font-size:11px; color:#1c458f; font-weight:bold; text-decoration:none; }
+
+.tituloMateriaLink {font-size:11px; color:#1c458f; font-weight:bold; text-decoration:none; }
+.tituloMateriaLink:hover {font-size:11px; color:#1c458f; font-weight:bold; text-decoration:underline; }
+
+#hlkDestaquePrincipal{padding-bottom:5px; }
+#destaquePrincipal{margin-left:14px; margin-top:8px; }
+#destaquePrincipal p a{line-height:14px; font-size:11px; text-decoration:none; color:#333333; }
+#destaquePrincipal p a:hover{line-height:14px; font-size:11px; text-decoration:underline; color:#333333; }
+#imgDestaquePrincipal{margin-bottom:5px;}
+#destaquePrincipal p {width:207px;}
+
+
+#hlkDestaqueSecundario{float:left;}
+#hlkDestaqueSecundario img{height:53px; width:86px;}
+#destaqueSecundarioImagem{ margin-right:7px;  margin-top:5px; height:53px; width:86px; float:left;}
+#destaqueSecundario{width:207px; height:67px; margin-top:3px;padding-left:15px; margin-bottom:0px; }
+#destaqueSecundario p a{width:207px; line-height:12px; font-size:11px; text-decoration:none; color:#333333;}
+#destaqueSecundario p a:hover{width:207px; line-height:12px; font-size:11px; text-decoration:underline; color:#333333;}
+
+#noticias{width:223px; margin-top:0px; padding-top:7px; background-image:url(_img/linha_col_revista.gif); background-repeat:no-repeat;}
+#listaNoticiasColunistas{margin-bottom:8px; }
+#listaNoticias li, #listaNoticiasColunistas li{margin-bottom:5px; background-image:url(_img/bullet-revista.gif); background-repeat:no-repeat; padding-left:7px; background-position:left 3px; width:210px; margin-left:5px; padding-top:1px;}
+#listaNoticias li a, #listaNoticiasColunistas li a{font-size:11px; line-height:15px; text-decoration:none;}
+#listaNoticias li a:hover {font-size:11px; line-height:15px; text-decoration:underline;}
+#listaNoticiasColunistas li a:hover{font-size:11px; line-height:15px; text-decoration:underline; }
+#noticiasTitulo, #noticiasColunistas{margin-bottom:2px;}
+#colunistas{width:223px;  padding-top:7px; padding-bottom:10px;background-image:url(_img/linha_col_revista.gif); background-repeat:no-repeat;}
+#listaColunistas li a{font-size:11px; line-height:12px; margin-bottom:6px; background-image:url(_img/bullet-revista.gif); background-repeat:no-repeat; padding-left:8px; background-position:left 3px; width:220px; }
+#linkColunistas{ font-size:11px; font-weight:bold; color:#1c458f; background-image:url(_img/bullet-azul.gif); background-repeat:no-repeat; padding-left:8px; margin-left:5px; background-position:left 3px;}
+#linkColunistas:hover{ font-size:11px; font-weight:bold; color:#1c458f; background-image:url(_img/bullet-azul.gif); background-repeat:no-repeat; padding-left:8px; margin-left:5px; background-position:left 3px; text-decoration:none;}
+
+
+#caixaRSS{background-image:url(_img/linha_col_revista.gif); background-repeat:no-repeat;margin-top:7px; padding-top:5px}
+#rss{width:223px;  }
+#rss img{#margin-top:2px; float:left; display:block; margin-right:5px; padding-left:55px;}
+#rss a{font-size:10px; font-weight:bold; }
+#rss a:hover{font-size:10px; font-weight:bold; text-decoration:none; }
+#destaquePrincipal h3{margin-top:2px;}
+.fundoCombo{background-color:#fdfae1; width:180px;  }
+.fundoComboZebra{background-color:#fdf6b5; display:block; width:180px;}
+.fundoComboAzul{background-color:#EDF0F6; width:180px;}
+.fundoComboBranco{background-color:#ffffff; width:180px;}
+
+
+#q{color:#666666;width:168px;_width:165px; height:15px;_height:13px; font-size:10px;margin-right:8px;margin-top:7px;_margin-top:5px; border-style:solid; border-width:1px; border-color:#7f9db9;}
+.botaoazul{background-image:url(_img/btn-ok.gif); background-color:Blue;width:28px;height:16px; position:absolute;top:31px;#top:32px;}

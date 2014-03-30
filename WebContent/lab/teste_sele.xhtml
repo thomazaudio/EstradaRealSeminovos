@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head></h:head>
+	
+	<h:body>
+	
+	
+	
+	           <h:form id="f">
+	            
+	           <ui:repeat var="pg" value="#{anuncioBean.paginas}">
+			   <h:commandButton    disabled="#{pg.atual}"    value="#{pg.pagina}">
+	           <f:param name="page" value="#{pg.pagina}"></f:param>
+			   <p:ajax update=":f"  listener="#{anuncioBean.alterarPage}" event="click">
+			   </p:ajax>
+			   </h:commandButton>
+			    </ui:repeat>
+	            </h:form>
+	</h:body>
+	
+	</html>
+	
+	
+	
+	

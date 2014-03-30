@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:head>
+</h:head>
+
+<h:body>
+
+<p:panel>
+
+<p:fieldset legend="Perguntas Recebidas">
+
+<p:dataTable id="dados" var="pg" value="#{usuarioBean.perguntasRecebidas}" >
+
+
+
+<p:column rendered="#{pg.status==0}">
+
+<p:panelGrid columns="1">
+<p:outputLabel value="#{pg.pergunta}"></p:outputLabel>
+<br></br>
+
+<h:form prependId="false">
+
+<p:growl id="msg"></p:growl>
+<textarea name="resposta" rows="5" cols="100%">#{pg.resposta}</textarea>
+
+<br></br>
+<p:commandButton value="Enviar Resposta" >
+
+<f:param name="id_pergunta"  value="#{pg.id}"></f:param>
+
+<p:ajax listener="#{usuarioBean.EnviaRespostaPergunta}" update="msg :dados" ></p:ajax>
+</p:commandButton>
+
+</h:form>
+
+</p:panelGrid>
+</p:column>
+</p:dataTable>
+
+
+</p:fieldset>
+
+
+</p:panel>
+
+
+</h:body>
+
+</html>

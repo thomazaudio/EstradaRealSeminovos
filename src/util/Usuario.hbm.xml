@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+
+
+
+	
+	
+<class name="util.Usuario" table="USUARIO">
+
+
+<id name="id" column="ID_USUARIO" type="long">
+<generator class="native"></generator>
+</id>
+<discriminator  column="TIPO_USUARIO" type="string"></discriminator> 
+
+<property name="status" column="STATUS"  ></property>
+<property name="nome" column="NOME" ></property>
+<property name="senha" column="SENHA"></property>
+
+
+<property name="img_perfil" column="IMG_PERFIL" type="binary" />
+
+
+
+<many-to-one name="localizacao" class="util.Localizacao" fetch="select">
+        <column name="ID_LOCALIZACAO" not-null="true" />
+</many-to-one>
+
+<many-to-one name="contato" class="util.Contato" fetch="select">
+        <column name="ID_CONTATO" not-null="true" />
+</many-to-one>
+    
+
+ <subclass name="util.Pessoa" discriminator-value="PESSOA_FISICA">
+ <property name="cpf" column="CPF"></property>
+ </subclass>
+ 
+ <subclass name="util.Empresa" discriminator-value="PESSOA_JURIDICA">
+ <property name="cnpj" column="CNPJ"></property>
+ 
+ </subclass>
+ 
+ 
+</class>
+
+</hibernate-mapping>

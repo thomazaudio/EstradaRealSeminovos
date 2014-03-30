@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:body>
+
+<h:panelGrid columns="2">
+<h:form>
+<h:outputLabel value="Item:" for="item"></h:outputLabel>
+<h:inputText  id="item" label="Item" value="#{itemBean.item}"> </h:inputText>
+
+
+<h:outputLabel value="Tipo:" for="tipo"></h:outputLabel>
+<h:selectOneMenu id="tipo" label="Tipo" value="#{itemBean.tipo}" >
+ 
+ <f:selectItem itemValue="1" itemLabel="Conforto" />
+ <f:selectItem itemValue="2" itemLabel="Desempenho" />
+ <f:selectItem itemValue="3" itemLabel="Designer" />
+ <f:selectItem itemValue="4" itemLabel="Segurança" />
+ </h:selectOneMenu>
+ 
+ <h:commandButton value="Cadastrar Item" listener="#{itemBean.cadastra}"></h:commandButton>
+ </h:form>
+ </h:panelGrid>
+</h:body>
+
+
+</html>

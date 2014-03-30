@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+
+
+
+<class name="util.Pergunta" table="pergunta">
+
+<id name="id" column="ID_PERGUNTA" type="long">
+<generator class="native"></generator>
+</id>
+
+
+<property name="id_remetente" column="ID_REMETENTE"></property>
+<property name="id_destinatario" column="ID_DESTINATARIO"></property>
+<property name="id_anuncio" column="ID_ANUNCIO"></property>
+<property name="pergunta" column="PERGUNTA"></property>
+<property name="resposta" column="RESPOSTA"></property>
+<property name="dataPergunta" column="DATA_PERGUNTA" type="java.util.Calendar"></property>
+<property name="dataResposta" column="DATA_RESPOSTA" type="java.util.Calendar"></property>
+<property name="id_veiculo" column="ID_VEICULO"></property>
+<property name="status" column="STATUS"></property>
+
+
+</class>
+
+
+
+
+
+<class name="util.Contato" table="CONTATO">
+
+<id name="id" column="ID_CONTATO" type="long">
+<generator class="native"></generator>
+</id>
+<property name="nome" column="NOME"></property>
+<property name="cel" column="CEL"></property>
+<property name="tel1" column="TEL_1"></property>
+<property name="tel2" column="TEL_2"></property>
+<property name="email" column="EMAIL" unique="true" ></property>
+<property name="comp" column="COMP"></property>
+<property name="confirmado" column="CONFIRMADO"></property>
+
+</class>
+
+<class name="util.Localizacao" table="LOCALIZACAO">
+
+<id name="id" column="ID_LOCALIZACAO" type="long" >
+
+
+<generator class="identity"></generator>
+</id>
+<property name="cod_cidade" column="COD_CIDADE"></property>
+<property name="cod_estado" column="COD_ESTADO"></property>
+
+</class>
+
+<class name="util.Imagem" table="IMAGENS">
+
+<id name="id" column="ID_IMG" type="long" >
+
+
+<generator class="identity"></generator>
+</id>
+<property name="img" type="blob" column="IMG"></property>
+<property name="id_veiculo" column="ID_VEICULO" ></property>
+<property name="capa" column="CAPA" ></property>
+</class>
+
+<class name="util.TrocaEmail" table="TROCA_EMAIL">
+<id name="id" column="ID_TROCA_EMAIL" type="long">
+<generator class="identity"></generator>
+</id>
+<property name="idContato" column="idContato"></property>
+<property name="emailtroca" column="emailtroca"></property>
+<property name="idUsuario" column="idUsuario"></property>
+
+
+
+</class>
+
+
+</hibernate-mapping>

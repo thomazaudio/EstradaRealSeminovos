@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style980.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style800.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style700.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style600.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style500.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style400.css" />
+	<link rel="stylesheet" type="text/css"></link>
+
+
+</h:head>
+<h:body>
+
+
+
+<h:form  id="form-pag">
+
+<div class="pagination">
+
+
+
+<ui:repeat var="pg" value="#{anuncioBean.paginas}">
+<h:commandButton     value="#{pg.pagina}">
+<f:param name="page" value="#{pg.pagina}"></f:param>
+<f:ajax render="lista"  listener="#{anuncioBean.alterarPage}" event="click">
+</f:ajax>
+</h:commandButton>
+</ui:repeat>
+
+</div>
+</h:form>
+
+<div class="main_catalog">
+
+<h2><strong>Meus anúncios</strong></h2>
+<h:form id="lista">
+<ul class="catalog_table">
+<ui:repeat var="ans" value="#{anuncioBean.anuncios}">
+
+					<li>
+
+
+						<div class="catalog_desc">
+						
+						
+                               
+							<div class="location">
+								Cadastrado em:
+								<p:outputLabel value="#{ans.dataIniFormated}"></p:outputLabel>
+							</div>
+
+							<div class="title_box">
+								<h4>
+									<a href="#"></a>
+									<p:outputLabel value="#{ans.veiculo.titulo}" />
+								</h4>
+
+								<div class="price">Pendente</div>
+							</div>
+							<div class="clear"></div>
+							<div class="grey_area">
+								<span>Plano: ------</span> <span>Termina em: ------</span>
+							</div>
+							<div class="grey_area">
+
+								<span><a href="#"><strong>Editar anúncio</strong></a></span> <span><a
+								class="iframe"	href="alt_plano.jsf"><strong>Alterar Plano</strong></a></span> <span><a
+									href="#"><strong>Excluir anúncio</strong></a></span>
+
+							</div>
+							<a class="iframe"
+								href="../anuncio.jsp?id_veiculo=#{ans.veiculo.id}">Visualizar
+								anúncio</a>
+						</div>
+
+					</li>
+
+				</ui:repeat>
+				</ul>
+
+</h:form>
+</div>
+
+</h:body>
+</html>

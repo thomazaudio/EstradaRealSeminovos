@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Informações do perfil</title>
+	<!-- Page Title -->
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style980.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style800.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style700.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style600.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style500.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style400.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../css/jquery.fancybox-1.3.4.css" media="screen" />
+	<!--[if IE]>
+	<link href="css/style_ie.css" rel="stylesheet" type="text/css">
+	<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="../js/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="../js/jquery.selectik.js"></script>
+	<script type="text/javascript"
+		src="../js/jquery.mousewheel-3.0.4.pack.js"></script>
+	<script type="text/javascript"
+		src="../js/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript" src="../js/jquery.countdown.js"></script>
+	<script type="text/javascript" src="../js/jquery.checkbox.js"></script>
+	<script type="text/javascript" src="../js/js.js"></script>
+	
+
+</h:head>
+<h:body>
+
+	<!--BEGIN HEADER-->
+	
+	<!--EOF HEADER-->
+	<!--BEGIN CONTENT-->
+	<div id="content">
+
+		
+
+          <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+    <f:facet name="start">  
+        <h:graphicImage value="images/loading.gif" />  
+    </f:facet>  
+      
+    <f:facet name="complete">  
+        <h:outputText value="" />  
+    </f:facet>  
+</p:ajaxStatus>  
+
+        <!-- Conteudo de edit_perfil -->
+        <ui:include src="base.xhtml"></ui:include>
+		
+		<!-- Painel de informações basicas -->
+		<div class="main_catalog">
+		<h2><strong>Meus Dados</strong></h2>
+		<div class="messages">
+		
+		<p>Clique nas informações para editá-las.</p>
+		</div>
+		<h:form prependId="false">
+		<p:growl id="msgs" />
+		<p:panel header="Informações">
+		<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+		
+			<h:outputText value="Tipo de usuário: "/> 
+				<h:outputText value="Revenda"/> 
+				
+			<h:outputText value="Nome: "/>  
+		<h:outputText value="#{usuarioBean.user.nome}"></h:outputText>
+       
+		
+		<h:outputText value="Senha: " />
+		<p:inplace editor="true"  saveLabel="Salvar" cancelLabel="Cancelar" label="*****">  
+        <p:ajax event="save" listener="#{usuarioBean.salvar}" update="msgs" ></p:ajax>
+        <p:inputText required="true" requiredMessage="Por favor, insira uma senha." type="password" id="senha1" value="#{usuarioBean.user.senha}"  validator="#{validacaoBean.validaSenha}"> </p:inputText>
+        <h:outputText value=" Repita a Senha: "  />
+        <p:inputText required="true" requiredMessage="Por favor, confirme a senha." type="password" id="senha2"  validator="#{validacaoBean.validaSenha2}"   
+        
+        > </p:inputText>
+        </p:inplace>  
+        
+        <h:outputText value="Cnpj: " />  
+        <p:inplace disabled="true" editor="true" saveLabel="Salvar" cancelLabel="Cancelar">  
+        <p:ajax event="save" listener="#{usuarioBean.salvar}" update="msgs" ></p:ajax>
+        <p:inputText validator="#{validacaoBean.validaCpf_Cnpj}" value="#{usuarioBean.user.cnpj}" > </p:inputText>
+        </p:inplace> 
+        
+        <h:outputText value="Logo: "></h:outputText>
+        
+       
+        <p:panelGrid columns="1">
+        <p:graphicImage width="120" height="100" value="#{usuarioBean.logo}">
+       
+        </p:graphicImage> 
+         <p><a class="iframe2" href="edit_logo.jsp"><strong>Alterar</strong></a></p>
+         </p:panelGrid>
+  
+         
+		</h:panelGrid>
+		
+		</p:panel>
+        
+        <br>
+        </br>
+        
+        <p:panel header="Localização"  >
+    
+      
+       
+        <p:inplace  editor="true" label="Clique para editar">
+         
+         <p:ajax update="msgs" event="save" listener="#{usuarioBean.salvarLocalizacao}"></p:ajax>
+        <h:selectOneMenu id="estado"  >
+      
+       
+        <f:selectItem    itemLabel="Minas Gerais" itemValue="-" />  
+        
+        </h:selectOneMenu>
+        
+         
+       <h:selectOneMenu id="cidade" value="#{usuarioBean.user.localizacao.cod_cidade}">
+       <f:selectItem   itemLabel="Selecione uma cidade" itemValue="-" /> 
+       <f:selectItems
+       var="cidades"
+       value="#{localizacaoBean.cidades}"
+       itemValue="#{cidades.id}"
+       itemLabel="#{cidades.cidade}"
+       ></f:selectItems>
+       
+       
+       </h:selectOneMenu>
+       </p:inplace>
+        
+       <br>
+       </br>
+       
+        </p:panel>
+        
+        <br>
+        </br>
+        
+        <!-- CONTATO -->
+       
+      
+        <p:panel header="Contato">
+        <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+        
+        <h:outputText value="Email: " ></h:outputText>
+        <p:inplace editor="true" saveLabel="Salvar" cancelLabel="Cancelar">  
+        <p:ajax event="save" listener="#{usuarioBean.salvarEmail}"  update="msgs" ></p:ajax>
+        <p:inputText id="email1"   value="#{usuarioBean.user.contato.email}" validator="#{validacaoBean.validaEmail1}" > </p:inputText>
+        <h:outputText value=" Repita o email: "/>
+        <p:inputText id="email2" validator="#{validacaoBean.validaEmail2}"> </p:inputText>
+        <div class="message">
+        <p>Obs: Ao alterar o email será enviado um link de ativação, a alteração será efetivada após a confirmação.</p>
+        </div>
+        </p:inplace>
+        
+           
+        <h:outputText value="Cel: " />  
+        <p:inplace widgetVar="ee" toggleable="true"  editor="true" saveLabel="Salvar" cancelLabel="Cancelar">  
+        <p:ajax event="save" listener="#{usuarioBean.salvarContato}" update="msgs" ></p:ajax>
+        <p:inputText value="#{usuarioBean.user.contato.cel}" > </p:inputText>
+        </p:inplace> 
+        
+        
+            
+        <h:outputText value="Tel-1: " />  
+        <p:inplace widgetVar="ee2" toggleable="true"  editor="true" saveLabel="Salvar" cancelLabel="Cancelar">  
+        <p:ajax event="save" listener="#{usuarioBean.salvarContato}" update="msgs" ></p:ajax>
+        <p:inputText value="#{usuarioBean.user.contato.tel1}" > </p:inputText>
+        </p:inplace> 
+        
+              
+        <h:outputText value="Tel-2: " />  
+        <p:inplace widgetVar="ee3" toggleable="true"  editor="true" saveLabel="Salvar" cancelLabel="Cancelar">  
+        <p:ajax event="save" listener="#{usuarioBean.salvarContato}" update="msgs" ></p:ajax>
+        <p:inputText value="#{usuarioBean.user.contato.tel2}" > </p:inputText>
+        </p:inplace> 
+        
+        <!-- Localização -->
+        
+       
+        
+        
+         </h:panelGrid>
+        </p:panel>
+        
+        
+       
+        
+        
+        </h:form>
+        
+      
+        
+        
+        
+        <script>
+        
+        //Mostra o tefe
+        ee.show();
+        ee2.show();
+        ee3.show();
+        </script>
+         
+       
+        
+      
+        
+        
+      
+        
+		</div>
+		
+
+</div>
+
+	<!--EOF CONTENT-->
+	<!--BEGIN FOOTER-->
+	<div id="footer"></div>
+	<!--EOF FOOTER-->
+
+
+
+
+	<script>
+	
+	
+	$(document).ready(function() {
+		
+		
+		
+		
+		$(".iframe2").fancybox({
+		   
+		    'autoScale'     : false,
+		    'transitionIn'  : 'none',
+		    'transitionOut' : 'none',
+		    'type'          : 'iframe',
+		    'onClosed': function() {
+		         
+		    	window.location.reload();
+		    	
+		        }
+		      	
+		});	
+		
+		
+	
+		
+		$(".iframe").fancybox({
+		    'width'         : '100%',
+		    'height'        : '100%',
+		    'autoScale'     : false,
+		    'transitionIn'  : 'none',
+		    'transitionOut' : 'none',
+		    'type'          : 'iframe',
+		    'onClosed': function() {
+		         
+		    	window.location.reload();
+		    	
+		        }
+		      	
+		});	
+		      	
+	
+	});
+	</script>
+
+
+
+
+</h:body>
+</html>

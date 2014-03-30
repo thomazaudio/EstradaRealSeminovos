@@ -1,0 +1,608 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+
+
+
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-includes/js/jquery/jquery.js?ver=1.10.2'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-includes/js/jquery/ui/jquery.ui.core.min.js?ver=1.10.3'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-includes/js/jquery/ui/jquery.ui.widget.min.js?ver=1.10.3'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-includes/js/jquery/ui/jquery.ui.accordion.min.js?ver=1.10.3'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-includes/js/jquery/ui/jquery.ui.tabs.min.js?ver=1.10.3'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-content/plugins/zilla-shortcodes/js/zilla-shortcodes-lib.js?ver=3.7.1'></script>
+
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-content/plugins/zilla-likes/scripts/zilla-likes.js?ver=3.7.1'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-content/themes/gridlocked/js/jquery.jplayer.min.js?ver=3.7.1'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-content/themes/gridlocked/js/jquery.easing.1.3.js?ver=3.7.1'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-content/themes/gridlocked/js/slides.min.jquery.js?ver=3.7.1'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-content/themes/gridlocked/js/jquery.masonry.min.js?ver=3.7.1'></script>
+<script type='text/javascript'
+	src='http://turbo.themezilla.com/gridlocked/wp-content/themes/gridlocked/js/jquery.fancybox-1.3.4.pack.js?ver=3.7.1'></script>
+
+
+<link rel="stylesheet" href="style_sup.css" type="text/css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style980.css" />
+	<link rel="stylesheet" type="text/css" href="css/style800.css" />
+	<link rel="stylesheet" type="text/css" href="css/style700.css" />
+	<link rel="stylesheet" type="text/css" href="css/style600.css" />
+	<link rel="stylesheet" type="text/css" href="css/style500.css" />
+	<link rel="stylesheet" type="text/css" href="css/style400.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.fancybox-1.3.4.css" media="screen" />
+	<!--[if IE]>
+	<link href="css/style_ie.css" rel="stylesheet" type="text/css">
+	<![endif]-->
+	
+
+
+</h:head>
+
+
+
+
+<h:body styleClass="catalog catalog-list">
+     
+        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+    <f:facet name="start">  
+        <h:graphicImage value="images/loading.gif" />  
+    </f:facet>  
+      
+    <f:facet name="complete">  
+        <h:outputText value="" />  
+    </f:facet>  
+</p:ajaxStatus>  
+
+ <p:panel>
+ 
+ 
+ <div id="widget-overlay-container"
+		style="margin-top: 0px; display: block;">
+		<div>
+		
+		
+		
+		<p:fieldset id="sup" legend="Lista de interesses">  
+        <p:dataTable emptyMessage="Não há carros na lista"
+        
+        rows="5"
+      
+        
+        
+          id="availableCars" var="car" value="#{interesseBean.veiculos}">  
+            
+            
+           <p:column>
+           
+             <p:graphicImage  width="45" height="29"  value="#{imgBean.capaVeiculo}">
+                        
+                   <f:param name="idVeiculo" value="#{car.id}"></f:param>
+                    </p:graphicImage>
+           
+           </p:column>
+  
+            <p:column headerText="Modelo"  >  
+                <h:outputText  value="#{car.titulo}" />  
+            </p:column> 
+            
+            
+            <p:column headerText="Ano"  >  
+                <h:outputText  value="#{car.anoFabricacao}/#{car.anoModelo}" />  
+            </p:column> 
+            
+            
+            <p:column headerText="Motor"  >  
+                <h:outputText  value="#{car.motor}" />  
+            </p:column> 
+            
+            <p:column headerText="Acessórios"  >  
+               
+            <ui:repeat var="it" value="#{car.itensFiltered}" size="4">
+						
+			 <p:outputLabel value="#{it.item}-"></p:outputLabel>
+			 
+			</ui:repeat> 
+               
+            </p:column> 
+            
+             <p:column >  
+              
+              <h:form>
+            	<a target="_blank" href="anuncio.jsp?id_veiculo=#{res.id}" >Detalhes </a>
+              
+            
+            
+             <p:commandButton icon="ui-icon-trash" >
+             <f:param name="idVeiculo" value="#{car.id}"></f:param>
+             <p:ajax listener="#{interesseBean.removeVeiculo}" update=":sup" ></p:ajax>
+              </p:commandButton>
+              </h:form>
+            </p:column>  
+           
+           
+        </p:dataTable>  
+    </p:fieldset>  
+		
+		
+		</div>	
+		<div id="overlay-open">
+			<a href="#" class="close">Open Widget Area</a>
+		</div>
+	</div>
+
+
+
+	<script type='text/javascript'
+		src='script_sup.js'></script>
+ 
+ </p:panel>
+ 
+<ui:repeat var="pg" value="#{buscaBean.paginas}"></ui:repeat>
+
+
+
+<ui:include src="header.xhtml"></ui:include>
+
+
+	<!--EOF HEADER-->
+	<!--BEGIN CONTENT-->
+		<div id="content">
+		<div class="content">
+<div class="breadcrumbs">
+<a href="./">Home</a>
+					<img src="images/marker_2.gif" alt="" />
+					<span>Busca</span>
+				</div>
+				
+				<div class="main_wrapper">
+					<div class="cars_categories">
+						
+						
+					</div>
+				
+					<div class="catalog_sidebar">
+						<div class="search_auto">
+							
+							
+				
+				  
+				
+					<h3>
+						<strong>Oque você</strong> procura?
+							
+				<canvas id="linha_p" width="300" height="5"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_p');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 350;
+     					    var rectHeight = 50;
+
+      						
+
+      						context.fillStyle = '#f28633';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+					</h3>
+						 <div class="clear"/>
+						  
+					
+					        <h:form prependId="false">
+					        <p:selectOneRadio id="customRadio" value="#{buscaBean.codTipo}"  valueChangeListener="#{buscaBean.alteraTipoVeiculo}">  
+					        
+					      
+					       
+        					<f:selectItem itemLabel="Moto" itemValue="1" id="search_radio_2" />  
+        				
+       						<f:selectItem itemLabel="Carro" itemValue="2" />  
+       						 
+       						
+       						 
+       						   <p:ajax   update=":form_fab_model:fabricantes"   ></p:ajax>
+   							</p:selectOneRadio> 
+					        
+					      
+						   </h:form>
+						  
+					
+					<div class="clear"></div>
+					<div class="clear"></div>
+					
+
+				
+					
+  					<p:panel>
+ 				   <h:form id="form_fab_model" >
+ 				   
+ 				 
+		           <label><strong>Fabricante:</strong></label>
+                   
+                   <h:selectOneMenu id="fabricantes"  value="#{buscaBean.codFabricante}" valueChangeListener="#{buscaBean.alteraFab}" styleClass="n_2" >  
+            
+            	    <f:selectItem itemValue="0" itemLabel="Todos" ></f:selectItem>
+                    <f:selectItems 
+            
+            		value="#{buscaBean.fabricantes}"
+                  
+                   />
+            
+                 <p:ajax update=":form_model:modelos"   event="change"></p:ajax>
+                 </h:selectOneMenu>  
+               </h:form>
+					
+				 <h:form id="form_model" prependId="false">
+                 <label><strong>Modelo:</strong></label>
+                 
+               
+				 <h:selectOneMenu id="modelos"  value="#{buscaBean.codModelo}" styleClass="n_2" valueChangeListener="#{buscaBean.alteraModelo}" >
+				 
+				 <f:selectItem itemValue="0" itemLabel="Todos" ></f:selectItem>
+				
+				
+				 <f:selectItems value="#{buscaBean.modelos}"/>	
+				 
+				 <p:ajax event="change" update="modelo" ></p:ajax>		
+								
+		         </h:selectOneMenu>
+					 
+			  
+				<h:inputHidden id="modelo"></h:inputHidden>
+				   </h:form>
+                  
+                     <h:form prependId="false">
+					<label><strong>Cidade:</strong></label>
+					
+					<h:selectOneMenu value="#{buscaBean.codCidade}" styleClass="n_2" >
+					<f:selectItem itemValue="0" itemLabel="Todas as cidades"></f:selectItem>
+					<f:selectItems  value="#{buscaBean.cidades}" >
+					
+					</f:selectItems>
+					
+					</h:selectOneMenu>
+					
+					
+					</h:form>
+				
+					<label><strong>Ano:</strong></label>
+					<div class="select_box_2">
+                        <h:form>
+						<h:selectOneMenu styleClass="n_2" value="#{buscaBean.anoDe}">
+							<f:selectItem itemValue="0" itemLabel="De todos"></f:selectItem>
+							<f:selectItem itemValue="1999" itemLabel="1999"></f:selectItem>
+							<f:selectItem itemValue="2000" itemLabel="2000"></f:selectItem>
+							<f:selectItem itemValue="2001" itemLabel="2001"></f:selectItem>
+							<f:ajax></f:ajax>
+						</h:selectOneMenu>
+						
+
+						
+						<h:selectOneMenu styleClass="n_2" value="#{buscaBean.anoAte}">
+							<f:selectItem itemValue="0" itemLabel="Até todos"></f:selectItem>
+							<f:selectItem itemValue="1999" itemLabel="1999"></f:selectItem>
+							<f:selectItem itemValue="2000" itemLabel="2000"></f:selectItem>
+							<f:selectItem itemValue="2001" itemLabel="2001"></f:selectItem>
+							<f:ajax></f:ajax>
+						</h:selectOneMenu>
+						
+						</h:form>
+
+						<div class="clear"></div>
+					</div>
+					
+					
+					 
+					<label><strong>Preço:</strong></label>
+					<div class="select_box_2">
+                         <h:form>
+						<h:selectOneMenu styleClass="n_2" value="#{buscaBean.precoDe}" >
+							<f:selectItem itemValue="5.0" itemLabel="De todos"></f:selectItem>
+							<f:selectItem  itemValue="24000.0" itemLabel="24000"></f:selectItem>
+							<f:selectItem  itemValue="25000.0" itemLabel="25000"></f:selectItem>
+							<f:selectItem  itemValue="30000.0" itemLabel="30000"></f:selectItem>
+							<f:selectItem  itemValue="40000.0" itemLabel="40000"></f:selectItem>
+							<f:ajax></f:ajax>
+						</h:selectOneMenu>
+
+							</h:form>
+							
+							 <h:form>
+						<h:selectOneMenu styleClass="n_2" value="#{buscaBean.precoAte}" >
+							<f:selectItem itemValue="500000.0" itemLabel="Até todos"></f:selectItem>
+							<f:selectItem  itemValue="24000.0" itemLabel="24000"></f:selectItem>
+							<f:selectItem  itemValue="25000.0" itemLabel="25000"></f:selectItem>
+							<f:selectItem  itemValue="30000.0" itemLabel="30000"></f:selectItem>
+							<f:selectItem  itemValue="40000.0" itemLabel="40000"></f:selectItem>
+							<f:ajax></f:ajax>
+						</h:selectOneMenu>
+						
+</h:form>
+						<div class="clear"></div>
+					</div>
+					
+					
+					<label><strong>Quilometragem:</strong></label>
+					<div class="select_box_2">
+
+						<h:selectOneMenu styleClass="n_2">
+							<f:selectItem itemLabel="De"></f:selectItem>
+						</h:selectOneMenu>
+
+						<h:selectOneMenu styleClass="n_2">
+							<f:selectItem itemLabel="Até"></f:selectItem>
+						</h:selectOneMenu>
+
+						<div class="clear"></div>
+					</div>
+					</p:panel>
+
+
+ 						<br></br>
+					<div class="chb_wrapper">
+                        <h:form>
+						<p:selectBooleanCheckbox value="#{buscaBean.particular}" >
+						<p:ajax></p:ajax>
+						</p:selectBooleanCheckbox>
+
+						<label class="check_label">Particular </label>
+						
+						<p:selectBooleanCheckbox  value="#{buscaBean.revenda}" >
+						<p:ajax></p:ajax></p:selectBooleanCheckbox>
+
+						<label class="check_label"> Revenda</label>
+						
+						</h:form>
+					</div>
+
+
+					<div class="clear"></div>
+					
+					
+        
+			
+				
+					<p:commandButton  action="#{buscaBean.buscar}" value="Buscar" styleClass="btn_search" >
+					
+				
+					
+					
+					
+					</p:commandButton>
+					
+					
+				
+				<div class="clear"></div>
+							
+							
+							
+							
+							</div>
+							
+							
+							
+						</div>
+					</div>
+					<div class="main_catalog">
+						<div class="top_catalog_box">
+							<div class="switch">
+								<span class="table_view"></span>
+								<a href="./05_catalog_grid.html" class="list_view"></a>
+							</div>
+							<div class="sorting drop_list">
+								
+								<p:panelGrid columns="3">
+
+<p:panelGrid columns="1">
+<p:outputLabel for="ord" value="Ordenar por: "></p:outputLabel>
+<h:selectOneMenu   id="ord" styleClass="n">
+<f:selectItem itemValue="2" itemLabel="Destaque"></f:selectItem>
+<f:selectItem itemValue="5" itemLabel="Ano"></f:selectItem>
+<f:selectItem itemValue="10" itemLabel="Valor"></f:selectItem>
+<p:ajax update="" ></p:ajax>
+</h:selectOneMenu> 
+</p:panelGrid>
+
+<p:panelGrid columns="1">
+<p:outputLabel for="d_c" value="Ordem: "></p:outputLabel>
+<h:selectOneMenu id="d_c"   styleClass="n">
+<f:selectItem itemValue="2" itemLabel="Decrescente"></f:selectItem>
+<f:selectItem itemValue="5" itemLabel="Crescente"></f:selectItem>
+
+<p:ajax update="" ></p:ajax>
+</h:selectOneMenu>
+</p:panelGrid>
+
+<h:form>
+<p:panelGrid columns="1">
+<p:outputLabel for="quant_p_page" value="Quantidade por página: "></p:outputLabel>
+<h:selectOneMenu id="quant_p_page" value="#{buscaBean.quantPorPagina}" styleClass="n">
+<f:selectItem itemValue="2" itemLabel="2 por página"></f:selectItem>
+<f:selectItem itemValue="5" itemLabel="5 por página"></f:selectItem>
+<f:selectItem itemValue="10" itemLabel="10 por página"></f:selectItem>
+<p:ajax update=":form :result_busca" ></p:ajax>
+</h:selectOneMenu> 
+</p:panelGrid>
+</h:form>
+
+
+
+</p:panelGrid>
+
+	
+				<canvas id="linha_titulo" width="1900" height="3"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_titulo');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 1880;
+     					    var rectHeight = 50;
+
+      						
+
+      						context.fillStyle = '#f28633';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+								
+								<div class="clear"></div>
+							</div>
+							
+							 
+							<div class="pagination">
+								
+							</div>
+							<div class="clear"></div>
+						</div>
+						<h:form id="result_busca">
+						<ul class="catalog_table">
+						 
+							
+						<ui:repeat  var="res" value="#{buscaBean.resultadoBusca}">
+						
+						<li>
+						
+						
+						   
+						  
+                     
+                          
+                       <p:outputPanel id="v" >
+						  <p:draggable for="v" revert="true"></p:draggable>
+                        <a target="_blank" id="" class="thumb" href="anuncio.jsp?id_veiculo=#{res.id}">
+                        
+                        
+                        <p:graphicImage  width="165" height="119"  value="#{imgBean.capaVeiculo}">
+                        
+                        <f:param name="idVeiculo" value="#{res.id}"></f:param>
+                        </p:graphicImage>
+                        </a>
+				      
+						<div class="catalog_desc">
+						<div class="location">#{res.condicaoTroca}</div>
+						<div class="title_box">
+						<h4><a href="anuncio.jsp?id_veiculo=#{res.id}">#{res.titulo}</a></h4>
+						<div class="price">R$ #{res.preco}</div>
+						<div class="price"> ID: #{res.id}</div>
+						</div>
+						<div class="clear"></div>
+						<div class="grey_area">
+						
+						<ui:repeat var="it" value="#{res.itensFiltered}" size="4">
+						
+						<strong>#{it.item} - </strong>
+						</ui:repeat>
+						
+						<div class="clear"></div>
+						<br></br>
+						<strong> *#{res.anoFabricacao}/#{res.anoModelo}  -  </strong>
+						<strong> *#{res.quilometragem} km  -  </strong>
+						<strong> *#{res.cor}  -  </strong>
+						<strong> *#{res.quantPortas} portas</strong>
+						
+						</div>
+						
+						<p:commandButton value="Adicionar a lista de interesse">
+						  <f:param name="idVeiculo" value="#{res.id}"></f:param>
+						<p:ajax  update=":sup" listener="#{interesseBean.addVeiculo}"></p:ajax>
+						</p:commandButton>
+						</div>
+						
+						 </p:outputPanel> 
+						
+						
+						
+						</li>
+						 
+						</ui:repeat>	
+							
+							
+						</ul>
+						
+						</h:form>
+						<div class="bottom_catalog_box">
+							
+								
+								
+								<h:form  id="form">
+
+<p><strong>#{buscaBean.textoBusca}</strong></p>
+<p:commandLink      value="Anterior  ">
+<p:ajax update=":form :result_busca"  listener="#{buscaBean.antPagina}" event="click"/>
+</p:commandLink>
+<ui:repeat var="pg" value="#{buscaBean.paginas}">
+<p:commandButton   disabled="#{pg.atual}"    value="#{pg.pagina}">
+<f:param name="page" value="#{pg.pagina}"></f:param>
+<p:ajax update=":form :result_busca"  listener="#{buscaBean.alterarPage}" event="click">
+</p:ajax>
+</p:commandButton>
+</ui:repeat>
+
+
+
+<p:commandLink      value="  Próxima">
+<p:ajax update=":form :result_busca"  listener="#{buscaBean.proximaPagina}" event="click"/>
+</p:commandLink>
+</h:form>
+								
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			
+		
+	<!--EOF CONTENT-->
+	<!--BEGIN FOOTER-->
+		<ui:include src="rodape.xhtml"></ui:include>
+   
+   <script>
+	
+	
+	$(document).ready(function() {
+		
+		
+		
+		
+		$(".iframe").fancybox({
+		    'width'         : '100%',
+		    'height'        : '100%',
+		    'autoScale'     : false,
+		    'transitionIn'  : 'none',
+		    'transitionOut' : 'none',
+		    'type'          : 'iframe',
+		    'onClosed': function() {
+		         
+		    	window.location.reload();
+		    	
+		        }
+		      	
+		});	
+		
+		
+
+	});
+	
+	
+
+	</script>
+  
+
+</h:body>
+
+
+
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:head>
+
+<script>
+	
+	
+	$(document).ready(function() {
+		
+		
+		
+		
+		$(".iframe").fancybox({
+		    'width'         : '100%',
+		    'height'        : '100%',
+		    'autoScale'     : false,
+		    'transitionIn'  : 'none',
+		    'transitionOut' : 'none',
+		    'type'          : 'iframe',
+		    'onClosed': function() {
+		         
+		    	window.location.reload();
+		    	
+		        }
+		      	
+		});	
+		
+		
+
+		$(".frame_confirm").fancybox({
+		   
+		    'autoScale'     : true,
+		    'transitionIn'  : 'none',
+		    'transitionOut' : 'none',
+		    'type'          : 'iframe',
+		    'onClosed': function() {
+		         
+		    	window.location.reload();
+		    	
+		        }
+		      	
+		});	
+	});
+	
+	
+
+	</script>
+
+
+</h:head>
+<h:body>
+
+<ui:include src="/header.xhtml"></ui:include>
+
+
+<div class="clear"></div>
+	
+				<br></br>
+
+
+		<div class="catalog_sidebar">
+			<div class="search_auto">
+			
+			
+				
+				<canvas id="linha_titulo" width="370" height="3"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_titulo');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 370;
+     					    var rectHeight = 50;
+
+      						
+
+      						context.fillStyle = '#f28633';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+				<h3><strong>Menu Rápido</strong></h3>
+
+				<h:form>
+					<p:growl id="messages" />
+					<p:menu>
+
+
+						
+							<p:menuitem class="iframe" value="Novo Anúncio" update="messages"
+								url="../anunciar.jsp" actionListener="#{menuBean.save}"
+								icon="ui-icon-disk" />
+							<p:menuitem value="Meus Anúncios"
+								url="lista_anuncios.jsf"
+								icon="ui-icon-arrowrefresh-1-w" />
+							
+								<p:menuitem value="Editar perfil"
+							url="#{usuarioBean.linkEditPerfil}"	
+								icon="ui-icon-arrowrefresh-1-w" />
+						
+						</p:menu>
+				
+
+				</h:form>
+			</div>
+			<div class="calculator">
+
+			
+			  <canvas id="linha_p" width="370" height="3"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_p');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 370;
+     					    var rectHeight = 50;
+
+      						
+
+      						context.fillStyle = '#f28633';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+			  <h3><strong>Perguntas</strong></h3>
+			  <h:form>
+					<p:growl id="messages" />
+					<p:menu>
+
+
+						
+							<p:menuitem class="iframe" value="Recebidas#{usuarioBean.textoQuantPerguntas}" update="messages"
+								url="perguntas_recebidas.jsf" 
+								 />
+								
+								
+							</p:menu>
+				
+
+				</h:form>
+			
+				
+			    </div>
+			    
+			    
+			    <div class="calculator">
+
+			
+			  <canvas id="linha_f" width="370" height="3"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_f');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 370;
+     					    var rectHeight = 50;
+
+      						
+
+      						context.fillStyle = '#f28633';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+			  <h3><strong>Financeiro</strong></h3>
+			  
+						       
+						        
+						       <p:button  value="Saldo: R$ 0.0" ></p:button>
+						       
+			  <h:form>
+					<p:growl id="messages" />
+					<p:menu>
+
+                               
+                             
+							    <p:menuitem class="iframe" value="Adicionar Quantia" update="messages"
+								action="#{pagamentoBean.novoPagamento}" title="Adiciona uma quantia em reias a sua conta. Isso facilitará o pagamento de anúncios.">
+								
+								  <f:param name="tipo_transacao" value="2" ></f:param>
+								 </p:menuitem>
+								 
+								
+								 <p:menuitem class="iframe" value="Extrato" update="messages"
+								url="perguntas_recebidas.jsf" 
+								 />
+								
+								
+								
+							</p:menu>
+				
+
+				</h:form>
+			
+				
+			    </div>
+			    
+			    <div class="calculator">
+
+			
+			  <canvas id="linha_s" width="370" height="3"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_s');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 370;
+     					    var rectHeight = 50;
+
+      						
+
+      						context.fillStyle = '#f28633';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+			  <h3><strong>Sistema</strong></h3>
+			  <h:form>
+					<p:growl id="messages" />
+					
+
+
+						<h:form>
+			
+			<p:commandButton value="Log-off" action="#{usuarioBean.logOff}" ></p:commandButton>
+			</h:form>
+								
+								
+							
+				
+
+				</h:form>
+			
+				
+			    </div>
+			    <div class="clear"></div>
+		       </div>
+		      
+		  
+		    <p:panelGrid  columns="2" rendered="#{usuarioBean.user.contato.confirmado==0}">
+		    
+		    <p:graphicImage url="../images/logo_2.png"></p:graphicImage>
+		    
+		    <p:panelGrid columns="1">
+		     <p:outputLabel value="O seu email ainda não foi confirmado!"></p:outputLabel>
+		   
+		    <p:commandButton value="Reenviar email de confirmação." ></p:commandButton>
+		    </p:panelGrid>
+		   
+		    </p:panelGrid>
+		   
+		       
+		       
+		
+
+</h:body>
+</html>

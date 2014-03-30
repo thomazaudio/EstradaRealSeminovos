@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:head>
+
+
+
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style980.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style800.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style700.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style600.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style500.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style400.css" />
+	<link rel="stylesheet" type="text/css" href="../css/jquery.fancybox-1.3.4.css" media="screen" />
+	<!--[if IE]>
+	<link href="css/style_ie.css" rel="stylesheet" type="text/css">
+	<![endif]-->
+	<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="../js/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="../js/jquery.selectik.js"></script>
+	<script type="text/javascript" src="../js/jquery.mousewheel-3.0.4.pack.js"></script>
+	<script type="text/javascript" src="../js/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript" src="../js/jquery.countdown.js"></script>
+	<script type="text/javascript" src="../js/jquery.checkbox.js"></script>
+	<script type="text/javascript" src="../js/js.js"></script>
+
+</h:head>
+
+<h:body>
+
+
+<ui:include src="../simple_header.xhtml"></ui:include> 
+
+<div class="content">
+
+<h2><strong>Perguntas Recebidas</strong></h2>
+	
+				<canvas id="linha_titulo" width="1900" height="3"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_titulo');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 1880;
+     					    var rectHeight = 50;
+
+      						
+
+      						context.fillStyle = '#f28633';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+<p:panel >
+<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+    <f:facet name="start">  
+        <h:graphicImage value="../images/loading.gif" />  
+    </f:facet>  
+      
+    <f:facet name="complete">  
+        <h:outputText value="" />  
+    </f:facet>  
+</p:ajaxStatus> 
+
+
+<p:fieldset legend="Perguntas não respondidas">
+
+<p:dataTable id="dados" var="pg" value="#{usuarioBean.perguntasRecebidas}" emptyMessage="Nenhuma pergunta pra responder." >
+
+
+
+<p:column  rendered="#{pg.status==0}">
+
+<p:panelGrid columns="1">
+
+
+<p:panelGrid columns="3">
+<p:outputLabel value="#{pg.pergunta}"></p:outputLabel>
+<a target="_blank" href="../anuncio.jsp?id_veiculo=#{pg.id_veiculo}">Visualizar anúncio</a>
+</p:panelGrid>
+<br></br>
+
+
+
+<p:panelGrid columns="2">
+<h:form prependId="false">
+
+<p:growl id="msg"></p:growl>
+<textarea name="resposta" rows="5" cols="100%">#{pg.resposta}</textarea>
+
+<br></br>
+<p:commandButton value="Enviar Resposta" >
+
+<f:param name="id_pergunta"  value="#{pg.id}"></f:param>
+
+<p:ajax listener="#{usuarioBean.EnviaRespostaPergunta}" update="msg :dados" ></p:ajax>
+</p:commandButton>
+
+
+<p:commandButton value="Excluir Pergunta">
+<f:param name="id_pergunta"  value="#{pg.id}"></f:param>
+
+<p:ajax listener="#{usuarioBean.ExcluirPergunta}" update="msg :dados" ></p:ajax>
+
+</p:commandButton>
+
+</h:form>
+
+
+
+
+
+</p:panelGrid>
+
+
+</p:panelGrid>
+</p:column>
+</p:dataTable>
+
+
+</p:fieldset>
+
+
+</p:panel>
+
+<canvas id="linha_n" width="1900" height="3"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_n');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 1880;
+     					    var rectHeight = 50;
+
+      						
+
+      						context.fillStyle = 'blue';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+<p:panel>
+
+
+<p:fieldset legend="Perguntas já respondidas">
+
+<p:dataTable id="dados_respondidos" var="pg" value="#{usuarioBean.perguntasRecebidas}" emptyMessage="Você não respondeu nenhuma pergunta ainda." >
+
+
+
+<p:column rendered="#{pg.status==1}">
+
+<p:panelGrid columns="1">
+<p:outputLabel value="#{pg.pergunta}"></p:outputLabel>
+
+
+<p:outputLabel value="Sua resposta: #{pg.resposta}"></p:outputLabel>
+
+
+</p:panelGrid>
+</p:column>
+</p:dataTable>
+
+
+</p:fieldset>
+
+
+</p:panel>
+</div>
+
+</h:body>
+
+</html>
