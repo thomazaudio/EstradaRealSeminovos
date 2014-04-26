@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+<div class="tabs_wrapper home_tabs section">
+						  	<ul class="tabs">
+						    	<li class="current">Parceiros</li>
+						    	
+						 	</ul>
+						 	<div class="box visible">
+						 		<a href="#" class="all">Ver todos...</a>
+						   		<div class="results"><span>---</span></div>
+						   		<div class="clear"></div>
+						   		<div class="bx-wrapper" style="max-width: 660px;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 148px;"><div class="tabs_carousel" style="width: 2580%; position: relative; -webkit-transition: 0s; transition: 0s; -webkit-transform: translate3d(0px, 0px, 0px);">
+						   			
+									
+									
+									
+									<ui:repeat var="p" value="#{parceiroBean.parceiros}">
+									
+									<div class="slide" style="float: left; list-style: none; position: relative; width: 150px; margin-right: 20px;">
+										<a href="dealer" class="img">
+										
+										<p:graphicImage  height="90" value="#{imgBean.logo}">
+                        
+                  						<f:param name="id" value="#{p.cod}"></f:param>
+                  						
+                  					    </p:graphicImage>
+										
+										
+										</a>
+										<a href="dealer" class="title">#{p.nome}</a>
+									</div>
+									</ui:repeat>
+									
+								</div></div></div>
+						  	</div>
+						  	
+						  	
+						</div>
+
+</h:body>
+</html>

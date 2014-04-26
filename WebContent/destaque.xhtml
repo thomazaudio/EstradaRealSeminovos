@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+
+
+<div class="recent">
+
+<div class="tabs_wrapper home_tabs section">
+				<ul class="tabs">
+						    	<li class="current">Veículos em destaque</li>
+						    	
+						 	</ul>
+						 	
+						 	
+						 	
+						 	
+						 	
+						 	
+						 	
+				<div class="recent_carousel">
+				
+				
+				
+				      <ui:repeat var="d" value="#{destaqueBean.destaqueInferior}">
+						<div class="slide">
+							<a href="anuncio.jsp?id_veiculo=#{d.id}">
+								
+								<p:graphicImage  value="#{imgBean.tumbCapaVeiculo}">
+                        
+                   				<f:param name="idVeiculo" value="#{d.id}"></f:param>
+                    			</p:graphicImage>
+								
+								<div class="description">
+									<p>#{d.anoFabricacao}/#{d.anoModelo}<br></br>#{d.combustivel}<br></br>#{d.quilometragem}<span class="price"> km</span><br></br>#{d.cor}</p>
+									
+								</div>
+								<div class="title">
+									<p>
+										<span>#{d.tituloCompactado}</span>
+									
+									</p>
+									
+									<p>	<span class="price">R$ #{d.preco}</span></p>
+								</div>
+							</a>
+						</div>
+						</ui:repeat>
+						
+						
+					
+					
+					</div>
+					
+					</div>
+					
+					</div>
+				
+
+
+
+</h:body>
+
+</html>

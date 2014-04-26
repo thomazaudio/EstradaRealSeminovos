@@ -1,0 +1,412 @@
+
+/****************************************************************************
+(800 X 600) + (768 X 1024)
+****************************************************************************/
+@media only screen and (min-width: 768px) and (max-width: 959px)
+{
+	.header-topwrapper { background:#161616;}
+	.header-topwrapper .login  { width:768px; margin:0 auto;  }
+	.header-topwrapper .login p {   margin:0px 0px 0px 5px; }
+	.header-topwrapper .login .cell {  margin:0px 5px 0px 0px;  }
+	.header-wrapper .header {width:768px;  margin:0 auto;   text-align:center; padding-top:30px;}
+	.header-wrapper .header .logo img {  margin-bottom:10px; margin:0px 0px 0px 5px; }
+	.header-wrapper .header .logo input {  margin:0px 0px 0px 5px; }
+
+	.header-wrapper .header #desktop-nav { display:block;  }
+	.header-wrapper .header #mobile-nav { display:none; }
+	#desktop-nav> ul> li> .submenu { width:768px; }
+	
+	.container-wrapper .content { width:768px; margin:0 auto;  }
+	.container-top { width:718px; padding: 25px; text-align:center;  }
+	.container-top h1 {margin:0px 0px 10px 0px; font-size:20px;  }
+	.container-top h1 span { font-size:20px; }
+	.container-top { background:#f6f6f6; }
+	.container-top .btn {   margin-bottom:5px; margin-top:0px;}
+	.container-top .blue { float:left; margin: 0 10px 0 75px;}
+	.container-top .red { float:right;   }
+	
+	.fearture { width:768px; margin:0 auto; }
+	.fearture h2 { margin-left:10px; }
+	.fearture .product { float:left !important;  width:270px; margin:0px 5px; }
+	
+	.contact-main { width:740px; float:none; }
+	.automobile { width:740px; margin:0 auto; }
+	.automobile .project1 figure{ width:221px; height:145px;}
+	.automobile .project1 {  margin:0 auto; width:230px; margin:0px 5px 10px 5px; }
+	.automobile .project3 { float:left; margin:0 auto; width:230px;  margin:0px 5px 10px 5px; }
+	.automobile .overlay { width:221px; height:145px; }
+	.automobile .overlay a { margin-top:58px; }
+
+	.content .blognews{width:720px; margin-left:15px;  float:none;}
+	.content .blognews .post .post-meta{margin:0px 5px;   }
+	.content .container .blognews .post p { width:625px; }
+	
+	.container-wrapper .content .container{width:720px; margin:0 auto;}
+	.content .sidebar-right{width:300px; float:none; margin:0 auto;}
+	
+	.footer-wrapper { background:#1c1c1c; }
+	.footer{width:768px; margin:0 auto;}
+	.footer .help { margin:0px 5px 10px 5px;   }
+	.footer .my-account { margin:0px 20px 10px; } 
+	.footer .ab { width:278px; margin:0 auto; float:left; }
+	footer { width:768px; margin:0 auto; }
+	footer .copy-right { width:223px; margin-left:10px; }
+	footer .social-nav{ width:230px; margin-right:10px;}
+	
+	.slider-wrapper-a #slider .slide img{width:100%; height:100%;}
+	.slider-wrapper-a #slider{width:768px; margin:0 auto;height:387px;}
+	.slider-wrapper-a .slide-opetion {left:243px;}
+	.slider-wrapper-a #per { z-index:999;  left:10px;}
+	.slider-wrapper-a #next { z-index:999;  right:10px;}
+	
+	.conteiner-hv2 .car-search { margin:0px 0px 10px 43px; }
+	
+	.slider-wrapper-c #slider-c { width:768px; margin:0 auto; }
+	.slider-wrapper-c #slider-c .slide-c .slide-c-detail  { width:300px; margin-right:10px; padding-top:0px;}
+	.slider-wrapper-c #slider-c .slide-c .video { width:400px !important; }
+	.slider-wrapper-c #slider-c .slide-c .video iframe#vid { width:400px !important; }
+	.slider-wrapper-c #slider-c .slide-c .slide-c-detail .blue{margin-right:0px;}
+	
+	.conteiner-about{margin-top:-540px !important; }
+	
+	.aboutus .ourweb { width:742px !important ; margin:0 auto; }
+	.ourweb .webimg {width:335px;   }
+	.ourweb .webdetail { width:335px; margin:0px 10px;  }
+	.aboutus .ghraphic { width:768px; margin:0 auto; }
+	.market { width:735px; margin:0 auto; }
+	.choose { width:735px; margin:0 auto; }
+	.aboutus .topautomotive-brand { width:768px; }
+	.topautomotive-brand li { margin:0px 10px 10px 0px; }
+	
+	.aboutus .our-team { width:768px; margin:0 auto; }
+	.our-team .team { width:280px; margin:0px 10px 10px 10px ;}
+	
+	.pagination{text-align:center; clear:both; margin-bottom:20px;}
+	.contact-rightcolum { margin:0 auto; float:none; }
+	
+	.conteiner-rent{margin-top:-540px !important; }
+	
+	.conteiner-about .container-top h2 { margin:0px; }
+	.conteiner-about .container-top p { margin:0px; }
+	
+	.contact-main form textarea { width:740px; }
+}
+
+
+/****************************************************************************
+(768)
+****************************************************************************/
+@media only screen and ( max-width: 768px )
+{
+	.header-topwrapper { background:#161616;}
+	.header-topwrapper .login  { width:720px; margin:0 auto;  }
+	.header-topwrapper .login p {  width:310px; margin:0px 0px 0px 5px;  }
+	.header-topwrapper .login .cell {  width:310px; margin:0px 5px 0px 0px;  }
+	.header-wrapper .header {width:720px;  margin:0 auto;   text-align:center; padding-top:30px;}
+	.header-wrapper .header .logo img {  margin-bottom:10px; margin:0px 0px 0px 5px; }
+	.header-wrapper .header .logo input {  margin:0px 0px 0px 5px; }
+
+	.header-wrapper .header #desktop-nav { display:block;  }
+	.header-wrapper .header #mobile-nav { display:none; }
+	#desktop-nav> ul> li> .submenu { width:720px; }
+	
+	.container-wrapper .content { width:720px; margin:0 auto;  }
+	.container-top { width:669px; padding: 25px; text-align:center;  }
+	.container-top h1 {margin:0px 0px 10px 0px; font-size:20px; }
+	.container-top h1 span { font-size:20px; }
+	.container-top { background:#f6f6f6; }
+	.container-top .btn {  margin-bottom:5px; margin-top:0px;}
+	.container-top .blue { float:left; margin-right:0px; margin-left:105px;}
+	.container-top .red { float:right;  margin-right:115px; }
+	
+	.fearture { width:720px; margin:0 auto; }
+	.fearture h2 { margin-left:10px; }
+	.fearture .product { float:left !important;  width:270px; margin:0px 5px; }
+	
+	.contact-main { width:720px; float:none; }
+	.automobile { width:720px; margin:0 auto; }
+	.automobile .project1 {  margin:0 auto; width:230px; margin:0px 5px 10px 5px; }
+	.automobile .project3 { float:left; margin:0 auto; width:230px;  margin:0px 5px 10px 5px; }
+	.automobile .overlay { width:221px; height:145px; }
+	.automobile .overlay a { margin-top:58px; }
+
+	.content .blognews{width:720px; margin:0 auto;  float:none;}
+	.content .blognews .post .post-meta{margin:0px 5px;   }
+	.content .container .blognews .post p { width:625px; }
+	
+	.container-wrapper .content .container{width:720px; margin:0 auto;}
+	.content .sidebar-right{width:300px; float:none; margin:0 auto;}
+	
+	.footer-wrapper { background:#1c1c1c; }
+	.footer{width:720px; margin:0 auto;}
+	.footer .help { margin:0px 5px 10px 5px;   }
+	.footer .my-account { margin:0px 35px 10px; } 
+	.footer .ab { width:276px; margin:0 auto; float:left; }
+	footer { width:720px; margin:0 auto; }
+	footer .copy-right { width:223px; margin-left:10px; }
+	footer .social-nav{ width:230px; margin-right:10px;}
+	
+	.slider-wrapper-a #slider .slide img{width:100%; height:100%;}
+	.slider-wrapper-a #slider{width:720px; margin:0 auto;height:387px;}
+	.slider-wrapper-a .slide-opetion {left:243px;}
+	.slider-wrapper-a #per { z-index:999;  left:10px;}
+	.slider-wrapper-a #next { z-index:999;  right:10px;}
+	
+	.conteiner-hv2 .car-search { margin:0px 0px 10px 43px; }
+	
+	.slider-wrapper-c #slider-c { width:720px; margin:0 auto; }
+	.slider-wrapper-c #slider-c .slide-c .slide-c-detail  { width:300px; margin-right:10px; }
+	.slider-wrapper-c #slider-c .slide-c .video { width:400px !important; }
+	.slider-wrapper-c #slider-c .slide-c .video iframe#vid { width:400px !important; }
+	
+	.conteiner-about{margin-top:-540px !important; }
+	
+	.aboutus .ourweb { width:720px ; margin:0 auto; }
+	.ourweb .webimg {width:565px;  float:none; }
+	.ourweb .webdetail { width:720px; margin:0px 10px; float:none; }
+	.aboutus .ghraphic { width:720px; margin:0 auto; }
+	.market { width:720px; margin:0 auto; float:none; }
+	.choose { width:720px; margin:0 auto; float:none; }
+	.aboutus .topautomotive-brand { width:720px; }
+	.topautomotive-brand li { margin-bottom:10px; }
+	
+	.aboutus .our-team { width:720px; margin:0 auto; }
+	.our-team .team { width:280px; margin:0px 10px 10px 10px ;}
+	
+	.pagination{text-align:center; clear:both; margin-bottom:20px;}
+	.contact-rightcolum { margin:0 auto; float:none; }
+	
+	.conteiner-rent{margin-top:-540px !important; }
+	
+	.conteiner-about .container-top h2 { margin:0px; }
+	.conteiner-about .container-top p { margin:0px; }
+	
+	.contact-main form textarea { width:720px; }
+	
+}
+
+
+/****************************************************************************
+(600 X 800)
+****************************************************************************/
+@media only screen and ( min-width: 481px ) and ( max-width: 767px )
+{
+	.header-topwrapper { background:#161616;}
+	.header-topwrapper .login  { width:580px; margin:0 auto; text-align:center;  }
+	.header-topwrapper .login p {  width:580px; margin:0px 0px 0px 5px; }
+	.header-topwrapper .login .cell {   margin:8px 5px 0px 0px; width:580px;  }
+	.header-wrapper .header {width:580px;  margin:0 auto;   text-align:center; padding-top:30px;}
+	.header-wrapper .header .logo img {  margin-bottom:10px; margin:0px 0px 0px 5px; }
+	.header-wrapper .header .logo input {  margin:0px 0px 0px 5px; }
+
+	.header-wrapper .header #desktop-nav { display:none; }
+	.header-wrapper .header #mobile-nav { display:block; }
+	
+	.slider .slide .overlay { display:none; }
+	.slider-wrapper .per  { left:30px; bottom:50px; }
+	.slider-wrapper .next  { left:72px; bottom:50px; } 
+
+	.container-wrapper .content { width:580px; margin:0 auto;  }
+	.container-top { width:530px; padding:25px;   }
+	.container-top h1 {margin-bottom:10px; font-size:20px; float:none; margin-top:0px;}
+	.container-top h1 span { font-size:20px; }
+	.container-top { background:#f6f6f6; }
+	.container-top .btn { float:none;  margin-bottom:5px; margin-top:0px;}
+	.container-top .blue { float:left; margin-right:0px; margin-left:105px;}
+	.container-top .red { float:right;  margin-right:115px; }
+	
+	.fearture { width:580px; margin:0 auto; }
+	.fearture h2 { margin-left:10px; }
+	.fearture .product { float:left !important;  width:270px; margin:0px 5px; }
+	
+	.contact-main { width:580px; float:none; }
+	.automobile { width:580px; margin:0 auto; }
+	.automobile .project1 figure{  width:166px; height:108px;}
+	.automobile .project1 {  margin:0 auto; width:175px; margin:0px 5px 10px 5px; }
+	.automobile .project3 { float:left; margin:0 auto; width:175px;  margin:0px 5px 10px 5px; }
+	.automobile .overlay { width:166px; height:108px; }
+	.automobile .overlay a { margin-top:40px; }
+	
+	.content .blognews{width:580px; margin:0 auto;  float:none;}
+	.content .blognews .post .post-meta{margin:0px 5px;   }
+	.content .container .blognews .post p { width:470px;  float:none;}
+	
+	.container-wrapper .content .container{width:580px; margin:0 auto;}
+	.content .sidebar-right{width:300px; float:none; margin:0 auto;}
+	
+	.footer-wrapper { background:#1c1c1c; }
+	.footer{width:580px; margin:0 auto;}
+	.footer .help { margin:0px 5px 10px 5px;   }
+	.footer .my-account { margin:0px 35px 10px; } 
+	.footer .ab { width:276px; margin:0 auto; float:left; }
+	footer { width:580px; margin:0 auto; }
+	footer .copy-right { width:223px; margin-left:10px; }
+	footer .social-nav{ width:230px; margin-right:10px;}
+	
+	.slider-wrapper-a #slider .slide img{width:100%; height:100%;}
+	.slider-wrapper-a #slider{width:580px; margin:0 auto;height:387px;}
+	.slider-wrapper-a .slide-opetion {left:243px;}
+	.slider-wrapper-a #per { z-index:999;  left:10px;}
+	.slider-wrapper-a #next { z-index:999;  right:10px;}
+	
+	.conteiner-hv2 .car-search { margin:0px 0px 10px 43px; }
+	
+	.slider-wrapper-c #slider-c { width:580px; margin:0 auto; }
+	.slider-wrapper-c #slider-c .slide-c .slide-c-detail  { width:300px; margin-right:10px; padding-top:0px; }
+	.slider-wrapper-c #slider-c .slide-c .video { width:270px !important; }
+	.slider-wrapper-c #slider-c .slide-c .video iframe#vid { width:270px !important; }
+	.slider-wrapper-c #slider-c .slide-c .slide-c-detail .blue{margin-right:0px;}
+	
+	.content .container-leftvtwo { width:580px; margin:0 auto; float:none; }
+	.automobile-v2 .project1 .project-detail { width:380px; }
+	
+	.aboutus .ourweb { width:580px ; margin:0 auto; }
+	.ourweb .webimg {width:565px;  float:none; }
+	.ourweb .webdetail { width:580px; margin:0px 10px; float:none; }
+	.aboutus .ghraphic { width:580px; margin:0 auto; }
+	.market { width:570px; margin:0 auto; float:none; }
+	.choose { width:570px; margin:0 auto; float:none; }
+	.aboutus .topautomotive-brand { width:580px; }
+	.topautomotive-brand li { margin-bottom:10px; }
+	
+	.conteiner-about{margin-top:-540px !important;}
+	.aboutus .our-team { width:580px; margin:0 auto; }
+	.our-team .team { width:280px; margin:0px 0px 10px 0px ;}
+	
+	
+	.showroom .project1 { width:270px; margin:0px 10px 42px; }
+	.pagination{text-align:center; clear:both; margin-bottom:20px;}
+	.contact-rightcolum { margin:0 auto; float:none; }
+	
+	.conteiner-rent{margin-top:-540px !important; }
+	
+	.contact-main{ width:580px; margin:0 auto; margin-bottom:30px; }
+	.contact-main .post .post-pic img{ width:100%; height:100%; }
+	.contact-main form textarea { width:580px; }
+	
+	.car-pic li { width:76px; }
+	.contact-main form input { width:255px; }
+	.contact-main .input .left { width:270px; margin-right:0px; }
+	.keyword .input-left { width:270px; }
+	
+	#map_canvas iframe#gogle-map { width:580px; margin:0 auto; height:398px; }
+}
+
+
+/****************************************************************************
+{320 X 480} + (480 X 320)
+****************************************************************************/
+@media only screen and ( max-width: 480px )
+{
+	.header-topwrapper { background:#161616;}
+	.header-topwrapper .login  { width:300px; }
+	.header-topwrapper .login p { float:none; width:280px; margin:0 auto; }
+	.header-topwrapper .login .cell { float:none;  margin:0 auto; }
+	.header-wrapper .header {width:300px;  text-align:center;}
+	.header-wrapper .header .logo img { float:none;  margin-bottom:10px;}
+	.header-wrapper .header .logo input { float:none !important; margin-top:0px;margin-bottom:25px; }
+	
+	.header-wrapper .header #desktop-nav { display:none; }
+	.header-wrapper .header #mobile-nav { display:block; }
+	
+	.slider .slide .overlay { display:none; }
+	.content { width:300px !important; }
+	.container-wrapper .content .container { width:300px !important;  }
+	.container-top { width:250px; padding:25px;   }
+	.container-top h1 {margin-bottom:10px; font-size:20px; }
+	.container-top h1 span { font-size:20px; }
+	.container-top { background:#f6f6f6; }
+	.container-top .btn { float:none;  margin-bottom:5px; margin-top:0px;}
+	.container-top .blue { float:left; margin-right:0px; margin-left:56px;}
+	.container-top .red { float:right;  margin-right:50px; }
+	
+	.fearture { width:300px; }
+	.fearture h2 { margin-left:10px; }
+	.fearture .product { float:none; width:284px; margin:0 auto; }
+	
+	.contact-main { width:300px; float:none; }
+	.automobile { width:280px; margin:0 auto; }
+	.automobile .project1 figure{  width:120px; height:78px;}
+	.automobile .project1 {  margin:0 auto; width:130px; margin:0px 5px 10px 5px; }
+	.automobile .project3 { float:left; margin:0 auto; width:130px;  margin:0px 5px 10px 5px; }
+	.automobile .overlay { width:120px; height:78px; }
+	.automobile .overlay a { margin-top:22px; }
+	
+	.content .blognews{width:280px; margin:0 auto;  float:none;}
+	.content .blognews .post .post-meta{margin:0px 5px;   }
+	.content .container .blognews .post p { width:260px;  float:none;}
+	
+	.footer-wrapper { background:#1c1c1c; }
+	.footer{width:300px;}
+	.footer .help { margin:0 auto 10px; float:none;  }
+	.footer .my-account { margin:0px 35px 10px; } 
+	.footer .ab { width:276px; margin-left:20px; }
+	footer { width:300px; }
+	footer .copy-right { width:223px; margin:0 auto 10px; float:none; }
+	footer .social-nav{float:none; width:230px; margin:0 auto;}
+	
+	
+	.slider-wrapper-a { display:none; }
+	.header-wrapper .header #mobile-nav { display:block; margin-bottom:50px;}
+	
+	.conteiner-hv2 .car-search { width:235px;  margin:0 auto;margin-left:0px; margin-bottom:10px; }
+	.conteiner-hv2 .container-top .btn { margin-right:50px; }
+	
+	.conteiner-hv2 .top-brands ul { width:130px; margin:0px 10px 30px 10px; }
+	
+	
+	.slider-wrapper-c { display:none; }
+	.content .container-leftvtwo{width:300px; float:none;margin-right:0px;}
+	.automobile-v2 .project1 figure {width:93px; margin-left:10px; }
+	.automobile-v2 .project1 .project-detail { width:175px; margin-right:10px; }
+	.automobile-v2 .overlay { width:93px; height:60px; }
+	.automobile-v2 .overlay a { padding:4px 8px; margin-top:20px; }
+	
+	
+	.aboutus .ourweb { width:280px ; margin:0 auto; }
+	.ourweb .webimg {width:280px;  float:none; }
+	.ourweb .webdetail { width:280px; margin:0px 10px; float:none; }
+	.aboutus .ghraphic { width:280px; margin:0 auto; }
+	.market { width:280px; margin:0 auto; float:none; }
+	.choose { width:280px; margin:0 auto; float:none; }
+	.aboutus .topautomotive-brand { width:280px; margin:0px 10px }
+	
+	.aboutus .topautomotive-brand { width:280px; margin:0 auto; }
+	.topautomotive-brand li { width:280px; margin:0 auto 10px; }
+	
+	.aboutus .our-team { width:280px; margin:0 auto; margin-bottom:164px;}
+	.our-team .team { width:280px; float:none; margin-right:0px;}
+	
+	
+	.contact-main{ width:280px; margin:0 auto; }
+	.contact-main .post .post-pic img{ width:100%; height:100%; }
+	.post-comments .com-text { width:192px;  min-width:192px; }
+	.post-comments  .children { margin-left:0px; }
+	.contact-main form textarea { width:280px; margin:0 auto; }
+	.contact-main .send { margin-right:45px; }
+	.widget #search { background:url(images/search-icon1.png) no-repeat 255px center;  width:251px; margin-top:25px;}
+	.showroom .project1 { width:280px; margin:0 auto; }
+	.showroom .overlay { width:272px; height:146px; }
+	
+	
+	.contact-main .input .left{float:none; margin-right:0px; width:280px;}
+	.contact-main .input .right{float:none; margin-right:0px; width:280px;}
+	.contact-main form input { width:265px; }
+	.keyword .input-left { width:280px; float:none; }
+	.keyword .input-right { width:280px; float:none; }
+	.car-pic { min-height:78px; }
+	.car-pic li { width:72px; }
+	
+	.price-range { width:280px; }
+	
+	.shortby { width:125px; }
+	.shortby ul li input { width:0px; }
+	
+	#map_canvas { display:none; }
+	.conteiner-about .container-top h2 { margin-left:10px; }
+	
+	.error-page img { width:100% ; height:100%; }
+	
+	.automobile .selectors a { margin-right:0px; }
+	
+}

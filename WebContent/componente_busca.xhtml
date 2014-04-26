@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<ui:composition>
+<div class="search_auto">
+							
+							
+				
+				  <img  height="90" src="images/logo_2.png" alt="" />
+				
+					<h3>
+						<strong>Oque você</strong> procura?
+							
+				<canvas id="linha_p" width="300" height="5"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_p');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 350;
+     					    var rectHeight = 50;
+
+      						
+
+      						context.fillStyle = '#f28633';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+					</h3>
+						 <div class="clear"/>
+						  
+					
+					        <h:form prependId="false">
+					        <p:selectOneRadio id="customRadio" value="#{buscaBean.codTipo}"  valueChangeListener="#{buscaBean.alteraTipoVeiculo}">  
+					        
+					      
+					       
+        					<f:selectItem itemLabel="Moto" itemValue="1" id="search_radio_2" />  
+        				
+       						<f:selectItem itemLabel="Carro" itemValue="2" />  
+       						 
+       						
+       						 
+       						   <p:ajax   update=":form_fab_model:fabricantes"   ></p:ajax>
+   							</p:selectOneRadio> 
+					        
+					      
+						   </h:form>
+						  
+					
+					<div class="clear"></div>
+					<div class="clear"></div>
+					
+
+				
+					
+  					<p:panel>
+ 				   <h:form id="form_fab_model" >
+ 				   
+ 				 
+		           <label><strong>Fabricante:</strong></label>
+                   
+                   <h:selectOneMenu  id="fabricantes"  value="#{buscaBean.codFabricante}" valueChangeListener="#{buscaBean.alteraFab}" styleClass="n_2" >  
+            
+            	    <f:selectItem itemValue="0" itemLabel="Todos" ></f:selectItem>
+                    <f:selectItems 
+            
+            		value="#{buscaBean.fabricantes}"
+                  
+                   />
+            
+                 <p:ajax update=":form_model:modelos"   event="change"></p:ajax>
+                 </h:selectOneMenu>  
+               </h:form>
+					
+				 <h:form id="form_model" prependId="false">
+                 <label><strong>Modelo:</strong></label>
+                 
+               
+				 <h:selectOneMenu id="modelos"  value="#{buscaBean.codModelo}" styleClass="n_3" valueChangeListener="#{buscaBean.alteraModelo}" >
+				 
+				 <f:selectItem itemValue="0" itemLabel="Todos" ></f:selectItem>
+				
+				
+				 <f:selectItems value="#{buscaBean.modelos}"/>	
+				 
+				 <p:ajax event="change" update="modelo" ></p:ajax>		
+								
+		         </h:selectOneMenu>
+					 
+			  
+				<h:inputHidden id="modelo"></h:inputHidden>
+				   </h:form>
+                  
+                     <h:form prependId="false">
+					<label><strong>Cidade:</strong></label>
+					
+					<h:selectOneMenu value="#{buscaBean.codCidade}" styleClass="n_3" >
+					<f:selectItem itemValue="0" itemLabel="Todas as cidades"></f:selectItem>
+					<f:selectItems  value="#{buscaBean.cidades}" >
+					
+					</f:selectItems>
+					
+					</h:selectOneMenu>
+					
+					
+					</h:form>
+				
+					<label><strong>Ano:</strong></label>
+					<div class="select_box_2">
+                        <h:form>
+						<h:selectOneMenu styleClass="n_3" value="#{buscaBean.anoDe}">
+							<f:selectItem itemValue="0" itemLabel="De todos"></f:selectItem>
+							<f:selectItem itemValue="1999" itemLabel="1999"></f:selectItem>
+							<f:selectItem itemValue="2000" itemLabel="2000"></f:selectItem>
+							<f:selectItem itemValue="2001" itemLabel="2001"></f:selectItem>
+							<f:ajax></f:ajax>
+						</h:selectOneMenu>
+						
+
+						
+						<h:selectOneMenu styleClass="n_3" value="#{buscaBean.anoAte}">
+							<f:selectItem itemValue="0" itemLabel="Até todos"></f:selectItem>
+							<f:selectItem itemValue="1999" itemLabel="1999"></f:selectItem>
+							<f:selectItem itemValue="2000" itemLabel="2000"></f:selectItem>
+							<f:selectItem itemValue="2001" itemLabel="2001"></f:selectItem>
+							<f:ajax></f:ajax>
+						</h:selectOneMenu>
+						
+						</h:form>
+
+						<div class="clear"></div>
+					</div>
+					
+					
+					 
+					<label><strong>Preço:</strong></label>
+					<div class="select_box_2">
+                         <h:form>
+						<h:selectOneMenu styleClass="n_3" value="#{buscaBean.precoDe}" >
+							<f:selectItem itemValue="5.0" itemLabel="De todos"></f:selectItem>
+							<f:selectItem  itemValue="24000.0" itemLabel="24000"></f:selectItem>
+							<f:selectItem  itemValue="25000.0" itemLabel="25000"></f:selectItem>
+							<f:selectItem  itemValue="30000.0" itemLabel="30000"></f:selectItem>
+							<f:selectItem  itemValue="40000.0" itemLabel="40000"></f:selectItem>
+							<f:ajax></f:ajax>
+						</h:selectOneMenu>
+
+							</h:form>
+							
+							 <h:form>
+						<h:selectOneMenu styleClass="n_3" value="#{buscaBean.precoAte}" >
+							<f:selectItem itemValue="500000.0" itemLabel="Até todos"></f:selectItem>
+							<f:selectItem  itemValue="24000.0" itemLabel="24000"></f:selectItem>
+							<f:selectItem  itemValue="25000.0" itemLabel="25000"></f:selectItem>
+							<f:selectItem  itemValue="30000.0" itemLabel="30000"></f:selectItem>
+							<f:selectItem  itemValue="40000.0" itemLabel="40000"></f:selectItem>
+							<f:ajax></f:ajax>
+						</h:selectOneMenu>
+						
+</h:form>
+						<div class="clear"></div>
+					</div>
+					
+					
+					<label><strong>Quilometragem:</strong></label>
+					<div class="select_box_2">
+
+						<h:selectOneMenu styleClass="n_3">
+							<f:selectItem itemLabel="De"></f:selectItem>
+						</h:selectOneMenu>
+
+						<h:selectOneMenu styleClass="n_3">
+							<f:selectItem itemLabel="Até"></f:selectItem>
+						</h:selectOneMenu>
+
+						<div class="clear"></div>
+					</div>
+					</p:panel>
+
+
+ 						<br></br>
+					<div class="chb_wrapper">
+                        <h:form>
+						<p:selectBooleanCheckbox value="#{buscaBean.particular}" >
+						<p:ajax></p:ajax>
+						</p:selectBooleanCheckbox>
+
+						<label class="check_label">Particular </label>
+						
+						<p:selectBooleanCheckbox  value="#{buscaBean.revenda}" >
+						<p:ajax></p:ajax></p:selectBooleanCheckbox>
+
+						<label class="check_label"> Revenda</label>
+						
+						</h:form>
+					</div>
+
+
+					
+					
+					
+        
+			
+				
+					<p:commandButton  action="#{buscaBean.buscar}" value="Buscar" styleClass="btn_search" >
+					
+				
+					
+					
+					
+					</p:commandButton>
+					
+					
+				
+				<div class="clear"></div>
+							
+							
+							
+							
+							</div>
+
+</ui:composition>
+
+</html>
