@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+
+
+<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	
+
+
+<!-- CSS do Banner Destaque
+ 				================================================== -->
+
+
+<link rel="stylesheet" href="rs-plugin/css/settings.css" media="screen"/>
+<link rel="stylesheet" href="css/style_2.css"/>
+</h:head>
+
+<h:body>
+
+<!-- CABEÇALHO -->
+<ui:include src="header.xhtml"></ui:include>
+
+
+<!-- BANNER DESTAQUE -->
+<div class="fullwidthbanner-container slider-wrapper">
+
+		<div class="fullwidthbanner slider tp-simpleresponsive hovered"
+			style="height: 300px;">
+			<ul>
+
+				<ui:repeat var="d" value="#{destaqueBean.destaqueBanner}">
+
+
+				<li class="slide" data-transition="boxfade" data-slotamount="7"
+					style="visibility: visible; left: 0px; top: 0px; z-index: 18; opacity: 1;">
+					<div class="slotholder">
+					
+					
+					<a target="_blank" href="anuncio.jsp?id_veiculo=#{d.codVeiculo}">
+					<p:graphicImage styleClass="defaultimg" style="width:1354 px; height: 562.8515928515928px; position: absolute; left: -25px; opacity: 0;"  value="#{imgBean.capaVeiculo}">
+                     
+                   <f:param name="idVeiculo" value="#{d.codVeiculo}"></f:param>
+                    </p:graphicImage>
+					 </a>  
+					
+					
+					
+					</div>
+					<h2 class="caption sft heading-a start" data-x="0" data-y="100"
+						data-start="1700"
+						style="font-size: 26px; padding: 0px; margin: 0px; border: 0px; line-height: 0px; white-space: nowrap; opacity: 0; left: 172px; top: 50px;">
+						<span>#{d.titulo}</span>
+					</h2>
+					<h2 class="caption lfb heading-b start" data-x="0" data-y="150"
+						data-start="2500"
+						style="font-size: 26px; padding: 8px 29px 8px 8px; margin: 0px; border: 0px; line-height: 0px; white-space: nowrap; opacity: 0.800000011920929; left: 172px; top: 407px;">#{d.anoFabricacao}/#{d.anoModelo}</h2>
+					<h2 class="caption lfr heading-c start" data-x="0" data-y="200"
+						data-start="3000"
+						style="font-size: 16px; padding: 0px; margin: 0px; border: 0px; line-height: 0px; white-space: nowrap; opacity: 1; left: 1309px; top: 200px;">
+						<span>R$ #{d.preco}</span>
+					</h2>
+				</li>
+
+				</ui:repeat>
+
+			</ul>
+			<div class="tp-loader" style="display: none;"></div>
+		</div>
+
+		<div class="tp-leftarrow tparrows round large"
+			style="visibility: visible; position: absolute; left: 0px; top: 201px; opacity: 1;"></div>
+		<div class="tp-rightarrow tparrows round large"
+			style="visibility: visible; position: absolute; left: 1250px; top: 201px; opacity: 1;"></div>
+	</div>
+
+
+	<!-- CONTAINER-->
+
+
+
+
+
+
+	<!--Footer-->
+
+	<!--End Footer-->
+
+
+
+
+
+
+
+
+	<!-- Scripts -->
+	<script src="js/jquery-1.7.1.min.js"></script>
+	<script src="rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+	<script src="rs-plugin/js/jquery.themepunch.revolution.js"></script>
+	<script src="js/jquery.isotope.min.js"></script>
+	<script src="js/jquery-cycle.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/jquery.selectBox.js"></script>
+	<script src="js/timeline.js"></script>
+	<script src="js/custom.js"></script>
+
+
+
+
+
+
+	
+	
+	<!-- FIM DO BANNER DESTAQUE -->
+	
+	<div class="content_z conteiner-hv2">
+	<div class="container-top clearfix">
+	                            <div class="car_characteristics">
+	                            
+	                          
+	                            
+                                <h2><strong>Anuncie gratuitamente seu veículo!</strong></h2>
+                              <div class="message">
+                              
+                                <p>Estrada Real seminovos, aqui você encontra os melhores veículos novos e semi-novos 
+                                de Lafaiete, congonhas, Ouro Branco.
+                                </p>
+                                
+                         <div class="features_table">
+					  
+					  
+					  
+					   
+					
+					
+						
+							<h3><strong>Vantagens</strong></h3>
+							<p><span>*</span>Destaque na página inicial.</p>
+							<p><span>*</span>Até 15 fotos por anúncio.</p>
+							<p><span>*</span>O veículo permance cadastrado até a venda.</p>
+						
+						
+						
+					</div>
+                              
+                              
+                              </div>
+                              
+                              
+                                                              </div> 
+                                                                <img src="images/logo_2.png" alt="" /> 
+                               <a href="#" class="btn blue">Anunciar agora!</a>
+                               
+                                
+                        </div>
+                        
+                        </div>
+	
+	<canvas id="linha_ini" width="1900" height="5"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_ini');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 1900;
+     					    var rectHeight = 5;
+
+      						
+
+      						context.fillStyle = '#f28633';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+	
+	<canvas id="linha_ini_2" width="2500" height="5"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_ini_2');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 2500;
+     					    var rectHeight = 5;
+
+      						
+
+      						context.fillStyle = 'blue';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+	
+	
+	<div id="content">
+
+<div class="content_2">
+
+<div class="main_wrapper">
+
+					
+					<div class="search_auto_wrapper">
+						
+						<ui:include src="componente_busca.xhtml"></ui:include>
+						
+						
+					</div>
+					
+
+					
+					</div>
+					
+					
+					<div class="main_catalog">
+					
+					<ui:include src="destaque.xhtml"></ui:include>
+					
+					</div>
+					
+					<!-- Restante da página -->
+					
+					<div class="main_catalog">
+					
+					<!-- PARCEIROS -->
+					
+					<div class="left">
+					<ui:include src="parceiros.xhtml"></ui:include>
+					</div>
+					
+					
+					</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+
+
+
+
+
+
+</div>
+
+</div>
+
+<div class="clear"></div>
+
+<ui:include src="rodape.xhtml"></ui:include>
+
+
+</h:body>
+
+</html>
