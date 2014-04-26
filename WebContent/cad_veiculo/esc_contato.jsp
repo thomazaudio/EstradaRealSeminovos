@@ -67,10 +67,10 @@ session.setAttribute("STEP",2);
 					out.write(step.toString());
 					
 					//Define o botão com o próximo
-					nome_botao = "images/bt_proximo.png";
+					nome_botao = "Continuar";
 					}
 					else
-					nome_botao = "images/bt_salvar.png";	
+					nome_botao = "Salvar";	
 					
 					
 
@@ -141,7 +141,7 @@ session.setAttribute("STEP",2);
                     	
                     	email =con.getEmail();  
                     	id_contato = con.getId();
-                    	nome =  con.getNome();
+                    	nome =  user.getNome();
                     	cel = con.getCel();
                     	tel1 = con.getTel1();
                     	tel2 = con.getTel2();
@@ -188,13 +188,13 @@ session.setAttribute("STEP",2);
 	                   <div  class="message">
 						<div class="text_wrapper">
 							<h2><strong>Contato</strong> Principal</h2>
-							<p class="desc"><strong>Email: </strong><%=email %></p>
-							<p class="desc"><strong>Nome: </strong><%=nome%></p>
-							<p class="desc"><strong>Cel: </strong><%=cel%></p>
-							<p class="desc"><strong>Tel1: </strong><%=tel1%></p>
-							<p class="desc"><strong>tel2: </strong><%=tel2%></p>
+							<p class="desc"><strong>Email:  </strong><%=email %></p>
+							<p class="desc"><strong>Nome:  </strong><%=nome%></p>
+							<p class="desc"><strong>Cel:  </strong><%=cel%></p>
+							<p class="desc"><strong>Tel1:  </strong><%=tel1%></p>
+							<p class="desc"><strong>tel2:  </strong><%=tel2%></p>
 							 
-						<!--  	<p class="desc"><input href="edit_contato.jsp?id_contato=<%=id_contato%>" type="submit" class="iframe" value="Editar Contato"></p> -->
+						<input href="arearestritausuario/edit_perfil_empresa.xhtml" type="submit" class="btn blue iframe" value="Editar Informações"> 
 						
 					
 						     
@@ -268,7 +268,7 @@ session.setAttribute("STEP",2);
 					    <input type="hidden" name="id_contato" value="<%=id_contato%>">
 					    <input type="hidden" name="id_contato_veiculo" value="<%=id_contato_veiculo%>">
 					     <input type="hidden" name="mostra_step" value="<%=mostra_step%>">
-						<input align="left" type="image" src="<%=nome_botao%>" />	
+						<input align="left" class="btn_2 blue" type="submit" value="<%=nome_botao%>" />	
 						
 						</form>
 					 

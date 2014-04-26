@@ -36,12 +36,42 @@
 
 
 <script>
+	
+
+
+       
+
+//Validação da placa do veículo
+function validaPlaca()
+{
+	
+	
+	
+var placa =  document.getElementById('placa').value;	
+
+window.alert(placa);
+	
+  var er = /[a-z]{3}-?\d{4}/gim;
+  er.lastIndex = 0;
+  if(er.test(placa))
+  {
+	window.alert("Plca ok");  
+  }	  
+  else
+	  window.alert("Placa inválida"); 
+}
+
+
+
 		
 	$(document)
 		.ready(
+				
+				
+				
+
 				function() {
 	           
-				
 					
 				
 				$("#cadInfoForm")
@@ -62,8 +92,10 @@
 											required:true
 										},
 										
-										model:{
-							            	required: true
+										modelo:{
+							            	required: true,
+							            	
+							            		
 							            },
 							            
 							            combustivel:{
@@ -171,7 +203,7 @@
 									messages : {
 										placa : "Insira a placa do veículo.",
 										fabricante :"Por favor, Escolha o fabricante do veículo.",
-										model :"Por favor, escolha o modelo do veículo.",
+										modelo :"Por favor, escolha o modelo do veículo.",
 										combustivel:"Por favor, escolha o tipo de combustível do veículo.",
 										
 										anoFabricacao:
@@ -260,9 +292,9 @@
 					String nome_botao="";
 					
 					if(mostra_step==1)
-					nome_botao = "images/bt_proximo.png";	
+					nome_botao = "Continuar";	
 					else
-					nome_botao = "images/bt_salvar.png";	
+					nome_botao = "Salvar";	
 						
 					
 					//Itens
@@ -316,10 +348,10 @@
 
 		</div>
 
-		<form id="cadInfoForm" action="ServAnuncio" method="POST">
+		<form id="cadInfoForm" action="ServAnuncio" method="POST"  onsubmit="validaPlaca();" >
 			<div class="sell_submit_wrapper">
 
-				<input type="image" src=<%=nome_botao%> />
+				<input class="btn_2 blue" type="submit" value=<%=nome_botao%> />
 			</div>
 			<input type="hidden" name="STEP" value="2"> <input
 				type="hidden" name="mostra_step" value="<%=mostra_step%>">
@@ -350,7 +382,7 @@
 				<div class="select_wrapper">
 					<label><span>* </span><strong>Modelo: </strong></label> <select
 						id="model" name="modelo" class="n">
-						
+							<option value="">Selecione--</option>
 
 					</select>
 				</div>
@@ -450,6 +482,10 @@
 				<div class="select_wrapper">
 					<label><span>* </span><strong>Placa:</strong></label> <input
 						id="placa" name="placa" type="text" class="txb" value="<%=placa%>" />
+						
+						
+						
+						
 				</div>
 				<div class="input_wrapper">
 					<label><span>* </span><strong>Válvulas:</strong></label> <select
@@ -524,7 +560,9 @@
 					<strong>Acessórios</strong>
 				</h2>
 				<p>
-					<input type="button" value="Completo" class="btn_comp" />
+				  
+				
+					<input type="button" value="Completo" class="btn_comp btn blue" />-<input type="button" value="Completo - Ar" class="btn_comp_sem_ar btn blue" />
 				</p>
 				<jsp:include page="get_acessorios.jsp"></jsp:include>
 				<div class="clear"></div>
@@ -585,7 +623,7 @@
 
 			<div class="sell_submit_wrapper">
 
-				<input type="image" src=<%=nome_botao%> />
+				<input class="btn_2 blue" type="submit" value=<%=nome_botao%> />
 			</div>
 			<div class="clear"></div>
 		</form>
@@ -647,7 +685,7 @@
            	 
         	   var $select = $('#model');                           
                $select.find('option').remove();    
-                $('<option>').val('').text('Selecione um modelo').appendTo($select);                      
+                $('<option>').val('').text('Selecione um modelo 1').appendTo($select);                      
                $.each(responseJson, function(key, value) {               
                    $('<option>').val(key).text(value).appendTo($select);      
                     });
@@ -670,7 +708,7 @@
         	 
             var $select = $('#model');                           
                $select.find('option').remove();      
-               $('<option>').val('').text('Selecione um modelo').appendTo($select);
+               $('<option>').val('').text('Selecione um modelo 2').appendTo($select);
                $.each(responseJson, function(key, value) {               
                    $('<option>').val(key).text(value).appendTo($select);      
                     });
@@ -682,6 +720,20 @@
       
       
   
+  	//Marca os itens de completo -Ar
+       $('.btn_comp_sem_ar').click(function(){
+       		 
+       		   
+                   
+       			$("input[type='checkbox'][value=1]").attr('checked','checked');
+       			$("input[type='checkbox'][value=2]").attr('checked','checked');
+       			$("input[type='checkbox'][value=3]").prop('checked', false).uniform(); 
+       			$("input[type='checkbox'][value=4]").attr('checked','checked');
+       			$("input[type='checkbox'][value=5]").attr('checked','checked');
+       			$("input[type='checkbox'][value=6]").attr('checked','checked');            
+            
+            
+        });
      
   
      
@@ -719,8 +771,9 @@
 	  
 	  out.write("getModelos();");
 	  
-      
-	
+	 
+	  out.write("$('#modelo').val('"+carro.getCodModelo()+"');\n");
+	 
 	  
 	  
 	  //Combusive
@@ -781,8 +834,16 @@
 			
 				//Mascara de valor
 				  $("#valor").maskMoney({symbol:"",decimal:",",thousands:"."});
-		
-		
+				
+				
+				
+				
+
+					 
+
+					 
+	
+
 		    	
     
 </script>

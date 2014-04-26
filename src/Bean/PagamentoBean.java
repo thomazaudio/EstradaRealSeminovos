@@ -122,7 +122,11 @@ public class PagamentoBean {
 		
 		if(tipo_pagamento==Pagamento.PAGAMENTO_BOLETO){
 			
-			System.out.println("Pagamento via boleto");
+			
+			//Lança um novo pagamento no sistema
+			Pagamento pag = new Pagamento();
+			
+			
 			
 			//Encaminha para a pagina de download de boleto
 		    try {
@@ -247,7 +251,7 @@ public class PagamentoBean {
         try {
                                 
              response.setContentType("application/pdf");
-             response.setHeader("Content-Disposition", "attachment; filename=boleto.pdf");
+             response.setHeader("Content-Disposition", "attachment; filename=boleto_"+user.getNome()+".pdf");
 
              OutputStream output = response.getOutputStream();
              output.write(pdfAsBytes);

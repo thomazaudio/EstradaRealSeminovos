@@ -75,11 +75,13 @@
 			<a href="ServAnuncio?STEP=1&&mostra_step=1"><span>1.
 					Informações básicas</span></a> <a href="ServAnuncio?STEP=2&&mostra_step=1"><span>2.
 					Contato</span></a> <a href="ServAnuncio?STEP=3&&mostra_step=1"><span>3.Imagens</span></a>
-			<span>4. Pré-Visualizar</span> <a href="#"><span>5. Forma
-					de pagamento</span></a>
+			<span>4. Pré-Visualizar</span> <a href="#"><span>5.Concluído com sucesso!
+					</span></a>
 
            <% }%>
 		</div>
+		
+		<br></br>
 
 		<div class="content">
 		   
@@ -92,6 +94,12 @@
 				<p>O seu veículo está a um passo de ser anunciado!</p>
 				<p>Por favor, revise as informações cadastradas.</p>
 			</div>
+			
+			<form action="ServAnuncio">
+			<input type="hidden" value="5" name="STEP"/>
+			<input type="hidden" value="0" name="mostra_step"/>
+			<input type="submit" value="Finalizar" class="btn_2 blue">
+			</form>
 
 			<% }
 			 
@@ -240,7 +248,7 @@
 						</div>
 						<div class="line">
 							<div class="left">Nome:</div>
-							<div class="right"><%=con.getNome()%></div>
+							<div class="right"><%=user.getNome()%></div>
 						</div>
 						<div class="line grey_area">
 							<div class="left">Cel:</div>
@@ -259,9 +267,7 @@
 					<div class="wanted_line">
 						<div class="left"></div>
 						<div class="right">
-							<a class="iframe"
-								href="cad_veiculo/edit_contato.jsp?id_contato=<%=con.getId()%>&&id_contato_veiculo=0">Editar
-								contato</a>
+							
 						</div>
 					</div>
 				</div>

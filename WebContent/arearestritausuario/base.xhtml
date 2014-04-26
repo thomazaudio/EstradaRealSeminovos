@@ -93,7 +93,7 @@
 
 						
 							<p:menuitem class="iframe" value="Novo Anúncio" update="messages"
-								url="../anunciar.jsp" actionListener="#{menuBean.save}"
+								url="../cad_veiculo/index.jsp" actionListener="#{menuBean.save}"
 								icon="ui-icon-disk" />
 							<p:menuitem value="Meus Anúncios"
 								url="lista_anuncios.jsf"
@@ -162,8 +162,8 @@
 			  <h3><strong>Financeiro</strong></h3>
 			  
 						       
-						        
-						       <p:button  value="Saldo: R$ 0.0" ></p:button>
+						       
+						       <p:button  value="Crédito para anunciar: R$ #{usuarioBean.saldo}" ></p:button>
 						       
 			  <h:form>
 					<p:growl id="messages" />

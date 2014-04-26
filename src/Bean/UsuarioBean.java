@@ -17,6 +17,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import Modelo.ContatoDAO;
+import Modelo.FinanDAO;
 import Modelo.ImgDAO;
 import Modelo.LocalizacaoDAO;
 import Modelo.PerguntaDAO;
@@ -41,6 +42,20 @@ public class UsuarioBean {
 	private String email;
 	private String textoIniUsuario;
 	private String linkEditPerfil;
+	private double saldo;
+
+	public double getSaldo() {
+		
+		saldo =  new FinanDAO().getSaldo(this.getUser().getId());
+		
+		return saldo;
+	}
+
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
+
 
 	public String getLinkEditPerfil() {
 		
@@ -134,16 +149,18 @@ public class UsuarioBean {
 			
         user = (Usuario)sessao.getAttribute("usuario");
         
+        
+    
+       
+        
 		}
 		catch(Exception e){
 			
+			
+			
 		}
 		
-		if(user==null)
-		{
-		user =  new Usuario();
-		user.setNome("visitante");
-		}
+		
 		
         return user;
 	}

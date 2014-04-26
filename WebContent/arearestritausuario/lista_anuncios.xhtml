@@ -42,6 +42,7 @@
 <div id="content">
 <div class="content">
 <h2><strong>Meus Anúncios</strong></h2>
+
 <div class="main_catalog">
 
 
@@ -72,11 +73,11 @@
 
 <h:form>
 <p:panelGrid columns="1">
-<p:outputLabel for="quant_p_page" value="Quantidade por pÃ¡gina: "></p:outputLabel>
+<p:outputLabel for="quant_p_page" value="Quantidade por página: "></p:outputLabel>
 <h:selectOneMenu id="quant_p_page" value="#{anuncioBean.quantPorPagina}" styleClass="n">
-<f:selectItem itemValue="2" itemLabel="2 por página"></f:selectItem>
-<f:selectItem itemValue="5" itemLabel="5 por página"></f:selectItem>
+
 <f:selectItem itemValue="10" itemLabel="10 por página"></f:selectItem>
+<f:selectItem itemValue="20" itemLabel="20 por página"></f:selectItem>
 <p:ajax update=":form :lista" ></p:ajax>
 </h:selectOneMenu> 
 </p:panelGrid>
@@ -110,13 +111,13 @@
 							
 
 							<div class="title_box">
-							<p:graphicImage  width="65"   value="#{imgBean.capaVeiculo}">
+							<p:graphicImage  width="100"   value="#{imgBean.capaVeiculo}">
                         
                         <f:param name="idVeiculo" value="#{ans.veiculo.id}"></f:param>
                         </p:graphicImage>
 								<h4>
 									<a href="#"></a>
-									<p:outputLabel value="#{ans.veiculo.titulo}-#{ans.veiculo.id}" />
+									<p:outputLabel value="#{ans.veiculo.titulo}" />
 								</h4>
 								
 							   
@@ -128,6 +129,11 @@
 								<h:form rendered="#{ans.veiculo.statusPagamento!=1}"> 
 								<p:commandButton value="Realizar pagamento" ></p:commandButton>
 								
+								</h:form>
+								
+								
+								<h:form  rendered="#{ans.veiculo.statusPagamento==1}">
+								<h:commandButton class="btn blue" value="Promova este anúncio!" ></h:commandButton>
 								</h:form>
 							</div>
 							<div class="clear"></div>
@@ -143,11 +149,11 @@
   								
   								
   								
-    						     <h:outputLink class="iframe"  value="../ServAnuncio" title="Editar AnÃºncio"> 
+    						     <h:outputLink class="iframe"  value="../ServAnuncio" styleClass="btn blue" title="Editar Anúncio"> 
     						     <f:param name="STEP"   value="10"></f:param>
     						     <f:param name="mostra_step"   value="0"></f:param>
     						       <f:param name="id_veiculo"   value="#{ans.veiculo.id}"></f:param>
-    							<strong> <h:outputText value="Editar Anuncio"/> </strong>
+    						 <h:outputText value="Editar Anuncio"/> 
       							
    								</h:outputLink> 
   								
@@ -156,14 +162,14 @@
 								
 								
 								
-								 <span>
+								
 								 <a
-								class="frame_confirm"	href="alt_plano.jsf"><strong> - Alterar Plano</strong></a></span> 
+								class="frame_confirm btn green"	href="alt_plano.jsf">Alterar Plano</a>
 								
 								 
 								
-								<span><a class="frame_confirm" 
-									href="excluir_anuncio.jsp?id_anuncio=#{ans.id}"><strong>Excluir anúncio</strong></a></span>
+								<a class="frame_confirm btn red" 
+									href="excluir_anuncio.jsp?id_anuncio=#{ans.id}">Excluir</a>
 
 							</div>
 							<a class="iframe"
@@ -172,6 +178,7 @@
 						</div>
 
 					</li>
+					<p>---------------------------------------------------------------------------------</p>
 
 				</ui:repeat>
 				</ul>

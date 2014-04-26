@@ -228,10 +228,10 @@ public class VeiculoDAO {
 		cri = sessao.createCriteria(Veiculo.class);
 		
 		//Somente os veiculos que estão validados
-		cri.add(Restrictions.eq("statusValidacao",Pagamento.VALIDACAO_OK));
+		//cri.add(Restrictions.eq("statusValidacao",Pagamento.VALIDACAO_OK));
 		
 		
-		cri.add(Restrictions.eq("statusPagamento",Pagamento.CONFIRMADO));
+		//cri.add(Restrictions.eq("statusPagamento",Pagamento.CONFIRMADO));
 		
 		//Somente anuncios pagos
 		

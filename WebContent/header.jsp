@@ -12,7 +12,10 @@
 		 
            <div class="logo">
            
-             <img  height="120" src="images/logo.png" alt="" />
+             <a href="inicio.jsf"><img  height="120" src="images/logo.png" alt="" /></a>
+           
+           
+         
            </div> 
 
 

@@ -217,6 +217,75 @@ public class ImgDAO {
         return tumb;
 		
 	}
+      
+      
+      //Recupera a imagem de capa de um veiculo EM TAMANHO TUMB
+      public Imagem getTumbImgCapa(long id_veiculo){
+		
+
+		Imagem tumb = null;
+		ResultSet res =null;
+		Statement stm;
+		
+	    try
+	    {
+	    
+	    Connection con = Banco.abreBanco();
+	    stm = con.createStatement();
+	    res =stm.executeQuery("SELECT * FROM imagens WHERE ID_VEICULO="+id_veiculo+" &&CAPA=1");
+	    
+	    if(res.next())
+	    {
+	    
+	    tumb =  new Imagem();
+	    tumb.setId(res.getLong("ID_IMG"));
+	    tumb.setId_veiculo(res.getLong("id_veiculo"));
+	    tumb.setImg(res.getBinaryStream("IMG"));
+	    tumb.setCapa(res.getInt("CAPA"));
+	    
+	    	
+	    }
+	    else
+	    {
+	    	
+	    res =stm.executeQuery("SELECT * FROM imagens WHERE ID_VEICULO="+id_veiculo);
+	    
+	  
+	    if(res.next())
+	    this.marcaCapa(res.getLong("ID_IMG"), id_veiculo);
+	    
+	   
+	    res =stm.executeQuery("SELECT * FROM imagens WHERE ID_VEICULO="+id_veiculo+" &&CAPA=1");
+	    
+	    if(res.next())
+	    {
+	    
+	    tumb =  new Imagem();
+	    tumb.setId(res.getLong("ID_IMG"));
+	    tumb.setId_veiculo(res.getLong("id_veiculo"));
+	    tumb.setImg(res.getBinaryStream("IMG"));
+	    tumb.setCapa(res.getInt("CAPA"));
+	    
+	    return tumb;
+	    	
+	    }
+	   
+	    }
+	    
+	    stm.close();
+	    res.close();
+	    	
+	    }catch(Exception e){
+	    	
+	    	Debug.gerar("Modelo","ImgDAO","getImgCapa", e.getMessage());
+	    }
+		
+		
+		//Converte a imagem para Tumb
+		
+        return tumb;
+		
+	}
 	
 	
 	public Imagem getImg(long id_img){

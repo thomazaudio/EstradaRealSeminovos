@@ -7,6 +7,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Anuncio {
+	
+
+	//Processos
+	//Validacao dos dados
+	public static final int VALIDACAO_EM_ANALISE=0;
+	public static final int VALIDACAO_OK=1;
     
 	
 	private long id;

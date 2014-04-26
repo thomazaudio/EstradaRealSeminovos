@@ -79,7 +79,23 @@ public abstract class Veiculo {
 	}
 
 
-
+     public String getTituloCompactado(){
+    	 
+    	 char[] n  = new char[15];
+    	 
+    	 char[] t  =this.getTitulo().toCharArray();
+    	 
+    	 for(int i=0;i<15;i++)
+    	 n[i] = t[i];
+    	 
+    	
+    	 String s = new String(n);
+    	 
+    	 s+="...";
+    	 
+    	 return s;
+    	 
+     }
 	
 	public String getStatusAnuncio(){
 		

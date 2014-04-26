@@ -14,7 +14,7 @@
 		 
            <div class="logo">
            
-             <img  height="120" src="images/logo.png" alt="" />
+             <img  height="120" src="../images/logo.png" alt="" />
            </div> 
 
 

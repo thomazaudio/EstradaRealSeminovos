@@ -3,7 +3,7 @@
  xmlns:ui="http://java.sun.com/jsf/facelets" 
  xmlns:f="http://java.sun.com/jsf/core" 
  xmlns:h="http://java.sun.com/jsf/html"> 
- <h:head> <title>Hello JSF!</title> </h:head> <h:body> 
+ <h:head> <title></title> </h:head> <h:body> 
 
 
 

@@ -162,7 +162,7 @@ public class AnuncioBean {
 	private Paginacao pag;
 	private ArrayList<Pagina> paginas;
 	private int page=1;
-	private int quantPorPagina=2;
+	private int quantPorPagina=10;
 	private int quantPaginas;
 	
 	public int getQuantPaginas() {

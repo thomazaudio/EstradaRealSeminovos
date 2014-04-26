@@ -3,6 +3,35 @@
 <hibernate-mapping>
 
 
+  
+ <class name="util.Finan" table="financeiro">
+
+<id name="id" column="ID_FINAN" type="long">
+<generator class="native"></generator>
+</id> 
+
+
+<property name="idUser" column="ID_USER"  not-null="true"></property>
+
+<property name="saldo" column="SALDO"  ></property>
+</class>
+    
+    
+    
+<class name="util.Pagamento" table="pagamento">
+
+<id name="cod" column="COD_PAGAMENTO" type="long">
+<generator class="native"></generator>
+</id>
+
+<property name="codUser" column="COD_USER"  not-null="true"></property>
+<property name="tipo" column="TIPO" not-null="true"></property>
+<property name="data" column="DATA" type="java.util.Calendar"></property>
+<property name="descricao" column="DESCRICAO" not-null="true"></property>
+<property name="valor" column="VALOR" not-null="true"></property>
+<property name="status" column="STATUS" ></property>
+
+</class>
 
 
 <class name="util.Pergunta" table="pergunta">
@@ -76,7 +105,21 @@
 <property name="emailtroca" column="emailtroca"></property>
 <property name="idUsuario" column="idUsuario"></property>
 
+</class>
 
+
+<class name="util.Destaque" table="DESTAQUE">
+
+<id name="id" column="ID_DESTAQUE" type="long" >
+
+
+<generator class="identity"></generator>
+</id>
+
+<property name="tipoDestaque"  column="TIPO_DESTAQUE"></property>
+<property name="codVeiculo"  column="COD_VEICULO" ></property>
+<property name="dataIni" column="DATA_INI" type="java.util.Calendar" ></property>
+ <property name="dataFim" column="DATA_FIM" type="java.util.Calendar" ></property>
 
 </class>
 

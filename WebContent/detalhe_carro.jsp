@@ -65,11 +65,16 @@ Anuncio an =null;
 
 id_veiculo = Long.parseLong(request.getParameter("id_veiculo"));	
 
+
+
+
 try{
 //recupera o anuncio
 an = (Anuncio) new AnuncioDAO().getAnuncio(id_veiculo);
 
-
+if(an==null)
+request.getRequestDispatcher("anuncio_erro.jsp").forward(request, response);		
+	
 
 
 }catch(Exception e){
@@ -106,6 +111,8 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 <jsp:include page="header.jsp"></jsp:include>
 	<div id="content">
 		<div class="content">
+		
+		
 		
 
 			<div class="main_wrapper">
@@ -375,11 +382,9 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 						</p>
 						<div class="left">
 							<div class="phones detail single_line spaced">
-								(<%=con_user.getCel()%>)--(<%=con_user.getTel1()%>)--(<%=con_user.getTel2()%>)
+								[ <%=con_user.getCel()%> ] [ <%=con_user.getTel1()%> ] [ <%=con_user.getTel2()%> ]
 							</div>
-							<div class="email detail single_line">
-								<a href="mailto:#" class="markered"><%=con_user.getEmail()%></a>
-							</div>
+							
 							<div class="addr detail single_line"><%=cidade%>.
 							</div>
 						</div>
@@ -493,10 +498,40 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 							</ul>
 							<% }%>
 						</div>
+						
+						
+						<br></br>
+<!-- Outros anuncios deste vendendor(em caso de revenda) -->
+				
+				
+				<%
+					if(user.getClass()==Empresa.class)
+					{
+					%>
+					
+					
+					<h2>
+						Outros veículos de <strong>'<%=user.getNome()%>'
+						</strong>.
+					</h2>
+				   
+				  	<jsp:include page="outros_anuncios_empresa.jsp">
+				<jsp:param value="<%=user.getId()%>" name="id_user"/>
+				<jsp:param value="<%=an.getId()%>" name="id_atual"/>
+				</jsp:include>
+				
+				<div class="wanted_line">
+						
+						
+						<div class="right">
+							<a class="iframe" href="ServAnuncio?STEP=1&&mostra_step=0">Ver Todos</a>
+						</div>
+					</div>
+
+				<% }%>
 
 
-
-
+-------
 				</div>
 				<div class="car_sidebar">
 					<div class="calculator">
@@ -546,40 +581,20 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 						</form>
 						<div class="clear"></div>
 					</div>
+					
+					<jsp:include page="componente_busca.jsf"></jsp:include>
+					
+					
 					<div class="banner">
 						<p>Espaço para banner</p>
 					</div>
+					
+					
+					
 				</div>
 				<div class="clear"></div>
 					
-				<!-- Outros anuncios deste vendendor(em caso de revenda) -->
 				
-				
-				<%
-					if(user.getClass()==Empresa.class)
-					{
-					%>
-					
-					
-					<h2>
-						Outros veículos de <strong>'<%=user.getNome()%>'
-						</strong>.
-					</h2>
-				   
-				  	<jsp:include page="outros_anuncios_empresa.jsp">
-				<jsp:param value="<%=user.getId()%>" name="id_user"/>
-				<jsp:param value="<%=an.getId()%>" name="id_atual"/>
-				</jsp:include>
-				
-				<div class="wanted_line">
-						
-						
-						<div class="right">
-							<a class="iframe" href="ServAnuncio?STEP=1&&mostra_step=0">Ver Todos</a>
-						</div>
-					</div>
-
-				<% }%>
 			</div>
 		</div>
 	</div>

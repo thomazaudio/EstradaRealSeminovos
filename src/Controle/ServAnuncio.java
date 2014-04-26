@@ -23,7 +23,9 @@ import util.Debug;
 import util.Empresa;
 import util.Localizacao;
 import util.Moto;
+import util.Pagamento;
 import util.Pessoa;
+import util.PlanoAnuncio;
 import util.Sessao;
 import util.Usuario;
 import util.Veiculo;
@@ -40,6 +42,7 @@ public class ServAnuncio extends HttpServlet {
 	private final String PAGE_EDIT_CARRO="arearestritausuario/edit_carro.jsp";
 
 	//Constantes com os endereços das paginas de cada etapa
+	private  final String PAGE_CAD_SECESSO = "cad_veiculo/cad_anuncio_sucesso.jsf";
 	private  final String PAGE_ESC_ANUNCIO="edit_veiculo.jsp?page=cad_veiculo/esc_anuncio.jsp";
 	private  final String PAGE_CAD_INFO_CARRO="edit_veiculo.jsp?page=cad_veiculo/cad_info_carro.jsp";
 	private  final String PAGE_CAD_INFO_MOTO="edit_veiculo.jsp?page=cad_veiculo/cad_info_moto.jsp";
@@ -118,6 +121,9 @@ public class ServAnuncio extends HttpServlet {
 		//PREENCHIMENTO DOS DADOS BASICOS DO VEICULO
 		else if(step==this.STEP_1)
 		{
+			
+			
+			
 
 			//Recupera os steps
 			sessao.setAttribute("step",getStepsHtml(sessao,1));
@@ -127,7 +133,7 @@ public class ServAnuncio extends HttpServlet {
 			//Recebe o tipo de veiculo escolhido
 		    int	tipoVeiculo = (Integer) sessao.getAttribute("tipo_veiculo");
 		    
-		    System.out.println("Tipo: "+tipoVeiculo);
+		    
 		    
 		    
 		    if(tipoVeiculo==1)
@@ -174,7 +180,7 @@ public class ServAnuncio extends HttpServlet {
             
 		}
 		
-		//ESCOLHA DE PAGAMENTO
+		//ESCOLHA DE PAGAMENTO E FINALIZAÇÃO
 		else if(this.step==this.STEP_5)
 		{
 			
@@ -208,13 +214,39 @@ public class ServAnuncio extends HttpServlet {
 	
 		}
 		else
-        new AnuncioDAO().insert(an);
+		{
+			
+		//RECUPERA O TIPO DE PLANO INFORMADO NO INICIO
+		int tipoPlano = (Integer) sessao.getAttribute("tipo_plano");	
+			
+		//----SE O PLANO FOR GRÁTIS----	
+		//*OS DADOS DO VEÍCULOS SÃO SALVOS EM ESPERA PARA ANALISE DOS AGENTES DO SISTEMA
+		//*REDIRECIONA PARA A PÁGINA DE ANÚNCIO CADASTRADO COM SUCESSO	
+		if(tipoPlano==PlanoAnuncio.GRATUITO)
+		{
+			
+		//CONFIGURAÇÃO DOS STATUS PARA GRATIS
+		an.getVeiculo().setStatusPagamento(Pagamento.CONFIRMADO);
+		an.getVeiculo().setStatusValidacao(Pagamento.VALIDACAO_EM_ANALISE);
+			
+		new VeiculoDAO().update(an.getVeiculo());
+		new AnuncioDAO().insert(an);	
+		response.sendRedirect(this.PAGE_CAD_SECESSO);	
+		}
 		
+		//----SE O PLANO FOR PAGO----		
+		//*REDIRECIONA PARA A PÁGINA DE PAGAMENTO E CONFIRMAÇÃO DE PAGAMENTO
+		//REDIRECIONA PARA A PÁGINA DE ANÚNCIO CADASTRADO MAS AGUARDANDO PAGAMENTO	
+			
+			
+			
+     
+		
+		
+		}
 	
 		
 		
-		
-		response.getOutputStream().print("Salvo com sucesso");
 		}
 		
 		else 
@@ -222,6 +254,10 @@ public class ServAnuncio extends HttpServlet {
 			
 			Debug.gerar("Controle","ServAnuncio","SOLI=5(GET)","usuario na sesssão = null");
 		}
+		
+		
+		
+		this.resetSessaoAnuncio(sessao);
 			
 		}
 
@@ -549,6 +585,15 @@ public class ServAnuncio extends HttpServlet {
 
 	//Define na sessão os parametros iniciais para anunciar um veículo
 	private void resetSessaoAnuncio(HttpSession sessao){
+		
+		
+		//Remove os atributos antigos caso existam
+		sessao.removeAttribute("veiculo");
+		sessao.removeAttribute("carro");
+		sessao.removeAttribute("moto");
+		
+		
+		
 
 		//Define as paginas que já foram preenchidas
 		{
@@ -619,7 +664,7 @@ public class ServAnuncio extends HttpServlet {
 			step2="<a href=\""+this.getLinkStep(2,sessao)+"\"><span>2. Contato</span></a>";
 			step3="<a href=\""+this.getLinkStep(3,sessao)+"\"><span>3. Imagens</span></a>";
 			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Pré-Visualizar</span></a>";
-			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Forma de pagamento</span></a>";
+			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluído com sucesso!</span></a>";
 			break;
 
 
@@ -628,7 +673,7 @@ public class ServAnuncio extends HttpServlet {
 			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informações básicas</span></a>";
 			step3="<a href=\""+this.getLinkStep(3,sessao)+"\"><span>3. Imagens</span></a>";
 			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Pré-Visualizar</span></a>";
-			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Forma de pagamento</span></a>";
+			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluído com sucesso!</span></a>";
 			break;
 
 		case 3:
@@ -636,7 +681,7 @@ public class ServAnuncio extends HttpServlet {
 			step2="<a href=\""+this.getLinkStep(2,sessao)+"\"><span>2. Contato</span></a>";
 			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informações básicas</span></a>";
 			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Pré-Visualizar</span></a>";
-			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Forma de pagamento</span></a>";   
+			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluído com sucesso!</span></a>";   
 			break;	
 
 		case 4:
@@ -644,11 +689,11 @@ public class ServAnuncio extends HttpServlet {
 			step2="<a href=\""+this.getLinkStep(2,sessao)+"\"><span>2. Contato</span></a>";
 			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informações básicas</span></a>";
 			step3="<a href=\""+this.getLinkStep(3,sessao)+"\"><span>3. Imagens</span></a>";
-			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Forma de pagamento</span></a>";    
+			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluído com sucesso!</span></a>";    
 			break;	
 
 		case 5:
-			step5="<span>5. Forma de pagamento</span>";
+			step5="<span>5. Concluído com sucesso!</span>";
 			step2="<a href=\""+this.getLinkStep(2,sessao)+"\"><span>2. Contato</span></a>";
 			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informações básicas</span></a>";
 			step3="<a href=\""+this.getLinkStep(3,sessao)+"\"><span>3. Imagens</span></a>";

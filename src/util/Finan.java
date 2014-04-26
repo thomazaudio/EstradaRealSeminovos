@@ -5,6 +5,24 @@ package util;
  */
 public class Finan {
 
+	private long idUser;
+	private long id;
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public long getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(long idUser) {
+		this.idUser = idUser;
+	}
+
 	private double saldo;
 
 	public double getSaldo() {
@@ -15,20 +33,6 @@ public class Finan {
 		this.saldo = saldo;
 	}
 
-	/**
-	 * 
-	 * @param valor
-	 */
-	public boolean depositar(double valor) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param valor
-	 */
-	public boolean pagar(double valor) {
-		throw new UnsupportedOperationException();
-	}
+	
 
 }

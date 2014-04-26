@@ -18,9 +18,13 @@ long id_veiculo = Integer.parseInt(request.getParameter("id_veiculo"));
 Veiculo v = (Veiculo) new VeiculoDAO().getVeiculo(id_veiculo,Veiculo.class);
 
 
+if(v==null)
+request.getRequestDispatcher("anuncio_erro.jsp").forward(request, response);	
+else
+{
 if(v.getClass()==Carro.class)
 request.getRequestDispatcher("detalhe_carro.jsp?id_veiculo="+v.getId()).forward(request,response);
-
+}
 
 %>
 

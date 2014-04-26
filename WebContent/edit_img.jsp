@@ -58,10 +58,10 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 					if(step==null)
 					step = new StringBuffer();	
 					out.write(step.toString());
-					nome_bt = "images/bt_proximo.png";
+					nome_bt = "Continuar";
 					}
 					else
-					nome_bt = "images/bt_salvar.png";	
+					nome_bt = "Salvar";	
 					
 					
 					
@@ -76,9 +76,13 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 					</div>
 					
 					<div class="content">
+					
+					
+					
+					
 					<h1><strong>Imagens do </strong>do veiculo </h1>
 					<div class="message">
-						
+					<h3>Instruções:</h3>	
 					<p>Use um editor de imagem para ocultar a placa do veículo.</p>
 						
 					
@@ -89,9 +93,9 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 					<form action="ServAnuncio" method="GET" >
 					<input type="hidden" name="STEP" value="4">
 					<input type="hidden" name="mostra_step" value="<%=mostra_step%>">
-					<input type="image" src="<%=nome_bt%>">
+					<input class="btn_2 blue" type="submit" value="<%=nome_bt%>">
 					</form>
-					<h3><a id="iframe"  href="upload_imagem/index.html?id_veiculo=<%=id_veiculo%>"><h1><strong>+Adicionar imagens</strong></h1></a></h3>
+					<h3><a id="iframe" class="btn red"  href="upload_imagem/index.html?id_veiculo=<%=id_veiculo%>">+Adicionar Imagens</a></h3>
 					<%
 					
 					long[] ids_imgs = new ImgDAO().getIdsImgs(id_veiculo);
@@ -124,7 +128,7 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
  
  <div  class="teste">
 <a href="ServImg?SOLI=4&&ID_IMG=<%=ids_imgs[0]%>" rel="car_group">
-<img src="ServImg?SOLI=2&&ID_IMG=<%=ids_imgs[0]%>" alt="car_group" />
+<img  src="ServImg?SOLI=2&&ID_IMG=<%=ids_imgs[0]%>" alt="car_group" />
 </a>
 
 
@@ -133,7 +137,7 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 <input type="hidden" name="mostra_step" value="<%=mostra_step%>">
 <input type="hidden" name="ID_VEICULO" value="<%=id_veiculo%>">
 <input type="hidden" name="ID_IMG" value="<%=ids_imgs[0]%>">
-<p><input type="image" src="images/bt_delete.png" alt=""></p>
+<p><input class="btn_img red" type="submit" value="Deletar" alt=""></p>
 </form>
 
 
@@ -166,7 +170,7 @@ for(int i=1;i<ids_imgs.length;i++)
 <input type="hidden" name="mostra_step" value="<%=mostra_step%>">
 <input type="hidden" name="ID_VEICULO" value="<%=id_veiculo%>">
 <input type="hidden" name="ID_IMG" value="<%=ids_imgs[i]%>">
-<p><input type="image" src="images/bt_marcar_capa.png" alt="definir esta imagem como capa"></p>
+<p><input type="submit" class="btn_img blue" Value="Capa" alt="definir esta imagem como capa"></p>
 </form>
 
 <form action="ServImg"  method="POST">
@@ -174,7 +178,7 @@ for(int i=1;i<ids_imgs.length;i++)
 <input type="hidden" name="mostra_step" value="<%=mostra_step%>">
 <input type="hidden" name="ID_VEICULO" value="<%=id_veiculo%>">
 <input type="hidden" name="ID_IMG" value="<%=ids_imgs[i]%>">
-<p><input type="image" src="images/bt_delete.png" alt=""></p>
+<p><input class="btn_img red" type="submit" value="Deletar" alt=""></p>
 </form>
 
 

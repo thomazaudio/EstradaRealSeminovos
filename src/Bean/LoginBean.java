@@ -105,6 +105,33 @@ public class LoginBean {
 	}
 	
 	
+	//SE O USUÁRIO JÁ ESTIVER LOGADO ELE É ENCAMINHADO PARA PAG_POS
+	public void verificaLogin(){
+		
+		
+		
+		//Recupera os parametros externos
+		Map<String,String> ats =  faces.getExternalContext().getRequestParameterMap();
+				
+		String page_pos;
+				 
+		
+		page_pos = ats.get("page_pos");
+		
+		
+     try {
+			
+			System.out.println("Chego aqui, page_pos: "+page_pos);
+			
+			faces.getExternalContext().redirect(page_pos);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 	
 }

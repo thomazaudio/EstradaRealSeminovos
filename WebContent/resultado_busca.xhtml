@@ -164,7 +164,7 @@
 	<!--EOF HEADER-->
 	<!--BEGIN CONTENT-->
 		<div id="content">
-		<div class="content">
+		<div class="content_2">
 <div class="breadcrumbs">
 <a href="./">Home</a>
 					<img src="images/marker_2.gif" alt="" />
@@ -393,6 +393,35 @@
 							
 							</div>
 							
+							<div class="search_auto">
+							
+					<h3>Busca por códido ou placa do <strong>veículo</strong>
+						
+							
+				<canvas id="linha_C" width="300" height="5"></canvas>
+							<script>
+      						var canvas = document.getElementById('linha_C');
+     					    var context = canvas.getContext('2d');
+      						var rectWidth = 350;
+     					    var rectHeight = 50;
+
+      						
+
+      						context.fillStyle = '#f28633';
+     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+    					</script>
+					</h3>
+							
+							<p:panel>
+							
+							<h:inputText styleClass="n_2"></h:inputText>
+							
+							</p:panel>
+							
+							<p:commandButton  action="#{buscaBean.buscar}" value="Buscar" styleClass="btn_search" >
+							</p:commandButton>
+							</div>
+							
 							
 							
 						</div>
@@ -491,11 +520,10 @@
                         </a>
 				      
 						<div class="catalog_desc">
-						<div class="location">#{res.condicaoTroca}</div>
+						<div class="location"><strong>#{res.condicaoTroca}</strong></div>
 						<div class="title_box">
 						<h4><a href="anuncio.jsp?id_veiculo=#{res.id}">#{res.titulo}</a></h4>
 						<div class="price">R$ #{res.preco}</div>
-						<div class="price"> ID: #{res.id}</div>
 						</div>
 						<div class="clear"></div>
 						<div class="grey_area">
