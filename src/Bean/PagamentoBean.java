@@ -182,7 +182,7 @@ public class PagamentoBean {
 		if(tipo_user==Usuario.PESSOA)
 		doc  = ((Pessoa) user).getCpf();
 		else
-		doc  = ((Pessoa) user).getCpf();	
+		doc  = ((Empresa) user).getCnpj();	
 		
 		Cedente cedente = new Cedente("Grupo Estrada Real", "00.000.208/0001-00");
 		

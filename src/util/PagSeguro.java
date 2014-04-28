@@ -8,12 +8,19 @@ import java.math.BigDecimal;
 
 
 
+
+
+
 import org.w3c.dom.DocumentType;
 
-import br.com.uol.pagseguro.domain.Currency;
-import br.com.uol.pagseguro.domain.Documents;
+
+
+
+
+import br.com.uol.pagseguro.domain.Document;
 import br.com.uol.pagseguro.domain.PaymentRequest;
-import br.com.uol.pagseguro.domain.ShippingType;
+import br.com.uol.pagseguro.enums.Currency;
+import br.com.uol.pagseguro.enums.ShippingType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.properties.PagSeguroConfig;
 
@@ -56,7 +63,7 @@ public class PagSeguro {
 	    	      "comprador@uol.com.br", // email  
 	    	      "11", // DDD  
 	    	      "56273440", // Telefone  
-	    	      Documents.CPF, // Tipo de documento  
+	    	      br.com.uol.pagseguro.enums.DocumentType.CPF, // Tipo de documento  
 	    	      "000.000.001-91" // Número do documento  
 	    	    );  
 	    
@@ -79,7 +86,7 @@ public class PagSeguro {
 	    try {  
 	        
 	        boolean onlyCheckoutCode = false;  
-	        String response = paymentRequest.register(credentials) 
+	        String response = paymentRequest.register(PagSeguroConfig.getAccountCredentials(), onlyCheckoutCode);  
 	        
 	        System.out.println(response);  
 	        

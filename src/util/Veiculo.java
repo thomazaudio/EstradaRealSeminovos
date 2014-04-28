@@ -46,6 +46,8 @@ public abstract class Veiculo {
 	private int codModelo;
 	private DefaultStreamedContent imgCapa;
 	private String classColor;
+	private int statusPagamento;
+	private int statusValidacao;
 	
 	
 	
@@ -60,7 +62,7 @@ public abstract class Veiculo {
 		this.classColor = classColor;
 	}
 
-	private int statusValidacao;
+	
 	public int getStatusValidacao() {
 		return statusValidacao;
 	}
@@ -106,7 +108,7 @@ public abstract class Veiculo {
 		{
 			
 			if(this.statusValidacao==Pagamento.VALIDACAO_OK)
-			return "Anúncio publicado";
+			return "Anúncio publicado!";
 			
 			else 
 			return "Analisando dados do anúncio";	
@@ -117,7 +119,7 @@ public abstract class Veiculo {
 		
 	}
 
-	private int statusPagamento;
+	
 	
 	public void setImgCapa(DefaultStreamedContent imgCapa) {
 		this.imgCapa = imgCapa;

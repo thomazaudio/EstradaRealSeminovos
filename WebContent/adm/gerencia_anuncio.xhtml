@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<h:body>
+
+<f:view>
+        <h:form id="lista">
+            <p:dataTable id="lazyDataTable" value="#{anuncioAdmBean.veiculos}" var="an" paginator="true" rows="10"
+               
+                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,15" style="width: 80%;margin-left: 10%;margin-right: 10%;">
+ 
+           
+ 
+                <p:column>
+                    <f:facet name="header">Código do anúncio</f:facet>
+                    <h:outputText value="#{an.id}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Titulo</f:facet>
+                    <h:outputText value="#{an.titulo}" />
+                </p:column>
+                
+                 <p:column>
+                    <f:facet name="header">Status</f:facet>
+                    <h:outputText value="Confirmado" rendered="#{an.statusPagamento!=0 and an.statusValidacao!=0}" />
+                    <h:outputText value="Aguardando pagamento - " rendered="#{an.statusPagamento==0}"></h:outputText>
+                   
+                     <h:outputText value="Aguardando validação dos dados"  rendered="#{an.statusValidacao==0}"></h:outputText>
+                </p:column>
+                
+                 <p:column id="ind">
+                 
+            
+                    <f:facet name="header">Opções</f:facet>
+                    
+                    <p:panelGrid columns="4">
+                    
+                    <h:outputText value="Pagamento OK" rendered="#{an.statusPagamento!=0}"></h:outputText>
+                    
+                    <h:form>
+                   <p:commandButton value="Confirmar Pagamento" rendered="#{an.statusPagamento==0}"  >
+                  <f:param name="id" value="#{an.id}"></f:param>
+                 <p:ajax listener="#{anuncioAdmBean.confirmarPagamento}" update=":lista" ></p:ajax>
+                  </p:commandButton>
+                    </h:form>
+                   
+                   <h:outputText value="Validação OK" rendered="#{an.statusValidacao!=0}"></h:outputText>
+                   <h:form>
+                     <p:commandButton value="Confirmar Dados" rendered="#{an.statusValidacao==0}">
+                      <p:ajax listener="#{anuncioAdmBean.confereDados}" update=":lista" ></p:ajax>
+                      <f:param name="id" value="#{an.id}"></f:param>
+                    </p:commandButton>
+                    </h:form>
+                    
+                    </p:panelGrid>
+                    
+                </p:column>
+            </p:dataTable>
+        </h:form>
+ 
+        
+    </f:view>
+
+
+
+
+
+
+</h:body>
+
+
+
+</h:head>
+
+
+</html>

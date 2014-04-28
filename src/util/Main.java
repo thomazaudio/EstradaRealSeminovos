@@ -12,6 +12,7 @@ import org.primefaces.model.StreamedContent;
 
 import Bean.DestaqueBean;
 import Bean.UsuarioBean;
+import Modelo.AnuncioAdmDAO;
 import Modelo.AnuncioDAO;
 import Modelo.Banco;
 import Modelo.ContatoDAO;
@@ -30,6 +31,13 @@ public class Main {
 	
 	public static void main(String[] args){
 
+		
+		
+		new AnuncioAdmDAO().confirmaPagamento(245);
+		
+		
+		//new PagSeguro().geraPagamento();;
+		
 		/*
 		Pagamento pg =  new Pagamento();
 		
@@ -40,7 +48,7 @@ public class Main {
 		pg.setValor(500);
 		*/
 		
-		new FinanDAO().depositar(37,900);
+		//new FinanDAO().depositar(37,900);
 		
 		//System.out.println("Saldo: "+new FinanDAO().getSaldo(38));
 		
