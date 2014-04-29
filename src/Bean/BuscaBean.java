@@ -11,6 +11,11 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 
+
+
+
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.DefaultStreamedContent;
 
 import Modelo.ImgDAO;
@@ -19,7 +24,6 @@ import Modelo.VeiculoDAO;
 import util.Cidade;
 import util.Debug;
 import util.ItemVeiculo;
-
 import util.Pagina;
 import util.Paginacao;
 import util.TesteTime;
@@ -100,6 +104,7 @@ public class BuscaBean {
 	
 	public List<Veiculo> getResultadoBusca() {
 		
+		TesteTime t = new TesteTime();
 		
 		//Pagina
 	 
@@ -110,13 +115,14 @@ public class BuscaBean {
 	    else if(codTipo==2)
 		classe =  "Carro";	
 	    
-	    pag = new Paginacao(new VeiculoDAO().count(classe),this.getQuantPorPagina());
+	    pag = new Paginacao(new VeiculoDAO().count(classe,this.recuperaRestricoesParaBusca()),this.getQuantPorPagina());
 				
-	
+	    System.out.println("Index Inicial: "+pag.getIndexIni(this.getPage()));
 				
 				
 				
-				TesteTime t = new TesteTime();
+				TesteTime tempo = new TesteTime();
+				tempo.getTimeini();
 				
 				int tipo_venda;
 				
@@ -130,7 +136,7 @@ public class BuscaBean {
 				tipo_venda=3;	
 				
 			    //recupera os veiculos
-				List<Veiculo> 	resultadoBusca =  new VeiculoDAO().getVeiculosBusca(codFabricante,codModelo, anoDe, anoAte, quilometragemDe, quilometragemAte, tipo_venda, precoDe, precoAte,classe,pag.getIndexIni(this.getPage()),this.getQuantPorPagina());
+				List<Veiculo> 	resultadoBusca =  new VeiculoDAO().getVeiculosBusca(codFabricante,codModelo, anoDe, anoAte, quilometragemDe, quilometragemAte, tipo_venda, precoDe, precoAte,classe,pag.getIndexIni(this.getPage()),this.getQuantPorPagina(),recuperaRestricoesParaBusca());
 			
 		
 		if(resultadoBusca.size()==0)
@@ -138,6 +144,8 @@ public class BuscaBean {
 		else
 		this.setTextoBusca(String.format("Mostrando a página '%d' de um total de '%d' página(s).",this.getPage(),this.pag.getTotalPaginas()));
 			
+		
+		System.out.println("Tempo Total para buscar: "+tempo.getTotalTime());
 		
 		return resultadoBusca;
 	}
@@ -168,6 +176,7 @@ public class BuscaBean {
 		}
 	}
 	
+	//OPÇÕES DE FABRICANTE
 	public List<SelectItem> getFabricantes() {
 		
 		//Carro
@@ -176,8 +185,31 @@ public class BuscaBean {
 					//Recupera todos os fabricantes  de carros cadastrados no banco de dados
 					ArrayList<ItemVeiculo> itens =  new VeiculoDAO().getAllMarcasCarro();
 					
-					for(int i=0;i<itens.size();i++)
-					fabricantes.add(new SelectItem(itens.get(i).getCod(),itens.get(i).getNome()));	
+					ItemVeiculo it;
+					it = new ItemVeiculo();
+					it.setCod(23);
+					it.setNome("GM - Chevrolet");
+					itens.remove(it);
+					
+					fabricantes.clear();
+					
+					//FABRICANTES PRINCIPAIS
+					fabricantes.add(new SelectItem(23,"Chevrolet"));
+					fabricantes.add(new SelectItem(21,"Fiat"));
+					fabricantes.add(new SelectItem(22,"Ford"));
+					fabricantes.add(new SelectItem(25,"Honda"));
+					fabricantes.add(new SelectItem(41,"Mitsubish"));
+					fabricantes.add(new SelectItem(44,"Peugeot"));
+					fabricantes.add(new SelectItem(48,"Renault"));
+					fabricantes.add(new SelectItem(56,"Toyota"));
+					fabricantes.add(new SelectItem(59,"Volkswagem"));
+					
+					fabricantes.add(new SelectItem("","-----------"));
+					
+					
+					//FABRICANTES RESTANTES
+					//for(int i=0;i<itens.size();i++)
+					//fabricantes.add(new SelectItem(itens.get(i).getCod(),itens.get(i).getNome()));	
 				}
 		
 		return fabricantes;
@@ -232,7 +264,7 @@ public class BuscaBean {
 		
 		this.setPage(1);
 		
-		pag = new Paginacao(new VeiculoDAO().count(classe),this.getQuantPorPagina());
+		pag = new Paginacao(new VeiculoDAO().count(classe,this.recuperaRestricoesParaBusca()),this.getQuantPorPagina());
 		
 		TesteTime t = new TesteTime();
 		
@@ -246,6 +278,9 @@ public class BuscaBean {
 		tipo_venda = 1;
 		else 
 		tipo_venda=3;	
+		
+		
+		this.setQuantPorPagina(10);
 		
 	    //recupera os veiculos
 		//buscaTotal = new VeiculoDAO().getVeiculosBusca(codFabricante,codModelo, anoDe, anoAte, quilometragemDe, quilometragemAte, tipo_venda, precoDe, precoAte,classe);
@@ -390,7 +425,7 @@ public class BuscaBean {
 			else if(codTipo==2)
 			classe =  "Carro";	
 			
-			totalRegistros =  new VeiculoDAO().count(classe);
+			totalRegistros =  new VeiculoDAO().count(classe,this.recuperaRestricoesParaBusca());
 			
 			return totalRegistros  ;
 		}
@@ -498,6 +533,51 @@ public class BuscaBean {
 	
 	
 		
+	//RECUPERA AS RETRIÇÕES PARA BUSCA
+	public ArrayList<Criterion>	recuperaRestricoesParaBusca(){
 		
+		ArrayList<Criterion> cri =  new ArrayList<Criterion>();
+		
+		
+
+		
+		if(this.getCodFabricante()!=0)
+		cri.add(Restrictions.eq("cod_fabricante",this.getCodFabricante()));
+		//Eqs 
+		if(this.getCodModelo()!=0)
+		cri.add(Restrictions.eq("codModelo", this.getCodModelo()));
+		
+		//Ano
+		if(this.getAnoAte()!=0)
+		cri.add(Restrictions.le("anoModelo",this.getAnoAte()));	
+		
+		cri.add(Restrictions.ge("anoFabricacao",this.getAnoDe()));
+		
+		//Preço
+		cri.add(Restrictions.ge("preco",this.getPrecoDe()));
+		
+		if(this.getPrecoAte()!=0)
+		cri.add(Restrictions.le("preco",this.getPrecoAte()));
+		
+		
+
+		int tipo_venda;
+		
+		if(revenda&&particular)
+		tipo_venda=3;
+		else if(revenda)
+		tipo_venda=2;
+		else if(particular)
+		tipo_venda = 1;
+		else 
+		tipo_venda=3;
+		
+		if(tipo_venda!=3)
+		cri.add(Restrictions.eq("tipoVenda", tipo_venda));	
+		
+		
+		return cri;
+		
+	}
 	
 }

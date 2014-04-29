@@ -78,7 +78,7 @@ public class Paginacao {
 
 		int index = ( (pagina * n_registro_por_pagina) - (n_registro_por_pagina -1))-1;
 
-		System.out.println("Index Inicial: "+index);
+		
 	
 		return index;
 	}

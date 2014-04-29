@@ -221,7 +221,7 @@ public class VeiculoDAO {
 	
 	
 	//PARA BUSCA
-	public ArrayList<Veiculo> getVeiculosBusca(int cod_fab,int cod_modelo,int ano_de,int ano_ate,int qui_de,int aqui_ate,int tipo_venda,double preco_de,double preco_ate,String classe,int ini, int total)
+	public ArrayList<Veiculo> getVeiculosBusca(int cod_fab,int cod_modelo,int ano_de,int ano_ate,int qui_de,int aqui_ate,int tipo_venda,double preco_de,double preco_ate,String classe,int ini, int total,ArrayList<Criterion> rest)
 	{	
 		ArrayList<Veiculo> veiculos;
 		Session sessao;
@@ -242,39 +242,21 @@ public class VeiculoDAO {
 		//Somente os veiculos que estão validados
 		//cri.add(Restrictions.eq("statusValidacao",Pagamento.VALIDACAO_OK));
 		
-		
+		//Somente anuncios pagos
 		//cri.add(Restrictions.eq("statusPagamento",Pagamento.CONFIRMADO));
 		
 		
 		
-		
-		
-		//Somente anuncios pagos
-		
-		if(cod_fab!=0)
-		cri.add(Restrictions.eq("cod_fabricante",cod_fab));
-		//Eqs 
-		if(cod_modelo!=0)
-		cri.add(Restrictions.eq("codModelo", cod_modelo));
-		
-		//Ano
-		if(ano_ate!=0)
-		cri.add(Restrictions.le("anoModelo",ano_ate));	
-		
-		cri.add(Restrictions.ge("anoFabricacao",ano_de));
-		
-		//Preço
-		cri.add(Restrictions.ge("preco",preco_de));
-		
-		if(preco_ate!=0)
-		cri.add(Restrictions.le("preco",preco_ate));
-		
-		if(tipo_venda!=3)
-		cri.add(Restrictions.eq("tipoVenda", tipo_venda));	
+		//Adicona as restrições restantes
+		for(int i=0;i<rest.size();i++)
+		cri.add(rest.get(i));
 		
 		
 		
-		System.out.println("Quantidade de veículos: "+this.count(classe));
+		
+		
+		
+		System.out.println("Quantidade de veículos: "+this.count(classe,rest));
 		
 		
 		veiculos = (ArrayList<Veiculo>) cri.list();
@@ -419,14 +401,19 @@ public class VeiculoDAO {
 	
 	
 	//RECUPERA A QUANTIDADE TOTAL DE REGISTROS OBEDECENDO UMA RESTRIÇÃO
-		public long count(String classe){
+		public long count(String classe,ArrayList<Criterion> rest){
 			
 			long size = 0;
 			try {
 			
-		  Criteria criteria =  HibernateUtil.getSessaoV().openSession().createCriteria(Veiculo.class);
+		    Criteria criteria =  HibernateUtil.getSessaoV().openSession().createCriteria(Veiculo.class);
 			
 			criteria.add(Restrictions.eq("class",classe));
+			
+			//Adiciona o restante das restrições
+			for(int i=0;i<rest.size();i++)
+			criteria.add(rest.get(i));	
+			
 			criteria.setProjection(Projections.rowCount());
 			size = (Long) criteria.uniqueResult();
 			//getHibernate().commit();

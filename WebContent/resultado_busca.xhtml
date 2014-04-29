@@ -460,9 +460,11 @@
 <p:panelGrid columns="1">
 <p:outputLabel for="quant_p_page" value="Quantidade por página: "></p:outputLabel>
 <h:selectOneMenu id="quant_p_page" value="#{buscaBean.quantPorPagina}" styleClass="n">
-<f:selectItem itemValue="2" itemLabel="2 por página"></f:selectItem>
 <f:selectItem itemValue="5" itemLabel="5 por página"></f:selectItem>
 <f:selectItem itemValue="10" itemLabel="10 por página"></f:selectItem>
+<f:selectItem itemValue="15" itemLabel="15 por página"></f:selectItem>
+<f:selectItem itemValue="20" itemLabel="20 por página"></f:selectItem>
+<f:selectItem itemValue="30" itemLabel="30 por página"></f:selectItem>
 <p:ajax update=":form :result_busca" ></p:ajax>
 </h:selectOneMenu> 
 </p:panelGrid>
