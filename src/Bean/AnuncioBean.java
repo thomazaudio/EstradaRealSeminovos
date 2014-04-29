@@ -163,13 +163,13 @@ public class AnuncioBean {
 	private ArrayList<Pagina> paginas;
 	private int page=1;
 	private int quantPorPagina=10;
-	private int quantPaginas;
+	private long quantPaginas;
 	
-	public int getQuantPaginas() {
+	public long getQuantPaginas() {
 		return quantPaginas;
 	}
 
-	public void setQuantPaginas(int quantPaginas) {
+	public void setQuantPaginas(long quantPaginas) {
 		this.quantPaginas = quantPaginas;
 	}
 

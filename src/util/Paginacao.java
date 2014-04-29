@@ -6,15 +6,15 @@ import java.util.List;
 public class Paginacao {
 
 	
-	private int total_registros;
+	private long total_registros;
     private int n_registro_por_pagina;
 	private List<Object> lista;
 	
-	public int getTotal_registros() {
+	public long getTotal_registros() {
 		return total_registros;
 	}
 
-	public void setTotal_registros(int total_registros) {
+	public void setTotal_registros(long total_registros) {
 		this.total_registros = total_registros;
 	}
 
@@ -46,7 +46,7 @@ public class Paginacao {
 	}
 	
 	//Contrutor mais aprimorado
-	public Paginacao(int total_registros,int n_registro_por_pagina){
+	public Paginacao(long total_registros,int n_registro_por_pagina){
 		
 		this.setTotal_registros(total_registros);
 		this.setN_registro_por_pagina(n_registro_por_pagina);
@@ -54,16 +54,16 @@ public class Paginacao {
 
 	
 	//OK
-	public int getTotalPaginas(){
+	public long getTotalPaginas(){
 
-		int total;
+		long total;
 		
 		if( ( this.getTotal_registros()<this.getN_registro_por_pagina()) && this.getTotal_registros()!=0 )
 		return 1;	
 		
 		else
 		{
-		int resto = this.getTotal_registros()%this.getN_registro_por_pagina();	
+		long resto = this.getTotal_registros()%this.getN_registro_por_pagina();	
 		total= this.getTotal_registros()/this.getN_registro_por_pagina();
 		if(resto!=0)
 		total++;
@@ -78,6 +78,7 @@ public class Paginacao {
 
 		int index = ( (pagina * n_registro_por_pagina) - (n_registro_por_pagina -1))-1;
 
+		System.out.println("Index Inicial: "+index);
 	
 		return index;
 	}

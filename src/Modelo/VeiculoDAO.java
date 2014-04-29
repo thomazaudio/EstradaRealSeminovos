@@ -14,6 +14,9 @@ import org.hibernate.SessionFactory;
 
 
 
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import util.Carro;
@@ -147,7 +150,7 @@ public class VeiculoDAO {
 		
 		Paginacao p =  new Paginacao(lista,quant_reg_pagina);
 		
-		int total_paginas = p.getTotalPaginas();
+		long total_paginas = p.getTotalPaginas();
 		
 	
 		
@@ -218,20 +221,33 @@ public class VeiculoDAO {
 	
 	
 	//PARA BUSCA
-	public ArrayList<Veiculo> getVeiculosBusca(int cod_fab,int cod_modelo,int ano_de,int ano_ate,int qui_de,int aqui_ate,int tipo_venda,double preco_de,double preco_ate)
+	public ArrayList<Veiculo> getVeiculosBusca(int cod_fab,int cod_modelo,int ano_de,int ano_ate,int qui_de,int aqui_ate,int tipo_venda,double preco_de,double preco_ate,String classe,int ini, int total)
 	{	
 		ArrayList<Veiculo> veiculos;
 		Session sessao;
 		Criteria cri;
 		
 		sessao = HibernateUtil.getSessaoV().openSession();
+		
+		
 		cri = sessao.createCriteria(Veiculo.class);
+		
+		cri.add(Restrictions.eq("class",classe));
+		
+		
+		//Paginação
+		cri.setFirstResult(ini);
+		cri.setMaxResults(total);
 		
 		//Somente os veiculos que estão validados
 		//cri.add(Restrictions.eq("statusValidacao",Pagamento.VALIDACAO_OK));
 		
 		
 		//cri.add(Restrictions.eq("statusPagamento",Pagamento.CONFIRMADO));
+		
+		
+		
+		
 		
 		//Somente anuncios pagos
 		
@@ -255,6 +271,10 @@ public class VeiculoDAO {
 		
 		if(tipo_venda!=3)
 		cri.add(Restrictions.eq("tipoVenda", tipo_venda));	
+		
+		
+		
+		System.out.println("Quantidade de veículos: "+this.count(classe));
 		
 		
 		veiculos = (ArrayList<Veiculo>) cri.list();
@@ -396,5 +416,27 @@ public class VeiculoDAO {
 		}
 		
 	}
+	
+	
+	//RECUPERA A QUANTIDADE TOTAL DE REGISTROS OBEDECENDO UMA RESTRIÇÃO
+		public long count(String classe){
+			
+			long size = 0;
+			try {
+			
+		  Criteria criteria =  HibernateUtil.getSessaoV().openSession().createCriteria(Veiculo.class);
+			
+			criteria.add(Restrictions.eq("class",classe));
+			criteria.setProjection(Projections.rowCount());
+			size = (Long) criteria.uniqueResult();
+			//getHibernate().commit();
+			} catch (Exception e) {
+			//getHibernate().rollback();
+			e.printStackTrace();
+			} finally {
+			//getHibernate().close();
+			}
+			return size;
+			}
 	
 }

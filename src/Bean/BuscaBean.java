@@ -9,17 +9,17 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
+
 
 import org.primefaces.model.DefaultStreamedContent;
 
-import Modelo.AnuncioDAO;
 import Modelo.ImgDAO;
 import Modelo.LocalizacaoDAO;
 import Modelo.VeiculoDAO;
 import util.Cidade;
 import util.Debug;
 import util.ItemVeiculo;
+
 import util.Pagina;
 import util.Paginacao;
 import util.TesteTime;
@@ -44,7 +44,9 @@ public class BuscaBean {
 	private boolean revenda;
 	private long idVeiculo =0;
 	private String textoBusca;
+	
 	public String getTextoBusca() {
+		
 		return textoBusca;
 	}
 	public void setTextoBusca(String textoBusca) {
@@ -65,17 +67,12 @@ public class BuscaBean {
 	
 	
 	
-	private List<Veiculo> resultadoBusca =  new ArrayList<Veiculo>();
-	
-	private List<Veiculo> buscaTotal =  new ArrayList<Veiculo>();
 	
 	
-	public List<Veiculo> getBuscaTotal() {
-		return buscaTotal;
-	}
-	public void setBuscaTotal(List<Veiculo> buscaTotal) {
-		this.buscaTotal = buscaTotal;
-	}
+	
+	
+	
+	
 
 
 	ArrayList<SelectItem> cidades =  new ArrayList<SelectItem>();
@@ -103,7 +100,38 @@ public class BuscaBean {
 	
 	public List<Veiculo> getResultadoBusca() {
 		
-		resultadoBusca= pag.getPaginaElements(getPage());
+		
+		//Pagina
+	 
+		//Classe de veículo
+		String classe = null;
+	    if(codTipo==1)
+		classe =  "Moto";	
+	    else if(codTipo==2)
+		classe =  "Carro";	
+	    
+	    pag = new Paginacao(new VeiculoDAO().count(classe),this.getQuantPorPagina());
+				
+	
+				
+				
+				
+				TesteTime t = new TesteTime();
+				
+				int tipo_venda;
+				
+				if(revenda&&particular)
+				tipo_venda=3;
+				else if(revenda)
+				tipo_venda=2;
+				else if(particular)
+				tipo_venda = 1;
+				else 
+				tipo_venda=3;	
+				
+			    //recupera os veiculos
+				List<Veiculo> 	resultadoBusca =  new VeiculoDAO().getVeiculosBusca(codFabricante,codModelo, anoDe, anoAte, quilometragemDe, quilometragemAte, tipo_venda, precoDe, precoAte,classe,pag.getIndexIni(this.getPage()),this.getQuantPorPagina());
+			
 		
 		if(resultadoBusca.size()==0)
 		this.setTextoBusca("A busca não retornou nenhum resultado.");
@@ -113,9 +141,7 @@ public class BuscaBean {
 		
 		return resultadoBusca;
 	}
-	public void setResultadoBusca(List<Veiculo> resultadoBusca) {
-		this.resultadoBusca = resultadoBusca;
-	}
+	
 	
 	
 	public int getCodTipo() {
@@ -194,7 +220,19 @@ public class BuscaBean {
 	public void buscar(){
 		
 		
+		//Classe de veículo
+		
+		String classe = null;
+		
+		if(codTipo==1)
+		classe =  "Moto";	
+		else if(codTipo==2)
+		classe =  "Carro";	
+			
+		
 		this.setPage(1);
+		
+		pag = new Paginacao(new VeiculoDAO().count(classe),this.getQuantPorPagina());
 		
 		TesteTime t = new TesteTime();
 		
@@ -210,7 +248,8 @@ public class BuscaBean {
 		tipo_venda=3;	
 		
 	    //recupera os veiculos
-		buscaTotal = new VeiculoDAO().getVeiculosBusca(codFabricante,codModelo, anoDe, anoAte, quilometragemDe, quilometragemAte, tipo_venda, precoDe, precoAte);
+		//buscaTotal = new VeiculoDAO().getVeiculosBusca(codFabricante,codModelo, anoDe, anoAte, quilometragemDe, quilometragemAte, tipo_venda, precoDe, precoAte,classe);
+		//resultadoBusca = buscaTotal;
 		
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("resultado_busca.jsf");
@@ -219,7 +258,7 @@ public class BuscaBean {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Tempo total para busca: "+t.getTotalTime());
+		
 		
 	}
 	
@@ -336,13 +375,35 @@ public class BuscaBean {
 		private ArrayList<Pagina> paginas;
 		private int page=1;
 		private int quantPorPagina=2;
-		private int quantPaginas;
+		private long quantPaginas;
+		private long totalRegistros;
 		
-		public int getQuantPaginas() {
+		
+		public long getTotalRegistros() {
+			
+			//Classe de veículo
+			
+			String classe = null;
+			
+			if(codTipo==1)
+			classe =  "Moto";	
+			else if(codTipo==2)
+			classe =  "Carro";	
+			
+			totalRegistros =  new VeiculoDAO().count(classe);
+			
+			return totalRegistros  ;
+		}
+		
+		public void setTotalRegistros(long totalRegistros) {
+			this.totalRegistros = totalRegistros;
+		}
+		
+		public long getQuantPaginas() {
 			return quantPaginas;
 		}
 
-		public void setQuantPaginas(int quantPaginas) {
+		public void setQuantPaginas(long quantPaginas) {
 			this.quantPaginas = quantPaginas;
 		}
 
@@ -377,13 +438,8 @@ public class BuscaBean {
 		
 		    paginas =   new ArrayList<Pagina>();
 		    
-		    
-		   
-		    //Resultado da busca 
-		    ArrayList res = (ArrayList<Veiculo>) buscaTotal;
-			
 			//Configura a paginação
-			pag = new Paginacao(res,this.getQuantPorPagina());
+			pag = new Paginacao(this.getTotalRegistros(),this.getQuantPorPagina());
 			
 			this.setQuantPaginas(pag.getTotalPaginas());
 			
@@ -441,5 +497,7 @@ public class BuscaBean {
 		}
 	
 	
+		
+		
 	
 }

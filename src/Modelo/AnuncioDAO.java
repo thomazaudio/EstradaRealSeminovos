@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 
@@ -110,5 +111,7 @@ public class AnuncioDAO {
 		return (Anuncio)sessao.createCriteria(Anuncio.class).add(Restrictions.eq("veiculo.id",id_veiculo)).uniqueResult();
 		
 	}
+	
+	
 
 }
