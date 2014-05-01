@@ -33,41 +33,19 @@ public class Main {
 
 		
 		
-		new AnuncioAdmDAO().confirmaPagamento(245);
+		Transform t = new Transform();
+		
+		for(int i=2;i<=4;i++)
+		{
 		
 		
-		//new PagSeguro().geraPagamento();;
+		t.ler("C:\\Users\\Ultrabook\\Documents\\Modelos\\Motos\\"+i);
 		
-		/*
-		Pagamento pg =  new Pagamento();
+		ArrayList<String> modelos = t.getPalavras();
 		
-		pg.setCodUser(37);
-		pg.setData(Calendar.getInstance());
-		pg.setDescricao("Depósito");
-		pg.setTipo(Pagamento.ADICIONAR_CREDITO);
-		pg.setValor(500);
-		*/
+		new VeiculoDAO().inserirModelosMoto(modelos,i);
 		
-		//new FinanDAO().depositar(37,900);
-		
-		//System.out.println("Saldo: "+new FinanDAO().getSaldo(38));
-		
-		/*
-		VerificadorDeIntegridade.verificaIntegridadeAnuncio();
-		
-		
-		Destaque d =  new Destaque();
-		d.setCodVeiculo(248);
-		d.setDataIni(Calendar.getInstance());
-		d.setTipoDestaque(Destaque.DESTAQUE_INFERIOR);
-		
-		
-		new DestaqueDAO().insert(d);
-		
-		*/
-		
-		//new DestaqueDAO().setAllDestaqueInferior(Calendar.getInstance());
-		
+		}
 	
 	}
 	

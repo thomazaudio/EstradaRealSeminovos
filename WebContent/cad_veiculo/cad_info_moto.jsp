@@ -334,15 +334,12 @@
 					<select id="fabricante" name="fabricante" class="n">
 						<option value="">Selecionar</option>
 						
-						<option value="23">Chevrolet</option>
-						<option value="21">Fiat</option>
-						<option value="22">Ford</option>
-						<option value="25">Honda</option>
-						<option value="41">Mitsubishi</option>
-						<option value="44">Peugeot</option>
-						<option value="48">Renault</option>
-						<option value="56">Toyota</option>
-						<option value="59">Volkswagen</option>
+						<option value="2">Agrale</option>
+						<option value="3">BMW</option>
+						<option value="4">Ducati</option>
+						<option value="5">Harley Davidson</option>
+						
+						
 						<option value="">-------------------</option>
 
 
@@ -395,6 +392,24 @@
 				<div class="select_wrapper">
 					<label><span>* </span><strong>Placa:</strong></label> <input
 						id="placa" name="placa" type="text" class="txb" value="<%=placa%>" />
+				</div>
+				
+				
+				<div class="select_wrapper last">
+					<label><span>* </span><strong>Cilindradas:</strong></label> <select
+						id="cilindradas" name="cilindradas" class="n">
+						<option value="">Selecione</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+						<option value="150">150</option>
+						<option value="200">200</option>
+						
+
+					</select>
+					<div class="clear"></div>
+
+
+
 				</div>
 				
 
@@ -568,7 +583,7 @@
             var $fab=$("select#fabricante").val();
         
        
-           $.get('JSONItem',{fabricante:$fab,soli:'1'},function(responseJson) {   
+           $.get('JSONItem',{fabricante:$fab,soli:'3'},function(responseJson) {   
            	 
         	   var $select = $('#model');                           
                $select.find('option').remove();    
@@ -590,7 +605,7 @@
         var $fab=$("select#fabricante").val();
         
        
-           $.get('JSONItem',{fabricante:$fab,soli:'1'},function(responseJson) {   
+           $.get('JSONItem',{fabricante:$fab,soli:'3'},function(responseJson) {   
         	 
         	 
             var $select = $('#model');                           

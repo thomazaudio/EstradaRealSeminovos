@@ -85,6 +85,11 @@
 <property name="versao" column="VERSAO"/>
 </subclass>
 
+<subclass name="util.Moto" discriminator-value="MOTO">
+<property name="versao" column="VERSAO"/>
+<property name="cilindradas" column="CILINDRADAS"/>
+
+</subclass>
 
  
 </class>

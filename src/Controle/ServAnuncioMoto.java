@@ -33,7 +33,7 @@ import util.Veiculo;
 /**
  * Servlet implementation class ServAnuncio
  */
-public class ServAnuncio extends HttpServlet {
+public class ServAnuncioMoto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	
@@ -48,8 +48,8 @@ public class ServAnuncio extends HttpServlet {
 	private  final String PAGE_CAD_INFO_MOTO="edit_veiculo.jsp?page=cad_veiculo/cad_info_moto.jsp";
 	private  final String PAGE_STEP_2="edit_veiculo.jsp?page=cad_veiculo/esc_contato.jsp";
 	private  final String PAGE_STEP_3="edit_veiculo.jsp?page=edit_img.jsp?id_veiculo=";
-	private  final String PAGE_STEP_4="edit_veiculo.jsp?page=cad_veiculo/pre_carro.jsp";//Carro
-	private  final String PAGE_STEP_5="edit_veiculo.jsp?page=cad_veiculo/pre_moto.jsp";//Moto
+	private  final String PAGE_STEP_4="edit_veiculo.jsp?page=cad_veiculo/pre_carro.jsp";
+	private  final String PAGE_STEP_5="";
 
 	//Constantes de etapas
 	private final int STEP_0=0;
@@ -76,7 +76,7 @@ public class ServAnuncio extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ServAnuncio() {
+	public ServAnuncioMoto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -176,16 +176,8 @@ public class ServAnuncio extends HttpServlet {
 
 			//Permite voltar para essa pagina novamente
 			sessao.setAttribute(""+this.STEP_4,1);
-			
-			int tipo = (Integer) sessao.getAttribute("tipo_veiculo");
-			
-			//Carro
-			if(tipo==1)
 			request.getRequestDispatcher(this.PAGE_STEP_4+"?mostra_step="+mostra_step).forward(request,response);
-			
-			//Moto 
-			else if(tipo==2)
-			request.getRequestDispatcher(this.PAGE_STEP_5+"?mostra_step="+mostra_step).forward(request,response);	
+            
 		}
 		
 		//ESCOLHA DE PAGAMENTO E FINALIZAÇÃO
@@ -423,10 +415,9 @@ public class ServAnuncio extends HttpServlet {
 			Anuncio an =  (Anuncio) sessao.getAttribute("anuncio");
 
 			//Verifica qual o tipo de veiculo
-			int tipo =  (Integer) sessao.getAttribute("tipo_veiculo");
-			
+			String tipo =  new VeiculoDAO().getTipo(an.getVeiculo().getId());
 			//Carro
-			if(tipo==1 || an.getVeiculo().getClass()==Carro.class)
+			if(tipo.equals("CARRO") || an.getVeiculo().getClass()==Carro.class)
 			{
 				
                  Carro carro = new Carro();
@@ -496,83 +487,6 @@ public class ServAnuncio extends HttpServlet {
 				System.out.println("Chegou aqui---");
 
 			}
-			
-			
-			System.out.println("O tipo de veículo é "+tipo);
-			
-			//Moto
-			
-			if(tipo==2 || an.getVeiculo().getClass()==Moto.class)
-			{
-				
-                 Moto moto = new Moto();
-
-                 //Se os dados  estiverem em sessao
-				if(sessao.getAttribute("moto")!=null)
-				{	
-					Moto moto_session = (Moto) sessao.getAttribute("moto");	
-					moto.setId(moto_session.getId());	
-					moto.setContato(new ContatoDAO().getContato(moto_session.getContato().getId()));
-
-				}
-
-				moto.setCod_fabricante(Integer.parseInt(request.getParameter("fabricante")));
-				moto.setModelo(request.getParameter("modelo"));
-				moto.setCodModelo(Integer.parseInt(request.getParameter("modelo")));
-			
-
-				try{
-					moto.setPreco_negociavel(Integer.parseInt(request.getParameter("preco_negociavel")));
-				}catch(Exception e){
-					moto.setPreco_negociavel(0);
-
-				}
-
-
-				//Completa os dados da  moto
-				moto =  this.compMoto(moto,request);
-				moto.setQuilometragem(request.getParameter("quilometragem"));
-				
-			
-				
-				
-
-				
-				//preço
-				String preco = request.getParameter("valor");
-				preco = preco.replace(".","");
-				preco = preco.replace(",",".");
-				moto.setPreco(Double.parseDouble(preco));
-
-				//Salva um contato generico para o veiculo
-				Contato contato =  new Contato();
-				if(moto.getContato()!=null)
-				contato= new ContatoDAO().getContato(moto.getContato().getId());
-				new ContatoDAO().saveOrUpdate(contato);
-				moto.setContato(contato);
-				
-				UsuarioDAO d =  new UsuarioDAO();
-				
-				//Seta o tipo de venda
-				if(d.getTipoUser(user.getId())==Usuario.PESSOA)
-				moto.setTipoVenda(1);
-				else 
-				moto.setTipoVenda(2);
-
-				//Salva o veiculo no banco de dados
-				new VeiculoDAO().saveOrUpdate(moto);
-
-
-				//Joga a moto atualizada na sessao
-				sessao.setAttribute("moto",moto);
-
-				//Atualiza a moto no anuncio
-				an.setVeiculo(moto);
-				
-				System.out.println("Chegou aqui---");
-
-			}
-			//FIM OP MOTO
 
 
 			//Recupera os steps
@@ -603,15 +517,8 @@ public class ServAnuncio extends HttpServlet {
 			//Recupera os steps
 			sessao.setAttribute("step",getStepsHtml(sessao,3));
 
-			
-			//RECUPERA O TIPO DE VEÍCULO QUE ESTÁ SENDO CADASTRADO
-			int tipo = (Integer) sessao.getAttribute("tipo_veiculo");
-			
-			//CARRO
-			if(tipo==1)
-			{
 			//Recupera o veiculo em sessao
-			Carro carro = (Carro) sessao.getAttribute("carro");
+			Moto moto = (Moto) sessao.getAttribute("moto");
 
 
 
@@ -619,14 +526,14 @@ public class ServAnuncio extends HttpServlet {
 			Anuncio an = (Anuncio) sessao.getAttribute("anuncio");
 
 			//Atualiza o carro em anuncio
-			an.setVeiculo(carro);
+			an.setVeiculo(moto);
 
 			//Joga novamente o anuncio em sessão
 			sessao.setAttribute("anuncio",an);
 
 			//Redireciona para a pagina de escolha de imagens
 			if(mostra_step==1)	
-				response.sendRedirect(this.PAGE_STEP_3+carro.getId()+"&&mostra_step=1");	 
+				response.sendRedirect(this.PAGE_STEP_3+moto.getId()+"&&mostra_step=1");	 
 
 			//request.getRequestDispatcher(this.PAGE_STEP_3+carro.getId()).forward(request,response);
 			else
@@ -635,46 +542,6 @@ public class ServAnuncio extends HttpServlet {
 				response.getWriter().write("<script> parent.jQuery.fancybox.close(); </script>");
 
 
-			}
-			}
-			
-			//MOTO
-			else if(tipo==2)
-			{
-				
-				
-				//Recupera o veiculo em sessao (Moto)
-				Moto moto = (Moto) sessao.getAttribute("moto");
-
-
-				 System.out.println("Moto na sessão: "+moto);
-				
-				
-
-				//Recupera o anuncio em sessão
-				Anuncio an = (Anuncio) sessao.getAttribute("anuncio");
-
-				//Atualiza a moto em anuncio
-				an.setVeiculo(moto);
-
-				//Joga novamente o anuncio em sessão
-				sessao.setAttribute("anuncio",an);
-				
-				
-
-				//Redireciona para a pagina de escolha de imagens
-				if(mostra_step==1)	
-					response.sendRedirect(this.PAGE_STEP_3+moto.getId()+"&&mostra_step=1");	 
-
-				//request.getRequestDispatcher(this.PAGE_STEP_3+carro.getId()).forward(request,response);
-				else
-				{
-					response.setContentType("text/html");
-					response.getWriter().write("<script> parent.jQuery.fancybox.close(); </script>");
-
-
-				}
-				
 			}
 
 		}  
@@ -745,8 +612,6 @@ public class ServAnuncio extends HttpServlet {
 		
 		//Define a data de cadastro do anúncio
 		an.setDataIni(Calendar.getInstance());
-		
-		
 		
 		
 	
@@ -933,39 +798,6 @@ public class ServAnuncio extends HttpServlet {
 		return carro;
 	}
 
-	
-	//COMPLETA OS DADOS DA MOTO A PARTIR DO REQUEST
-		private Moto compMoto(Moto carro,HttpServletRequest request){
-
-			carro.setQuilometragem(request.getParameter("quilometragem"));
-			carro.setCombustivel(request.getParameter("combustivel"));
-			carro.setEstadoConservacao(request.getParameter("estadoConservacao"));
-			carro.setAnoFabricacao(Integer.parseInt(request.getParameter("anoFabricacao")));
-			carro.setAnoModelo(Integer.parseInt(request.getParameter("anoModelo")));
-			//carro.setQuantPortas(Integer.parseInt(request.getParameter("quantPortas")));
-			carro.setCondicaoTroca(request.getParameter("condicaoTroca"));
-			//carro.setQuantValvulas(Integer.parseInt(request.getParameter("valvulas")));
-			//carro.setMotor(request.getParameter("motor"));
-			carro.setPlaca(request.getParameter("placa"));
-			carro.setVersao(request.getParameter("versao"));
-			System.out.println("Versão: "+carro.getVersao());
-			//carro.setTransmissao(request.getParameter("transmissao"));
-			carro.setCor(request.getParameter("cor"));
-			carro.setDescricao(request.getParameter("descricao"));
-			carro.setCilindradas(request.getParameter("cilindradas"));
-			
-			
-			
-
-
-			//recupera os itens do carro	
-			String itens[]  = request.getParameterValues("idAcessorio");
-
-			if(itens!=null)
-				carro.setItens(new ItemDAO().getItens(this.toLong(itens)));
-
-			return carro;
-		}
 
 
 

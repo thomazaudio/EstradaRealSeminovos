@@ -18,7 +18,7 @@ public class Transform {
 			
 			StringBuffer buffer = new StringBuffer();
 			
-			FileReader  file = new FileReader("C:\\Users\\Ultrabook\\Documents\\Modelos\\"+marca+".txt");
+			FileReader  file = new FileReader(marca+".txt");
 			
 			BufferedReader b = new BufferedReader(file);
 			

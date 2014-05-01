@@ -10,6 +10,15 @@ public class Carro extends Veiculo {
 	private String versao;
 	private String transmissao;
 	
+	//Recupera o modelo  do veiculo
+	
+     public String getModelo() {
+		
+		
+		return  new VeiculoDAO().getNomeModelo(this.getCodModelo());
+		
+	}
+	
 	
 	
 	

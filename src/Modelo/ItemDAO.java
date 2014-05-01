@@ -78,6 +78,46 @@ public class ItemDAO {
 		
 	}
 	
+	//Recupera os itens atrves de um vetor de ids(MOTOS)
+	
+		public Collection<Item> getItensMoto(long[] ids){
+			
+			
+			Collection<Item> itens = new HashSet<Item>();
+			Item item=null;
+			
+			
+			try{
+			
+			Connection con =  Banco.abreBanco();	
+			Statement stm = con.createStatement();
+			ResultSet res;
+			for(int i=0;i<ids.length;i++)
+			{
+				
+			res = stm.executeQuery("SELECT * FROM item_moto WHERE ID_ITEM="+ids[i]);
+			
+			if(res.next())
+			{
+				item = new Item();
+				item.setId(ids[i]);
+				item.setItem(res.getString("ITEM"));
+				itens.add(item);
+				
+			}
+			
+			res.close();
+			}
+				
+			}catch(Exception e){
+				
+				Debug.gerar("Modelo","ItemDAO","getItens[int ids[]]", e.getMessage());
+			}
+			
+			return itens;
+			
+		}
+	
 
 	/**
 	 * 

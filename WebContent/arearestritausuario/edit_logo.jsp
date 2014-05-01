@@ -28,13 +28,18 @@ long id_user = ( (Usuario) session.getAttribute("usuario")).getId();
 %>
 
 <div class="message">
-<p>Escolha uma imagem.</p>
+<p>Anterior</p>
+<img width="90" src="../ServImg?SOLI=8&&mostra_step=0&&ID_USUARIO=<%=id_user%>" alt="">
+</div>
+<div class="message">
+
+<h2><strong>Escolha uma imagem.</strong></h2>
 <form action="uplogo.jsp" method="POST" enctype="multipart/form-data" name="form1" id="form1">
 <input type="hidden" name="SOLI" value="9">
 <input type="hidden" name="mostra_step" value="0">
 <input type="hidden" name="id_usuario" value="<%=id_user%>">
-<input name="file" type="file" id="file"/>
-<input type="submit" value="Enviar"/>
+<input class="btn red" name="file" type="file" id="file"/>
+<input class="btn_2 blue" type="image" value="Enviar"/>
 </form>
 
 </div>

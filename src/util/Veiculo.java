@@ -322,12 +322,7 @@ public abstract class Veiculo {
 		this.descricao = descricao;
 	}
 	
-	public String getModelo() {
-		
-		
-		modelo =  new VeiculoDAO().getNomeModelo(this.getCodModelo());
-		return modelo;
-	}
+	
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}

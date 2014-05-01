@@ -307,7 +307,47 @@ public class VeiculoDAO {
 	}
 	
 	
-	public void inserirModelos(ArrayList<String> modelos,int marca){
+	//Recupera todos os modelo de moto a partir de um fabricante
+		public ArrayList<ItemVeiculo> getAllModelosMoto(int fab){
+			
+			ArrayList<ItemVeiculo> itens = new ArrayList<ItemVeiculo>();
+			ItemVeiculo item= null;
+			
+			try{
+				
+				
+			
+				Connection con =  Banco.abreBanco();
+				Statement stm = con.createStatement();
+				ResultSet res =  stm.executeQuery("SELECT * FROM modelo_moto WHERE marca="+fab+"");
+				
+				while(res.next()){
+				
+					
+					
+				 	
+				 item = new ItemVeiculo();
+				 item.setCod(res.getInt("id"));
+				 item.setNome(res.getString("nome"));
+				 itens.add(item);
+				 System.out.println("Codigo da moto="+item.getCod());
+					
+				}
+				
+				stm.close();
+				res.close();
+				
+			}catch(Exception e){
+				
+				Debug.gerar("util", "VeiculoDAO", "getAllModelos", e.getMessage());
+			}
+			
+			return itens;
+			
+		}
+	
+	
+	public void inserirModelosVeiculo(ArrayList<String> modelos,int marca){
 		
 		
 		try{
@@ -330,6 +370,104 @@ public class VeiculoDAO {
 	}
 	
 	
+	
+	//Insere Modelos de moto
+    public void inserirModelosMoto(ArrayList<String> modelos,int marca){
+		
+		
+		try{
+			
+			Connection con =  Banco.abreBanco();
+			PreparedStatement stm =  con.prepareStatement("INSERT INTO modelo_moto(nome,marca) VALUES(?,?)");
+		
+			
+			for(int i=0;i<modelos.size();i++)
+			{
+				
+			stm.setString(1,modelos.get(i));	
+			stm.setInt(2,marca);	
+			stm.execute();
+			}
+			
+		}catch(Exception e){
+			
+		}
+	}
+    
+    
+  //Insere Marcas  de moto
+   public void inserirMarcasMoto(ArrayList<String> marcas){
+		
+		
+		try{
+			
+			Connection con =  Banco.abreBanco();
+			PreparedStatement stm =  con.prepareStatement("INSERT INTO marca_moto(nome) VALUES(?)");
+		
+			
+			for(int i=0;i<marcas.size();i++)
+			{
+				
+			stm.setString(1,marcas.get(i));	
+			stm.execute();
+		
+			}
+			
+		}catch(Exception e){
+			
+		}
+	}
+	
+	
+  
+   
+
+	//Recupera o fabricante de uma moto do codigo
+		public String getNomeFabricanteMoto(long cod){
+			
+			
+			try{
+				
+				Connection con = Banco.abreBanco();
+				Statement stm = con.createStatement();
+				ResultSet res = stm.executeQuery("SELECT * FROM marca_moto WHERE id="+cod);
+				
+				if(res.next())
+				return res.getString("nome");
+				else
+				return "---";	
+				
+			}catch(Exception e){
+				
+				Debug.gerar("Modelo", "VeiculoDAO", "getNomeFabricante", e.getMessage());
+				return "---";
+			}
+		}
+	
+   
+ //Recupera o modelo a partir do codigo
+ public String getNomeModeloMoto(long cod){
+ 		
+ 		
+ 		try{
+ 			
+ 			Connection con = Banco.abreBanco();
+ 			Statement stm = con.createStatement();
+ 			ResultSet res = stm.executeQuery("SELECT * FROM modelo_moto WHERE id="+cod);
+ 			
+ 			if(res.next())
+ 			return res.getString("nome");
+ 			else
+ 			return "---";	
+ 			
+ 		}catch(Exception e){
+ 			
+ 			Debug.gerar("Modelo", "VeiculoDAO", "getNomeModelo", e.getMessage());
+ 			return "---";
+ 		}
+ 	}
+   
+   
 	//Recupera o modelo a partir do codigo
 	public String getNomeModelo(long cod){
 		
