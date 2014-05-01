@@ -51,7 +51,6 @@
 <property name="condicaoTroca" column="CONDICAO_TROCA"/>
 <property name="status" column="STATUS"/>
 <property name="prioridade_anuncio" column="PRIORIDADE_ANUNCIO"/>
-<property name="modelo" column="MODELO"/>
 <property name="cod_fabricante" column="COD_FABRICANTE"/>
 <property name="img" column="IMG" type="blob" />
 <property name="fumante" column="FUMANTE"/>
@@ -70,22 +69,36 @@
         <column name="ID_CONTATO" not-null="true" />
 </many-to-one>
 
-<set name="itens" table="ITENS">
-        <key column="ID_VEICULO"/>
-        <many-to-many column="ID_ITEM"
-            class="util.Item"/>
-    </set>
+
 
 
 <subclass name="util.Carro" discriminator-value="CARRO">
+    
+  <set name="itens" table="ITENS">
+        <key column="ID_VEICULO"/>
+        <many-to-many column="ID_ITEM"
+            class="util.Item"/>
+    </set>  
+    
+    
 <property name="quantPortas" column="QUANT_PORTAS"/>
 <property name="transmissao" column="TRANSMISSAO"></property>
 <property name="motor" column="MOTOR"/>
 <property name="quantValvulas" column="QUANT_VALVULAS"/>
 <property name="versao" column="VERSAO"/>
+
 </subclass>
 
+ 
+
 <subclass name="util.Moto" discriminator-value="MOTO">
+    
+    <set name="itens" table="ITENS">
+        <key column="ID_VEICULO"/>
+        <many-to-many column="ID_ITEM"
+            class="util.Item"/>
+    </set>  
+    
 <property name="versao" column="VERSAO"/>
 <property name="cilindradas" column="CILINDRADAS"/>
 

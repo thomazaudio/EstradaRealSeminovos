@@ -252,14 +252,23 @@ public class BuscaBean {
 	public void buscar(){
 		
 		
+		String pagina_busca="";
+		
+		
 		//Classe de veículo
 		
 		String classe = null;
 		
 		if(codTipo==1)
-		classe =  "Moto";	
+		{
+		classe =  "Moto";
+		pagina_busca = "resultado_busca_moto.jsf";
+		}
 		else if(codTipo==2)
+		{
 		classe =  "Carro";	
+		pagina_busca = "resultado_busca.jsf";
+		}
 			
 		
 		this.setPage(1);
@@ -287,7 +296,9 @@ public class BuscaBean {
 		//resultadoBusca = buscaTotal;
 		
 		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("resultado_busca.jsf");
+			
+			
+			FacesContext.getCurrentInstance().getExternalContext().redirect(pagina_busca);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

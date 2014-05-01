@@ -235,19 +235,7 @@ public abstract class Veiculo {
 	}
 	
 	
-	public ArrayList<Item> getItensFiltered(){
-		
-
-		ArrayList<Item> last_itens = new ArrayList<Item>(this.itens);
-		ArrayList<Item> new_itens = new ArrayList<Item>();
-		
-		for(int i=0;i<last_itens.size();i++)
-	    new_itens.add(last_itens.get(i));	
-				
-		
-		return new_itens;
-		
-	}
+	
 	
 	
 	
@@ -328,67 +316,7 @@ public abstract class Veiculo {
 	}
 	
 	
-	public ArrayList<Item> getItensConforto(){
-		
-		ArrayList<Item> last_itens = new ArrayList<Item>(this.itens);
-		ArrayList<Item> new_itens = new ArrayList<Item>();
-		
-		for(int i=0;i<last_itens.size();i++)
-		{
-			if(last_itens.get(i).getTipo()==Item.TIPO_CONFORTO)
-			new_itens.add(last_itens.get(i));	
-				
-		}
-		return new_itens;
-		
-		
-	}
 	
-	
-	
-	public ArrayList<Item> getItensDesempenho(){
-		
-		ArrayList<Item> last_itens = new ArrayList<Item>(this.itens);
-		ArrayList<Item> new_itens = new ArrayList<Item>();
-		
-		for(int i=0;i<last_itens.size();i++)
-		{
-			if(last_itens.get(i).getTipo()==Item.TIPO_DESEMPENHO)
-			new_itens.add(last_itens.get(i));	
-				
-		}
-		return new_itens;
-	}
-	
-	public ArrayList<Item> getItensDesigner(){
-		
-		
-		ArrayList<Item> last_itens = new ArrayList<Item>(this.itens);
-		ArrayList<Item> new_itens = new ArrayList<Item>();
-		
-		for(int i=0;i<last_itens.size();i++)
-		{
-			if(last_itens.get(i).getTipo()==Item.TIPO_DESIGNER)
-			new_itens.add(last_itens.get(i));	
-				
-		}
-		return new_itens;
-	}
-	
-	public ArrayList<Item> getItensSeguranca(){
-		
-		
-		ArrayList<Item> last_itens = new ArrayList<Item>(this.itens);
-		ArrayList<Item> new_itens = new ArrayList<Item>();
-		
-		for(int i=0;i<last_itens.size();i++)
-		{
-			if(last_itens.get(i).getTipo()==Item.TIPO_SEGURANCA)
-			new_itens.add(last_itens.get(i));	
-				
-		}
-		return new_itens;
-	}
 	
 	public String getTitulo() {
 		
