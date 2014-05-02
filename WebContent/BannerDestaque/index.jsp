@@ -15,9 +15,7 @@
 
 				
 				<!-- CSS
- 				================================================== -->
-                <link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,400italic" rel="stylesheet" type="text/css">
-                <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet" type="text/css">
+ 				
                 
                 <link rel="stylesheet" href="../code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css">
 				<link rel="stylesheet" href="rs-plugin/css/settings.css" media="screen">

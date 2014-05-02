@@ -22,6 +22,21 @@
 
 
 
+.publicidade_cima{
+	
+	float: right;
+	margin-left: 5px;
+}
+
+.direito_header{
+	
+	float: right;
+}
+
+.esquerdo_header{
+	float: left;
+	margin-right: 20px;
+}
 
 .container-top { width:718px; padding: 10px; text-align:center;  }
 	.container-top h1 {margin:0px 0px 10px 0px; font-size:20px;  }

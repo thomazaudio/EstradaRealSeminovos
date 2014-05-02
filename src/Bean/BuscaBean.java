@@ -204,7 +204,7 @@ public class BuscaBean {
 					fabricantes.add(new SelectItem(56,"Toyota"));
 					fabricantes.add(new SelectItem(59,"Volkswagem"));
 					
-					fabricantes.add(new SelectItem("","-----------"));
+				
 					
 					
 					//FABRICANTES RESTANTES
@@ -420,7 +420,7 @@ public class BuscaBean {
 		private Paginacao pag;
 		private ArrayList<Pagina> paginas;
 		private int page=1;
-		private int quantPorPagina=2;
+		private int quantPorPagina=10;
 		private long quantPaginas;
 		private long totalRegistros;
 		
