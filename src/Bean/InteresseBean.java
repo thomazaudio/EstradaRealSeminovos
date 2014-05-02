@@ -30,12 +30,7 @@ public class InteresseBean {
 
 	public ArrayList<Veiculo> getVeiculos() {
 		
-		ArrayList<Veiculo> n_v =  new ArrayList<Veiculo>();
-		
-		for(int i =veiculos.size()-1;i>=0;i--)
-		n_v.add(veiculos.get(i));	
-		
-		return n_v;
+		return veiculos;
 	}
 
 	public void setVeiculos(ArrayList<Veiculo> veiculos) {
