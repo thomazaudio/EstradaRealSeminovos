@@ -31,11 +31,13 @@
 .direito_header{
 	
 	float: right;
+margin-top: -200px;
+margin-right: 35px;
 }
 
 .esquerdo_header{
 	float: left;
-	margin-right: 20px;
+	margin-left: 35px;
 }
 
 .container-top { width:718px; padding: 10px; text-align:center;  }
@@ -317,9 +319,10 @@ cite{
 	width: 940px;
 	margin: 0 auto;
 	overflow: hidden;
-	padding: 15px 20px 25px;
+	padding: 15px 20px 15px;
 }
 #header .top_info .logo{
+	margin-left: 30px;
 	width: 319px;
 	float: left;
 	padding: 0px 0 0 1px;
