@@ -20,6 +20,25 @@
 ================================================================================
 */
 
+.texto_branco{
+	
+	color: white;
+	
+}
+
+.fundo_azul{
+	width: 100%;
+	
+	background: url(../images/bg_navigation.jpg) repeat-x 0 0 #DBDCDC;
+	margin: 0 auto;
+}
+
+.fundo_laranja{
+	width: 100%;
+	
+	background: url(../images/img_laranja.jpg) repeat-x 0 0 #DBDCDC;
+	margin: 0 auto;
+}
 
 
 .publicidade_cima{
@@ -78,7 +97,7 @@ text-shadow: 0 1px 1px #FFFFFF;
 .section-heading{ font: 700 18px 'Lato',Arial, Helvetica, sans-serif; color:#4c4c50; }
 .section-heading span {color:#808181; }
 
-.btn_2{padding:0px 23px;border-radius:4px; font: bold 50px 'Lato',Arial, Helvetica, sans-serif;color:#FFFFFF; line-height:44px;}
+.btn_2{padding:0px 23px;border-radius:4px; font: bold 40px 'Lato',Arial, Helvetica, sans-serif;color:#FFFFFF; line-height:44px;}
 .btn{padding:0px 23px;border-radius:4px; font: bold 17px 'Lato',Arial, Helvetica, sans-serif;color:#FFFFFF; line-height:44px;}
 .btn_img{padding:0px 23px;border-radius:4px; font: bold 17px 'Lato',Arial, Helvetica, sans-serif;color:#FFFFFF; line-height:44px;width:79px;}
 
@@ -459,9 +478,8 @@ cite{
 	display: inline-block;
 	height: 49px;
 	padding: 0 0 0 0;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	color: #3B424A;
+	font-family: ,Arial,sans-serif;
+	color: white;
 	text-shadow:0 1px 0 #FFFFFF;
 	font-size: 15px;
 	line-height: 25px;

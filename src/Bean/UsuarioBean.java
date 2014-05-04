@@ -138,7 +138,23 @@ public class UsuarioBean {
 		sessao = (HttpSession) faces.getExternalContext().getSession(false);
 		getLogo();
 		
-		this.setEmail(this.getUser().getContato().getEmail());
+		
+		faces = FacesContext.getCurrentInstance();
+		Usuario user = getUser();
+		
+		if(user==null)
+		{
+			
+			System.out.println("User: "+user);
+			try {
+				faces.getExternalContext().redirect("esc_login.jsf");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		this.setEmail(user.getContato().getEmail());
 	}
 
 
@@ -161,7 +177,16 @@ public class UsuarioBean {
 		}
 		
 		
+		if(user==null)
+		{
+			try {
+				faces.getExternalContext().redirect("esc_login.jsf");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		
+		}
         return user;
 	}
     

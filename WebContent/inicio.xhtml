@@ -12,6 +12,41 @@
 <title>Home</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	
+	
+	
+	
+	
+	<script>
+	
+	
+	$(document).ready(function() {
+		
+		
+		
+		
+		$(".iframe").fancybox({
+		    'width'         : '100%',
+		    'height'        : '100%',
+		    'autoScale'     : false,
+		    'transitionIn'  : 'none',
+		    'transitionOut' : 'none',
+		    'type'          : 'iframe',
+		    'onClosed': function() {
+		         
+		    	window.location.reload();
+		    	
+		        }
+		      	
+		});	
+		
+		
+
+	
+	
+	
+
+	</script>
+	
 
 
 <!-- CSS do Banner Destaque
@@ -29,6 +64,7 @@
 
 
 <!-- BANNER DESTAQUE -->
+<img src="images/img_d.jpg"></img>
 <div class="fullwidthbanner-container slider-wrapper">
 
 		<div class="fullwidthbanner slider tp-simpleresponsive hovered"
@@ -44,9 +80,10 @@
 					
 					
 					<a target="_blank" href="anuncio.jsp?id_veiculo=#{d.codVeiculo}">
-					<p:graphicImage styleClass="defaultimg" style="width:1354 px; height: 562.8515928515928px; position: absolute; left: -25px; opacity: 0;"  value="#{imgBean.capaVeiculo}">
+					<p:graphicImage styleClass="defaultimg" style="width:1354 px; height: 562.8515928515928px; position: absolute; left: -25px; opacity: 0;"  value="#{imgBean.imgBanner}">
                      
-                   <f:param name="idVeiculo" value="#{d.codVeiculo}"></f:param>
+                   <f:param name="idDestaque" value="#{d.idDestaque}"></f:param>
+                   
                     </p:graphicImage>
 					 </a>  
 					
@@ -150,8 +187,9 @@ src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 	                            <div class="car_characteristics">
 	                            
 	                          
-	                            
-                                <h2><strong>Anuncie gratuitamente seu veículo!</strong></h2>
+	                            <div class="fundo_azul">
+                                <h2 class="texto_branco"><strong>Anuncie gratuitamente seu veículo!</strong></h2>
+                                </div>
                               <div class="message">
                               
                                 <p>Estrada Real seminovos, aqui você encontra os melhores veículos novos e semi-novos 
@@ -165,8 +203,9 @@ src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 					   
 					
 					
-						
-							<h3><strong>Vantagens</strong></h3>
+						    <div class="fundo_laranja">
+							<h3 class="texto_branco"><strong>Vantagens</strong></h3>
+							</div>
 							<p><span>*</span>Destaque na página inicial.</p>
 							<p><span>*</span>Até 15 fotos por anúncio.</p>
 							<p><span>*</span>O veículo permance cadastrado até a venda.</p>
@@ -181,8 +220,18 @@ src="//pagead2.googlesyndication.com/pagead/show_ads.js">
                               
                                                               </div> 
                                                                 <img src="images/logo_2.png" alt="" /> 
-                               <a href="#" class="btn blue">Anunciar agora!</a>
-                               
+                                                                <h2><strong>Quer vender seu veículo?</strong></h2>
+                                                                
+                                          <p:lightBox iframe="true" width="1200px" height="700px">                       
+                                         <h:outputLink  value="#{contextoBean.contextoInicial}/action.jsp">
+						
+						<f:param name="page_pos" value="cad_veiculo/index.jsp"></f:param>
+						<f:param name="text_page_pos" value="Cadastro de novo Veiculo"></f:param>
+						
+						<h:outputText styleClass="btn blue" value="Venda seu Veículo!"></h:outputText>
+						
+						</h:outputLink>
+                              </p:lightBox> 
                                 
                         </div>
                         
@@ -257,7 +306,18 @@ src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 						
 						<!-- Publicidade inferior -->
 						 <p><img src="images/img_pub.jpg" alt="" /></p>
-						
+						<script type="text/javascript"><!--
+						google_ad_client = "ca-pub-2319715661262324";
+						/* ewqwe */
+						google_ad_slot = "6227740595";
+						google_ad_width = 120;
+						google_ad_height = 240;
+						//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+          
 						
 						</div>
 						

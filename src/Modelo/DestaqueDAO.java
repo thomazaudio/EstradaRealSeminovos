@@ -83,7 +83,7 @@ public class DestaqueDAO {
 	}
 	
 	//RECUPERA AS INFORMAÇÕES DE CADA DESTAQUE
-	public InfoDestaque getInforDestaque(long codVeiculo){
+	public InfoDestaque getInforDestaque(long codVeiculo,long idDestaque){
 		
 		InfoDestaque info = new InfoDestaque();
 		
@@ -100,7 +100,7 @@ public class DestaqueDAO {
 			
 			if(res.next())
 			{
-				
+				info.setIdDestaque(idDestaque);
 				info.setTitulo(res.getString("TITULO"));
 				info.setPreco(res.getDouble("PRECO"));
 				info.setAnoFabricacao(res.getInt("ANO_FABRICACAO"));
@@ -108,6 +108,7 @@ public class DestaqueDAO {
 				
 			}
 			
+			System.out.println("O id do destaque é: "+info.getIdDestaque());
 			
 		}catch(Exception e){
 			

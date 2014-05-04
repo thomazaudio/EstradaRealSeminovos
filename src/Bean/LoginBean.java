@@ -17,7 +17,36 @@ public class LoginBean {
 
 	private FacesContext faces;
 	private String pagepos;
+	private String textPagePos;
 	
+	private boolean textonull;
+	
+	public boolean isTextonull() {
+		return this.getTextPagePos().length()<2;
+	}
+
+
+	public void setTextonull(boolean textonull) {
+		this.textonull = textonull;
+	}
+
+
+	public String getTextPagePos() {
+		
+		textPagePos = faces.getExternalContext().getRequestParameterMap().get("text_page_pos");
+		
+		if(textPagePos==null)
+		textPagePos="";
+		
+		return textPagePos;
+	}
+
+
+	public void setTextPagePos(String textPagePos) {
+		this.textPagePos = textPagePos;
+	}
+
+
 	public String getPagepos() {
 		
 		pagepos = faces.getExternalContext().getRequestParameterMap().get("page_pos");

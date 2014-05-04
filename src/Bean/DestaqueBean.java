@@ -66,7 +66,7 @@ public class DestaqueBean {
 		for(int i=0;i<destaques.size();i++)
 		{	
 			
-		 info = dao.getInforDestaque(destaques.get(i).getCodVeiculo());	
+		 info = dao.getInforDestaque(destaques.get(i).getCodVeiculo(),destaques.get(i).getId());	
 		 
 		 if(info!=null)
 		 destaqueBanner.add(info);
@@ -83,6 +83,7 @@ public class DestaqueBean {
 		
 		System.out.println("Tempo="+(System.currentTimeMillis()-tempo));
 		
+		System.out.println("Quantidade de veiculos no plano Banner: "+lista_ord.size());
 		return lista_ord;
 	}
 	public void setDestaqueBanner(ArrayList<InfoDestaque> destaqueBanner) {

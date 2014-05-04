@@ -402,7 +402,7 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 					
 					<div class="car_contacts">
 						<h2>
-							<strong>Perguntas</strong>.
+							<strong>Proposta</strong>.
 						</h2>
 					
 						<canvas id="linha_perguntas" width="900" height="3"></canvas>
@@ -420,11 +420,31 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
     </script>
     
                        
-						<p>
+						
 							
-							 <p><strong>Alguma dúvida em relação a este veículo?</strong> Envie uma pergunta ao anunciante.</p>
 					        <div class="calculator_2"  >
+					         <div class="fundo_laranja">
+							 <h3  class="texto_branco">Envie sua proposta!</h3>
+							 </div>
 							<form action="EnviaPergunta" method="POST" id="form_pergunta">
+							<label><strong>Nome:</strong></label>
+						<div class="select_box_1">
+							<input  required="true" type="text" class="select_3" />
+
+
+						</div>
+						<label><strong>Email:</strong></label>
+						<div class="select_box_1">
+							<input required="true" type="email" class="select_3" />
+
+
+						</div>
+						<label><strong>Telefone:</strong></label>
+						<div class="select_box_1">
+							<input type="text" class="select_3" />
+
+
+						</div>
 							
 							<input type="hidden" name="id_veiculo" value="<%=car.getId()%>"/>
 							<input type="hidden" name="id_destinatario" value="<%=user.getId()%>"/>
@@ -432,7 +452,7 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 							
 							<textarea required="true"   rows="3" cols="82" id="pg" name="pergunta"></textarea>
 							
-						     <input  type="submit" value="enviar" onclick="limpaP();"  class="btn_calc" />
+						     <input  type="submit"  value="enviar" onclick="limpaP();"  class="btn blue" />
 							
 							</form>
 							
@@ -534,59 +554,13 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 -------
 				</div>
 				<div class="car_sidebar">
-					<div class="calculator">
-					<p align="center"><img  alt="" src="images/logo_2.png"></p>
-					<h3 align="center">
-						Gostou?
-						</h3>
-						<h3>
-							<strong>Envie sua</strong> Proposta!
-						</h3>
-						
-						<form action="ServContato" method="GET" id="form_proposta">
-						
-						<input type="hidden" name="SOLI" value="7"/>
-						
-						<label><strong>Nome:</strong></label>
-						<div class="select_box_1">
-							<input  required="true" type="text" class="select_3" />
-
-
-						</div>
-						<label><strong>Email:</strong></label>
-						<div class="select_box_1">
-							<input required="true" type="email" class="select_3" />
-
-
-						</div>
-						<label><strong>Telefone:</strong></label>
-						<div class="select_box_1">
-							<input type="text" class="select_3" />
-
-
-						</div>
-
-						<textarea class="txb" rows="12" cols="19"></textarea>
-						<p><input type="checkbox" />Receber atualizações de <strong>"<%=user.getNome()%>"</strong>.</p>
-						<div class="clear"></div>
-						<br>
-						
-						<p><input type="checkbox" />Enviar uma copia da proposta para meu email.</p>
-						<div class="clear"></div>
-						<br>
-						
 					
-						<input type="submit" value="enviar" class="btn_calc" />
-						
-						</form>
-						<div class="clear"></div>
-					</div>
 					
 					<jsp:include page="componente_busca.jsf"></jsp:include>
 					
 					
-					<div class="banner">
-						<p>Espaço para banner</p>
+					<div class="calculator">
+					<img alt="" src="images/img_pub.jpg">
 					</div>
 					
 					

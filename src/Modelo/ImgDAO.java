@@ -219,6 +219,54 @@ public class ImgDAO {
 	}
       
       
+      
+      
+    //Recupera a imagem de capa de um destaque
+      public Imagem getImgBanner(long id){
+		
+
+		Imagem tumb = null;
+		ResultSet res =null;
+		Statement stm;
+		
+	    try
+	    {
+	    
+	    Connection con = Banco.abreBanco();
+	    stm = con.createStatement();
+	    res =stm.executeQuery("SELECT IMG_BANNER FROM destaque WHERE ID_DESTAQUE="+id);
+	    
+	    System.out.println("Id do destaque----: "+id);
+	    
+	    if(res.next())
+	    {
+	    
+	    tumb =  new Imagem();
+	    tumb.setImg(res.getBinaryStream("IMG_BANNER"));
+	   
+	    
+	    	
+	    }
+	   
+	   
+	    
+	    
+	    stm.close();
+	    res.close();
+	    	
+	    }catch(Exception e){
+	    	
+	    	Debug.gerar("Modelo","ImgDAO","getImgBanner", e.getMessage());
+	    }
+		
+		
+		//Converte a imagem para Tumb
+		
+        return tumb;
+		
+	}
+      
+      
       //Recupera a imagem de capa de um veiculo EM TAMANHO TUMB
       public Imagem getTumbImgCapa(long id_veiculo){
 		

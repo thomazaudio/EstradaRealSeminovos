@@ -66,9 +66,41 @@ src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 				<div id="navigation">
 
 					<ul>
-						<li><a href="./">Início</a></li>
-						<li><a href="about">Anuncie</a></li>
-						<li><a href="blog">Meus Anúncios</a></li>
+						<li><a href="#{contextoBean.contextoInicial}/inicio.xhtml">Início</a></li>
+						
+						<li>
+						
+						
+						<p:lightBox iframe="true" width="1200px" height="700px">  
+    					<h:outputLink  value="#{contextoBean.contextoInicial}/action.jsp">
+						
+						<f:param name="page_pos" value="cad_veiculo/index.jsp"></f:param>
+						<f:param name="text_page_pos" value="Cadastro de novo Veiculo"></f:param>
+						
+						<h:outputText value="Venda seu Veículo!"></h:outputText>
+						
+						</h:outputLink>
+       					
+   						  
+						</p:lightBox> 
+						
+						</li>
+						
+						<li>
+						
+						
+					<h:outputLink   value="#{contextoBean.contextoInicial}/action.jsp">
+						
+						<f:param name="page_pos" value="#{contextoBean.contextoInicial}/arearestritausuario/lista_anuncios.jsf"></f:param>
+						<f:param name="text_page_pos" value="Meus Anúncios"></f:param>
+						
+						<h:outputText value="Meus anúncios"></h:outputText>
+						
+						</h:outputLink>
+						
+						
+						
+						</li>
 						<li><a href="#">Revendas</a></li>
 						<li><a href="add">Ajuda</a></li>
 						<li><a href="contacts">Contato</a></li>

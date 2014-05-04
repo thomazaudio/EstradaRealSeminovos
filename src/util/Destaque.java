@@ -1,6 +1,15 @@
 package util;
 
+import java.io.IOException;
 import java.util.Calendar;
+
+import javax.faces.context.FacesContext;
+
+import org.apache.commons.io.IOUtils;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
+import Modelo.ImgDAO;
 
 public class Destaque {
 
@@ -15,7 +24,39 @@ public class Destaque {
 	private long codVeiculo;
 	private Calendar dataIni;
 	private Calendar dataFim;
+	private byte[] imgBanner;
 	
+	
+	
+	//RECUPERA A IMAGEM DE CAPA NO BANNER(NO CASO DE DESTAQUE-BANNER)
+	 public StreamedContent getcapaVeiculo() throws IOException {
+	       
+	        DefaultStreamedContent imgCapa;
+	        
+	        
+	        try{
+	        	
+				imgCapa = new DefaultStreamedContent();
+				imgCapa.setContentType("image/jpeg");
+				imgCapa.setStream(new ImgDAO().getImgBanner(this.getId()).getImg());
+	        	
+	        }catch(Exception e){
+	        	imgCapa = new DefaultStreamedContent();
+	        	imgCapa.setStream(null);
+	        	Debug.gerar("Bean","Destaque" , "Erro ao recuperar imagem do Banner",e.getMessage());
+	        }
+	        
+
+	        
+	        return imgCapa;
+	    }
+	
+	public byte[] getImgBanner() {
+		return imgBanner;
+	}
+	public void setImgBanner(byte[] img) {
+		this.imgBanner = img;
+	}
 	public long getId() {
 		return id;
 	}

@@ -119,7 +119,8 @@
 <property name="tipoDestaque"  column="TIPO_DESTAQUE"></property>
 <property name="codVeiculo"  column="COD_VEICULO" ></property>
 <property name="dataIni" column="DATA_INI" type="java.util.Calendar" ></property>
- <property name="dataFim" column="DATA_FIM" type="java.util.Calendar" ></property>
+<property name="dataFim" column="DATA_FIM" type="java.util.Calendar" ></property>
+
 
 </class>
 

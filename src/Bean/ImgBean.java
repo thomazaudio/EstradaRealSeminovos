@@ -58,6 +58,42 @@ public class ImgBean {
     }
     
     
+    
+    public StreamedContent getImgBanner() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        DefaultStreamedContent imgCapa;
+        
+        
+        try{
+        	
+
+            String id = context.getExternalContext().getRequestParameterMap().get("idDestaque");
+          
+        	
+			imgCapa = new DefaultStreamedContent();
+			imgCapa.setContentType("image/jpeg");
+			imgCapa.setStream(new ImgDAO().getImgBanner(Long.parseLong(id)).getImg());
+        	
+        }catch(Exception e){
+        	imgCapa = new DefaultStreamedContent();
+        	imgCapa.setStream(null);
+        	//Debug.gerar("Bean","ImgBean" , "Erro ao recuperar imagem de capa do veiculo",e.getMessage());
+        }
+        
+     
+        	
+            
+            
+      
+        
+        return imgCapa;
+    }
+    
+    
+    
+    
+    
     //RECUPERA A CAPA DO VEÍCULO E TAMANHO TUMB
     public StreamedContent getTumbCapaVeiculo() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();

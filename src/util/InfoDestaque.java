@@ -1,6 +1,26 @@
 package util;
 
+import java.io.IOException;
+
+import javax.faces.context.FacesContext;
+
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
+import Modelo.ImgDAO;
+
 public class InfoDestaque {
+
+	private long idDestaque;
+	public long getIdDestaque() {
+		return idDestaque;
+	}
+	
+	
+	public void setIdDestaque(long idDestaque) {
+		this.idDestaque = idDestaque;
+	}
+
 
 	private long codVeiculo;
 	private int anoFabricacao;
@@ -38,6 +58,10 @@ public class InfoDestaque {
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
+	
+	
+	
+    
 	
 	
 	

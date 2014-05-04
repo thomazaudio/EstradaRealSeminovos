@@ -7,14 +7,22 @@
 <title></title>
 </head>
 <body>
-<h2></h2>
 
-<% 
+<%
 
+String page_pos = request.getParameter("page_pos");
+String text_page_pos = request.getParameter("text_page_pos");
 
+if(page_pos==null)
+page_pos = "inicio.jsf";	
 
-response.sendRedirect("../esc_login.jsf");
+if(session.getAttribute("usuario")==null)
+response.sendRedirect("esc_login_simples.jsf?page_pos="+page_pos+"&&text_page_pos="+text_page_pos);
+else
+response.sendRedirect(page_pos);	
+
 
 %>
+
 </body>
 </html>
