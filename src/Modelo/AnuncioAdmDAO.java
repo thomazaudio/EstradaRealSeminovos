@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 import util.Debug;
+import util.Pagamento;
 
 public class AnuncioAdmDAO {
 	
@@ -17,14 +18,11 @@ public class AnuncioAdmDAO {
     	
     	try{
     		
-    		Connection con = Banco.abreBanco();
-    		Statement stm  =  con.createStatement();
-    	    
-    		stm.executeUpdate("UPDATE veiculo SET STATUS_PAGAMENTO=1 WHERE ID_VEICULO="+id);
-    		stm.close();
-    		
-    		System.out.println("Pagamento do veiculo '"+id+"' confirmado com sucesso!");
-    		
+    	//Recupera o pagamento
+    	Pagamento pag  =  new PagamentoDAO().getPagamento(id);
+    	
+    	//aprova a pagamento
+    	pag.aprovar();
     		
     		
     	}catch(Exception e){

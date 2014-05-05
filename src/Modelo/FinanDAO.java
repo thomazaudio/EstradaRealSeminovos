@@ -15,6 +15,40 @@ public class FinanDAO {
 	
 	
 	
+	
+	//DEBITAR UM VALOR DA CONTA
+    public void debitar(long user, double valor){
+		
+		Finan f = getFinan(user);
+		
+		System.out.println("Valor a ser debitado: "+valor);
+		
+		Session sessao =  HibernateUtil.getSessaoV().openSession();
+		
+		if(f!=null)
+		{
+	   
+	
+	    try{
+	    	
+	    	Connection con = Banco.abreBanco();
+	    	Statement stm = con.createStatement();
+	    	stm.executeUpdate("UPDATE financeiro SET SALDO="+(f.getSaldo()-valor)+" WHERE ID_FINAN="+f.getId());
+	    	
+	    	
+	    }catch(Exception e){
+	    	
+	    	Debug.gerar("","FinanDAO", "debitar", e.getMessage());
+	    	
+	    }
+	    
+	    
+		}
+		
+	
+		
+	}
+	
 	public void depositar(long user, double valor){
 		
 		Finan f = getFinan(user);
@@ -37,9 +71,7 @@ public class FinanDAO {
 		}
 		
 		
-		
-		
-		
+
 		
 		
 	}

@@ -29,6 +29,7 @@ import org.jrimum.domkee.financeiro.banco.febraban.SacadorAvalista;
 import org.jrimum.domkee.financeiro.banco.febraban.TipoDeTitulo;
 import org.jrimum.domkee.financeiro.banco.febraban.Titulo;
 
+import Modelo.PagamentoDAO;
 import Modelo.UsuarioDAO;
 import util.Empresa;
 import util.Pagamento;
@@ -87,10 +88,10 @@ public class PagamentoBean {
 		tipo_transacao = Integer.parseInt(p.get("tipo_transacao"));
 		
 		//Adicionar crédito
-		if(tipo_transacao==Pagamento.ADICIONAR_CREDITO){
+		if(tipo_transacao==Pagamento.CREDITO){
 			
 			
-		System.out.println("Trans: Add");	
+		
 			
 		//Encaminha para a pagina de escolha de valor
 	    try {
@@ -105,7 +106,7 @@ public class PagamentoBean {
 		}
 		
 		//Pagamento de anúncio
-		else if(tipo_transacao==Pagamento.PAGAR_ANUNCIO){
+		else if(tipo_transacao==Pagamento.CREDITO_DEBITO){
 			System.out.println("Trans: Pg");
 		}
 		
@@ -118,13 +119,27 @@ public class PagamentoBean {
 		
 		tipo_pagamento = Integer.parseInt(p.get("tipo_pagamento"));
 		
-
+		HttpSession sessao;
+        sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        long idUser = ((Usuario)sessao.getAttribute("usuario")).getId();
 		
 		if(tipo_pagamento==Pagamento.PAGAMENTO_BOLETO){
 			
 			
 			//Lança um novo pagamento no sistema
 			Pagamento pag = new Pagamento();
+			pag.setStatus(Pagamento.VALIDACAO_EM_ANALISE);
+			pag.setValor(this.valor);
+			pag.setTipo(tipo_transacao);
+			pag.setCodUser(idUser);
+			pag.setDescricao(Pagamento.getTextoTransacao(tipo_transacao));
+			
+			new PagamentoDAO().insert(pag);
+			
+			System.out.println("Detalhes do pagamento");
+			System.out.println("Tipo: "+pag.getTipo());
+			System.out.println("Valor: "+pag.getValor());
+			System.out.println("Usuário: "+pag.getCodUser());
 			
 			
 			
