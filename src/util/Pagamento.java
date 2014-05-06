@@ -34,6 +34,15 @@ public class Pagamento {
 	private int status;
 	private long idVeiculo;
 	
+	
+	public String getDataFormated(){
+		
+		if(this.getData()==null)
+		this.setData(Calendar.getInstance());	
+		
+		return Util.getDataFormated(this.getData());
+	}
+	
 	public long getIdVeiculo() {
 		return idVeiculo;
 	}
