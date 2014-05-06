@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import util.Pagamento;
 import util.Veiculo;
 import Modelo.AnuncioAdmDAO;
+import Modelo.PagamentoDAO;
 import Modelo.VeiculoDAO;
 
 @ManagedBean
@@ -31,7 +33,12 @@ public class AnuncioAdmBean {
 		//Recupera o id do veiculo
 		long id = Long.parseLong(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id"));
 		
-		new  AnuncioAdmDAO().confirmaPagamento(id);
+		
+		Pagamento pg = new PagamentoDAO().getPagamento(id);
+		
+		pg.aprovar();
+		
+		
 		
 	}
 	

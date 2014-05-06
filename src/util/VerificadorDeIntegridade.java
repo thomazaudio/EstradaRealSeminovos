@@ -17,23 +17,37 @@ public class VerificadorDeIntegridade {
 		
 		
 		
-	    ArrayList<Veiculo> vs = 	new VeiculoDAO().getAllVeiculos();
+	  ArrayList<Anuncio> anuncios = new AnuncioDAO().getAllAnuncios();
+	  
+	  
+	  ArrayList<Long> sem_int =  new ArrayList<Long>();
+	  
+	 
+	  
+	  for(int i=0;i<anuncios.size();i++)
+	  {
+		  
+		  if(new VeiculoDAO().getVeiculo(anuncios.get(i).getVeiculo().getId(),Veiculo.class)==null)
+		  sem_int.add(anuncios.get(i).getId());
+		  
+	  }
 	    
-	    if(vs.size()==0)
-	    System.out.println("Os dados estão integros(Anuncio/Veiculo)");	
-	    
-	    for(int i=0;i<vs.size();i++ )
-	    {
-	    	if(new AnuncioDAO().getAnuncio(vs.get(i).getId())==null)
-	    	{
-	    		
-	    	System.out.println("Deletando "+vs.get(i).getTitulo()+"...");	
-	    	new VeiculoDAO().delete(vs.get(i));	
-	    	}
-	    	
-	    }
-	    
-	    
+	  if(sem_int.size()==0)
+	  System.out.println("Os anúncios estão integros.");	
+	  
+	  else
+	  {
+		  
+		  System.out.println("Anúncios sem integridade");
+		  
+		  System.out.println("{");
+		  
+		  for(int i=0;i<sem_int.size();i++)
+		  System.out.println(sem_int.get(i)+" ");	  
+		  
+		  
+		  System.out.println("}");
+	  }
 	    
 		
 		

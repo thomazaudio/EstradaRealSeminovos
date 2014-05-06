@@ -1,13 +1,10 @@
 package util;
 
-import java.sql.Connection;
-import java.sql.Statement;
-import java.util.ArrayList;
+
 
 import Modelo.AnuncioAdmDAO;
-import Modelo.Banco;
 import Modelo.FinanDAO;
-import Modelo.VeiculoDAO;
+
 
 public class Acao {
 	

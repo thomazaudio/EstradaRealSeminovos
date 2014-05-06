@@ -66,8 +66,23 @@ public class FinanDAO {
 		}
 		else
 		{
-		f.setSaldo(getSaldo(user)+valor);
-		sessao.update(f);
+			
+			
+			 try{
+			    	
+			    	Connection con = Banco.abreBanco();
+			    	Statement stm = con.createStatement();
+			    	stm.executeUpdate("UPDATE financeiro SET SALDO="+(f.getSaldo()+valor)+" WHERE ID_USER="+user);
+			    	
+			    	
+			    }catch(Exception e){
+			    	
+			    	Debug.gerar("","FinanDAO", "depositar", e.getMessage());
+			    	
+			    }
+			    
+		
+		
 		}
 		
 		

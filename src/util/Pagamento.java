@@ -2,6 +2,8 @@ package util;
 
 import java.util.Calendar;
 
+import Modelo.PagamentoDAO;
+
 public class Pagamento {
 
 	//Tipos possiveis de pagamento (Transações)
@@ -88,19 +90,27 @@ public class Pagamento {
 	public void aprovar(){
 		
 		
+		if(this.getStatus()!=Pagamento.CONFIRMADO){
 		
+		//MARCA O PAGAMENTO COMO APROVADO
+		new PagamentoDAO().aprovaPagamento(this.getCod());
 		
 		
 		//VERIFICAÇÃO DO TIPO 
 		switch(this.getTipo()){
 		
-		case CREDITO: new Acao().executAcaoCredito(this.getCodUser(),this.getValor());
+		case CREDITO:
+			
+		new Acao().executAcaoCredito(this.getCodUser(),this.getValor());
+		
 		break;
 		
 		case DEBITO_CREDITO: new Acao().executaAcaoDebitoCredito(this.getCodUser(),this.getIdVeiculo(),this.getValor());
 		break;
 		
 		}
+		
+	  }
 		
 	}
 	

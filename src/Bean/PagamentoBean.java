@@ -128,7 +128,7 @@ public class PagamentoBean {
 			
 			//Lança um novo pagamento no sistema
 			Pagamento pag = new Pagamento();
-			pag.setStatus(Pagamento.VALIDACAO_EM_ANALISE);
+			pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
 			pag.setValor(this.valor);
 			pag.setTipo(tipo_transacao);
 			pag.setCodUser(idUser);

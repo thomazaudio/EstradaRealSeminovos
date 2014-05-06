@@ -9,28 +9,35 @@
 
 <f:view>
         <h:form id="lista">
-            <p:dataTable id="lazyDataTable" value="#{anuncioAdmBean.veiculos}" var="an" paginator="true" rows="10"
-               
+            <p:dataTable id="lazyDataTable" value="#{usuarioBean.pgs}" var="an" paginator="true" rows="10"
+              
                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                 rowsPerPageTemplate="5,10,15" style="width: 80%;margin-left: 10%;margin-right: 10%;">
  
            
  
                 <p:column>
-                    <f:facet name="header">Código do anúncio</f:facet>
-                    <h:outputText value="#{an.id}" />
+                    <f:facet name="header">Código da transação</f:facet>
+                    <h:outputText value="#{an.cod}" />
                 </p:column>
                 <p:column>
-                    <f:facet name="header">Titulo</f:facet>
-                    <h:outputText value="#{an.titulo}" />
+                    <f:facet name="header">Desricão</f:facet>
+                    <h:outputText value="#{an.descricao}" />
                 </p:column>
+                <p:column>
+                
+                 <f:facet name="header">Valor</f:facet>
+                    <h:outputText value="#{an.valor}" />
+                </p:column>
+               
                 
                  <p:column>
                     <f:facet name="header">Status</f:facet>
-                    <h:outputText value="Confirmado" rendered="#{an.statusPagamento!=0 and an.statusValidacao!=0}" />
-                    <h:outputText value="Aguardando pagamento - " rendered="#{an.statusPagamento==0}"></h:outputText>
+                    
+                    <h:outputText value="Confirmado" rendered="#{an.status==1}"></h:outputText>
+                      <h:outputText value="Em análise" rendered="#{an.status==2}"></h:outputText>
+                        <h:outputText value="Aguardando aprovação" rendered="#{an.status==3}"></h:outputText>
                    
-                     <h:outputText value="Aguardando validação dos dados"  rendered="#{an.statusValidacao==0}"></h:outputText>
                 </p:column>
                 
                  <p:column id="ind">
@@ -40,17 +47,7 @@
                     
                     <p:panelGrid columns="4">
                     
-                    <h:outputText value="Pagamento OK" rendered="#{an.statusPagamento!=0}"></h:outputText>
-                    
-                   
-                   
-                   <h:outputText value="Validação OK" rendered="#{an.statusValidacao!=0}"></h:outputText>
-                   <h:form>
-                     <p:commandButton value="Confirmar Dados" rendered="#{an.statusValidacao==0}">
-                      <p:ajax listener="#{anuncioAdmBean.confereDados}" update=":lista" ></p:ajax>
-                      <f:param name="id" value="#{an.id}"></f:param>
-                    </p:commandButton>
-                    </h:form>
+                  
                     
                     </p:panelGrid>
                     

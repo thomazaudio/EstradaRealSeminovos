@@ -20,11 +20,13 @@ import Modelo.ContatoDAO;
 import Modelo.FinanDAO;
 import Modelo.ImgDAO;
 import Modelo.LocalizacaoDAO;
+import Modelo.PagamentoDAO;
 import Modelo.PerguntaDAO;
 import Modelo.TrocaEmailDAO;
 import Modelo.UsuarioDAO;
 import util.Debug;
 import util.Imagem;
+import util.Pagamento;
 import util.Pergunta;
 import util.TrocaEmail;
 import util.Usuario;
@@ -43,6 +45,22 @@ public class UsuarioBean {
 	private String textoIniUsuario;
 	private String linkEditPerfil;
 	private double saldo;
+	private ArrayList<Pagamento> pgs;
+	
+	
+	//PAGAMENTOS DO USUÁRIO (EXTRATO)
+    public ArrayList<Pagamento> getPgs() {
+		
+		pgs =  new PagamentoDAO().getAllPagamentos(this.getUser().getId());
+		
+		return pgs;
+	}
+
+
+	public void setPgs(ArrayList<Pagamento> pgs) {
+		this.pgs = pgs;
+	}
+
 
 	public double getSaldo() {
 		

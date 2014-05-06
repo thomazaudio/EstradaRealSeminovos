@@ -393,14 +393,17 @@ public abstract class Veiculo {
 	public String getTitulo() {
 		
 		
-VeiculoDAO v = new VeiculoDAO();
+        VeiculoDAO v = new VeiculoDAO();
 		
-		
+       
+        System.out.println("Id do veículo: "+this.getId());
 		if(v.getTipo(this.getId()).equals("CARRO"))
 		{
 			Carro c = (Carro)this;
 			return v.getNomeFabricante(this.getCod_fabricante())+" "+v.getNomeModelo(this.getCodModelo())+" "+c.getVersao()
 			+" "+c.getMotor();
+			
+			
 		}
 		
 		else return "Titulo não definido para este tipo de veículo";

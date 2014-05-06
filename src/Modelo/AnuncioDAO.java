@@ -50,10 +50,34 @@ public class AnuncioDAO {
 	@SuppressWarnings("unchecked")
 	public ArrayList<Anuncio> getAnunciosForUser(long id_usuario){
 		
-		Session sessao = HibernateUtil.getSessaoV().openSession();
-		return (ArrayList<Anuncio>)sessao.createCriteria(Anuncio.class).add(Restrictions.eq("idUsuario",id_usuario)).list();
+		ArrayList<Anuncio> anuncios;
 		
+		Session sessao = HibernateUtil.getSessaoV().openSession();
+	   anuncios = (ArrayList<Anuncio>)sessao.createCriteria(Anuncio.class).add(Restrictions.eq("idUsuario",id_usuario)).list();
+		
+		   
+	   
+	   
+	   
+	   
+	   return anuncios;
 	}
+	
+public ArrayList<Anuncio> getAllAnuncios(){
+		
+		ArrayList<Anuncio> anuncios;
+		
+		Session sessao = HibernateUtil.getSessaoV().openSession();
+	   anuncios = (ArrayList<Anuncio>)sessao.createCriteria(Anuncio.class).list();
+		
+		   
+	   
+	   
+	   
+	   
+	   return anuncios;
+	}
+	
 	
 	//Atualiza a quantidade de visualizações
 	public void incrementVi(long id_anuncio){

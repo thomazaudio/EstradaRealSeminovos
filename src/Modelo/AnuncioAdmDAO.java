@@ -18,11 +18,10 @@ public class AnuncioAdmDAO {
     	
     	try{
     		
-    	//Recupera o pagamento
-    	Pagamento pag  =  new PagamentoDAO().getPagamento(id);
+    	Connection con = Banco.abreBanco();
+    	Statement stm =  con.createStatement();
+    	stm.executeUpdate("UPDATE veiculo SET STATUS_PAGAMENTO=1 WHERE ID_VEICULO="+id);
     	
-    	//aprova a pagamento
-    	pag.aprovar();
     		
     		
     	}catch(Exception e){

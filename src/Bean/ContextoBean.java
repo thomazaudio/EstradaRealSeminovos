@@ -11,9 +11,11 @@ import javax.faces.context.FacesContext;
 
 	public String getContextoInicial() {
 		
-	contextoInicial = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
-	return contextoInicial;
-	
+		contextoInicial = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+		
+		
+		System.out.println("Contexto="+contextoInicial);
+		return contextoInicial;
 	}
 
 	public void setContextoInicial(String contextoInicial) {
