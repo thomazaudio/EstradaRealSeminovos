@@ -538,6 +538,24 @@ public class VeiculoDAO {
 	}
 	
 	
+	  //ALTERA A PRIORIDADE DE UM VEÍCULO
+	public void alteraPrioridade(int prioridade,long veiculo){
+		
+		
+		try{
+			
+			Connection con = Banco.abreBanco();
+			Statement stm =  con.createStatement();
+			stm.executeUpdate("UPDATE veiculo SET PRIORIDADE_ANUNCIO="+prioridade+" WHERE ID_VEICULO="+veiculo);
+			
+			
+		}catch(Exception e){
+			
+			Debug.gerar("","VeiculoDAO","alteraPrioridade", e.getMessage());
+		}
+		
+	}
+	
 	//RECUPERA A QUANTIDADE TOTAL DE REGISTROS OBEDECENDO UMA RESTRIÇÃO
 		public long count(String classe,ArrayList<Criterion> rest){
 			

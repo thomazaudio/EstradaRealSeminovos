@@ -49,7 +49,20 @@ public abstract class Veiculo {
 	private int statusPagamento;
 	private int statusValidacao;
 	
+    private String textoPlano;
 	
+	
+	public String getTextoPlano() {
+		
+		textoPlano = Plano.getPlano(this.getPrioridade_anuncio());
+		
+		return textoPlano;
+	}
+
+
+	public void setTextoPlano(String textoPlano) {
+		this.textoPlano = textoPlano;
+	}
 	
 	
 	

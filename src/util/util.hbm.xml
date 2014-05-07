@@ -24,13 +24,14 @@
 <generator class="native"></generator>
 </id>
 
-<property name="idVeiculo" column="ID_VEICULO"  ></property>
+<property name="idVeiculo" column="ID_VEICULO"></property>
 <property name="codUser" column="COD_USER"  not-null="true"></property>
 <property name="tipo" column="TIPO" not-null="true"></property>
 <property name="data" column="DATA" type="java.util.Calendar"></property>
 <property name="descricao" column="DESCRICAO" not-null="true"></property>
 <property name="valor" column="VALOR" not-null="true"></property>
 <property name="status" column="STATUS" ></property>
+<property name="prioridade" column="PRIORIDADE" ></property>
 
 </class>
 

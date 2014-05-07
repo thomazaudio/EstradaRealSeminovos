@@ -16,6 +16,7 @@ public class PagamentoDAO {
 	
 	public void insert(Pagamento pagamento){
 		
+		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
 		
 		sessao.save(pagamento);

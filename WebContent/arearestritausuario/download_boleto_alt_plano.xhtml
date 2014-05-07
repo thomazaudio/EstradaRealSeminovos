@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:head>
+
+<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style980.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style800.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style700.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style600.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style500.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style400.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../css/jquery.fancybox-1.3.4.css" media="screen" />
+	
+
+</h:head>
+<h:body>
+<ui:include src="base.xhtml"></ui:include>
+
+
+<div class="content">
+
+
+
+
+<div class="message">
+<h3>Olá <strong>#{usuarioBean.nome}</strong>, o seu pedido de alteração de plano foi realizado com sucesso foi preocessado com sucesso, faça o download do boleto e siga as instruções para efetivação da solicitação.
+</h3>
+<h3>Lembramos que o prazo para compensação do valor através do pagamento via <strong>Boleto Bancário</strong> é de até dois dias úteis podendo ocorrer antes.</h3>
+</div>
+
+
+<h:form>
+<p:commandButton   icon="ui-icon-arrowthickstop-1-s" style="width:700px;height:150px;font-size:70px;" ajax="false" value="Gerar Boleto" action="#{altPlanoBean.geraPagamentoCreditoBoleto}"></p:commandButton>
+</h:form>
+
+
+
+</div>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+
+<ui:include src="../rodape.xhtml"></ui:include>
+
+</h:body>
+</html>

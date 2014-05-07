@@ -1,6 +1,7 @@
 package Bean;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.faces.bean.ManagedBean;
 
@@ -75,16 +76,10 @@ public class DestaqueBean {
 		}
 		
 		
+		//Embaralha
+		Collections.shuffle(destaqueBanner);
 		
-		ArrayList<InfoDestaque> lista_ord = new ArrayList<InfoDestaque>();
-		
-		for(int i=(destaqueBanner.size()-1);i>=0;i--)
-		lista_ord.add(destaqueBanner.get(i));
-		
-		System.out.println("Tempo="+(System.currentTimeMillis()-tempo));
-		
-		System.out.println("Quantidade de veiculos no plano Banner: "+lista_ord.size());
-		return lista_ord;
+		return destaqueBanner;
 	}
 	public void setDestaqueBanner(ArrayList<InfoDestaque> destaqueBanner) {
 		this.destaqueBanner = destaqueBanner;

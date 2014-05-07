@@ -10,9 +10,12 @@ public class Pagamento {
 	public static final int DEBITO_CREDITO=1;//PAGAMENTO DE AÚNCIO UTILIZANDO DINHEIRO EM CAIXA
 	public static  final int CREDITO_DEBITO=2;//PAGAMENTO DE ANÚNCIO UTILIZANDO BOLETO OU PAG-SEGURO
 	public static final  int CREDITO=3;//ADIÇÃO DE CRÉDITO NA CONTA DO USUÁRIO(DEPÓSITO)
+	public static final int ALT_PLANO=4;//ALTERAÇÃO DE PLANO
+	public static final int ALT_PLANO_CREDITO=5;//ALTERAÇÃO DE PLANO UTILIZANDO CREDITO EM CONTA
 	
 	//Método de pagamento
 	public static int PAGAMENTO_BOLETO=1;
+	public static int PAGAMENTO_CREDITO_CONTA=2;
 	
 	//Processos
 	//Validacao dos dados
@@ -33,8 +36,17 @@ public class Pagamento {
 	private String descricao;
 	private int status;
 	private long idVeiculo;
+	private int prioridade;
 	
 	
+	public int getPrioridade() {
+		return prioridade;
+	}
+
+	public void setPrioridade(int prioridade) {
+		this.prioridade = prioridade;
+	}
+
 	public String getDataFormated(){
 		
 		if(this.getData()==null)
@@ -117,6 +129,11 @@ public class Pagamento {
 		case DEBITO_CREDITO: new Acao().executaAcaoDebitoCredito(this.getCodUser(),this.getIdVeiculo(),this.getValor());
 		break;
 		
+		case ALT_PLANO: new Acao().executaAcaoAltPlano(this.getIdVeiculo(),this.getPrioridade());
+		break;
+		
+		case ALT_PLANO_CREDITO :new Acao().executaAcaoAltPlanoCredito(this.getIdVeiculo(), this.getPrioridade(),this.getValor(),this.getCodUser());
+		
 		}
 		
 	  }
@@ -136,7 +153,14 @@ public class Pagamento {
 		case CREDITO_DEBITO: texto = "";
 		break;
 		
+		case ALT_PLANO :texto="Alteração de plano";
+		break;
+		
+		case ALT_PLANO_CREDITO :texto="Alteração de plano";
+		break;
+		
 		case DEBITO_CREDITO: texto = "";
+		break;
 		
 		default: return texto = "";
 		

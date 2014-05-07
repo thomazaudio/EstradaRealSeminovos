@@ -2,7 +2,11 @@ package util;
 
 
 
+import java.sql.Connection;
+import java.sql.Statement;
+
 import Modelo.AnuncioAdmDAO;
+import Modelo.Banco;
 import Modelo.FinanDAO;
 
 
@@ -10,6 +14,46 @@ public class Acao {
 	
     
 	
+	//Caso : alteração do plano de um veículo já cadastrado(Boleto ou Pag-seguro)
+	public void executaAcaoAltPlano(long id_veiculo,int prioridade){
+		
+		try{
+			
+			Connection con = Banco.abreBanco();
+			Statement stm =  con.createStatement();
+			stm.executeUpdate("UPDATE veiculo SET PRIORIDADE_ANUNCIO="+prioridade+" WHERE ID_VEICULO="+id_veiculo);
+			
+			System.out.println("Plano do veiculo "+id_veiculo+" alterado com sucesso!");
+			
+		}catch(Exception e){
+			
+			Debug.gerar("", "Acao","executaAcaoAltPlano", e.getMessage());
+			
+		}
+		
+	}
+	
+	//Caso : alteração do plano de um veículo já cadastrado(Credito em conta)
+		public void executaAcaoAltPlanoCredito(long id_veiculo,int prioridade,double valor,long user){
+			
+			//Debitar valor correspondente da conta do usuário
+			new FinanDAO().debitar(user, valor);
+			
+			try{
+				
+				Connection con = Banco.abreBanco();
+				Statement stm =  con.createStatement();
+				stm.executeUpdate("UPDATE veiculo SET PRIORIDADE_ANUNCIO="+prioridade+" WHERE ID_VEICULO="+id_veiculo);
+				
+				System.out.println("Plano do veiculo "+id_veiculo+" alterado com sucesso!");
+				
+			}catch(Exception e){
+				
+				Debug.gerar("", "Acao","executaAcaoAltPlano", e.getMessage());
+				
+			}
+			
+		}
 	
 	
 	//CASO:  uso do dinheiro em caixa para pagar um anúncio
