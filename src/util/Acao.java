@@ -17,6 +17,11 @@ public class Acao {
 	//Caso : alteração do plano de um veículo já cadastrado(Boleto ou Pag-seguro)
 	public void executaAcaoAltPlano(long id_veiculo,int prioridade){
 		
+		
+		
+		//Liberaçao finaceira do anúncio
+		new  AnuncioAdmDAO().confirmaPagamento(id_veiculo);
+
 		try{
 			
 			Connection con = Banco.abreBanco();
@@ -35,6 +40,12 @@ public class Acao {
 	
 	//Caso : alteração do plano de um veículo já cadastrado(Credito em conta)
 		public void executaAcaoAltPlanoCredito(long id_veiculo,int prioridade,double valor,long user){
+			
+			
+			
+			
+			//Liberaçao finaceira do anúncio
+			new  AnuncioAdmDAO().confirmaPagamento(id_veiculo);
 			
 			//Debitar valor correspondente da conta do usuário
 			new FinanDAO().debitar(user, valor);
@@ -72,6 +83,15 @@ public class Acao {
 		
 	}
 	
+	
+	//Caso: Pagamento de veículo no ato de cadastro
+	public void executaAcaoCreditoDebito(long id_veiculo){
+		
+		//Liberaçao finaceira do anúncio
+		new  AnuncioAdmDAO().confirmaPagamento(id_veiculo);
+		
+	}
+	
 	//Caso: Adicionar crédito na conta
 	public void executAcaoCredito(long id_usuario,double valor){
 		
@@ -80,6 +100,13 @@ public class Acao {
 		
 	}
 	
+	
+	public void executaAcaoReemitePagamento(long id_veiculo){
+		
+
+		//Liberaçao finaceira do anúncio
+		new  AnuncioAdmDAO().confirmaPagamento(id_veiculo);
+	}
 	
 
 }

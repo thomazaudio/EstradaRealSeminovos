@@ -31,23 +31,22 @@
 
 <div class="content">
 
-<div class="fundo_azul">
+<div class="message">
 
-<h2 class="texto_branco">Olá <strong>#{usuarioBean.user.nome}!</strong> Por favor, escolha uma forma de pagamento para prosseguir com seu pedido.</h2>
+<p>Escolha a forma de pagamento.</p>
 
 </div>
 
 <p:panel header="Escolha uma forma de pagamento">
 
-<p:panelGrid columns="4">
+<p:panelGrid columns="3">
 <p:panel header="Boleto Bancário">
 <p:panelGrid columns="1"> 
-<h:outputText></h:outputText>
 <h:form prependId="false">
-<p:commandButton  value="Pagar via Boleto bancário" action="#{altPlanoBean.escTipoPagamento}" >
+<p:commandButton styleClass="btn blue" value="Pagar via Boleto bancário" action="#{pagamentoAnuncio.escTipoPagamentoCadastro}" >
 
 <f:param  name="tipo_pagamento"  value="1"></f:param>
-<f:param  name="tipo_transacao"  value="4"></f:param>
+<f:param  name="tipo_transacao"  value="2"></f:param>
 
 </p:commandButton>
 
@@ -60,10 +59,10 @@
 </p:panel>
 
 
+<p:outputLabel  value="               -               " ></p:outputLabel>
+<p:panel header="PagSeguro" style="align:right;">
 
-<p:panel header="PagSeguro" >
 
-<p:panelGrid columns="2"> 
 
 <!-- Declaração do formulário -->  
 <form method="post" target="pagseguro"  action="https://pagseguro.uol.com.br/v2/checkout/payment.html" onsubmit="PagSeguroLightbox(this); return false;">  
@@ -105,26 +104,6 @@
 
 
 <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
-
-</p:panelGrid>
-</p:panel>
-
-<!-- Pagamento utilizando credito -->
-<p:panel header="Crédito em conta">
-<p:panelGrid columns="2"> 
-<h:outputText value="Saldo: R$ #{usuarioBean.saldo}"></h:outputText>
-
-<h:form prependId="false">
-<p:commandButton styleClass="btn blue" value="Pagar utilizando saldo da conta" action="#{altPlanoBean.debitoConta}" >
-
-<f:param  name="tipo_pagamento"  value="2"></f:param>
-<f:param  name="tipo_transacao"  value="5"></f:param>
-
-</p:commandButton>
-
-</h:form>
-
-</p:panelGrid>
 
 
 </p:panel>

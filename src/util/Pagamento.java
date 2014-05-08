@@ -6,14 +6,15 @@ import Modelo.PagamentoDAO;
 
 public class Pagamento {
 
-	//Tipos possiveis de pagamento (Transações)
+	//Tipos possiveis de pagamento (parametro= tipo_transacao)
 	public static final int DEBITO_CREDITO=1;//PAGAMENTO DE AÚNCIO UTILIZANDO DINHEIRO EM CAIXA
 	public static  final int CREDITO_DEBITO=2;//PAGAMENTO DE ANÚNCIO UTILIZANDO BOLETO OU PAG-SEGURO
 	public static final  int CREDITO=3;//ADIÇÃO DE CRÉDITO NA CONTA DO USUÁRIO(DEPÓSITO)
 	public static final int ALT_PLANO=4;//ALTERAÇÃO DE PLANO
 	public static final int ALT_PLANO_CREDITO=5;//ALTERAÇÃO DE PLANO UTILIZANDO CREDITO EM CONTA
+	public static final int REEMITE_PAGAMENTO=6;//REEMISSÃO DE PAGAMENTO PARA UM ANÚNCIO
 	
-	//Método de pagamento
+	//Método de pagamento(parametro= tipo_pagamento)
 	public static int PAGAMENTO_BOLETO=1;
 	public static int PAGAMENTO_CREDITO_CONTA=2;
 	
@@ -129,10 +130,16 @@ public class Pagamento {
 		case DEBITO_CREDITO: new Acao().executaAcaoDebitoCredito(this.getCodUser(),this.getIdVeiculo(),this.getValor());
 		break;
 		
+		case CREDITO_DEBITO: new Acao().executaAcaoCreditoDebito(this.getIdVeiculo());
+		
 		case ALT_PLANO: new Acao().executaAcaoAltPlano(this.getIdVeiculo(),this.getPrioridade());
 		break;
 		
 		case ALT_PLANO_CREDITO :new Acao().executaAcaoAltPlanoCredito(this.getIdVeiculo(), this.getPrioridade(),this.getValor(),this.getCodUser());
+		break;
+		
+		case REEMITE_PAGAMENTO : new Acao().executaAcaoReemitePagamento(this.getIdVeiculo());
+	
 		
 		}
 		
@@ -150,7 +157,7 @@ public class Pagamento {
 		case CREDITO: texto = "Adição de crédito";
 		break;
 		
-		case CREDITO_DEBITO: texto = "";
+		case CREDITO_DEBITO: texto = "Pagamento de Anúncio";
 		break;
 		
 		case ALT_PLANO :texto="Alteração de plano";
@@ -160,6 +167,9 @@ public class Pagamento {
 		break;
 		
 		case DEBITO_CREDITO: texto = "";
+		break;
+		
+		case REEMITE_PAGAMENTO: texto ="Reemissão de pagamento de anúncio";
 		break;
 		
 		default: return texto = "";

@@ -51,17 +51,18 @@
 		<div class="content">
 
 
-			<div class="main_wrapper">
+		
 
-				<div class="message">
 				
-				    <p><img height="34" src="images/logo_2.png" alt="" /></p>
-					<h2> Seja bem vindo ao <strong>Estrada Real seminovos</strong>! Escolha uma opção abaixo para continuar.</h2>
-					
+				
+				    <p align="center"><img align="middle" height="100" src="images/logo_2.png" alt="" /></p>
+				    <div class="fundo_azul">
+					<h2 class="texto_branco"> Seja bem vindo ao <strong>Estrada Real seminovos</strong>! Escolha uma opção abaixo para continuar.</h2>
+					</div>
 					
 					<h:outputText rendered="#{!loginBean.textonull}"  value="Em seguida você será encaminhado para"> </h:outputText>
 					<strong>'#{loginBean.textPagePos}'</strong>
-				</div>
+				
 				<div class="car_characteristics">
 
 
@@ -76,8 +77,8 @@
                       
                          <h:inputHidden id="page_pos" value="#{page}" ></h:inputHidden>
                         
-						<p:panel header="Já possui cadastro?">
-							<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+						<p:panel  header="Já possui cadastro?">
+							<h:panelGrid styleClass="painel_lado"  columns="2" columnClasses="column" cellpadding="5">
 
                              
 								<h:outputText value="Email: " />
@@ -95,6 +96,8 @@
 						
 						</h:form>
 				</div>
+				
+				
 				<div class="car_characteristics">
                    
                    <h:form prependId="false">
@@ -103,8 +106,9 @@
 					<p:growl id="msgs"></p:growl>
 					<p:growl id="msg_temp"></p:growl>
 					
+				
 					
-					<p:panel header="Não possue cadastro?" >
+					<p:panel  style="border-left:100px"  header="Não possue cadastro?" >
 						<h:panelGrid columns="2" columnClasses="column" cellpadding="5" >
 							<h:outputText value="Cnpj ou cpf: " />
 
@@ -134,7 +138,7 @@
 				<p>Em caso de dúvidas utilize uma das formas de contato do site.</p>
 				</div>
 
-			</div>
+			
 		</div>
 	</div>
 	<ui:include src="rodape.xhtml"></ui:include>

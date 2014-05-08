@@ -22,7 +22,7 @@
 
 </h:head>
 <h:body>
-<ui:include src="base.xhtml"></ui:include>
+<ui:include src="../arearestritausuario/base.xhtml"></ui:include>
 
 
 <div class="content">
@@ -31,15 +31,14 @@
 
 
 <div class="message">
-<h3>Olá <strong>#{usuarioBean.nome}</strong>, o seu pedido de alteração de plano foi processado  com sucesso, faça o download do boleto e siga as instruções para efetivação da solicitação.
+<h3>Olá <strong>#{usuarioBean.nome}</strong>, o seu pedido de crédito no valor de <strong> R$ #{pagamentoBean.valor}</strong> foi realizado com sucesso, faça o download do boleto e siga as instruções para efetivação da solicitação.
 </h3>
 <h3>Lembramos que o prazo para compensação do valor através do pagamento via <strong>Boleto Bancário</strong> é de até dois dias úteis podendo ocorrer antes.</h3>
-<h3>Você receberá uma notificação quando seu pedido for efetivado, você pode também acompanhar o status do seu pedido clicando em 'Extrato' no menu 'Financeiro'</h3>
 </div>
 
 
 <h:form>
-<p:commandButton   icon="ui-icon-arrowthickstop-1-s" style="width:700px;height:150px;font-size:70px;" ajax="false" value="Gerar Boleto" action="#{altPlanoBean.geraPagamentoCreditoBoleto}"></p:commandButton>
+<p:commandButton   icon="ui-icon-arrowthickstop-1-s" style="width:700px;height:150px;font-size:70px;" ajax="false" value="Gerar Boleto" action="#{pagamentoAnuncio.geraPagamentoCreditoBoleto}"></p:commandButton>
 </h:form>
 
 

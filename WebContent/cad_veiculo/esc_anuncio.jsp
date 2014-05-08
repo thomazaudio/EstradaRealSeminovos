@@ -66,7 +66,56 @@
                               
                               <form action="ServAnuncio" method="POST">
 								<input type="hidden" name="STEP" value="1">
-								<input type="hidden" name="tipo_plano" value="1">
+								<input type="hidden" name="prioridade_anuncio" value="5">
+									<input type="hidden" name="tipo_veiculo" value="1">
+									<input class="btn blue" type="image" value="Escolher este" >
+										</form>
+                               
+                                
+                        </div>
+                        
+                        </div>
+                        
+                        
+                        <div class="content_z conteiner-hv2">
+	<div class="container-top clearfix">
+	                            <div class="car_characteristics">
+	                            
+	                          
+	                            
+                               <div class="price"><strong>Anúcio Grátis</strong></div>
+                              <div class="message">
+                              
+                              
+                                
+                         <div class="features_table">
+					  
+					  
+					  
+					   
+					
+					
+						
+							<h3><strong>Vantagens</strong></h3>
+							<p><span>*</span>Destaque na página inicial.</p>
+							<p><span>*</span>Até 15 fotos por anúncio.</p>
+							<p><span>*</span>O veículo permance cadastrado até a venda.</p>
+						
+						
+						
+					</div>
+                              
+                              
+                              </div>
+                              
+                              
+                                                              </div> 
+                                                                <img src="images/logo_2.png" alt="" /> 
+                              
+                              
+                              <form action="ServAnuncio" method="POST">
+								<input type="hidden" name="STEP" value="1">
+								<input type="hidden" name="prioridade_anuncio" value="1">
 									<input type="hidden" name="tipo_veiculo" value="1">
 									<input class="btn blue" type="image" value="Escolher este" >
 										</form>

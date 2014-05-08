@@ -25,7 +25,7 @@ import util.Localizacao;
 import util.Moto;
 import util.Pagamento;
 import util.Pessoa;
-import util.PlanoAnuncio;
+import util.Plano;
 import util.Sessao;
 import util.Usuario;
 import util.Veiculo;
@@ -50,6 +50,7 @@ public class ServAnuncio extends HttpServlet {
 	private  final String PAGE_STEP_3="edit_veiculo.jsp?page=edit_img.jsp?id_veiculo=";
 	private  final String PAGE_STEP_4="edit_veiculo.jsp?page=cad_veiculo/pre_carro.jsp";//Carro
 	private  final String PAGE_STEP_5="edit_veiculo.jsp?page=cad_veiculo/pre_moto.jsp";//Moto
+	private  final String PAGE_ESC_PAGAMENTO="cad_veiculo/esc_pagamento.jsf";
 
 	//Constantes de etapas
 	private final int STEP_0=0;
@@ -203,6 +204,11 @@ public class ServAnuncio extends HttpServlet {
 		
 		
 		
+		
+		//Joga o id do veiculo na sessão
+		sessao.setAttribute("cod_veiculo",an.getVeiculo().getId());
+		
+		
 	
 		
 		//Seta o usuário responsável pelo anúncio
@@ -225,12 +231,12 @@ public class ServAnuncio extends HttpServlet {
 		{
 			
 		//RECUPERA O TIPO DE PLANO INFORMADO NO INICIO
-		int tipoPlano = (Integer) sessao.getAttribute("tipo_plano");	
+		int prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");	
 			
 		//----SE O PLANO FOR GRÁTIS----	
 		//*OS DADOS DO VEÍCULOS SÃO SALVOS EM ESPERA PARA ANALISE DOS AGENTES DO SISTEMA
 		//*REDIRECIONA PARA A PÁGINA DE ANÚNCIO CADASTRADO COM SUCESSO	
-		if(tipoPlano==PlanoAnuncio.GRATUITO)
+		if(prioridade_anuncio==Plano.PRIORIDADE_GRATIS)
 		{
 			
 		//CONFIGURAÇÃO DOS STATUS PARA GRATIS
@@ -245,6 +251,21 @@ public class ServAnuncio extends HttpServlet {
 		//----SE O PLANO FOR PAGO----		
 		//*REDIRECIONA PARA A PÁGINA DE PAGAMENTO E CONFIRMAÇÃO DE PAGAMENTO
 		//REDIRECIONA PARA A PÁGINA DE ANÚNCIO CADASTRADO MAS AGUARDANDO PAGAMENTO	
+		else if(prioridade_anuncio==Plano.PRIORIDADE_MEGA){
+		
+			
+			
+			//Configuração dos dados para prioridade Meag
+			
+			an.getVeiculo().setStatusPagamento(Pagamento.AGUARDANDO_APROVACAO);
+			an.getVeiculo().setStatusValidacao(Pagamento.VALIDACAO_EM_ANALISE);
+				
+			new VeiculoDAO().update(an.getVeiculo());
+			new AnuncioDAO().insert(an);	
+			response.sendRedirect(this.PAGE_ESC_PAGAMENTO);	
+			
+			
+		}
 			
 			
 			
@@ -364,7 +385,7 @@ public class ServAnuncio extends HttpServlet {
 		else if(step==this.STEP_1)
 		{
 			Anuncio an = (Anuncio) sessao.getAttribute("anuncio");
-			int tipoPlano;
+			
 			int tipoVeiculo;
 
 
@@ -372,13 +393,13 @@ public class ServAnuncio extends HttpServlet {
 			sessao.setAttribute(""+this.STEP_1,1);
 
 		
-			tipoPlano = Integer.parseInt(request.getParameter("tipo_plano"));
+			int prioridade_anuncio = Integer.parseInt(request.getParameter("prioridade_anuncio"));
 
 			//Recupera o tipo de vepiculo da sessão
 			tipoVeiculo = (Integer)sessao.getAttribute("tipo_veiculo");
 
 			//Joga os dados na sessao para serem facilmente utilizados com get
-			sessao.setAttribute("tipo_plano",tipoPlano); 
+			sessao.setAttribute("prioridade_anuncio",prioridade_anuncio); 
 			
 
 			//Atribuição de valores de acordo com o plano escolhido

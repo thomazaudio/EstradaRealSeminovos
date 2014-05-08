@@ -122,14 +122,25 @@
 								
 							   
 							     
-							   
+							   <div class="fundo_azul">
+							<p class="texto_branco"><strong>#{ans.veiculo.textoPlano}</strong></p>
+							</div>
 
-								<div class="price"><p ><strong>#{ans.veiculo.statusAnuncio}</strong></p></div>
+								<div class="price">
+								<div class="fundo_laranja">
+								<p class="texto_branco"><strong>#{ans.veiculo.statusAnuncio}</strong></p>
+								</div>
+								</div>
 								
-								<h:form rendered="#{ans.veiculo.statusPagamento!=1}"> 
-								<p:commandButton value="Realizar pagamento" ></p:commandButton>
 								
-								</h:form>
+								<p:commandButton rendered="#{ans.veiculo.statusPagamento!=1}" value="Realizar pagamento" action="#{pagamentoAnuncio.escTipoPagamentoReemissao}" >
+								<f:param name="prioridade_anuncio" value="#{ans.veiculo.prioridade_anuncio}" />
+								<f:param name="cod_veiculo" value="#{ans.veiculo.id}" />
+								
+								
+								</p:commandButton>
+								
+								
 								
 								
 								
@@ -145,25 +156,19 @@
 							
 								
 								
-								<br></br>
+							
 								
 								
 								
 								
 							</div>
 							<div class="clear"></div>
+							
 							<div class="grey_area">
-								<span>Plano: <strong>#{ans.veiculo.textoPlano}</strong></span> <span>Termina em:  <strong>#{ans.dataIniFormated}</strong></span>
+								 <span>Termina em:  <strong>#{ans.dataIniFormated}</strong></span>
 							</div>
-							<div class="grey_area">
-
-								
-								
-								 
-  								
-  								
-  								
-  								
+							
+							<div class="grey_area">	
     						     <h:outputLink class="iframe"  value="../ServAnuncio" styleClass="btn blue" > 
     						     <f:param name="STEP"   value="10"></f:param>
     						     <f:param name="mostra_step"   value="0"></f:param>
@@ -188,8 +193,8 @@
 
 							</div>
 							<a class="iframe"
-								href="../anuncio.jsp?id_veiculo=#{ans.veiculo.id}"><h4>Visualizar
-								anúncio</h4></a>
+								href="../anuncio.jsp?id_veiculo=#{ans.veiculo.id}">Visualizar
+								anúncio</a>
 						</div>
 
 					</li>

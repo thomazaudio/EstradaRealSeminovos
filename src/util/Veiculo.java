@@ -121,14 +121,14 @@ public abstract class Veiculo {
 		{
 			
 			if(this.statusValidacao==Pagamento.VALIDACAO_OK)
-			return "Anúncio publicado!";
+			return "ANÚNCIO PUBLICADO!";
 			
 			else 
-			return "Analisando dados do anúncio";	
+			return "ANALISANDO DADOS DO ANÚNCIO";	
 		}
 
 		else
-		return "Aguardando pagamento";	
+		return "AGUARDANDO PAGAMENTO";	
 		
 	}
 
