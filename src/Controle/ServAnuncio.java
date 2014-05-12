@@ -2,15 +2,44 @@ package Controle;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+
+
+
+
+import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+
+
+
+
+
+
+
+import org.apache.commons.io.IOUtils;
+
+
+
+
+
 
 import Modelo.AnuncioDAO;
 import Modelo.ContatoDAO;
+import Modelo.ImgDAO;
 import Modelo.ItemDAO;
 import Modelo.LocalizacaoDAO;
 import Modelo.UsuarioDAO;
@@ -42,15 +71,15 @@ public class ServAnuncio extends HttpServlet {
 	private final String PAGE_EDIT_CARRO="arearestritausuario/edit_carro.jsp";
 
 	//Constantes com os endereços das paginas de cada etapa
-	private  final String PAGE_CAD_SECESSO = "cad_veiculo/cad_anuncio_sucesso.jsf";
-	private  final String PAGE_ESC_ANUNCIO="edit_veiculo.jsp?page=cad_veiculo/esc_anuncio.jsp";
-	private  final String PAGE_CAD_INFO_CARRO="edit_veiculo.jsp?page=cad_veiculo/cad_info_carro.jsp";
-	private  final String PAGE_CAD_INFO_MOTO="edit_veiculo.jsp?page=cad_veiculo/cad_info_moto.jsp";
-	private  final String PAGE_STEP_2="edit_veiculo.jsp?page=cad_veiculo/esc_contato.jsp";
-	private  final String PAGE_STEP_3="edit_veiculo.jsp?page=edit_img.jsp?id_veiculo=";
-	private  final String PAGE_STEP_4="edit_veiculo.jsp?page=cad_veiculo/pre_carro.jsp";//Carro
-	private  final String PAGE_STEP_5="edit_veiculo.jsp?page=cad_veiculo/pre_moto.jsp";//Moto
-	private  final String PAGE_ESC_PAGAMENTO="cad_veiculo/esc_pagamento.jsf";
+	public static  final String PAGE_CAD_SECESSO = "cad_veiculo/cad_anuncio_sucesso.jsf";
+	public static final String PAGE_ESC_ANUNCIO="edit_veiculo.jsp?page=cad_veiculo/esc_anuncio.jsp";
+	public static final String PAGE_CAD_INFO_CARRO="edit_veiculo.jsp?page=cad_veiculo/cad_info_carro.jsp";
+	public static final String PAGE_CAD_INFO_MOTO="edit_veiculo.jsp?page=cad_veiculo/cad_info_moto.jsp";
+	public static final String PAGE_STEP_2="edit_veiculo.jsp?page=cad_veiculo/esc_contato.jsp";
+	public static final String PAGE_STEP_3="edit_veiculo.jsp?page=edit_img.jsp?id_veiculo=";
+	public static final String PAGE_STEP_4="edit_veiculo.jsp?page=cad_veiculo/pre_carro.jsp";//Carro
+	public static final String PAGE_STEP_5="edit_veiculo.jsp?page=cad_veiculo/pre_moto.jsp";//Moto
+    public static final String PAGE_ESC_PAGAMENTO="cad_veiculo/esc_pagamento.jsf";
 
 	//Constantes de etapas
 	private final int STEP_0=0;
@@ -61,6 +90,7 @@ public class ServAnuncio extends HttpServlet {
 	private final int STEP_5 = 5;
 	private final int EDIT_ANUNCIO=10;
 	private final int DELETE_ANUNCIO=11;
+	private final int CADASTRA_BANNER=12;
 	private int step;
 
 	private int mostra_step;
@@ -251,18 +281,21 @@ public class ServAnuncio extends HttpServlet {
 		//----SE O PLANO FOR PAGO----		
 		//*REDIRECIONA PARA A PÁGINA DE PAGAMENTO E CONFIRMAÇÃO DE PAGAMENTO
 		//REDIRECIONA PARA A PÁGINA DE ANÚNCIO CADASTRADO MAS AGUARDANDO PAGAMENTO	
-		else if(prioridade_anuncio==Plano.PRIORIDADE_MEGA){
+		else {
 		
 			
 			
-			//Configuração dos dados para prioridade Meag
-			
+			//Configuração dos dados para prioridade Mega
 			an.getVeiculo().setStatusPagamento(Pagamento.AGUARDANDO_APROVACAO);
 			an.getVeiculo().setStatusValidacao(Pagamento.VALIDACAO_EM_ANALISE);
+			
+			//Prioridade do anúncio
+			an.getVeiculo().setPrioridade_anuncio(prioridade_anuncio);
 				
 			new VeiculoDAO().update(an.getVeiculo());
 			new AnuncioDAO().insert(an);	
 			response.sendRedirect(this.PAGE_ESC_PAGAMENTO);	
+			
 			
 			
 		}
@@ -394,6 +427,8 @@ public class ServAnuncio extends HttpServlet {
 
 		
 			int prioridade_anuncio = Integer.parseInt(request.getParameter("prioridade_anuncio"));
+			
+
 
 			//Recupera o tipo de vepiculo da sessão
 			tipoVeiculo = (Integer)sessao.getAttribute("tipo_veiculo");
@@ -647,7 +682,7 @@ public class ServAnuncio extends HttpServlet {
 
 			//Redireciona para a pagina de escolha de imagens
 			if(mostra_step==1)	
-				response.sendRedirect(this.PAGE_STEP_3+carro.getId()+"&&mostra_step=1");	 
+			response.sendRedirect(this.PAGE_STEP_3+carro.getId()+"&&mostra_step=1");	 
 
 			//request.getRequestDispatcher(this.PAGE_STEP_3+carro.getId()).forward(request,response);
 			else
@@ -713,6 +748,10 @@ public class ServAnuncio extends HttpServlet {
 		
 			
 		}
+		
+		
+		
+		
 
 	}
 	

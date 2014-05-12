@@ -29,7 +29,7 @@ public class DestaqueBean {
 		
 		long tempo  =  System.currentTimeMillis();
 		
-	     VeiculoDAO   dao  =  new VeiculoDAO();
+	    VeiculoDAO   dao  =  new VeiculoDAO();
 		
 		ArrayList<Destaque> destaques = new DestaqueDAO().getDestaques(Destaque.DESTAQUE_INFERIOR);
 		

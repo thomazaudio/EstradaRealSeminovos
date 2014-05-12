@@ -16,6 +16,7 @@ import org.hibernate.SessionFactory;
 
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -240,10 +241,10 @@ public class VeiculoDAO {
 		cri.setMaxResults(total);
 		
 		//Somente os veiculos que estão validados
-		//cri.add(Restrictions.eq("statusValidacao",Pagamento.VALIDACAO_OK));
+		cri.add(Restrictions.eq("statusValidacao",Pagamento.VALIDACAO_OK));
 		
 		//Somente anuncios pagos
-		//cri.add(Restrictions.eq("statusPagamento",Pagamento.CONFIRMADO));
+		cri.add(Restrictions.eq("statusPagamento",Pagamento.CONFIRMADO));
 		
 		
 		
@@ -252,6 +253,10 @@ public class VeiculoDAO {
 		cri.add(rest.get(i));
 		
 		
+		
+		//Oredem de prioridade
+		cri.addOrder(Order.asc("prioridade_anuncio"));  
+
 		
 		
 		

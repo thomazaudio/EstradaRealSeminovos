@@ -39,6 +39,7 @@ public class ServImg extends HttpServlet {
 	public final int GET_CAPA =7;
 	public final int GET_LOGO =8;
 	public final int SET_LOGO =9;
+	public final int GET_IMG_TEMP_BANNER =10;
 	public int soli; 
 	public int mostra_step=0;
 
@@ -124,6 +125,18 @@ public class ServImg extends HttpServlet {
 			response.setContentLength(img.length);
 			response.getOutputStream().write(img);	
 			
+			
+		}
+		
+		//Imagem temporaria de banner destaque
+		else if(soli==this.GET_IMG_TEMP_BANNER){
+			
+			//Recebe o id do veiculo
+			long id_veiculo = Long.parseLong(request.getParameter("ID_VEICULO"));
+			byte[] img = new ImgDAO().getImgTempBanner(id_veiculo);
+			response.setContentType("image/jpeg");
+			response.setContentLength(img.length);
+			response.getOutputStream().write(img);	
 			
 		}
 		

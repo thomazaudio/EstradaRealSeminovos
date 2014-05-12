@@ -642,6 +642,73 @@ public class ImgDAO {
 	
 	
 	
+	//Método para recuperação de uma imagem de banner temporária
+	 public byte[] getImgTempBanner(long id_veiculo){
+		
+		
+		 
+		
+		 
+		byte [] img= null;
+		
+		
+	     try{
+				
+				Connection con = Banco.abreBanco();
+				Statement stm =  con.createStatement();
+				ResultSet res = stm.executeQuery("SELECT * FROM temp_img_banner WHERE ID_VEICULO="+id_veiculo);
+				
+				if(res.next())
+				img =  res.getBytes("IMG_BANNER");
+					
+				else
+				Debug.gerar("","ImgDAO","getImgTempBanner","Erro ao recupera imagem de banner temporária(Não existe) id_veiculo+"+id_veiculo);
+					
+				
+				
+	     }catch(Exception e){
+	    	 
+	    	 Debug.gerar("","ImgDAO","getImgTempBanner", e.getMessage());
+	     }
+	     
+	     return img;
+	}
+	
+	
+	//Método para inserçao de imagem temporária para o banner destaque
+	public void insertImgTempBanner(byte[] img,long id_veiculo){
+		
+
+     try{
+			
+			Connection con = Banco.abreBanco();
+			Statement stm_ =  con.createStatement();
+			
+			//Deleta uma imagem anterior se existir
+			stm_.executeUpdate("DELETE FROM temp_img_banner WHERE ID_VEICULO="+id_veiculo);
+			
+			
+			PreparedStatement stm =  con.prepareStatement("INSERT INTO temp_img_banner(ID_VEICULO,IMG_BANNER) VALUES(?,?)");
+			stm.setLong(1,id_veiculo);
+			stm.setBytes(2,img);
+			
+			
+			stm.execute();
+			
+			
+			System.out.println("Imagem de banner temporaria inserida com sucesso!");
+		
+			
+			
+		}catch(Exception e){
+			
+			
+			
+			Debug.gerar("Modelo", "ImagDAO","inserImgBannerTemp", e.getMessage());
+		}
+		
+	}
+	
 
 	//LOGO
 	public void updateLogo(long id_user,byte[] logo){
@@ -654,6 +721,8 @@ public class ImgDAO {
 			stm.setLong(2,id_user);
 			
 			stm.executeUpdate();
+			
+			
 			System.out.println("Logo alterada com sucesso!");
 		
 			
@@ -696,4 +765,34 @@ public class ImgDAO {
 	return null;
 	}
 
+	
+	
+	//Altera uma imagem de um banner destaque
+	public void updateImgBannerDestaque(byte[] img, long id_veiculo){
+		
+		
+try{
+			
+			Connection con = Banco.abreBanco();
+			PreparedStatement stm =  con.prepareStatement("UPDATE destaque set IMG_BANNER = ? WHERE COD_VEICULO=? && TIPO_DESTAQUE="+Destaque.DESTAQUE_BANNER);
+			stm.setBytes(1,img);
+			stm.setLong(2,id_veiculo);
+			
+			stm.executeUpdate();
+			
+			
+			System.out.println("Imagem de banner alterada com sucesso!");
+		
+			
+			
+		}catch(Exception e){
+			
+			System.out.println("Erro ao alterar imagem do banner"+e.getMessage());
+			
+			Debug.gerar("Modelo", "UsuarioDAO","updateImgBannerdestaque", e.getMessage());
+		}
+		
+	}
+	
+	
 }

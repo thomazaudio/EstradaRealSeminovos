@@ -36,18 +36,9 @@ public class Main {
 		//new VerificadorDeIntegridade().verificaIntegridadeAnuncio();
 		
 		
+	    new AnuncioAdmDAO().confirmaPagamento(258);
 		
-		Pagamento pg = new Pagamento();
-		
-		pg.setCodUser(37);
-		pg.setValor(50.30);
-		pg.setIdVeiculo(260);
-		pg.setTipo(Pagamento.DEBITO_CREDITO);
-		pg.setDescricao("Pagamento de anúncio 'Mega'");
-		pg.setData(Calendar.getInstance());
-		
-		new PagamentoDAO().insert(pg);
-		
+	
 		
 	
 	}

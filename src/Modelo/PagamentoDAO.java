@@ -32,6 +32,7 @@ public class PagamentoDAO {
 			Connection con  = Banco.abreBanco();
 			Statement stm =  con.createStatement();
 			stm.executeUpdate("UPDATE pagamento set STATUS="+Pagamento.CONFIRMADO+" WHERE COD_PAGAMENTO="+codPagamento);
+			stm.close();
 			
 		}catch(Exception e){
 			

@@ -17,6 +17,7 @@ public class Pagamento {
 	//Método de pagamento(parametro= tipo_pagamento)
 	public static int PAGAMENTO_BOLETO=1;
 	public static int PAGAMENTO_CREDITO_CONTA=2;
+	public static int PAGAMENTO_PAG_SEGURO=1;
 	
 	//Processos
 	//Validacao dos dados
@@ -124,13 +125,13 @@ public class Pagamento {
 		case CREDITO:
 			
 		new Acao().executAcaoCredito(this.getCodUser(),this.getValor());
-		
 		break;
 		
 		case DEBITO_CREDITO: new Acao().executaAcaoDebitoCredito(this.getCodUser(),this.getIdVeiculo(),this.getValor());
 		break;
 		
 		case CREDITO_DEBITO: new Acao().executaAcaoCreditoDebito(this.getIdVeiculo());
+		break;
 		
 		case ALT_PLANO: new Acao().executaAcaoAltPlano(this.getIdVeiculo(),this.getPrioridade());
 		break;
@@ -139,7 +140,7 @@ public class Pagamento {
 		break;
 		
 		case REEMITE_PAGAMENTO : new Acao().executaAcaoReemitePagamento(this.getIdVeiculo());
-	
+	    break;
 		
 		}
 		

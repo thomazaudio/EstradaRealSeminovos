@@ -66,25 +66,22 @@ public class PagamentoAnuncio {
 		        
 		        //Tipo de plano
 		         prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");
-		        
-		         
-		       
 		         
 		         //Codigo do veiculo
 		         codVeiculo = (Long) sessao.getAttribute("cod_veiculo");
 		         
 		         System.out.println("Id do veiculo na sessoa: "+codVeiculo);
 		        
-		        //Valor 
+		         //Valor 
 		         valor = Plano.getPrecoPlano(prioridade_anuncio);
 		        
 		        
 		        //Tipo de transação
 		         tipo_transacao = Integer.parseInt(p.get("tipo_transacao"));
 		        
-		        System.out.println("A prioridade do auncio é: "+prioridade_anuncio);
+		         //Lança um
 				
-				if(tipo_pagamento==Pagamento.PAGAMENTO_BOLETO){
+				 if(tipo_pagamento==Pagamento.PAGAMENTO_BOLETO){
 					
 					
 					//Lança um novo pagamento no sistema
@@ -142,9 +139,7 @@ public class PagamentoAnuncio {
 		        System.out.println("PLano: "+prioridade_anuncio);
 		        System.out.println("Preco: "+Plano.getPrecoPlano(prioridade_anuncio));
 		        
-		       
-		        
-
+		    
 		        //Valor 
 		        valor = Plano.getPrecoPlano(prioridade_anuncio);
 		     
@@ -225,7 +220,7 @@ public class PagamentoAnuncio {
 		 
 		 
 		 
-		//Emite um boleto para acionar crédito ao fincanceiro de um usuário
+		    //Emite um boleto para acionar crédito ao fincanceiro de um usuário
 			public void geraPagamentoCreditoBoleto(){
 				
 				

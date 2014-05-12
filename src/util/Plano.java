@@ -1,6 +1,15 @@
 package util;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class Plano {
+	
+	
+	
+	//Quantidade de dias que o destaque ficara no ar
+	public static final int DIAS_MEGA =30;
+	public static final int DIAS_ULTRA=20;
 	
 	//Nomes
 	public static final String NOME_ANUNCIO_ULTRA="DESTAQUE ULTRA + HOME + BANNER";
@@ -33,6 +42,32 @@ public class Plano {
 		
 		}
 	}
+	
+	
+	//Recupera a data final de cada plano lançado no sistema
+	public static Calendar getDataFim(int prioridade_anuncio){
+		
+		
+		Calendar fim = Calendar.getInstance();
+		
+		
+		
+		
+		
+		switch(prioridade_anuncio){
+	
+		case PRIORIDADE_MEGA :fim.add(Calendar.DAY_OF_MONTH,DIAS_MEGA);
+		break;
+		
+		case PRIORIDADE_ULTRA :fim.add(Calendar.DAY_OF_MONTH,DIAS_ULTRA);
+		
+		}
+		
+		return fim;
+	}
+	
+	
+	
 	
 	
 	//Recupera o nome do plano de acordo com a prioridade

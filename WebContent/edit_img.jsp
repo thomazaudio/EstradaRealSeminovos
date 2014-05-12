@@ -3,6 +3,8 @@
     <%@page import="Modelo.ImgDAO"%>
      <%@page import="util.Usuario"%>
       <%@page import="util.Anuncio"%>
+      <%@page import="util.Plano"%>
+      <%@page import="util.Debug"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -88,13 +90,45 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 					
 						
 					</div>
-				
+					
+					<% 
+					
+					//Se prioridade =  Ultra ->Vou para escolha de Destaque Banner
+					int prioridade_anuncio =-1;
+					try{
+					 prioridade_anuncio = (Integer) session.getAttribute("prioridade_anuncio");
+					}catch(Exception e){
 						
+						Debug.gerar("","edit_img.jsp","","A prioridade_anuncio não foi recuperada");
+						
+					}
+					
+					
+					//Banner Destaque
+					if(prioridade_anuncio==Plano.PRIORIDADE_ULTRA)
+					{
+					%>
+				    
+				    <form action="cad_veiculo/esc_img_banner.jsp" method="GET" >
+					<input type="hidden" name="ID_VEICULO" value="<%=id_veiculo%>">
+					<input class="btn_2 blue" type="submit" value="Continuar">
+					</form>
+					
+					
+					
+					<% 
+					}
+					else {
+					%>
+					
 					<form action="ServAnuncio" method="GET" >
 					<input type="hidden" name="STEP" value="4">
 					<input type="hidden" name="mostra_step" value="<%=mostra_step%>">
 					<input class="btn_2 blue" type="submit" value="<%=nome_bt%>">
 					</form>
+					
+					<% }%>
+					
 					<h3><a id="iframe" class="btn red"  href="upload_imagem/index.html?id_veiculo=<%=id_veiculo%>">+Adicionar Imagens</a></h3>
 					<%
 					

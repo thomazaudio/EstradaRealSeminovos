@@ -48,6 +48,19 @@
                     <f:facet name="header">Data</f:facet>
                      <h:outputText value="#{an.dataFormated}" ></h:outputText>
                     </p:column>
+                    
+                   <p:column>
+                   
+                   <f:facet name="header">Veículo afetado</f:facet>
+                   
+                   <p:lightBox  iframe="true">
+                   
+                   <a href="../anuncio.jsp?id_veiculo=#{an.idVeiculo}">#{an.idVeiculo}</a>
+                   
+                   
+                   </p:lightBox>
+                   
+                   </p:column> 
                 
                  <p:column id="ind">
                  

@@ -124,6 +124,9 @@
 <property name="dataFim" column="DATA_FIM" type="java.util.Calendar" ></property>
 
 
+<property name="status" column="STATUS"></property>
+
+
 </class>
 
 

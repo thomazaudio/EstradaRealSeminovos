@@ -1,6 +1,8 @@
 package Modelo;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,19 +16,170 @@ import org.hibernate.criterion.Restrictions;
 import util.Debug;
 import util.Destaque;
 import util.InfoDestaque;
+import util.Plano;
 
 public class DestaqueDAO {
 
 	
 	public void insert(Destaque d){
 		
-			Session sessao = HibernateUtil.getSessaoV().openSession();
-			sessao.saveOrUpdate(d);
-			sessao.flush();
-			sessao.close();	
+		//REGRAS
+		//1-Não é permitido adicionar um veiculo mais de uma vez no destaque
+		//2-O veículo inserirdo no plano BANNER é automaticamente inserido no PLANO_INFERIOR também
+		//3-No caso de inserção de um veciulo já existente, acontece a prorrogação de data final
+		
+		     
+		    System.out.println("Inserindo novo destaque");
+		      
+		    //Remove o destaque caso ele exista
+		    removeDestaque(d.getCodVeiculo(),d.getTipoDestaque());
+		
+		
+		    Session sessao = HibernateUtil.getSessaoV().openSession();
+		    
+	
+			sessao.save(d);
+			
+			
+			//Se for destaque banner é inserido como destaque Inferior tambem
+			if(d.getTipoDestaque()==Destaque.DESTAQUE_BANNER){
+				
+				Destaque destaque_inf = new Destaque();
+				destaque_inf.setCodVeiculo(d.getCodVeiculo());
+				destaque_inf.setDataFim(d.getDataFim());
+				destaque_inf.setDataIni(d.getDataIni());
+				destaque_inf.setStatus(0);//Não confirmado
+				destaque_inf.setTipoDestaque(Destaque.DESTAQUE_INFERIOR);
+				
+				
+			
+				sessao.save(destaque_inf);
+				
+				
+				
+			}
+			
+			sessao.close();
 		
 	}
 	
+	
+	//Remove um destaque
+	public void removeDestaque(long id_veiculo,int tipo_destaque){
+		
+     try{
+			
+			Connection con =  Banco.abreBanco();
+			Statement  stm =  con.createStatement();
+			stm.executeUpdate("DELETE  FROM destaque WHERE COD_VEICULO="+id_veiculo+" && TIPO_DESTAQUE="+tipo_destaque);
+			
+			
+			//Ser for destaque banner, deleta também oo inferior
+			if(tipo_destaque==Destaque.DESTAQUE_BANNER)
+			stm.executeUpdate("DELETE  FROM destaque WHERE COD_VEICULO="+id_veiculo+" && TIPO_DESTAQUE="+Destaque.DESTAQUE_INFERIOR);
+		
+			
+			
+			
+			
+		}catch(Exception e){
+			
+			Debug.gerar("","DestaqueDAO","removeDestaque",e.getMessage());
+			
+		} 
+		
+		
+		
+	}
+	
+	
+	//Ativa um destaque(Ato de pagamento)
+	public void ativaDestaque(int prioridade,long id_veiculo){
+		
+		switch(prioridade){
+		
+		case Plano.PRIORIDADE_ULTRA:	
+		System.out.println("Destaque Ultra");
+		this.ativaDestaqueBanner(id_veiculo);
+		this.ativaDestaqueInferior(id_veiculo);
+		break;
+		
+		
+		case  Plano.PRIORIDADE_MEGA: 
+		System.out.println("Destaque Mega");
+		this.ativaDestaqueInferior(id_veiculo);	
+		break;
+		
+		default: 
+		System.out.println("Nenhum destaque definido para o tipo de plano");	
+		
+		
+		}
+		
+	}
+	
+	//Ativa um destaque do tipo inferior
+	public void ativaDestaqueInferior(long id_veiculo){
+		
+		
+		 try{
+			    Date data_ini =  new Date(Calendar.getInstance().getTimeInMillis()); 
+			    Date data_fim =  new Date(Plano.getDataFim(Plano.PRIORIDADE_MEGA).getTimeInMillis());
+				
+				Connection con = Banco.abreBanco();
+				PreparedStatement stm =  con.prepareStatement("UPDATE destaque set DATA_INI=?,DATA_FIM=?,STATUS =1 WHERE COD_VEICULO=? && TIPO_DESTAQUE="+Destaque.DESTAQUE_INFERIOR);
+				stm.setDate(1,data_ini);
+				stm.setDate(2,data_fim);
+				stm.setLong(3,id_veiculo);
+				
+				
+				stm.executeUpdate();
+				stm.close();
+				
+				System.out.println("Destaque ativado com sucesso!");
+			
+				
+				
+			    }catch(Exception e){
+			    	
+			    	
+			    	Debug.gerar("","DestaqueDAO","ativaDestaqueInferior",e.getMessage());
+			    }
+		
+	}
+	
+	//Ativa um destaque do tipo banner
+	public void ativaDestaqueBanner(long id_veiculo){
+		
+		
+        try{
+        	
+        	Date data_ini =  new Date(Calendar.getInstance().getTimeInMillis()); 
+			Date data_fim =  new Date(Plano.getDataFim(Plano.PRIORIDADE_MEGA).getTimeInMillis());
+			
+			Connection con = Banco.abreBanco();
+			PreparedStatement stm =  con.prepareStatement("UPDATE destaque set DATA_INI=?,DATA_FIM=?,STATUS = ? WHERE COD_VEICULO=? && TIPO_DESTAQUE="+Destaque.DESTAQUE_BANNER);
+			stm.setDate(1,data_ini);
+			stm.setDate(2,data_fim);
+			stm.setInt(3,1);
+			stm.setLong(4,id_veiculo);
+			
+			
+			stm.executeUpdate();
+			
+			
+			System.out.println("Destaque ativado com sucesso!");
+		
+			
+			
+		    }catch(Exception e){
+		    	
+		    	
+		    	Debug.gerar("","DestaqueDAO","ativaDestaqueBanner",e.getMessage());
+		    }
+		
+	}
+  
 	
 	//COLOCA TODOS OS VEÍCULOS COMO DESTAQUE INFERIOR
 	public void setAllDestaqueInferior(Calendar dataFim)
@@ -76,11 +229,17 @@ public class DestaqueDAO {
 		
 		c.add(Restrictions.eq("tipoDestaque", tipo));
 		
+		//Destaques ativos no sistema
+		c.add(Restrictions.eq("status",1));
+		
 		destaques = (ArrayList<Destaque>) c.list();
 		
 		return destaques;
 		
 	}
+	
+	
+	
 	
 	//RECUPERA AS INFORMAÇÕES DE CADA DESTAQUE
 	public InfoDestaque getInforDestaque(long codVeiculo,long idDestaque){

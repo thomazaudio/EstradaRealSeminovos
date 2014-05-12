@@ -82,16 +82,14 @@ public class AltPlanoBean {
 	//Inicio da alteração
 	public void alteraPlano(){
 		
+	Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		
-		
-		Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		
-		codVeiculo= Long.parseLong(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("cod_veiculo"));
+	codVeiculo= Long.parseLong(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("cod_veiculo"));
         
 		
-		System.out.println("Codigo do veiculo="+codVeiculo);
+	System.out.println("Codigo do veiculo="+codVeiculo);
 		
-		//Encaminha pra pagina de escolha do plano
+		//Encaminha pra pagina de escolha do plano a ser alterado
 		 try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("alt_plano.jsf");
 			
@@ -112,6 +110,7 @@ public class AltPlanoBean {
 	//Após escolha do plano, escolha do pagamento
 	public void escPagamento(){
 		
+		//Recebe a prioridade que é de acordo com o plano escolhido
 		prioridade_anunio = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("prioridade_anuncio"));
 		
 		
@@ -123,16 +122,53 @@ public class AltPlanoBean {
 			e.printStackTrace();
 		}
 	}
+	    
+	
+	    //Método recebedor dos parametros do pagamento
+	    public void pagar(){
+	    	
+	    	//Recebe o tipo de transacao
+	    	
+	    	//Recebe o tipo de pagamento
+	    	
+	    	
+	    	
+	    }
 	
 	
+	    //Método escolhido  = PAGAMENTO_BOLETO
+		//Tipo de Transação  = CREDITO_DEBITO
+		//Tipo de pagamento  = PAGAMENTO_BOLETO
+	    public void pagamentoBoleto(){
+	    	
+	    	//Lança o pagamento no sistema
+	    	
+	    	//Redireciona para a página definida
+	    	
+	    }
+	  
 	
+	    
+	    //Método escolhido = PAGAMENTO_PAG_SEGURO
+		//Tipo de Transação  = CREDITO_DEBITO
+    	//Tipo de pagamento  = PAGAMENTO_PAG_SEGURO
+	    public void pagamentoPagSeguro(){
+	    	
+             //Lança o pagamento no sistema
+	    	
+	    	//Redireciona para a página definida
+	    	
+	    }
+	    
+	    
+	    
 	
-	    //Debito na conta
+	    //Método escolhido = Debito na conta
+	    //Tipo de Transação  = DEBITO_CREDITO
+	    //Tipo de pagamento  = PAGAMENTO_CREDITO_CONTA
 	    public void debitoConta(){
 	    	
-	    	
-	    	
-            Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+	        Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 			
 			tipo_pagamento = Integer.parseInt(p.get("tipo_pagamento"));
 			
@@ -155,10 +191,12 @@ public class AltPlanoBean {
 			
 			new PagamentoDAO().insert(pag);
 			
+			
+			
+			//COMO O VALOR É DEBITADO INSTANTANEAMENTE DA CONTA DO USUÁRIO, O PAGAMENTO É IMEDIATAMENTE APROVADO
 			pag.aprovar();
 			
 
-			
 		    try {
 				FacesContext.getCurrentInstance().getExternalContext().redirect("alt_sucesso.jsf");
 			} catch (IOException e) {
@@ -218,10 +256,6 @@ public class AltPlanoBean {
 			//Pagamento através d credito existente em conta
 			else if(tipo_pagamento==Pagamento.PAGAMENTO_CREDITO_CONTA)	
 			{
-				
-				
-				
-
 				//Lança um novo pagamento no sistema
 				Pagamento pag = new Pagamento();
 				pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
@@ -234,10 +268,7 @@ public class AltPlanoBean {
 				
 				new PagamentoDAO().insert(pag);
 				
-				
-				
-				
-				
+		
 				//Encaminha para a pagina de download de boleto
 			    try {
 					FacesContext.getCurrentInstance().getExternalContext().redirect("download_boleto_alt_plano.jsf");
@@ -258,8 +289,8 @@ public class AltPlanoBean {
 	}
 	
 	
-	//Emite um boleto para acionar crédito ao fincanceiro de um usuário
-		public void geraPagamentoCreditoBoleto(){
+	
+		   public void geraPagamentoCreditoBoleto(){
 			
 			
 			System.out.println("Prioridade do anúncio");

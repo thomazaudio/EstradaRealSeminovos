@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import Modelo.AnuncioAdmDAO;
 import Modelo.Banco;
+import Modelo.DestaqueDAO;
 import Modelo.FinanDAO;
 
 
@@ -18,11 +19,8 @@ public class Acao {
 	public void executaAcaoAltPlano(long id_veiculo,int prioridade){
 		
 		
-		
-		//Liberaçao finaceira do anúncio
-		new  AnuncioAdmDAO().confirmaPagamento(id_veiculo);
-
-		try{
+	   //Mudança da prioridade do anúncio	
+       try{
 			
 			Connection con = Banco.abreBanco();
 			Statement stm =  con.createStatement();
@@ -36,6 +34,11 @@ public class Acao {
 			
 		}
 		
+		//Liberaçao finaceira do anúncio
+		new  AnuncioAdmDAO().confirmaPagamento(id_veiculo);
+
+		
+		
 	}
 	
 	//Caso : alteração do plano de um veículo já cadastrado(Credito em conta)
@@ -43,14 +46,8 @@ public class Acao {
 			
 			
 			
-			
-			//Liberaçao finaceira do anúncio
-			new  AnuncioAdmDAO().confirmaPagamento(id_veiculo);
-			
-			//Debitar valor correspondente da conta do usuário
-			new FinanDAO().debitar(user, valor);
-			
-			try{
+			//Mudança da prioridade do anúncio
+            try{
 				
 				Connection con = Banco.abreBanco();
 				Statement stm =  con.createStatement();
@@ -63,6 +60,15 @@ public class Acao {
 				Debug.gerar("", "Acao","executaAcaoAltPlano", e.getMessage());
 				
 			}
+			
+			
+			//Liberaçao finaceira do anúncio
+			new  AnuncioAdmDAO().confirmaPagamento(id_veiculo);
+			
+			//Debitar valor correspondente da conta do usuário
+			new FinanDAO().debitar(user, valor);
+			
+			
 			
 		}
 	
@@ -103,8 +109,7 @@ public class Acao {
 	
 	public void executaAcaoReemitePagamento(long id_veiculo){
 		
-
-		//Liberaçao finaceira do anúncio
+        //Liberaçao finaceira do anúncio
 		new  AnuncioAdmDAO().confirmaPagamento(id_veiculo);
 	}
 	

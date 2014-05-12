@@ -51,28 +51,7 @@
 	<!--BEGIN CONTENT-->
 	
 	
-	<div id="header">
-		
-		<div class="top_info">
-		 
-           <div class="logo">
-           
-             <img  height="120" src="images/logo.png" alt="" />
-           </div> 
-
-
-
-			<div class="header_contacts">
-				<div class="phone"></div>
-
-
-			</div>
-			<div class="socials"></div>
-
-		</div>
-		
-
-	</div>
+	
 	
 		<div id="content">
 		

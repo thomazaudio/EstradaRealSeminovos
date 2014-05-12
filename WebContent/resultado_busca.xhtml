@@ -528,6 +528,9 @@
                           
                        <p:outputPanel id="v" >
 						  <p:draggable for="v" revert="true"></p:draggable>
+						 <div class="fundo_laranja">
+						<p class="texto_branco">#{res.textoPlano}</p>
+						</div> 
                         <a target="_blank" id="" class="thumb" href="anuncio.jsp?id_veiculo=#{res.id}">
                         
                         
@@ -538,18 +541,22 @@
                         </a>
 				      
 						<div class="catalog_desc">
+						
 						<div class="location"><strong>#{res.condicaoTroca}</strong></div>
 						<div class="title_box">
+						
 						<h4><a href="anuncio.jsp?id_veiculo=#{res.id}">#{res.titulo}</a></h4>
 						<div class="price">R$ #{res.preco}</div>
 						</div>
 						<div class="clear"></div>
 						<div class="grey_area">
-						
+						<div class="fundo_azul">
 						<ui:repeat var="it" value="#{res.itensFiltered}" size="4">
 						
-						<strong>#{it.item} - </strong>
+						<strong class="texto_branco">#{it.item} - </strong>
 						</ui:repeat>
+						
+						</div>
 						
 						<div class="clear"></div>
 						<br></br>

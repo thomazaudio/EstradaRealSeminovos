@@ -1,6 +1,8 @@
 package util;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 
 import javax.faces.context.FacesContext;
@@ -24,10 +26,18 @@ public class Destaque {
 	private long codVeiculo;
 	private Calendar dataIni;
 	private Calendar dataFim;
-	private byte[] imgBanner;
+	private int status;
 	
 	
 	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	//RECUPERA A IMAGEM DE CAPA NO BANNER(NO CASO DE DESTAQUE-BANNER)
 	 public StreamedContent getcapaVeiculo() throws IOException {
 	       
@@ -51,12 +61,7 @@ public class Destaque {
 	        return imgCapa;
 	    }
 	
-	public byte[] getImgBanner() {
-		return imgBanner;
-	}
-	public void setImgBanner(byte[] img) {
-		this.imgBanner = img;
-	}
+	
 	public long getId() {
 		return id;
 	}
