@@ -8,15 +8,24 @@ import javax.faces.event.ValueChangeEvent;
 
 
 
+
+
+
 import Modelo.AnuncioDAO;
 import util.Anuncio;
+import util.Ordenacao;
 import util.Pagina;
 import util.Paginacao;
 
 
 
+
+
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @ManagedBean(name="anuncioBean")
@@ -101,6 +110,29 @@ public class AnuncioBean {
 		
 	  anuncios = pag.getPaginaElements(getPage());
 	  
+	  
+	  //Verifica o tipo de ordenação
+	  
+	  switch(tipoOrdenacao){
+	  
+	  case Ordenacao.ORD_DESTAQUE:
+	  
+		  ordenaPorDestaque(anuncios);
+		  
+	  break;
+	  
+	  case Ordenacao.ORD_ANO:
+		  
+		ordenaPorAno(anuncios);
+	  
+	  break;
+	  
+	  case Ordenacao.ORD_VALOR:
+	  
+	  break;
+	  
+	  }
+	  
 	 
 	  
 	  return anuncios;
@@ -164,6 +196,26 @@ public class AnuncioBean {
 	private int page=1;
 	private int quantPorPagina=10;
 	private long quantPaginas;
+	private int tipoOrdenacao;//Destaque, valor
+	private int ordem;//Crescente decrescente
+	
+	public int getTipoOrdenacao() {
+		return tipoOrdenacao;
+	}
+	public void setTipoOrdenacao(int tipoOrdenacao) {
+		this.tipoOrdenacao = tipoOrdenacao;
+	}
+	public int getOrdem() {
+		return ordem;
+	}
+	public void setOrdem(int ordem) {
+		this.ordem = ordem;
+	}
+
+
+	
+	
+	
 	
 	public long getQuantPaginas() {
 		return quantPaginas;
@@ -269,6 +321,61 @@ public class AnuncioBean {
 		System.out.println("Pagina2: "+this.getPage());
 		
 	}
+	
+	
+	//Ordenação
+	 // Para ordenar por destaque 
+    private static void ordenaPorDestaque(List<Anuncio> lista) {  
+        Collections.sort(lista, new Comparator<Anuncio>() {  
+            @Override  
+            public int compare(Anuncio o1, Anuncio o2) {  
+                
+            	Integer prioridade_1 = o1.getVeiculo().getPrioridade_anuncio();
+            	Integer prioridade_2 = o2.getVeiculo().getPrioridade_anuncio();
+            	
+            	return prioridade_1.compareTo(prioridade_2);
+            	
+            	
+            }
+	
+           
+     });  
+    }  
+    
+    
+    // Para ordenar por preco
+    private static void ordenaPorAno(List<Anuncio> lista) {  
+        Collections.sort(lista, new Comparator<Anuncio>() {  
+            @Override  
+            public int compare(Anuncio o1, Anuncio o2) {  
+                
+            	
+            	Integer  ano_1 = o1.getVeiculo().getAnoModelo();
+            	Integer  ano_2 = o2.getVeiculo().getAnoModelo();
+            	
+            	return ano_1.compareTo(ano_2);
+            	
+            	
+            }
+	
+           
+     });  
+    } 
+    
+    
+    //Coloca o array em ordem decrescente
+    public ArrayList<Anuncio> getDecrescente(ArrayList<Anuncio> ans){
+    	
+    	ArrayList<Anuncio> n = new ArrayList<Anuncio>();
+    	
+    	for(int i= (ans.size() -1);i>=0;i--)
+    	n.add(ans.get(i));
+    	
+    	
+    	return n;
+    	
+    	
+    }
 	
 	
 }

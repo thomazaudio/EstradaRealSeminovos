@@ -11,7 +11,7 @@
 
 <h:head>
 
-<title>Home</title>
+<title></title>
 	<link rel="stylesheet" type="text/css" href="../css/style.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style980.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style800.css" />
@@ -44,10 +44,9 @@
 <p:panelGrid columns="1"> 
 <h:outputText></h:outputText>
 <h:form prependId="false">
-<p:commandButton  value="Pagar via Boleto bancário" action="#{altPlanoBean.escTipoPagamento}" >
+<p:commandButton  value="Pagar via Boleto bancário" action="#{altPlanoBean.pagar}" >
 
 <f:param  name="tipo_pagamento"  value="1"></f:param>
-<f:param  name="tipo_transacao"  value="4"></f:param>
 
 </p:commandButton>
 
@@ -115,10 +114,10 @@
 <h:outputText value="Saldo: R$ #{usuarioBean.saldo}"></h:outputText>
 
 <h:form prependId="false">
-<p:commandButton styleClass="btn blue" value="Pagar utilizando saldo da conta" action="#{altPlanoBean.debitoConta}" >
+<p:commandButton  value="Pagar utilizando saldo da conta" action="#{altPlanoBean.pagar}" >
 
 <f:param  name="tipo_pagamento"  value="2"></f:param>
-<f:param  name="tipo_transacao"  value="5"></f:param>
+
 
 </p:commandButton>
 

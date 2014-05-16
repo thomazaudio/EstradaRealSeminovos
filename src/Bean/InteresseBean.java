@@ -2,6 +2,7 @@ package Bean;
 
 import java.util.ArrayList;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -40,7 +41,7 @@ public class InteresseBean {
 	
 	public void addVeiculo(){
 		  
-		 
+		  FacesMessage msg = new FacesMessage();
 		
 		  FacesContext context =  FacesContext.getCurrentInstance();
 		 
@@ -49,9 +50,15 @@ public class InteresseBean {
 		  
 		  if(veiculos.size()==5)
 		  veiculos.set(4,(Veiculo)new VeiculoDAO().getVeiculo(Integer.parseInt(id),Veiculo.class));  
+		  
 			  
 		  else
 		  veiculos.add((Veiculo)new VeiculoDAO().getVeiculo(Integer.parseInt(id),Veiculo.class));
+		  
+		  msg.setSummary("Veículo adicionado a lista.");
+		  msg.setSeverity(FacesMessage.SEVERITY_INFO);
+		  
+		  context.addMessage(null,msg);
 
 
 	}

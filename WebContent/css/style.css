@@ -1043,15 +1043,20 @@ img.aligncenter {
 	padding: 1px 19px 0;
 }
 .home_tabs .box {
+	border-top:50px;
   	display: none;
   	background: #F8F8F8;
   	border: 1px solid #D9DDE3;
   	padding: 15px 19px 20px;
 }
 .home_tabs .box.visible {
+	border-top:50px;
   	display: block;
 }
 .home_tabs .box .all{
+	
+	
+	border-top:50px;
 	font-size: 13px;
 	color: #293848;
 	line-height: 20px;

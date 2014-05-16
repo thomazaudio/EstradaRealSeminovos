@@ -3,17 +3,13 @@ package Bean;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.jrimum.bopepo.BancosSuportados;
 import org.jrimum.bopepo.Boleto;
 import org.jrimum.bopepo.view.BoletoViewer;
@@ -35,6 +31,7 @@ import Modelo.UsuarioDAO;
 import util.Empresa;
 import util.Pagamento;
 import util.Pessoa;
+import util.Transacao;
 import util.Usuario;
 
 
@@ -89,7 +86,7 @@ public class PagamentoBean {
 		tipo_transacao = Integer.parseInt(p.get("tipo_transacao"));
 		
 		//Adicionar crédito
-		if(tipo_transacao==Pagamento.CREDITO){
+		if(tipo_transacao==Transacao.CREDITO){
 			
 			
 		
@@ -107,7 +104,7 @@ public class PagamentoBean {
 		}
 		
 		//Pagamento de anúncio
-		else if(tipo_transacao==Pagamento.CREDITO_DEBITO){
+		else if(tipo_transacao==Transacao.CREDITO_DEBITO){
 			System.out.println("Trans: Pg");
 		}
 		
@@ -133,7 +130,7 @@ public class PagamentoBean {
 			pag.setValor(this.valor);
 			pag.setTipo(tipo_transacao);
 			pag.setCodUser(idUser);
-			pag.setDescricao(Pagamento.getTextoTransacao(tipo_transacao));
+			pag.setDescricao(Transacao.getTextoTransacao(tipo_transacao));
 			
 			new PagamentoDAO().insert(pag);
 			
@@ -146,6 +143,7 @@ public class PagamentoBean {
 			
 			//Encaminha para a pagina de download de boleto
 		    try {
+		    	
 				FacesContext.getCurrentInstance().getExternalContext().redirect("download_boleto.jsf");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -189,7 +187,7 @@ public class PagamentoBean {
 				pag.setValor(this.valor);
 				pag.setTipo(tipo_transacao);
 				pag.setCodUser(idUser);
-				pag.setDescricao(Pagamento.getTextoTransacao(tipo_transacao));
+				pag.setDescricao(Transacao.getTextoTransacao(tipo_transacao));
 				
 				new PagamentoDAO().insert(pag);
 				
@@ -346,25 +344,24 @@ public class PagamentoBean {
 	//Emite um boleto para acionar crédito ao fincanceiro de um usuário
 	public void geraPagamentoBoleto(){
 		
-		
-
 		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		
 		//Recupera o usuário em sessão
-		Usuario user = (Usuario) sessao.getAttribute("usuario");	System.out.println("Valor: "+valor);
+		Usuario user = (Usuario) sessao.getAttribute("usuario");
 		
 		
 		int tipo_user = new UsuarioDAO().getTipoUser(user.getId());
 		
 		
 		String doc;
-		
-		
+
 		
 		if(tipo_user==Usuario.PESSOA)
 		doc  = ((Pessoa) user).getCpf();
 		else
 		doc  = ((Empresa) user).getCnpj();	
+		
+		
 		
 		Cedente cedente = new Cedente("Grupo Estrada Real", "00.000.208/0001-00");
 		
@@ -448,5 +445,9 @@ public class PagamentoBean {
       
 		
 	}
+	
+	
+	
+	
 	
 }

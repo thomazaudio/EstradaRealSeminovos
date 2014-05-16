@@ -43,9 +43,10 @@
 <p:panel header="Boleto Bancário">
 <p:panelGrid columns="1"> 
 <h:form prependId="false">
-<p:commandButton styleClass="btn blue" value="Pagar via Boleto bancário" action="#{pagamentoAnuncio.reemitePagamento}" >
+<p:commandButton styleClass="btn blue" value="Pagar via Boleto bancário" action="#{pagamentoAnuncio.escTipoPagamentoReemissao}" >
 
 <f:param  name="tipo_pagamento"  value="1"></f:param>
+
 
 </p:commandButton>
 

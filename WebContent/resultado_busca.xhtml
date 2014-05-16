@@ -442,36 +442,52 @@
 							
 						</div>
 					</div>
+					
+					
+					
+					
 					<div class="main_catalog">
-						<div class="top_catalog_box">
-							<div class="switch">
-								<span class="table_view"></span>
-								<a href="./05_catalog_grid.html" class="list_view"></a>
-							</div>
-							<div class="sorting drop_list">
-								
-								<p:panelGrid columns="3">
+					
+					
+					
+					<div class="tabs_wrapper">
+				   <ul class="tabs">
+						    	<li class="current">
+						    	Opções
+						    	</li>
+						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
+						    	
+						 	</ul>
+						 	
+						  	<div class="box visible">
+						  	
+						  	
+						  	<p:panelGrid columns="3">
 
+<h:form>
 <p:panelGrid columns="1">
 <p:outputLabel for="ord" value="Ordenar por: "></p:outputLabel>
-<h:selectOneMenu   id="ord" styleClass="n">
-<f:selectItem itemValue="2" itemLabel="Destaque"></f:selectItem>
-<f:selectItem itemValue="5" itemLabel="Ano"></f:selectItem>
-<f:selectItem itemValue="10" itemLabel="Valor"></f:selectItem>
-<p:ajax update="" ></p:ajax>
+<h:selectOneMenu   id="ord" styleClass="n" value="#{buscaBean.tipoOrdem}">
+<f:selectItem itemValue="3" itemLabel="Destaque"></f:selectItem>
+<f:selectItem itemValue="1" itemLabel="Ano"></f:selectItem>
+<f:selectItem itemValue="2" itemLabel="Valor"></f:selectItem>
+<p:ajax update=":form :result_busca" ></p:ajax>
 </h:selectOneMenu> 
 </p:panelGrid>
+</h:form>
 
+
+<h:form>
 <p:panelGrid columns="1">
 <p:outputLabel for="d_c" value="Ordem: "></p:outputLabel>
-<h:selectOneMenu id="d_c"   styleClass="n">
+<h:selectOneMenu id="d_c"   styleClass="n" value="#{buscaBean.ordem}">
 <f:selectItem itemValue="2" itemLabel="Decrescente"></f:selectItem>
-<f:selectItem itemValue="5" itemLabel="Crescente"></f:selectItem>
+<f:selectItem itemValue="1" itemLabel="Crescente"></f:selectItem>
 
-<p:ajax update="" ></p:ajax>
+<p:ajax update=":form :result_busca" ></p:ajax>
 </h:selectOneMenu>
 </p:panelGrid>
-
+</h:form>
 <h:form>
 <p:panelGrid columns="1">
 <p:outputLabel for="quant_p_page" value="Quantidade por página: "></p:outputLabel>
@@ -489,29 +505,23 @@
 
 
 </p:panelGrid>
-
-	
-				<canvas id="linha_titulo" width="1900" height="3"></canvas>
-							<script>
-      						var canvas = document.getElementById('linha_titulo');
-     					    var context = canvas.getContext('2d');
-      						var rectWidth = 1880;
-     					    var rectHeight = 50;
-
-      						
-
-      						context.fillStyle = '#f28633';
-     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
-    					</script>
-								
-								<div class="clear"></div>
-							</div>
+						  	
+						  
+						  	
+						  	</div>
+				
+				  </div>
+					
+						<div class="top_catalog_box">
+							
 							
 							 
-							<div class="pagination">
-								
-							</div>
-							<div class="clear"></div>
+							
+							
+						</div>
+						
+						<div class="fundo_azul">
+						<h3 class="texto_branco">Resultado da busca:</h3>
 						</div>
 						<h:form id="result_busca">
 						<ul class="catalog_table">
@@ -521,9 +531,7 @@
 						
 						<li>
 						
-						
-						   
-						  
+			
                      
                           
                        <p:outputPanel id="v" >
@@ -553,7 +561,7 @@
 						<div class="fundo_azul">
 						<ui:repeat var="it" value="#{res.itensFiltered}" size="4">
 						
-						<strong class="texto_branco">#{it.item} - </strong>
+						<strong class="texto_branco">#{it.item} </strong>
 						</ui:repeat>
 						
 						</div>
@@ -567,10 +575,15 @@
 						
 						</div>
 						
+						<h:form prependId="false">
+						<p:growl  autoUpdate="true" id="msg"></p:growl>
 						<p:commandButton value="Adicionar a lista de interesse">
 						  <f:param name="idVeiculo" value="#{res.id}"></f:param>
-						<p:ajax  update=":sup" listener="#{interesseBean.addVeiculo}"></p:ajax>
+						<p:ajax  update=":sup msg" listener="#{interesseBean.addVeiculo}"></p:ajax>
 						</p:commandButton>
+						
+						</h:form>
+						
 						</div>
 						
 						 </p:outputPanel> 

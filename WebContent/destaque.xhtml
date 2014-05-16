@@ -30,20 +30,20 @@
 				
 				      <ui:repeat var="d" value="#{destaqueBean.destaqueInferior}">
 						<div class="slide">
-							<a href="anuncio.jsp?id_veiculo=#{d.id}">
+							<a href="anuncio.jsp?id_veiculo=#{d.codVeiculo}">
 								
 								<p:graphicImage  value="#{imgBean.tumbCapaVeiculo}">
                         
-                   				<f:param name="idVeiculo" value="#{d.id}"></f:param>
+                   				<f:param name="idVeiculo" value="#{d.codVeiculo}"></f:param>
                     			</p:graphicImage>
 								
 								<div class="description">
-									<p>#{d.anoFabricacao}/#{d.anoModelo}<br></br>#{d.combustivel}<br></br>#{d.quilometragem}<span class="price"> km</span><br></br>#{d.cor}</p>
+									<p>#{d.anoFabricacao}/#{d.anoModelo}<br></br><br></br><span class="price"></span><br></br></p>
 									
 								</div>
 								<div class="title">
 									<p>
-										<span>#{d.tituloCompactado}</span>
+										<span>#{d.titulo}</span>
 									
 									</p>
 									

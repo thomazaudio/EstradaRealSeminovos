@@ -31,14 +31,20 @@
 
 
 <div class="message">
-<h3>Olá <strong>#{usuarioBean.nome}</strong>, o seu pedido de crédito no valor de <strong> R$ #{pagamentoBean.valor}</strong> foi realizado com sucesso, faça o download do boleto e siga as instruções para efetivação da solicitação.
-</h3>
-<h3>Lembramos que o prazo para compensação do valor através do pagamento via <strong>Boleto Bancário</strong> é de até dois dias úteis podendo ocorrer antes.</h3>
+
+<h4>Obrigado pela preferência  <strong> #{usuarioBean.user.nome}</strong>!</h4>
+<h4>Seu pedido foi processado com sucesso!</h4>
+<h4>Por favor, faça o download do boleto e siga as instruções para concretizar a solicitação.</h4>
+<h4>Em caso de dúvida, utilize umas das formas de contato do site.</h4>
 </div>
 
 
-<h:form>
-<p:commandButton   icon="ui-icon-arrowthickstop-1-s" style="width:700px;height:150px;font-size:70px;" ajax="false" value="Gerar Boleto" action="#{pagamentoAnuncio.geraPagamentoCreditoBoleto}"></p:commandButton>
+<h:form prependId="false">
+<p:commandButton   icon="ui-icon-arrowthickstop-1-s" style="width:700px;height:150px;font-size:70px;" ajax="false" value="Gerar Boleto" action="#{boletoBean.geraBoleto}">
+
+<f:param name="id_pagamento" value="#{boletoBean.idPagamento}"></f:param>
+
+</p:commandButton>
 </h:form>
 
 

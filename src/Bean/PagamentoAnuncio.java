@@ -2,43 +2,29 @@ package Bean;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
-
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.jrimum.bopepo.BancosSuportados;
 import org.jrimum.bopepo.Boleto;
 import org.jrimum.bopepo.view.BoletoViewer;
-import org.jrimum.domkee.comum.pessoa.endereco.CEP;
-import org.jrimum.domkee.comum.pessoa.endereco.Endereco;
-import org.jrimum.domkee.comum.pessoa.endereco.UnidadeFederativa;
-import org.jrimum.domkee.financeiro.banco.febraban.Agencia;
-import org.jrimum.domkee.financeiro.banco.febraban.Carteira;
-import org.jrimum.domkee.financeiro.banco.febraban.Cedente;
-import org.jrimum.domkee.financeiro.banco.febraban.ContaBancaria;
-import org.jrimum.domkee.financeiro.banco.febraban.NumeroDaConta;
-import org.jrimum.domkee.financeiro.banco.febraban.Sacado;
-import org.jrimum.domkee.financeiro.banco.febraban.SacadorAvalista;
-import org.jrimum.domkee.financeiro.banco.febraban.TipoDeTitulo;
-import org.jrimum.domkee.financeiro.banco.febraban.Titulo;
-
-import util.Empresa;
+import util.BoletoUtil;
+import util.Debug;
 import util.Pagamento;
-import util.Pessoa;
 import util.Plano;
+import util.Transacao;
 import util.Usuario;
-import util.Veiculo;
+import util.UsuarioUtil;
+import Modelo.FinanDAO;
 import Modelo.PagamentoDAO;
 import Modelo.UsuarioDAO;
-import Modelo.VeiculoDAO;
 
+
+//CLASSE PARA PAGAMENTO DE ANÚNCIO NO ATO DE CADASTRO
 
 @ManagedBean
 @SessionScoped
@@ -49,28 +35,42 @@ public class PagamentoAnuncio {
 	private int tipo_transacao;
 	private double valor;
 	private long codVeiculo;
+	private long codPagamento;
 	
 	
 	
-	    //Escolha do tipo de pagamento (Caso: pagamentoo logo após cadastramento dos dados do anúncio)
+	    public long getCodPagamento() {
+		return codPagamento;
+	}
+
+
+	public void setCodPagamento(long codPagamento) {
+		this.codPagamento = codPagamento;
+	}
+
+
+		//Escolha do tipo de pagamento (Caso: pagamentoo logo após cadastramento dos dados do anúncio)
 		 public void escTipoPagamentoCadastro(){
 				
 				Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 				
+				
+				//TIPO DE PAGAMENTO: BOLETO, PAG-SEGURO, CREDITO EM CONTA
 				int tipo_pagamento = Integer.parseInt(p.get("tipo_pagamento"));
 				
 				HttpSession sessao;
 		        sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		        long idUser = ((Usuario)sessao.getAttribute("usuario")).getId();
 		        
 		        
-		        //Tipo de plano
+		        
+		         //Tipo de plano
+		         //COMO ESTÁ NO ATO DE CADASTRO O DADO SE ENCONTRA EM SESSÃO
 		         prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");
-		         
+		          
 		         //Codigo do veiculo
 		         codVeiculo = (Long) sessao.getAttribute("cod_veiculo");
 		         
-		         System.out.println("Id do veiculo na sessoa: "+codVeiculo);
+		         
 		        
 		         //Valor 
 		         valor = Plano.getPrecoPlano(prioridade_anuncio);
@@ -78,50 +78,33 @@ public class PagamentoAnuncio {
 		        
 		        //Tipo de transação
 		         tipo_transacao = Integer.parseInt(p.get("tipo_transacao"));
-		        
-		         //Lança um
+		         
+		         
+		     	
+		         
+		        //verificação do tipo de pagamento escolhido
+				switch(tipo_pagamento){
 				
-				 if(tipo_pagamento==Pagamento.PAGAMENTO_BOLETO){
-					
-					
-					//Lança um novo pagamento no sistema
-					Pagamento pag = new Pagamento();
-					pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
-					pag.setValor(valor);
-					pag.setTipo(tipo_transacao);
-					pag.setCodUser(idUser);
-					pag.setDescricao(Pagamento.getTextoTransacao(tipo_transacao));
-					pag.setIdVeiculo(codVeiculo);
-					pag.setData(Calendar.getInstance());
-					
-					new PagamentoDAO().insert(pag);
-					
-					System.out.println("Detalhes do pagamento");
-					System.out.println("Tipo: "+pag.getTipo());
-					System.out.println("Valor: "+pag.getValor());
-					System.out.println("Usuário: "+pag.getCodUser());
-					System.out.println("Veículo: "+pag.getIdVeiculo());
-					
-					
-					
-					//Encaminha para a pagina de download de boleto
-				    try {
-						FacesContext.getCurrentInstance().getExternalContext().redirect("download_boleto_anuncio.jsf");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-						
-					
-					
+				case Pagamento.PAGAMENTO_BOLETO: this.pagamentoBoleto();
+				break;
+				
+				case Pagamento.PAGAMENTO_CREDITO_CONTA: this.debitoConta();
+				break;
+				
+				case Pagamento.PAGAMENTO_PAG_SEGURO: this.pagamentoPagSeguro();
+				break;
+			 
+				
+				
 				}
+			  
 				
 				
 			}
 		 
 		 
 		 //Escolha do tipo de pagamento
-		 public void escTipoPagamentoReemissao(){
+		 public void reemitePagamento(){
 			 
 			 
 			 
@@ -136,8 +119,6 @@ public class PagamentoAnuncio {
 		        //Prioridade do  anuncio 
 		        prioridade_anuncio = Integer.parseInt(p.get("prioridade_anuncio"));
 		        
-		        System.out.println("PLano: "+prioridade_anuncio);
-		        System.out.println("Preco: "+Plano.getPrecoPlano(prioridade_anuncio));
 		        
 		    
 		        //Valor 
@@ -145,9 +126,9 @@ public class PagamentoAnuncio {
 		     
 		        
 		        //Tipo de transação (Reemissão de pagamento)
-		        tipo_transacao = Pagamento.REEMITE_PAGAMENTO;
-			 
-			 
+		        tipo_transacao = Transacao.REEMITE_PAGAMENTO;
+		        
+		 
 
 				//Encaminha para a pagina de  escolha de pagamento
 			    try {
@@ -160,7 +141,7 @@ public class PagamentoAnuncio {
 		 }
 		 
 		 //Reemissão de pagamento para este veículo
-		 public void reemitePagamento(){
+		 public void escTipoPagamentoReemissao(){
 				
 				Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 				
@@ -176,154 +157,232 @@ public class PagamentoAnuncio {
 		        valor = Plano.getPrecoPlano(prioridade_anuncio);
 		        
 		        
-		     
+		        //verificação do tipo de pagamento escolhido
+				switch(tipo_pagamento){
+				
+				case Pagamento.PAGAMENTO_BOLETO: this.pagamentoBoleto();
+				break;
+				
+				case Pagamento.PAGAMENTO_CREDITO_CONTA: this.debitoConta();
+				break;
+				
+				case Pagamento.PAGAMENTO_PAG_SEGURO: this.pagamentoPagSeguro();
+				break;
+				
+				}
 		  
-		        
-              	if(tipo_pagamento==Pagamento.PAGAMENTO_BOLETO){
-					
-					
-					//Lança um novo pagamento no sistema
-					Pagamento pag = new Pagamento();
-					pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
-					pag.setValor(valor);
-					pag.setTipo(tipo_transacao);
-					pag.setCodUser(idUser);
-					pag.setDescricao(Pagamento.getTextoTransacao(tipo_transacao));
-					pag.setIdVeiculo(codVeiculo);
-					pag.setData(Calendar.getInstance());
-					
-					
-					//Lança um novo pagamento no sistema
-					new PagamentoDAO().insert(pag);
-					
-					System.out.println("Detalhes do pagamento");
-					System.out.println("Tipo: "+pag.getTipo());
-					System.out.println("Valor: "+pag.getValor());
-					System.out.println("Usuário: "+pag.getCodUser());
-					System.out.println("Veículo: "+pag.getIdVeiculo());
-					
-
-					//Encaminha para a pagina de download de boleto
-				    try {
-						FacesContext.getCurrentInstance().getExternalContext().redirect("download_boleto_anuncio.jsf");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+		       
 						
 					
 					
+				
+				
+				
+			}
+		 
+		 
+		 
+
+		    //Método escolhido  = PAGAMENTO_BOLETO
+			//Tipo de Transação  = CREDITO_DEBITO
+			//Tipo de pagamento  = PAGAMENTO_BOLETO
+		    public void pagamentoBoleto(){
+		    	
+
+		    	//Lança o pagamento no sistema
+		    	//Definição do pagamento:boleto bancário
+				int tipo_pagamento = Pagamento.PAGAMENTO_BOLETO;
+				
+				
+				//Recupera usuario pra preenchimento das informações
+				HttpSession sessao;
+		        sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		        long idUser = ((Usuario)sessao.getAttribute("usuario")).getId();
+		    	
+
+				//Lança um novo pagamento no sistema
+				Pagamento pag = new Pagamento();
+				pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
+				pag.setValor(Plano.getPrecoPlano(prioridade_anuncio));
+				pag.setPrioridade(prioridade_anuncio);
+				pag.setTipo(Transacao.CREDITO_DEBITO);//Pagamento de anúncio
+				pag.setCodUser(idUser);
+				pag.setIdVeiculo(codVeiculo);
+				pag.setDescricao(Transacao.getTextoTransacao(Transacao.CREDITO_DEBITO));
+				pag.setFormaPagamento(tipo_pagamento);
+			    pag.setData(Calendar.getInstance());
+				
+				new PagamentoDAO().insert(pag);
+		    	
+			
+				
+				
+		    	//Atribuição do codigo do pagamento para sessao
+				codPagamento = pag.getCod();
+		    	
+				
+		    	
+				//Encaminha para a pagina de download de boleto
+			    try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect(new ContextoBean().getContextoInicial()+"/cad_veiculo/download_boleto_anuncio.jsf?id_pagamento="+pag.getCod());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				
-				
-			}
+		    }
 		 
-		 
-		 
-		    //Emite um boleto para acionar crédito ao fincanceiro de um usuário
-			public void geraPagamentoCreditoBoleto(){
+		    
+		    
+		    
+		    //Método escolhido = PAGAMENTO_PAG_SEGURO
+			//Tipo de Transação  = CREDITO_DEBITO
+	    	//Tipo de pagamento  = PAGAMENTO_PAG_SEGURO
+		    public void pagamentoPagSeguro(){
+		    	
+	             //Lança o pagamento no sistema
+		    	
+		    	//Atribuição do codigo do pagamento para sessao
+		    	
+		    	//Redireciona para a página definida
+		    	
+		    }
+		    
+		    
+		    
+		
+		    //Método escolhido = Debito na conta
+		    //Tipo de Transação  = ALT_PLANO_CREDITO
+		    //Tipo de pagamento  = PAGAMENTO_CREDITO_CONTA
+		    public void debitoConta(){
+		    	
+		    	FacesMessage msg = new FacesMessage();
+		    	
+		    	
+		    	System.out.println("Tipo de pagamento escolhido:Credito na conta");
+		        
+				
+		    	//Definição do pagamento: utilizando crédito existente em conta
+				int tipo_pagamento = Pagamento.PAGAMENTO_CREDITO_CONTA;
 				
 				
+				
+				HttpSession sessao;
+		        sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		        Usuario user = (Usuario)sessao.getAttribute("usuario");
+		    	
 
-				HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+				//Lança um novo pagamento no sistema
+				Pagamento pag = new Pagamento();
+				pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
+				pag.setValor(Plano.getPrecoPlano(prioridade_anuncio));
+				pag.setPrioridade(prioridade_anuncio);
+				pag.setTipo(Transacao.CREDITO_DEBITO);//Alteração de plano
+				pag.setCodUser(user.getId());
+				pag.setIdVeiculo(codVeiculo);
+				pag.setDescricao(Transacao.getTextoTransacao(Transacao.CREDITO_DEBITO));
+				pag.setFormaPagamento(tipo_pagamento);
+			    pag.setData(Calendar.getInstance());
 				
-				//Recupera o usuário em sessão
-				Usuario user = (Usuario) sessao.getAttribute("usuario");	System.out.println("Valor: "+valor);
+				new PagamentoDAO().insert(pag);
 				
 				
-				int tipo_user = new UsuarioDAO().getTipoUser(user.getId());
+				//Verifica se o saldo do usuário é suficiente
+				double saldo =  new FinanDAO().getSaldo(user.getId());
 				
+				if(saldo>=pag.getValor())
+				{
+					
+				//Aprova o pagamento	
+				pag.aprovar();
+			
 				
-				String doc;
-				
-				
-				
-				if(tipo_user==Usuario.PESSOA)
-				doc  = ((Pessoa) user).getCpf();
+				//Encaminha para página adequada
+
+			    try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("alt_sucesso.jsf");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				} 
 				else
-				doc  = ((Empresa) user).getCnpj();	
-				
-				Cedente cedente = new Cedente("Grupo Estrada Real", "00.000.208/0001-00");
-				
-				Sacado sacado = new Sacado(user.getNome(),doc);
+				{
+	
+					msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+					msg.setSummary("Saldo insuficiente pada realizar esta operação.");
+					FacesContext.getCurrentInstance().addMessage(null,msg);
+				}
+		    	
+		    }
+		 
+		 
+		  
+			
+			
+			//Método para geração de boleto de um pagamento para dowload
+	    	public void geraBoleto(long codPagamento){
+	    		
+	    		
+	    		
+	    		
+	    		HttpSession sessao;
+		        sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		        Usuario user = (Usuario)sessao.getAttribute("usuario");
+	    		
+	    		//O código do pagamento lançado deve estar em sessão
+	    		if(codPagamento==0)
+	    		Debug.gerar("", "AltPlanoBean","geraBoleto","Código do pagamento  = 0");	
+	    		
+	    		
+	    		//Recuperação do pagamento
+	    		Pagamento pg = new PagamentoDAO().getPagamento(codPagamento);
+	    		
+	    		if(pg.getCodUser()==0)
+	    		Debug.gerarDebugPagamento("","AltPlanoBean","geraBoleto","O Código do usuário no pagamento é = 0", pg);	
+	    		
+	    		
+	    		
+	    		//Recuperação do documento, cpf ou cnpj
+	    		String doc = UsuarioUtil.getDoc(user);
+	    		
+	    	
+	    	    //Preenchimento dos dados do Boleto
+	    		Boleto bol  =  new BoletoUtil().getBoleto(user, doc,pg.getValor(),pg.getCod(),0);
+	    		
+	    		
 
-				// Informando o endereço do sacado.
-				Endereco enderecoSac = new Endereco();
-				enderecoSac.setUF(UnidadeFederativa.RN);
-				enderecoSac.setLocalidade("Natal");
-				enderecoSac.setCep(new CEP("59064-120"));
-				enderecoSac.setBairro("Grande Centro");
-				enderecoSac.setLogradouro("Rua poeta dos programas");
-				enderecoSac.setNumero("1");
-				sacado.addEndereco(enderecoSac);
-				
-				SacadorAvalista sacadorAvalista = new SacadorAvalista("JRimum Enterprise", "00.000.000/0001-91");
+	    		BoletoViewer boletoViewer = new BoletoViewer(bol);
+	    		
+	    		
+	            
+	            byte[] pdfAsBytes = boletoViewer.getPdfAsByteArray();
+	            
+	           
 
-				// Informando o endereço do sacador avalista.
-				Endereco enderecoSacAval = new Endereco();
-				enderecoSacAval.setUF(UnidadeFederativa.DF);
-				enderecoSacAval.setLocalidade("Brasília");
-				enderecoSacAval.setCep(new CEP("59000-000"));
-				enderecoSacAval.setBairro("Grande Centro");
-				enderecoSacAval.setLogradouro("Rua Eternamente Principal");
-				enderecoSacAval.setNumero("001");
-				sacadorAvalista.addEndereco(enderecoSacAval);
-				
-				
-				// Informando dados sobre a conta bancária do título.
-				ContaBancaria contaBancaria = new ContaBancaria(BancosSuportados.BANCO_BRADESCO.create());
-				contaBancaria.setNumeroDaConta(new NumeroDaConta(123456, "0"));
-				contaBancaria.setCarteira(new Carteira(30));
-				contaBancaria.setAgencia(new Agencia(1234, "1"));
-				
-				
-				Titulo titulo = new Titulo(contaBancaria, sacado, cedente, sacadorAvalista);
-				titulo.setNumeroDoDocumento("123456");
-				titulo.setNossoNumero("99345678912");
-				titulo.setDigitoDoNossoNumero("5");
-				titulo.setValor(BigDecimal.valueOf(valor));
-				titulo.setDataDoDocumento(new Date());
-				titulo.setDataDoVencimento(new Date());
-				titulo.setTipoDeDocumento(TipoDeTitulo.DM_DUPLICATA_MERCANTIL);
-				//titulo.setAceite(new Aceite());
-				titulo.setDesconto(new BigDecimal(0.05));
-				titulo.setDeducao(BigDecimal.ZERO);
-				titulo.setMora(BigDecimal.ZERO);
-				titulo.setAcrecimo(BigDecimal.ZERO);
-				titulo.setValorCobrado(BigDecimal.valueOf(valor));
-				
-				Boleto boleto = new Boleto(titulo);
-		        
-				boleto.setLocalPagamento("Pagável preferencialmente na Rede X ou em " +
-				                "qualquer Banco até o Vencimento.");
-				
-				
-				
-				BoletoViewer boletoViewer = new BoletoViewer(boleto);
-		        
-		        byte[] pdfAsBytes = boletoViewer.getPdfAsByteArray();
-		        
-		       
+	            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
-		        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+	            try {
+	                
+	            	//DOWNLOAD DO BOLETO
+	            	
+	                 response.setContentType("application/pdf");
+	                 response.setHeader("Content-Disposition", "attachment; filename=boleto_"+user.getNome()+".pdf");
 
-		        try {
-		                                
-		             response.setContentType("application/pdf");
-		             response.setHeader("Content-Disposition", "attachment; filename=boleto_"+user.getNome()+".pdf");
+	                 OutputStream output = response.getOutputStream();
+	                 output.write(pdfAsBytes);
+	                 response.flushBuffer();
 
-		             OutputStream output = response.getOutputStream();
-		             output.write(pdfAsBytes);
-		             response.flushBuffer();
+	                 FacesContext.getCurrentInstance().responseComplete();
 
-		             FacesContext.getCurrentInstance().responseComplete();
-
-		        } catch (IOException e) {
-		                e.printStackTrace();
-		        }
-		        
-		      
-				
-			}
+	            } catch (IOException e) {
+	                    e.printStackTrace();
+	            }
+	    		
+	    		
+	    	}
+			
+			
+			
+			
 
 }

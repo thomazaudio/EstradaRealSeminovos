@@ -13,8 +13,7 @@ import javax.faces.context.FacesContext;
 		
 		contextoInicial = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
 		
-		
-		System.out.println("Contexto="+contextoInicial);
+	
 		return contextoInicial;
 	}
 

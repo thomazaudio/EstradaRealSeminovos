@@ -37,13 +37,15 @@
 
 </div>
 
+
 <p:panel header="Escolha uma forma de pagamento">
 
 <p:panelGrid columns="3">
 <p:panel header="Boleto Bancário">
 <p:panelGrid columns="1"> 
 <h:form prependId="false">
-<p:commandButton styleClass="btn blue" value="Pagar via Boleto bancário" action="#{pagamentoAnuncio.escTipoPagamentoCadastro}" >
+<p:growl id="msg"></p:growl>
+<p:commandButton update="msg" styleClass="btn blue" value="Pagar via Boleto bancário" action="#{pagamentoAnuncio.escTipoPagamentoCadastro}" >
 
 <f:param  name="tipo_pagamento"  value="1"></f:param>
 <f:param  name="tipo_transacao"  value="2"></f:param>
@@ -105,18 +107,34 @@
 
 <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
 
+</p:panel>
+
+<p:panel header="Crédito em conta" rendered="#{usuarioBean.saldo>0}">
+<p:panelGrid columns="2"> 
+<h:outputText value="Saldo: R$ #{usuarioBean.saldo}"></h:outputText>
+
+<h:form prependId="false">
+<p:growl id="msg_2"></p:growl>
+<p:commandButton update="msg_2"  value="Pagar utilizando saldo da conta" action="#{altPlanoBean.pagar}" >
+
+<f:param  name="tipo_pagamento"  value="2"></f:param>
+
+
+</p:commandButton>
+
+</h:form>
+
+</p:panelGrid>
+
 
 </p:panel>
+
 
 </p:panelGrid>
 </p:panel>
-
-
 </div>
-
 <br></br>
 <br></br>
-
 <ui:include src="../rodape.xhtml"></ui:include>
 </h:body>
 

@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import Modelo.AnuncioDAO;
 import Modelo.VeiculoDAO;
@@ -43,13 +44,21 @@ public class VerificadorDeIntegridade {
 		  System.out.println("{");
 		  
 		  for(int i=0;i<sem_int.size();i++)
-		  System.out.println(sem_int.get(i)+" ");	  
+		  {
+			  
+		  System.out.println(sem_int.get(i)+" ");	
+		
+		  
+		  }
 		  
 		  
 		  System.out.println("}");
 	  }
-	    
-		
+	  
+	  
+	  
+	  new AnuncioDAO().delet(sem_int);
+	 
 		
 	}
 	

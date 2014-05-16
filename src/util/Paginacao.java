@@ -55,8 +55,11 @@ public class Paginacao {
 	
 	//OK
 	public long getTotalPaginas(){
+		
+		
+		
 
-		long total;
+		long total=0;
 		
 		if( ( this.getTotal_registros()<this.getN_registro_por_pagina()) && this.getTotal_registros()!=0 )
 		return 1;	
@@ -69,7 +72,11 @@ public class Paginacao {
 		total++;
 		return total;
 		
+		
 		}
+	
+		
+		
 	}
 
 	

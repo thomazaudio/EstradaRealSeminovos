@@ -2,40 +2,24 @@ package Bean;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Map;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.jrimum.bopepo.BancosSuportados;
 import org.jrimum.bopepo.Boleto;
 import org.jrimum.bopepo.view.BoletoViewer;
-import org.jrimum.domkee.comum.pessoa.endereco.CEP;
-import org.jrimum.domkee.comum.pessoa.endereco.Endereco;
-import org.jrimum.domkee.comum.pessoa.endereco.UnidadeFederativa;
-import org.jrimum.domkee.financeiro.banco.febraban.Agencia;
-import org.jrimum.domkee.financeiro.banco.febraban.Carteira;
-import org.jrimum.domkee.financeiro.banco.febraban.Cedente;
-import org.jrimum.domkee.financeiro.banco.febraban.ContaBancaria;
-import org.jrimum.domkee.financeiro.banco.febraban.NumeroDaConta;
-import org.jrimum.domkee.financeiro.banco.febraban.Sacado;
-import org.jrimum.domkee.financeiro.banco.febraban.SacadorAvalista;
-import org.jrimum.domkee.financeiro.banco.febraban.TipoDeTitulo;
-import org.jrimum.domkee.financeiro.banco.febraban.Titulo;
-
 import Modelo.PagamentoDAO;
 import Modelo.UsuarioDAO;
-import util.Empresa;
+import util.BoletoUtil;
+import util.Debug;
 import util.Pagamento;
-import util.Pessoa;
 import util.Plano;
+import util.Transacao;
 import util.Usuario;
+import util.UsuarioUtil;
 
 
 @ManagedBean
@@ -44,39 +28,28 @@ public class AltPlanoBean {
 	
 	private long codVeiculo;
 	private int prioridade_anunio;//Nova prioridade escolhida
-	private int tipo_pagamento;
-	private int tipo_transacao;
-	private String textoPlano;
+
+	//Código do veículo que será alterado o plano
+	public long getCodVeiculo(){
+		
+		return codVeiculo;
+	}
+	
+	private long codPagamento;
 	
 	
-	public String getTextoPlano() {
-		
-		textoPlano = Plano.getPlano(prioridade_anunio);
-		
-		return textoPlano;
+	public long getCodPagamento() {
+		return codPagamento;
 	}
 
 
-	public void setTextoPlano(String textoPlano) {
-		this.textoPlano = textoPlano;
+	public void setCodPagamento(long codPagamento) {
+		this.codPagamento = codPagamento;
 	}
 
 
-	public int getTipo_transacao() {
-		return tipo_transacao;
-	}
+	
 
-
-	public void setTipo_transacao(int tipo_transacao) {
-		this.tipo_transacao = tipo_transacao;
-	}
-
-
-	public AltPlanoBean(){
-		
-		
-
-	}
 	
 	
 	//Inicio da alteração
@@ -86,8 +59,7 @@ public class AltPlanoBean {
 		
 	codVeiculo= Long.parseLong(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("cod_veiculo"));
         
-		
-	System.out.println("Codigo do veiculo="+codVeiculo);
+	
 		
 		//Encaminha pra pagina de escolha do plano a ser alterado
 		 try {
@@ -107,16 +79,34 @@ public class AltPlanoBean {
 		
 	
 	
-	//Após escolha do plano, escolha do pagamento
-	public void escPagamento(){
+	 //Após escolha do plano, escolha do pagamento
+	 public void escPagamento(){
 		
 		//Recebe a prioridade que é de acordo com o plano escolhido
 		prioridade_anunio = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("prioridade_anuncio"));
 		
+		String page_pos;
+		
+		if(prioridade_anunio==Plano.PRIORIDADE_GRATIS)
+		{
+			
+			
+			
+			
+			
+			page_pos="alt_sucesso.jsf";
+			
+		}
+		
+		else
+		page_pos="esc_pagamento_alt_anuncio.jsf";	
+			
 		
 		//Encaminha para a pagina de  escolha de pagamento
 	    try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("esc_pagamento_alt_anuncio.jsf");
+	    	
+			FacesContext.getCurrentInstance().getExternalContext().redirect(page_pos);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,14 +114,49 @@ public class AltPlanoBean {
 	}
 	    
 	
-	    //Método recebedor dos parametros do pagamento
-	    public void pagar(){
+	       //Método recebedor dos parametros do pagamento
+	       //Encaminha para pagina de acordo com o método escolhido 
+	        public void pagar(){
+	        	
+	        //Transacao: ALT_PLANO
+	        
+	        	
+	        //Métodos de pagamento(tipo_pagamento)
+	        //PAGAMENTO_CREDITO_CONTA
+	        //PAGAMENTO_PAG_SEGURO
+	        //PAGAMENTO_BOLETO	
+	        	
 	    	
-	    	//Recebe o tipo de transacao
-	    	
+	    	//Configuração dos parametros externos
+	    	 Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+	    	 
 	    	//Recebe o tipo de pagamento
+	    	int tipo_pagamento = Integer.parseInt(p.get("tipo_pagamento"));
 	    	
-	    	
+	    	System.out.println("O tipo escolhido para pagamento é: "+tipo_pagamento);
+	    	 
+	    	 
+	    	 switch(tipo_pagamento){
+	    	 
+	    	 
+	    	 //Alteraçao via boleto bancário
+	    	 case Pagamento.PAGAMENTO_BOLETO :
+	    	 this.pagamentoBoleto();
+	    	 break;
+	    	 
+	    	 //Alteração via pag-seguro
+	    	 case Pagamento.PAGAMENTO_PAG_SEGURO :
+	    	 this.pagamentoPagSeguro();
+	    	 break; 
+	    	 
+	    	 //Alteração via crédito em conta
+	    	 case Pagamento.PAGAMENTO_CREDITO_CONTA :
+	    	 this.debitoConta();
+	    	 break;
+	    	 
+	    	 
+	    	 }
+		
 	    	
 	    }
 	
@@ -142,8 +167,48 @@ public class AltPlanoBean {
 	    public void pagamentoBoleto(){
 	    	
 	    	//Lança o pagamento no sistema
+	    	//Definição do pagamento:boleto bancário
+			int tipo_pagamento = Pagamento.PAGAMENTO_BOLETO;
+			
+			
+			//Recupera usuario pra preenchimento das informações
+			HttpSession sessao;
+	        sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+	        long idUser = ((Usuario)sessao.getAttribute("usuario")).getId();
 	    	
-	    	//Redireciona para a página definida
+
+			//Lança um novo pagamento no sistema
+			Pagamento pag = new Pagamento();
+			pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
+			pag.setValor(Plano.getPrecoPlano(prioridade_anunio));
+			pag.setPrioridade(prioridade_anunio);
+			pag.setTipo(Transacao.ALT_PLANO);//Alteração de plano
+			pag.setCodUser(idUser);
+			pag.setIdVeiculo(this.getCodVeiculo());
+			pag.setDescricao(Transacao.getTextoTransacao(Transacao.ALT_PLANO));
+			pag.setFormaPagamento(tipo_pagamento);
+		    pag.setData(Calendar.getInstance());
+			
+			new PagamentoDAO().insert(pag);
+	    	
+		
+			
+			
+	    	//Atribuição do codigo do pagamento para sessao
+			codPagamento = pag.getCod();
+	    	
+			//Gera o belo 
+			
+			
+			
+	    	
+			//Encaminha para a pagina de download de boleto
+		    try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("download_boleto_alt_plano.jsf");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    	
 	    }
 	  
@@ -156,6 +221,8 @@ public class AltPlanoBean {
 	    	
              //Lança o pagamento no sistema
 	    	
+	    	//Atribuição do codigo do pagamento para sessao
+	    	
 	    	//Redireciona para a página definida
 	    	
 	    }
@@ -164,15 +231,18 @@ public class AltPlanoBean {
 	    
 	
 	    //Método escolhido = Debito na conta
-	    //Tipo de Transação  = DEBITO_CREDITO
+	    //Tipo de Transação  = ALT_PLANO_CREDITO
 	    //Tipo de pagamento  = PAGAMENTO_CREDITO_CONTA
 	    public void debitoConta(){
 	    	
-	        Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+	    	
+	    	System.out.println("Tipo de pagamento escolhido:Credito na conta");
+	        
 			
-			tipo_pagamento = Integer.parseInt(p.get("tipo_pagamento"));
+	    	//Definição do pagamento: utilizando crédito existente em conta
+			int tipo_pagamento = Pagamento.PAGAMENTO_CREDITO_CONTA;
 			
-			tipo_transacao = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tipo_transacao"));
+			
 			
 			HttpSession sessao;
 	        sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -184,13 +254,14 @@ public class AltPlanoBean {
 			pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
 			pag.setValor(Plano.getPrecoPlano(prioridade_anunio));
 			pag.setPrioridade(prioridade_anunio);
-			pag.setTipo(tipo_transacao);
+			pag.setTipo(Transacao.ALT_PLANO);//Alteração de plano
 			pag.setCodUser(idUser);
 			pag.setIdVeiculo(this.getCodVeiculo());
-			pag.setDescricao(Pagamento.getTextoTransacao(tipo_transacao));
+			pag.setDescricao(Transacao.getTextoTransacao(Transacao.ALT_PLANO));
+			pag.setFormaPagamento(tipo_pagamento);
+		    pag.setData(Calendar.getInstance());
 			
 			new PagamentoDAO().insert(pag);
-			
 			
 			
 			//COMO O VALOR É DEBITADO INSTANTANEAMENTE DA CONTA DO USUÁRIO, O PAGAMENTO É IMEDIATAMENTE APROVADO
@@ -206,197 +277,68 @@ public class AltPlanoBean {
 			
 	    	
 	    }
-	 
-	
-	
-	    //Escolha do tipo de pagamento 
-		public void escTipoPagamento(){
-			
-			Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-			
-			tipo_pagamento = Integer.parseInt(p.get("tipo_pagamento"));
-			
-			tipo_transacao = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tipo_transacao"));
-			
-			HttpSession sessao;
-	        sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-	        long idUser = ((Usuario)sessao.getAttribute("usuario")).getId();
-			
-			if(tipo_pagamento==Pagamento.PAGAMENTO_BOLETO){
-				
-				
-				//Lança um novo pagamento no sistema
-				Pagamento pag = new Pagamento();
-				pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
-				pag.setValor(Plano.getPrecoPlano(prioridade_anunio));
-				pag.setPrioridade(prioridade_anunio);
-				pag.setTipo(tipo_transacao);
-				pag.setCodUser(idUser);
-				pag.setIdVeiculo(this.getCodVeiculo());
-				pag.setDescricao(Pagamento.getTextoTransacao(tipo_transacao));
-				
-				new PagamentoDAO().insert(pag);
-				
-				
-				
-				
-				
-				//Encaminha para a pagina de download de boleto
-			    try {
-					FacesContext.getCurrentInstance().getExternalContext().redirect("download_boleto_alt_plano.jsf");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-					
-				
-				
-			}
-			
-			//Pagamento através d credito existente em conta
-			else if(tipo_pagamento==Pagamento.PAGAMENTO_CREDITO_CONTA)	
-			{
-				//Lança um novo pagamento no sistema
-				Pagamento pag = new Pagamento();
-				pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
-				pag.setValor(Plano.getPrecoPlano(prioridade_anunio));
-				pag.setPrioridade(prioridade_anunio);
-				pag.setTipo(tipo_transacao);
-				pag.setCodUser(idUser);
-				pag.setIdVeiculo(this.getCodVeiculo());
-				pag.setDescricao(Pagamento.getTextoTransacao(tipo_transacao));
-				
-				new PagamentoDAO().insert(pag);
-				
-		
-				//Encaminha para a pagina de download de boleto
-			    try {
-					FacesContext.getCurrentInstance().getExternalContext().redirect("download_boleto_alt_plano.jsf");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			
-			
-		}
-	
-	//Código do veículo que será alterado o plano
-	public long getCodVeiculo(){
-		
-		return codVeiculo;
-	}
-	
-	
-	
-		   public void geraPagamentoCreditoBoleto(){
-			
-			
-			System.out.println("Prioridade do anúncio");
-			
 
-			HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			
-			//Recupera o usuário em sessão
-			Usuario user = (Usuario) sessao.getAttribute("usuario");	
-			
-			
-			int tipo_user = new UsuarioDAO().getTipoUser(user.getId());
-			
-			
-			String doc;
-			
-			
-			
-			if(tipo_user==Usuario.PESSOA)
-			doc  = ((Pessoa) user).getCpf();
-			else
-			doc  = ((Empresa) user).getCnpj();	
-			
-			Cedente cedente = new Cedente("Grupo Estrada Real", "00.000.208/0001-00");
-			
-			Sacado sacado = new Sacado(user.getNome(),doc);
+        
+      //Método para geração de boleto de um pagamento para dowload
+    	public void geraBoleto(){
+    		
+    		
+    		//O código do pagamento lançado deve estar em sessão
+    		if(codPagamento==0)
+    		Debug.gerar("", "AltPlanoBean","geraBoleto","Código do pagamento  = 0");	
+    		
+    		
+    		//Recuperação do pagamento
+    		Pagamento pg = new PagamentoDAO().getPagamento(codPagamento);
+    		
+    		if(pg.getCodUser()==0)
+    		Debug.gerarDebugPagamento("","AltPlanoBean","geraBoleto","O Código do usuário no pagamento é = 0", pg);	
+    		
+    		
+    		//Recuperação do usuário relacionado ao pagamento (sacado)
+    		Usuario user = new UsuarioDAO().getUser(pg.getCodUser());
+    		
+    		//Recuperação do documento, cpf ou cnpj
+    		String doc = UsuarioUtil.getDoc(user);
+    		
+    	
+    	    //Preenchimento dos dados do Boleto
+    		Boleto bol  =  new BoletoUtil().getBoleto(user, doc,pg.getValor(),pg.getCod(),0);
+    		
+    		
 
-			// Informando o endereço do sacado.
-			Endereco enderecoSac = new Endereco();
-			enderecoSac.setUF(UnidadeFederativa.RN);
-			enderecoSac.setLocalidade("Natal");
-			enderecoSac.setCep(new CEP("59064-120"));
-			enderecoSac.setBairro("Grande Centro");
-			enderecoSac.setLogradouro("Rua poeta dos programas");
-			enderecoSac.setNumero("1");
-			sacado.addEndereco(enderecoSac);
-			
-			SacadorAvalista sacadorAvalista = new SacadorAvalista("JRimum Enterprise", "00.000.000/0001-91");
+    		BoletoViewer boletoViewer = new BoletoViewer(bol);
+    		
+    		
+            
+            byte[] pdfAsBytes = boletoViewer.getPdfAsByteArray();
+            
+           
 
-			// Informando o endereço do sacador avalista.
-			Endereco enderecoSacAval = new Endereco();
-			enderecoSacAval.setUF(UnidadeFederativa.DF);
-			enderecoSacAval.setLocalidade("Brasília");
-			enderecoSacAval.setCep(new CEP("59000-000"));
-			enderecoSacAval.setBairro("Grande Centro");
-			enderecoSacAval.setLogradouro("Rua Eternamente Principal");
-			enderecoSacAval.setNumero("001");
-			sacadorAvalista.addEndereco(enderecoSacAval);
-			
-			
-			// Informando dados sobre a conta bancária do título.
-			ContaBancaria contaBancaria = new ContaBancaria(BancosSuportados.BANCO_BRADESCO.create());
-			contaBancaria.setNumeroDaConta(new NumeroDaConta(123456, "0"));
-			contaBancaria.setCarteira(new Carteira(30));
-			contaBancaria.setAgencia(new Agencia(1234, "1"));
-			
-			
-			Titulo titulo = new Titulo(contaBancaria, sacado, cedente, sacadorAvalista);
-			titulo.setNumeroDoDocumento("123456");
-			titulo.setNossoNumero("99345678912");
-			titulo.setDigitoDoNossoNumero("5");
-			titulo.setValor(BigDecimal.valueOf(Plano.getPrecoPlano(prioridade_anunio)));
-			titulo.setDataDoDocumento(new Date());
-			titulo.setDataDoVencimento(new Date());
-			titulo.setTipoDeDocumento(TipoDeTitulo.DM_DUPLICATA_MERCANTIL);
-			//titulo.setAceite(new Aceite());
-			titulo.setDesconto(new BigDecimal(0.05));
-			titulo.setDeducao(BigDecimal.ZERO);
-			titulo.setMora(BigDecimal.ZERO);
-			titulo.setAcrecimo(BigDecimal.ZERO);
-			titulo.setValorCobrado(BigDecimal.valueOf(Plano.getPrecoPlano(prioridade_anunio)));
-			
-			Boleto boleto = new Boleto(titulo);
-	        
-			boleto.setLocalPagamento("Pagável preferencialmente na Rede X ou em " +
-			                "qualquer Banco até o Vencimento.");
-			
-			
-			
-			BoletoViewer boletoViewer = new BoletoViewer(boleto);
-	        
-	        byte[] pdfAsBytes = boletoViewer.getPdfAsByteArray();
-	        
-	       
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
-	        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            try {
+                
+            	//DOWNLOAD DO BOLETO
+            	
+                 response.setContentType("application/pdf");
+                 response.setHeader("Content-Disposition", "attachment; filename=boleto_"+user.getNome()+".pdf");
 
-	        try {
-	                                
-	             response.setContentType("application/pdf");
-	             response.setHeader("Content-Disposition", "attachment; filename=boleto_"+user.getNome()+".pdf");
+                 OutputStream output = response.getOutputStream();
+                 output.write(pdfAsBytes);
+                 response.flushBuffer();
 
-	             OutputStream output = response.getOutputStream();
-	             output.write(pdfAsBytes);
-	             response.flushBuffer();
+                 FacesContext.getCurrentInstance().responseComplete();
 
-	             FacesContext.getCurrentInstance().responseComplete();
-
-	        } catch (IOException e) {
-	                e.printStackTrace();
-	        }
-	        
-	      
-			
-		}
-		
+            } catch (IOException e) {
+                    e.printStackTrace();
+            }
+    		
+    		
+    	}
+    	
+    	
+    	
 	
 	
 	

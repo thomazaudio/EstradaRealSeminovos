@@ -83,11 +83,17 @@
             
                     <f:facet name="header">Opções</f:facet>
                     
-                    <p:panelGrid columns="4">
+                    
+                    
+                    <h:form prependId="false" rendered="#{an.formaPagamento==1}">
+							<p:commandButton   icon="ui-icon-arrowthickstop-1-s"  ajax="false" value="Segunda via de Boleto" action="#{boletoBean.geraBoleto}">
+
+							<f:param name="id_pagamento" value="#{an.cod}"></f:param>
+
+						</p:commandButton>
+							</h:form>
                     
                   
-                    
-                    </p:panelGrid>
                     
                 </p:column>
             </p:dataTable>

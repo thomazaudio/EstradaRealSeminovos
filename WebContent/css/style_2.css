@@ -40,10 +40,7 @@ BASIC STYLES
 .slider .slide .heading-b { font: 400 26px 'Lato',Arial, Helvetica, sans-serif; line-height:normal !important; color:#FFF; border-radius:2px; background:#000000; padding:8px 29px 8px 8px; width:419px; opacity: 0.8 !important; text-shadow:0px 1px 0px #000;  }
 .slider .slide .heading-c span{font: 400 26px 'Lato',Arial, Helvetica, sans-serif; line-height:normal !important; color:#ed2424;background:#000000; padding:0px 8px; opacity:0.8 !important; border-radius:2px; text-shadow:0px 1px 0px #000;}
 
-.slider-wrapper .tp-leftarrow{height:37px;width:37px; display:block; position:absolute;left:0px;background:url(../images/arrow-slide-next.png);background-position: 0px 0px; z-index:999;}
-.slider-wrapper .tp-rightarrow{height:37px;width:37px; display:block; position:absolute;left:42px;background:url(../images/arrow-slide-next.png);background-position: 0px -47px;z-index:999;}
-.slider-wrapper .tp-leftarrow:hover{background:url(../images/arrow-slide-next.png);background-position: 0px -94px;}
-.slider-wrapper .tp-rightarrow:hover{background:url(../images/arrow-slide-next.png);background-position: 0px -142px;}
+
 
 
 /****************************************************************************

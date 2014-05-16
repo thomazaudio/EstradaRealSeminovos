@@ -35,21 +35,42 @@ import util.Destaque;
 import util.Plano;
 import Modelo.DestaqueDAO;
 import Modelo.ImgDAO;
+import Modelo.VeiculoDAO;
 
 public class ServBanner extends HttpServlet  {
 
 	
 	public static final int CADASTRA_BANNER=1;
+	public static final int EDIT_BANNER=2;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
 		
 		
 		
-		       
-		       
+		
+		     //Id do veículo
+             long id_veiculo = Long.parseLong(req.getParameter("ID_VEICULO"));
+		
+		     //Verifica se o pagamento do veículo está ok
+		     boolean  pagamento_ok = new VeiculoDAO().pagamentoOK(id_veiculo); 
+		
+		     Destaque d = new Destaque();
+		
+		
+		      //Recebe a solicitação
+		      int soli = Integer.parseInt(req.getParameter("soli"));
+		      
+		        
+		    	  
+		      if(pagamento_ok)	  
+		      d.setStatus(1);
+		      
+		      else d.setStatus(0);
+		      
+  
 		      //Página a ser encaminhada após cadastro do banner
-				String page_pos = req.getParameter("page_pos");
+			  String page_pos = req.getParameter("page_pos");
 				
 			 	
 		
@@ -64,8 +85,7 @@ public class ServBanner extends HttpServlet  {
 	            h=  Double.parseDouble(req.getParameter("h"));
 	            
  
-	            //Id do veículo
-	            long id_veiculo = Long.parseLong(req.getParameter("ID_VEICULO"));
+	         
 	            
 	            System.out.println("Chegou aqui 2");
 	            
@@ -95,13 +115,14 @@ public class ServBanner extends HttpServlet  {
 				 System.out.println("Chegou aqui 5");
 	            
 	            //Lança o banner detaque no sistema
-	             Destaque d =  new Destaque();
+	           
 	            d.setTipoDestaque(Destaque.DESTAQUE_BANNER);
 	            d.setCodVeiculo(id_veiculo);
 	            d.setDataIni(Calendar.getInstance());
 	            d.setDataFim(Plano.getDataFim(Plano.PRIORIDADE_ULTRA));
-	            d.setStatus(0);//Não pago
-	            
+	           
+	           //Lança o destaque no sistema 
+	            if(soli==this.CADASTRA_BANNER)
 	            new DestaqueDAO().insert(d);
 	            
 	            

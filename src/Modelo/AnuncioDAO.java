@@ -45,6 +45,25 @@ public class AnuncioDAO {
 		return true;
 	}
 	
+	public void delet(ArrayList<Long> sem_int){
+		
+		try{
+			
+			Connection con = Banco.abreBanco();
+			Statement stm = con.createStatement();
+			
+			for(int i=0;i<sem_int.size();i++)
+			stm.executeUpdate("DELETE FROM  anuncio WHERE ID_ANUNCIO="+sem_int.get(i));
+			
+			
+		}catch(Exception e){
+			
+			Debug.gerar("","AnuncioDAO","delet(long id_anuncio)",e.getMessage());
+			
+		}
+		
+	}
+	
 	
 	//Recupera a lista de anuncio de um usuário
 	@SuppressWarnings("unchecked")

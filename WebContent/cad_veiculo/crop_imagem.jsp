@@ -152,9 +152,10 @@
                         <input type="hidden" id="y" name="t" />
                         <input type="hidden" id="w" name="w" />
                         <input type="hidden" id="h" name="h" />
+                         <input type="hidden"  name="soli" value="1" />
                         <input type="hidden"  id="ID_VEICULO" name="ID_VEICULO" value="<%=id_veiculo %>" />
                         <input type="hidden"  id="page_pos" name="page_pos" value="<%=page_pos%>" />
-                        <input type="hidden"  id="SOLI" name="page_pos" value="1" />
+                        <input type="hidden"  name="page_pos" value="1" />
                         <input type="submit" class="button" value="Próximo" />
                         
                        

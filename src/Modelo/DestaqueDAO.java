@@ -19,6 +19,36 @@ import util.InfoDestaque;
 import util.Plano;
 
 public class DestaqueDAO {
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//Verifica se já esxiste um banner destaque cadastrado para o veículo
+	
+	public boolean existeBannerDestaque(long id_veiculo){
+		
+		 Session sessao = HibernateUtil.getSessaoV().openSession();
+		 
+		 Criteria cri =  sessao.createCriteria(Destaque.class);
+		 
+		 cri.add(Restrictions.eq("codVeiculo",id_veiculo));
+		 
+		 //Ativo
+		 cri.add(Restrictions.eq("status",1));
+		 
+		 //Banner destaque
+		 cri.add(Restrictions.eq("tipoDestaque",Destaque.DESTAQUE_BANNER));
+		 
+		 if(cri.uniqueResult()!=null)
+		 return true;
+		 
+		 else return false;
+	}
 
 	
 	public void insert(Destaque d){
@@ -48,7 +78,18 @@ public class DestaqueDAO {
 				destaque_inf.setCodVeiculo(d.getCodVeiculo());
 				destaque_inf.setDataFim(d.getDataFim());
 				destaque_inf.setDataIni(d.getDataIni());
+				
+				
+
+			     //Verifica se o pagamento do veículo está ok
+			    boolean  pagamento_ok = new VeiculoDAO().pagamentoOK(d.getCodVeiculo()); 
+			    
+			    if(pagamento_ok)
+				destaque_inf.setStatus(1);//Confirmado
+				else
 				destaque_inf.setStatus(0);//Não confirmado
+				
+				
 				destaque_inf.setTipoDestaque(Destaque.DESTAQUE_INFERIOR);
 				
 				
@@ -255,7 +296,7 @@ public class DestaqueDAO {
 			
 			con = Banco.abreBanco();
 			stm =  con.createStatement();
-			res =  stm.executeQuery("SELECT * FROM veiculo WHERE ID_VEICULO="+codVeiculo);
+			res =  stm.executeQuery("SELECT  TITULO,PRECO,ANO_FABRICACAO,ANO_MODELO FROM veiculo WHERE ID_VEICULO="+codVeiculo);
 			
 			if(res.next())
 			{
@@ -267,7 +308,7 @@ public class DestaqueDAO {
 				
 			}
 			
-			System.out.println("O id do destaque é: "+info.getIdDestaque());
+			
 			
 		}catch(Exception e){
 			

@@ -27,19 +27,36 @@
 
 <div class="content">
 
-
+<div class="tabs_wrapper">
+						  	<ul class="tabs">
+						    	<li class="current">
+						    	Estrada Real - Seminovos 
+						    	</li>
+						    	<li><IMG alt="" width="30" src="../images/logo_2.png" /></li>
+						    	
+						 	</ul>
+						 	
+						  	<div class="box visible">
+						  	
+						  	
+						  	<h3>Olá <strong>#{usuarioBean.nome}</strong>, o seu pedido de alteração de plano foi processado  com sucesso, agora seu anúncio terá muito mais chance de ser visto, 
+ faça o download do boleto e siga as instruções para efetivação da solicitação.
+</h3>
+<h3>O seu anúncio será liberado em até <strong>1 hora</strong> após confirmação do pagamento.</h3>
+<h3>Você receberá uma notificação quando seu pedido for efetivado, você pode também acompanhar o status do seu pedido clicando em 'Extrato' no menu 'Financeiro'</h3>
+						  	
+						  	</div>
+						  	
+						</div>
 
 
 <div class="message">
-<h3>Olá <strong>#{usuarioBean.nome}</strong>, o seu pedido de alteração de plano foi processado  com sucesso, faça o download do boleto e siga as instruções para efetivação da solicitação.
-</h3>
-<h3>Lembramos que o prazo para compensação do valor através do pagamento via <strong>Boleto Bancário</strong> é de até dois dias úteis podendo ocorrer antes.</h3>
-<h3>Você receberá uma notificação quando seu pedido for efetivado, você pode também acompanhar o status do seu pedido clicando em 'Extrato' no menu 'Financeiro'</h3>
+
 </div>
 
 
 <h:form>
-<p:commandButton   icon="ui-icon-arrowthickstop-1-s" style="width:700px;height:150px;font-size:70px;" ajax="false" value="Gerar Boleto" action="#{altPlanoBean.geraPagamentoCreditoBoleto}"></p:commandButton>
+<p:commandButton   icon="ui-icon-arrowthickstop-1-s" style="width:700px;height:150px;font-size:70px;" ajax="false" value="Gerar Boleto" action="#{altPlanoBean.geraBoleto}"></p:commandButton>
 </h:form>
 
 
@@ -65,6 +82,6 @@
 <br></br>
 
 <ui:include src="../rodape.xhtml"></ui:include>
-
+ 
 </h:body>
 </html>

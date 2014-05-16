@@ -5,19 +5,14 @@ import java.util.Calendar;
 import Modelo.PagamentoDAO;
 
 public class Pagamento {
-
-	//Tipos possiveis de pagamento (parametro= tipo_transacao)
-	public static final int DEBITO_CREDITO=1;//PAGAMENTO DE AÚNCIO UTILIZANDO DINHEIRO EM CAIXA
-	public static  final int CREDITO_DEBITO=2;//PAGAMENTO DE ANÚNCIO UTILIZANDO BOLETO OU PAG-SEGURO
-	public static final  int CREDITO=3;//ADIÇÃO DE CRÉDITO NA CONTA DO USUÁRIO(DEPÓSITO)
-	public static final int ALT_PLANO=4;//ALTERAÇÃO DE PLANO
-	public static final int ALT_PLANO_CREDITO=5;//ALTERAÇÃO DE PLANO UTILIZANDO CREDITO EM CONTA
-	public static final int REEMITE_PAGAMENTO=6;//REEMISSÃO DE PAGAMENTO PARA UM ANÚNCIO
+	
+	
+    
 	
 	//Método de pagamento(parametro= tipo_pagamento)
-	public static int PAGAMENTO_BOLETO=1;
-	public static int PAGAMENTO_CREDITO_CONTA=2;
-	public static int PAGAMENTO_PAG_SEGURO=1;
+	public static final int PAGAMENTO_BOLETO=1;
+	public static final int PAGAMENTO_CREDITO_CONTA=2;
+	public static final int PAGAMENTO_PAG_SEGURO=3;
 	
 	//Processos
 	//Validacao dos dados
@@ -39,8 +34,17 @@ public class Pagamento {
 	private int status;
 	private long idVeiculo;
 	private int prioridade;
+	private int formaPagamento;
 	
 	
+	public int getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(int formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+
 	public int getPrioridade() {
 		return prioridade;
 	}
@@ -113,72 +117,11 @@ public class Pagamento {
 	public void aprovar(){
 		
 		
-		if(this.getStatus()!=Pagamento.CONFIRMADO){
-		
-		//MARCA O PAGAMENTO COMO APROVADO
-		new PagamentoDAO().aprovaPagamento(this.getCod());
-		
-		
-		//VERIFICAÇÃO DO TIPO 
-		switch(this.getTipo()){
-		
-		case CREDITO:
-			
-		new Acao().executAcaoCredito(this.getCodUser(),this.getValor());
-		break;
-		
-		case DEBITO_CREDITO: new Acao().executaAcaoDebitoCredito(this.getCodUser(),this.getIdVeiculo(),this.getValor());
-		break;
-		
-		case CREDITO_DEBITO: new Acao().executaAcaoCreditoDebito(this.getIdVeiculo());
-		break;
-		
-		case ALT_PLANO: new Acao().executaAcaoAltPlano(this.getIdVeiculo(),this.getPrioridade());
-		break;
-		
-		case ALT_PLANO_CREDITO :new Acao().executaAcaoAltPlanoCredito(this.getIdVeiculo(), this.getPrioridade(),this.getValor(),this.getCodUser());
-		break;
-		
-		case REEMITE_PAGAMENTO : new Acao().executaAcaoReemitePagamento(this.getIdVeiculo());
-	    break;
-		
-		}
-		
-	  }
+		new Acao().executaAcaoPagamento(this);
 		
 	}
 	
-	//TRANSAÇÕES EM FORMA DE TEXTO
-	public static String getTextoTransacao(int tipo_transacao){
-		
-		String texto;
-		
-		switch(tipo_transacao){
-		
-		case CREDITO: texto = "Adição de crédito";
-		break;
-		
-		case CREDITO_DEBITO: texto = "Pagamento de Anúncio";
-		break;
-		
-		case ALT_PLANO :texto="Alteração de plano";
-		break;
-		
-		case ALT_PLANO_CREDITO :texto="Alteração de plano";
-		break;
-		
-		case DEBITO_CREDITO: texto = "";
-		break;
-		
-		case REEMITE_PAGAMENTO: texto ="Reemissão de pagamento de anúncio";
-		break;
-		
-		default: return texto = "";
-		
-		}
-		
-		return texto;
-	}
+	
 	
 	
 }

@@ -60,14 +60,44 @@
 		
 		<!-- Painel de informações basicas -->
 		<div class="main_catalog">
-		<h2><strong>Meus Dados</strong></h2>
-		<div class="messages">
+	
+	
+	   <div class="tabs_wrapper">
+				   <ul class="tabs">
+						    	<li class="current">
+						    	Meu Perfil
+						    	</li>
+						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
+						    	
+						 	</ul>
+						 	
+						  	<div class="box visible">
+						  	<p>Aqui estão suas informações referentes a concessionária</p>
+						  	<p>Clique nas informações para editá-las.</p>
+						  	
+						  	</div>
+				
+				  </div>
+	
+	
 		
-		<p>Clique nas informações para editá-las.</p>
-		</div>
 		<h:form prependId="false">
 		<p:growl id="msgs" />
-		<p:panel header="Informações">
+		
+		
+		
+		<div class="tabs_wrapper">
+				   <ul class="tabs">
+						    	<li class="current">
+						    	Informações
+						    	</li>
+						    	
+						    	
+						 	</ul>
+						 
+						 <div class="box visible">
+						 
+						 <p:panel >
 		<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
 		
 			<h:outputText value="Tipo de usuário: "/> 
@@ -107,11 +137,29 @@
 		</h:panelGrid>
 		
 		</p:panel>
+						 
+						 </div>
+						  	
+				
+				  </div>
+		
         
         <br>
         </br>
         
-        <p:panel header="Localização"  >
+        
+        
+        <div class="tabs_wrapper">
+				   <ul class="tabs">
+						    	<li class="current">
+						    	Localização
+						    	</li>
+						    	
+						    	
+						 	</ul>
+						 
+						 <div class="box visible">
+        <p:panel>
     
       
        
@@ -144,13 +192,25 @@
        
         </p:panel>
         
+        </div>
+        </div>
+        
         <br>
         </br>
         
         <!-- CONTATO -->
-       
+       <div class="tabs_wrapper">
+				   <ul class="tabs">
+						    	<li class="current">
+						    	Contato
+						    	</li>
+						    	
+						    	
+						 	</ul>
+						 
+						 <div class="box visible">
       
-        <p:panel header="Contato">
+        <p:panel>
         <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
         
         <h:outputText value="Email: " ></h:outputText>
@@ -194,13 +254,16 @@
          </h:panelGrid>
         </p:panel>
         
+        </div>
+        </div>
+        
         
        
         
         
         </h:form>
         
-      
+       
         
         
         
@@ -226,8 +289,10 @@
 
 	<!--EOF CONTENT-->
 	<!--BEGIN FOOTER-->
-	<div id="footer"></div>
-	<!--EOF FOOTER-->
+
+ <div class="clear"></div>
+       <ui:include src="../rodape.xhtml"></ui:include>        
+      
 
 
 

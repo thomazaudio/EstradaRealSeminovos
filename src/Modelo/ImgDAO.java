@@ -267,6 +267,49 @@ public class ImgDAO {
 	}
       
       
+      
+      
+      //Recupera a imagem de capa de um banner destaque
+      public byte[] getImgBannerDestaque(long id_veiculo){
+		
+
+		byte[] img=null;
+		ResultSet res =null;
+		Statement stm;
+		
+	    try
+	    {
+	    
+	    Connection con = Banco.abreBanco();
+	    stm = con.createStatement();
+	    res =stm.executeQuery("SELECT IMG_BANNER FROM destaque  WHERE TIPO_DESTAQUE=1 && COD_VEICULO="+id_veiculo);
+	    
+	    
+	    
+	    if(res.next())
+	    img = res.getBytes("IMG_BANNER");   
+	
+	   
+	   
+	    
+	    
+	    stm.close();
+	    res.close();
+	    	
+	    }catch(Exception e){
+	    	
+	    	Debug.gerar("Modelo","ImgDAO","getImgBannerDestaque", e.getMessage());
+	    }
+		
+		
+		//Converte a imagem para Tumb
+		
+        return img;
+		
+	}
+      
+      
+      
       //Recupera a imagem de capa de um veiculo EM TAMANHO TUMB
       public Imagem getTumbImgCapa(long id_veiculo){
 		

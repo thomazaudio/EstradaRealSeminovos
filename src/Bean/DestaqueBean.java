@@ -16,29 +16,31 @@ import util.Veiculo;
 public class DestaqueBean {
    
 	private ArrayList<InfoDestaque> destaqueBanner=  new ArrayList<InfoDestaque>();
-	private ArrayList<Veiculo> destaqueInferior =  new ArrayList<Veiculo>();
+	private ArrayList<InfoDestaque> destaqueInferior =  new ArrayList<InfoDestaque>();
 	
 	private ArrayList<Veiculo> destaqueParticular;
 	private ArrayList<Veiculo> destaqueRevenda;
 	
 	
-	public ArrayList<Veiculo> getDestaqueInferior() {
+	public ArrayList<InfoDestaque> getDestaqueInferior() {
 		
 		
-		Veiculo info = null;
+		InfoDestaque info = null;
 		
-		long tempo  =  System.currentTimeMillis();
+	
 		
-	    VeiculoDAO   dao  =  new VeiculoDAO();
+		DestaqueDAO dao  =  new DestaqueDAO();
 		
 		ArrayList<Destaque> destaques = new DestaqueDAO().getDestaques(Destaque.DESTAQUE_INFERIOR);
+		
+		
 		
 		
 		
 		for(int i=0;(i<destaques.size()&& i<10);i++)
 		{	
 			
-		 info = (Veiculo) dao.getVeiculo(destaques.get(i).getCodVeiculo(),Veiculo.class);	
+		 info =  dao.getInforDestaque(destaques.get(i).getCodVeiculo(),destaques.get(i).getId());	
 		 
 		 if(info!=null)
 		 destaqueInferior.add(info);
@@ -50,7 +52,7 @@ public class DestaqueBean {
 		
 		return destaqueInferior;
 	}
-	public void setDestaqueInferior(ArrayList<Veiculo> destaqueInferior) {
+	public void setDestaqueInferior(ArrayList<InfoDestaque> destaqueInferior) {
 		this.destaqueInferior = destaqueInferior;
 	}
 	

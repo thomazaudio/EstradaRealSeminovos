@@ -23,6 +23,7 @@ import org.hibernate.criterion.Restrictions;
 import util.Carro;
 import util.Debug;
 import util.ItemVeiculo;
+import util.Ordenacao;
 import util.Pagamento;
 import util.Paginacao;
 import util.Veiculo;
@@ -222,7 +223,7 @@ public class VeiculoDAO {
 	
 	
 	//PARA BUSCA
-	public ArrayList<Veiculo> getVeiculosBusca(int cod_fab,int cod_modelo,int ano_de,int ano_ate,int qui_de,int aqui_ate,int tipo_venda,double preco_de,double preco_ate,String classe,int ini, int total,ArrayList<Criterion> rest)
+	public ArrayList<Veiculo> getVeiculosBusca(int cod_fab,int cod_modelo,int ano_de,int ano_ate,int qui_de,int aqui_ate,int tipo_venda,double preco_de,double preco_ate,String classe,int ini, int total,ArrayList<Criterion> rest,int ordem,int tipoOrdem)
 	{	
 		ArrayList<Veiculo> veiculos;
 		Session sessao;
@@ -254,11 +255,46 @@ public class VeiculoDAO {
 		
 		
 		
-		//Oredem de prioridade
-		cri.addOrder(Order.asc("prioridade_anuncio"));  
-
 		
+		//Tipo de ordenação
 		
+		if(ordem==Ordenacao.CRESCENTE)
+		{
+		
+		switch(tipoOrdem)
+		{
+		
+		case Ordenacao.ORD_DESTAQUE: cri.addOrder(Order.asc("prioridade_anuncio"));
+		break;
+		
+		case Ordenacao.ORD_VALOR :cri.addOrder(Order.asc("preco"));
+		break;
+		
+		case Ordenacao.ORD_ANO:cri.addOrder(Order.asc("anoFabricacao"));
+		break;
+		}
+		
+		}
+		
+		else if(ordem==Ordenacao.DECRESCENTE)
+		{
+			
+			
+			
+			switch(tipoOrdem)
+			{
+			
+			case Ordenacao.ORD_DESTAQUE: cri.addOrder(Order.desc("prioridade_anuncio"));
+			break;
+			
+			case Ordenacao.ORD_VALOR :cri.addOrder(Order.desc("preco"));
+			break;
+			
+			case Ordenacao.ORD_ANO:cri.addOrder(Order.desc("anoFabricacao"));
+			break;
+			}
+			
+		}
 		
 		
 		System.out.println("Quantidade de veículos: "+this.count(classe,rest));
@@ -543,24 +579,6 @@ public class VeiculoDAO {
 	}
 	
 	
-	  //ALTERA A PRIORIDADE DE UM VEÍCULO
-	public void alteraPrioridade(int prioridade,long veiculo){
-		
-		
-		try{
-			
-			Connection con = Banco.abreBanco();
-			Statement stm =  con.createStatement();
-			stm.executeUpdate("UPDATE veiculo SET PRIORIDADE_ANUNCIO="+prioridade+" WHERE ID_VEICULO="+veiculo);
-			
-			
-		}catch(Exception e){
-			
-			Debug.gerar("","VeiculoDAO","alteraPrioridade", e.getMessage());
-		}
-		
-	}
-	
 	//RECUPERA A QUANTIDADE TOTAL DE REGISTROS OBEDECENDO UMA RESTRIÇÃO
 		public long count(String classe,ArrayList<Criterion> rest){
 			
@@ -586,5 +604,31 @@ public class VeiculoDAO {
 			}
 			return size;
 			}
+		
+		
+		
+		public boolean pagamentoOK(long id_veiculo){
+			
+			try{
+				
+				Connection con = Banco.abreBanco();
+				Statement stm =  con.createStatement();
+				ResultSet res =  stm.executeQuery("SELECT ID_VEICULO FROM veiculo WHERE ID_VEICULO="+id_veiculo);
+				
+				if(res.next())
+				return true;	
+				
+				else
+				return false;
+				
+			}catch(Exception e){
+				
+				Debug.gerar("","VeiculoDAO","pagamentoOK",e.getMessage());
+				
+				return true;
+				
+			}
+			
+		}
 	
 }
