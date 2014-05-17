@@ -18,6 +18,58 @@
     
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>-----</title>
+        
+        
+        <script type="text/javascript">
+        
+        
+
+
+function comprova_extensao(formulario) {
+   extensoes_permitidas = new Array(".png", ".jpg");
+   meuerro = "";
+   
+   var arquivo = formulario.arq.value;
+   
+ 
+   
+   if (!arquivo) {
+      //Se não tenho arquivo, é porque não se selecionou um arquivo no formulário.
+      window.alert("Não foi selecionado nenhum arquivo");
+       
+       return false;
+   }else{
+      //recupero a extensão deste nome de arquivo
+      extensao = (arquivo.substring(arquivo.lastIndexOf("."))).toLowerCase();
+      //alert (extensao);
+      //comprovo se a extensão está entre as permitidas
+      permitida = false;
+      for (var i = 0; i < extensoes_permitidas.length; i++) {
+         if (extensoes_permitidas[i] == extensao) {
+         permitida = true;
+         break;
+         }
+      }
+      if (!permitida) {
+           window.alert("O arquivo selecionado não é suportado. \nExtensões suportadas: " + extensoes_permitidas.join());
+          return false;
+        
+       }else{
+       
+         return verifica_tamanho(formulario.arq.value);  
+         
+       }
+   }
+  
+} 
+
+
+
+        
+        
+        </script>
+        
+        
     </head>
     <body>
     
@@ -56,6 +108,8 @@
     %>
 <h3><strong>Imagem anterior</strong></h3>
 
+
+
 <img width="400"  src="../ServImg?SOLI=11&&mostra_step=0&&ID_VEICULO=<%=id_veiculo%>"   />
    <% }%>
 
@@ -69,11 +123,11 @@
 	                         
 	                          
 	                            
-                               <form action="../ServBanner" method="POST" enctype="multipart/form-data">
+                               <form name="form" action="../ServBanner" method="POST" enctype="multipart/form-data" onsubmit="return comprova_extensao(this);">
 								<input type="hidden" name="id_veiculo" value="<%=id_veiculo%>"/>
-								<p><input class="btn red"  name="file" type="file" id="file"/></p>
+								<p><input class="btn red"  name="arq"   type="file" id="arq"/></p>
 								
-								<p><input class="btn blue" type="image" value="Próximo"/></p>
+								<p><input  class="btn blue" type="image" value="Próximo"/></p>
 								</form>
 								</div>
         

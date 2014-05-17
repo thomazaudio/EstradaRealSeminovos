@@ -21,6 +21,43 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.Jcrop.js"></script>
+
+
+<script type="text/javascript">
+
+
+function  valida(){
+
+
+
+   if(verificaTamanhoImagem())
+   {
+     
+     return false;
+   
+   }
+   
+   else
+   return false;
+
+}
+
+function verificaTamanhoImagem(){
+
+var largura = document.getElementById("target").width;
+var altura = document.getElementById("target").height;
+
+if(largura<700 || altura < 400)
+window.alert("Está imagem é muito pequena para o Banner Destaque ("+largura+"x"+altura+")\nÉ necessário uma imagem de tamanho minimo: 700x400.\nPor favor Selecione outra imagem.");
+
+
+
+return false;
+
+}
+
+</script>
+
 <script type="text/javascript">
   jQuery(function($){
 
@@ -167,7 +204,7 @@
 
   <img  src="../ServImg?SOLI=10&&mostra_step=0&&ID_VEICULO=<%=id_veiculo%>" id="target" alt="[Jcrop Example]" />
 
-  <form action="../ServBanner" method="get" onsubmit="return checkCoords();">
+  <form action="../ServBanner" method="get" onsubmit="return valida();">
 
                         <input type="hidden" id="x" name="l" />
                         <input type="hidden" id="y" name="t" />
