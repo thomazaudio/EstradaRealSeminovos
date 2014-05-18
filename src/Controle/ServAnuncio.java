@@ -143,6 +143,10 @@ public class ServAnuncio extends HttpServlet {
 
 			//Reseta a sessão
 			this.resetSessaoAnuncio(sessao);	
+			
+			
+			//Sessão em modo de cadastro
+			sessao.setAttribute("edit","false");
 
 			//Encaminha para página de escolha o da plano e do tipo de veículo	
             request.getRequestDispatcher(this.PAGE_ESC_ANUNCIO).forward(request, response);
@@ -251,7 +255,15 @@ public class ServAnuncio extends HttpServlet {
 		if(edit_mode.equals("true"))
 		{
 			
+		//Prioridade do anúncio	
+		int prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");
+		System.out.println("A prioridade do anúncio é:");
+		an.getVeiculo().setPrioridade_anuncio(prioridade_anuncio);	
 			
+		//Status de pagamento	
+		int status_pagamento = (Integer) sessao.getAttribute("status_pagamento");
+		System.out.println("O status do pagamento é: "+status_pagamento);
+		an.getVeiculo().setStatusPagamento(status_pagamento);
 			
 		new VeiculoDAO().update(an.getVeiculo());
 		new AnuncioDAO().update(an);
@@ -329,6 +341,10 @@ public class ServAnuncio extends HttpServlet {
 		//EDIÇÃO DE ANÚNCIO
 		else if(this.step==this.EDIT_ANUNCIO)
 		{
+			
+			
+			//Sessão em modo de edição
+			sessao.setAttribute("edit","true");
 		
 			//Recupera o usuário em sessão
 			Usuario user = (Usuario) sessao.getAttribute("usuario");
@@ -349,6 +365,14 @@ public class ServAnuncio extends HttpServlet {
 			//Joga o anuncio em sessão para edição dos dados
 			sessao.setAttribute("anuncio",an);
 			
+			
+			
+			
+			//Tipo de plano
+			sessao.setAttribute("prioridade_anuncio",an.getVeiculo().getPrioridade_anuncio());	
+			
+			//Status de pagamento
+			sessao.setAttribute("status_pagamento",an.getVeiculo().getStatusPagamento());
 			
 			
 			this.resetSessaoAnuncioForEdit(sessao);
@@ -538,6 +562,37 @@ public class ServAnuncio extends HttpServlet {
 				carro.setTipoVenda(1);
 				else 
 				carro.setTipoVenda(2);
+				
+				
+				//VERIFICAÇÃO MODO DE EDIÇÃO
+				
+				String edit_mode="";
+				try{
+				edit_mode = (String.format("%s",sessao.getAttribute("edit")));
+				
+				}catch(Exception e){
+					
+				}
+				
+				if(edit_mode.equals("true"))
+				{
+					
+				//Prioridade do anúncio	
+				int prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");
+				System.out.println("A prioridade do anúncio é:");
+				carro.setPrioridade_anuncio(prioridade_anuncio);	
+					
+				//Status de pagamento	
+				int status_pagamento = (Integer) sessao.getAttribute("status_pagamento");
+				System.out.println("O status do pagamento é: "+status_pagamento);
+				carro.setStatusPagamento(status_pagamento);
+					
+				
+			
+				}
+				
+				//FIM VERIFICAÇÃO MODO DE EDIÇÃO
+				
 
 				//Salva o veiculo no banco de dados
 				new VeiculoDAO().saveOrUpdate(carro);

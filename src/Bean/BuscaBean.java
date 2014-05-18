@@ -135,6 +135,9 @@ public class BuscaBean {
 				else 
 				tipo_venda=3;	
 				
+				System.out.println("Ordem: "+this.getOrdem());
+				System.out.println("Tipo de ordem: "+this.getTipoOrdem());
+				
 			    //recupera os veiculos
 				List<Veiculo> 	resultadoBusca =  new VeiculoDAO().getVeiculosBusca(codFabricante,codModelo, anoDe, anoAte, quilometragemDe, quilometragemAte, tipo_venda, precoDe, precoAte,classe,pag.getIndexIni(this.getPage()),this.getQuantPorPagina(),recuperaRestricoesParaBusca(),this.getOrdem(),this.getTipoOrdem());
 			
@@ -423,7 +426,8 @@ public class BuscaBean {
 		private int quantPorPagina=10;
 		private long quantPaginas;
 		private long totalRegistros;
-		private int ordem;
+		private int ordem=1;//Crescente
+		private int tipoOrdem=3;//Destaque
 		
 		public int getOrdem() {
 			return ordem;
@@ -433,7 +437,7 @@ public class BuscaBean {
 		}
 
 
-		private int tipoOrdem;
+		
 		
 		
 		public int getTipoOrdem() {
