@@ -27,6 +27,8 @@
 </h:head>
 <h:body>
 
+<p:growl id="msg" autoUpdate="true"></p:growl>
+
 <ui:include src="../simple_header.xhtml"></ui:include>
 
 <div class="content">
@@ -62,55 +64,28 @@
 
 <p:panel header="PagSeguro" >
 
+<!-- Pag seguro para destaque mega -->
 <p:panelGrid columns="2"> 
 
-<!-- Declaração do formulário -->  
-<form method="post" target="pagseguro"  action="https://pagseguro.uol.com.br/v2/checkout/payment.html" onsubmit="PagSeguroLightbox(this); return false;">  
-          
-        <!-- Campos obrigatórios -->  
-        <input name="receiverEmail" value="thomaz-guitar@hotmail.com" type="hidden"/>  
-        <input name="currency" value="BRL" type="hidden"/>  
-  
-        <!-- Itens do pagamento (ao menos um item é obrigatório) -->  
-        <input name="itemId1" value="0001" type="hidden"/>  
-        <input name="itemDescription1" value="Notebook Prata" type="hidden"/>  
-        <input name="itemAmount1" value="24300.00" type="hidden"/>  
-        <input name="itemQuantity1" value="1" type="hidden"/>  
-        <input name="itemWeight1" value="1000" type="hidden"/>  
-       
-  
-        <!-- Código de referência do pagamento no seu sistema (opcional) -->  
-        <input name="reference" value="REF1234" type="hidden"/>  
-          
-        <!-- Informações de frete (opcionais) -->  
-        <input name="shippingType" value="3" type="hidden"/>  
-        <input name="shippingAddressPostalCode" value="000000-000" type="hidden"/>  
-       
-  
-        <!-- Dados do comprador (opcionais) -->  
-        <input name="senderName" value="#{usuarioBean.user.nome}" type="hidden"/>  
-        <input name="senderAreaCode" value="11" type="hidden"/>  
-        <input name="senderPhone" value="56273440" type="hidden"/>  
-        <input name="senderEmail" value="comprador@uol.com.br" type="hidden"/> 
-          <input name="senderCpf" value="10821017616" type="hidden"/>   
-  
-        <!-- submit do form (obrigatório) -->  
-        <input class="iframe" alt="Pague com PagSeguro" name="submit"  type="image"  src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/209x48-pagar-laranja-assina.gif"/>  
-      
-      
-   
-      
+<!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
+<form action="https://pagseguro.uol.com.br/checkout/v2/payment.html" method="post" onsubmit="PagSeguroLightbox(this); return false;">
+<!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
+<input type="hidden" name="code" value="24E056B99191623774FEAF8716D5CE37" />
+<input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/209x48-pagar-laranja-assina.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
 </form>
-
-
+<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
 <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
+
 
 </p:panelGrid>
 </p:panel>
 
 <!-- Pagamento utilizando credito -->
+
 <p:panel header="Crédito em conta">
 <p:panelGrid columns="2"> 
+
+
 <h:outputText value="Saldo: R$ #{usuarioBean.saldo}"></h:outputText>
 
 <h:form prependId="false">

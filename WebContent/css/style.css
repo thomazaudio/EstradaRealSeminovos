@@ -20,6 +20,17 @@
 ================================================================================
 */
 
+
+
+
+.comparacao{
+	width: 950px;
+	padding:3px 0 14px 0;
+	float: left;
+	border-bottom: 1px solid #D1D5DC;
+	margin-bottom: 23px;
+}
+
 .painel_lado{
 	
 	
@@ -66,7 +77,7 @@ margin-right: 35px;
 	margin-left: 35px;
 }
 
-.container-top { width:718px; padding: 10px; text-align:center;  }
+.container-top { padding: 10px; text-align:center;  }
 	.container-top h1 {margin:0px 0px 10px 0px; font-size:20px;  }
 	.container-top h1 span { font-size:20px; }
 	.container-top { background:#f6f6f6; }
@@ -81,7 +92,7 @@ margin-right: 35px;
 	
 	
 	
-	width:700px;height:200px;background:#FFF; margin:0 auto; border:1px solid #e8e7e6;border-top-left-radius:4px;border-top-right-radius:4px;position:relative;top:-40px;z-index:999;}
+	width:1000px;height:200px;background:#FFF; margin:0 auto; border:1px solid #e8e7e6;border-top-left-radius:4px;border-top-right-radius:4px;position:relative;top:-20px;z-index:999;}
 
 .content_z h1{
 	
@@ -3324,6 +3335,15 @@ ul.personal_list li .grey_area span{
 	width: 81px;
 	height: 62px;
 }
+
+.esquerdo_inicio{
+	width: 500px;
+	padding:3px 0 14px 0;
+	float: left;
+	border-bottom: 1px solid #D1D5DC;
+	margin-bottom: 23px;
+}
+
 .car_characteristics{
 	width: 420px;
 	padding:3px 0 14px 0;

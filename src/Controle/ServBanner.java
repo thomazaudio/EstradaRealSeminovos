@@ -1,27 +1,21 @@
 package Controle;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageFilter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
 
 import javax.imageio.ImageIO;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.oreilly.servlet.MultipartRequest;
-
-import javax.servlet.http.Part;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -29,9 +23,11 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
+import org.imgscalr.Scalr;
 
 import util.Debug;
 import util.Destaque;
+import util.ImgUtil;
 import util.Plano;
 import Modelo.DestaqueDAO;
 import Modelo.ImgDAO;
@@ -40,6 +36,10 @@ import Modelo.VeiculoDAO;
 public class ServBanner extends HttpServlet  {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final int CADASTRA_BANNER=1;
 	public static final int EDIT_BANNER=2;
 	
@@ -96,9 +96,13 @@ public class ServBanner extends HttpServlet  {
 	            
 	            InputStream in = new ByteArrayInputStream(img_temp);
 	          
+	           
+	            
 	            //Inicio das transformações 
 	            BufferedImage outImage=ImageIO.read(in);
-	            BufferedImage cropped=outImage.getSubimage((int)l, (int)t,(int) w,(int) h);
+	            BufferedImage cropped = Scalr.crop(outImage,(int) t,(int) l,(int) w,(int) h,null);
+	            
+	            //BufferedImage cropped=outImage.getSubimage((int)l, (int)t,(int) w,(int) h);
 	            
 	            System.out.println("Chegou aqui 4");
 	           
@@ -122,7 +126,7 @@ public class ServBanner extends HttpServlet  {
 	            d.setDataFim(Plano.getDataFim(Plano.PRIORIDADE_ULTRA));
 	           
 	           //Lança o destaque no sistema 
-	            if(soli==this.CADASTRA_BANNER)
+	            if(soli==CADASTRA_BANNER)
 	            new DestaqueDAO().insert(d);
 	            
 	            
@@ -172,8 +176,18 @@ public class ServBanner extends HttpServlet  {
 						   try {
 							   
 				
-						  //Salva uma imagem de banner temporária no sistema			
-				          new ImgDAO().insertImgTempBanner(IOUtils.toByteArray(item.getInputStream()), id_veiculo);
+						  //Salva uma imagem de banner temporária no sistema	
+							   
+						  InputStream img = item.getInputStream();	   
+						  
+						  
+						  //CONVERTE A IMAGEM
+						  InputStream n_img =  new ImgUtil().alteraTamanho(img,ImgUtil.MIN_WIDTH_BANNER,ImgUtil.MIN_HEIGHT_BANNER);
+						  
+						  
+						  //Insere a imagem convertida
+							   
+				          new ImgDAO().insertImgTempBanner(IOUtils.toByteArray(n_img), id_veiculo);
 							     
 				          if(soli==1)
 				          response.sendRedirect("cad_veiculo/crop_imagem.jsp?ID_VEICULO="+id_veiculo);	

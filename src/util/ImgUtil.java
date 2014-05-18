@@ -1,23 +1,28 @@
 package util;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
+
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.swing.ImageIcon;
 
-import org.apache.commons.io.IOUtils;
+import org.imgscalr.Scalr;
+
 
 public class ImgUtil {
+	
+	
+	public static final int WIDTH_TUMB=195;
+	public static final int HEIGHT_TUMB=165;
+	
+	
+	//Banner destaque
+	public static final int MIN_WIDTH_BANNER=900;
+	public static final int MIN_HEIGHT_BANNER=450;
+	
 	
 	
 	//Altera o tamanho de uma imagem
@@ -25,9 +30,51 @@ public class ImgUtil {
 	public InputStream alteraTamanho(InputStream img_original,int w, int h) throws IOException{
 		
 		
+		 BufferedImage img = Scalr.resize(ImageIO.read(img_original), Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC,
+                             w, h, Scalr.OP_ANTIALIAS);
+		 
+		 
+		
+		
+		 
+		 ByteArrayOutputStream os = new ByteArrayOutputStream();
+		 ImageIO.write(img, "jpg", os);
+		 InputStream is = new ByteArrayInputStream(os.toByteArray());
+		 
 	  
-	   return img_original;
+	   return   is;
 	}
+	
+	
+	
+	
+	
+	
+	
+	//Valida a resolução minima de uma imagem de banner
+	public boolean validaResolucaoImgBanner(InputStream img) throws IOException{
+		
+		 BufferedImage buffe_img = ImageIO.read(img);
+		 
+		 int h = buffe_img.getHeight();
+		 int w = buffe_img.getWidth();
+		 
+		 //Teste h
+		 if(h<MIN_HEIGHT_BANNER)
+		 return false;	 
+		 
+		 //Teste w
+		 if(w<MIN_WIDTH_BANNER)
+		 return false;
+		 
+		 return true;
+		 
+		 
+		
+	}
+	
+	
+	
 	
 	
 	

@@ -4,13 +4,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Map;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.jrimum.bopepo.Boleto;
 import org.jrimum.bopepo.view.BoletoViewer;
+
+import Modelo.FinanDAO;
 import Modelo.PagamentoDAO;
 import Modelo.UsuarioDAO;
 import util.BoletoUtil;
@@ -237,7 +242,7 @@ public class AltPlanoBean {
 	    	
 	    	
 	    	System.out.println("Tipo de pagamento escolhido:Credito na conta");
-	        
+	        FacesMessage msg =  new FacesMessage();
 			
 	    	//Definição do pagamento: utilizando crédito existente em conta
 			int tipo_pagamento = Pagamento.PAGAMENTO_CREDITO_CONTA;
@@ -265,6 +270,10 @@ public class AltPlanoBean {
 			
 			
 			//COMO O VALOR É DEBITADO INSTANTANEAMENTE DA CONTA DO USUÁRIO, O PAGAMENTO É IMEDIATAMENTE APROVADO
+			//Se tiver saldo, aprova
+			
+			if(new FinanDAO().getSaldo(idUser)>=pag.getValor())
+			{
 			pag.aprovar();
 			
 
@@ -275,7 +284,16 @@ public class AltPlanoBean {
 				e.printStackTrace();
 			}
 			
-	    	
+			}
+			
+			else{
+				
+				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+				msg.setSummary("Saldo insuficiente para realizar esta operação.");
+				
+				FacesContext.getCurrentInstance().addMessage(null,msg);
+				
+			}
 	    }
 
         

@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="pragma" content="no-cache"></meta>
+
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style980.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style800.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style700.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style600.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style500.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style400.css" />
+	<link rel="stylesheet" type="text/css"/>
+
+
+
+
+</h:head>
+<h:body>
+
+<div id="content">
+<div class="content">
+
+
+
+
+<div class="tabs_wrapper">
+				   <ul class="tabs">
+						    	<li class="current">
+						    	Comparação de Veículos
+						    	</li>
+						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
+						    	
+						 	</ul>
+						 	
+						  	<div class="box visible">
+						  	
+						  	
+				
+				 
+
+<div class="comparacao">
+						
+						
+						<div class="clear"></div>
+						<div class="features_table">
+							<div class="line">
+								<div class="left">Veículo</div>
+								
+								<ui:repeat var="t" value="#{interesseBean.veiculosSelecionados}">
+								<div class="right fundo_azul"><a class="texto_branco" target="_blank"  href="anuncio.jsp?id_veiculo=#{t.id}"><strong>#{t.titulo}</strong></a></div>
+								</ui:repeat>
+								
+								
+
+							</div>
+							
+							<div class="line grey_area">
+							
+								<div class="left">Preço:</div>
+								
+								<ui:repeat var="p" value="#{interesseBean.veiculosSelecionados}">
+								<div class="right">#{p.preco}</div>
+								</ui:repeat>
+								
+								
+							</div>
+							
+							<div class="line">
+								<div class="left">Ano:</div>
+								
+								
+								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+								<div class="right">#{v.anoFabricacao}/#{v.anoModelo}</div>
+								</ui:repeat>
+								
+                               
+							</div>
+							<div class="line grey_area">
+							
+								<div class="left">Combustível:</div>
+								
+									<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+									<div class="right">#{v.combustivel}</div>
+									</ui:repeat>
+								
+								
+							</div>
+							
+							<div class="line">
+								<div class="left">Motor:</div>
+								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+								
+								<div class="right">#{v.motor}</div>
+								</ui:repeat>
+							</div>
+							
+							<div class="line grey_area">
+								<div class="left">Transmissão:</div>
+								
+								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+								
+								<div class="right">#{v.transmissao}</div>
+								</ui:repeat>
+								
+								
+							</div>
+							<div class="line">
+								<div class="left">Cor:</div>
+								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+								<div class="right">#{v.cor}</div>
+								</ui:repeat>
+								
+								
+								
+							</div>
+							<div class="line grey_area">
+								<div class="left">Quantidade de portas:</div>
+								
+								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+								<div class="right">#{v.quantPortas}</div>
+								</ui:repeat>
+								
+								
+								
+							</div>
+							<div class="line">
+								<div class="left">Direção hidráulica:</div>
+								
+								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+								<div class="right"><h:outputText value="SIM" rendered="#{v.temDirecao()}"></h:outputText><h:outputText value="NÃO" rendered="#{!v.temDirecao()}"></h:outputText></div>
+								</ui:repeat>
+								
+							</div>
+							
+							<div class="line grey_area">
+								<div class="left">Ar Condicionado:</div>
+								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+								<div class="right"><h:outputText value="SIM" rendered="#{v.temAr()}"></h:outputText><h:outputText value="NÃO" rendered="#{!v.temAr()}"></h:outputText></div>
+								</ui:repeat>
+								
+							</div>
+							<div class="line">
+								<div class="left">Rodas de liga leve:</div>
+								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+								<div class="right"><h:outputText value="SIM" rendered="#{v.temRoda()}"></h:outputText><h:outputText value="NÃO" rendered="#{!v.temRoda()}"></h:outputText></div>
+								</ui:repeat>
+							</div>
+							
+							<div class="line grey_area">
+								<div class="left">Retrovisores Elétricos:</div>
+								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+								<div class="right"><h:outputText value="SIM" rendered="#{v.temRetrovisor()}"></h:outputText><h:outputText value="NÃO" rendered="#{!v.temRetrovisor()}"></h:outputText></div>
+								</ui:repeat>
+							</div>
+							<div class="line">
+								<div class="left">Air Bag:</div>
+								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
+								<div class="right"><h:outputText value="SIM" rendered="#{v.temAirBag()}"></h:outputText><h:outputText value="NÃO" rendered="#{!v.temAirBag()}"></h:outputText></div>
+								</ui:repeat>
+							</div>
+							
+							
+						</div>
+						
+						
+						
+					</div>
+					 </div>
+				  
+				  </div>
+
+</div>
+
+</div>
+
+                    
+                      
+</h:body>
+
+</html>

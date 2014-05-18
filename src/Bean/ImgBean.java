@@ -6,12 +6,8 @@ import java.io.InputStream;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
-
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-
-import util.Debug;
 import util.ImgUtil;
 import Modelo.ImgDAO;
 
@@ -39,7 +35,14 @@ public class ImgBean {
         	
 			imgCapa = new DefaultStreamedContent();
 			imgCapa.setContentType("image/jpeg");
-			imgCapa.setStream(new ImgDAO().getImgCapa(Long.parseLong(id)).getImg());
+			
+			InputStream img = new ImgDAO().getImgCapa(Long.parseLong(id)).getImg();
+			
+			//Convert a imagem
+			InputStream n_img = new ImgUtil().alteraTamanho(img,ImgUtil.WIDTH_TUMB,ImgUtil.HEIGHT_TUMB);
+			
+			
+			imgCapa.setStream(n_img);
         	
         }catch(Exception e){
         	imgCapa = new DefaultStreamedContent();
@@ -110,9 +113,10 @@ public class ImgBean {
 			imgCapa.setContentType("image/jpeg");
 			
 			InputStream img_original = new ImgDAO().getTumbImgCapa(Long.parseLong(id)).getImg();
-			//Altera oo tamanho da imagem para Tumb
 			
-			imgCapa.setStream(new ImgUtil().alteraTamanho(img_original, 30, 50));
+			
+			//Altera oo tamanho da imagem
+			imgCapa.setStream(new ImgUtil().alteraTamanho(img_original,ImgUtil.WIDTH_TUMB,ImgUtil.HEIGHT_TUMB));
         	
         }catch(Exception e){
         	imgCapa = new DefaultStreamedContent();

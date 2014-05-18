@@ -4,27 +4,18 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-
 import util.Debug;
 import util.Destaque;
 import util.InfoDestaque;
 import util.Plano;
 
 public class DestaqueDAO {
-	
-	
-	
-	
-	
-	
 	
 	
 	

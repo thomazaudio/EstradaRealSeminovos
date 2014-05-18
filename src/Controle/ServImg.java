@@ -1,14 +1,18 @@
 package Controle;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 
 
 
 
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +26,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
 import util.Debug;
+import util.Imagem;
+import util.ImgUtil;
 import Modelo.ImgDAO;
 
 
@@ -41,6 +47,7 @@ public class ServImg extends HttpServlet {
 	public final int SET_LOGO =9;
 	public final int GET_IMG_TEMP_BANNER =10;
 	public final int GET_IMG_BANNER=11;
+	public final int GET_CAPA_TUMB =13;
 	public int soli; 
 	public int mostra_step=0;
 
@@ -114,6 +121,27 @@ public class ServImg extends HttpServlet {
 			response.setContentLength(img.length);
 			response.getOutputStream().write(img);	
 		}
+		
+		
+
+		//Imagem de capa de um veiculo(Tamanho tumb)
+		else if(soli==this.GET_CAPA_TUMB){
+
+			long id_veiculo = Long.parseLong(request.getParameter("ID_VEICULO"));
+			
+			Imagem imagem = new ImgDAO().getImgCapa(id_veiculo);
+			
+			InputStream in =  imagem.getImg();
+			
+			//Converte a imagem para tumb
+			InputStream n_img = new ImgUtil().alteraTamanho(in,ImgUtil.WIDTH_TUMB,ImgUtil.HEIGHT_TUMB);
+			
+			byte[] img = IOUtils.toByteArray(n_img);
+
+			response.setContentType("image/jpeg");
+			response.setContentLength(img.length);
+			response.getOutputStream().write(img);	
+		}
 
 		
 		//Logo de um usuário
@@ -135,6 +163,17 @@ public class ServImg extends HttpServlet {
 			//Recebe o id do veiculo
 			long id_veiculo = Long.parseLong(request.getParameter("ID_VEICULO"));
 			byte[] img = new ImgDAO().getImgTempBanner(id_veiculo);
+			
+			 
+		    //InputStream is = new ByteArrayInputStream(img);
+			
+		        
+		    //CONVERTE A IMAGEM
+		    //InputStream n_img =  new ImgUtil().alteraTamanho(is,ImgUtil.MIN_WIDTH_BANNER,ImgUtil.MIN_HEIGHT_BANNER);
+			
+		    //img = IOUtils.toByteArray(n_img);  
+			
+			
 			response.setContentType("image/jpeg");
 			response.setContentLength(img.length);
 			response.getOutputStream().write(img);	
@@ -148,6 +187,10 @@ public class ServImg extends HttpServlet {
 			long id_veiculo = Long.parseLong(request.getParameter("ID_VEICULO"));
 			
 			byte[] img = new ImgDAO().getImgBannerDestaque(id_veiculo);
+			
+			
+		
+			
 			response.setContentType("image/jpeg");
 			response.setContentLength(img.length);
 			response.getOutputStream().write(img);	

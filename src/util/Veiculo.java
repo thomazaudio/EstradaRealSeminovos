@@ -471,8 +471,54 @@ public abstract class Veiculo {
 		return imgCapa;
 
 	}
+	
+	
+	//Recupera o nome de todos os itens
+	
+	public ArrayList<String> nomeItens(){
+		
+		ArrayList<String> nomes =  new ArrayList<String>();	
+		
+		ArrayList<Item> itens =  new ArrayList<Item>(this.getItens());
+		
+		for(int i =0;i<itens.size();i++)
+		nomes.add(itens.get(i).getItem());	
+		
+		return nomes;
+	}
+	
+	//Verificacao de acessorios
+	public boolean temDirecao(){
+		
+		return this.nomeItens().contains("DIREÇÃO HIDRÁULICA");
+		
+		
+	}
+	
+	public boolean temAr(){
+		
+		return this.nomeItens().contains("AR CONDICIONADO");
+		
+		
+	}
+	
+	public boolean temRoda(){
+		
+		return this.nomeItens().contains("RODAS DE LIGA LEVE");
+		
+	}
+   
+	public boolean temRetrovisor(){
+		
+		return this.nomeItens().contains("RETOVISORES ELÉTRICOS");
+		
+	}
 
 
-
+	public boolean temAirBag(){
+		
+		return this.nomeItens().contains("AIR BAG");
+		
+	}
 	
 }

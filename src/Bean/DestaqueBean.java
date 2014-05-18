@@ -2,11 +2,8 @@ package Bean;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import javax.faces.bean.ManagedBean;
-
 import Modelo.DestaqueDAO;
-import Modelo.VeiculoDAO;
 import util.Destaque;
 import util.InfoDestaque;
 import util.Veiculo;
@@ -14,6 +11,10 @@ import util.Veiculo;
 
 @ManagedBean
 public class DestaqueBean {
+	
+	
+	public static final int MAX_DESTAQUE_INFERIOR=10;
+	public static final int MAX_DESTAQUE_BANNER=10;
    
 	private ArrayList<InfoDestaque> destaqueBanner=  new ArrayList<InfoDestaque>();
 	private ArrayList<InfoDestaque> destaqueInferior =  new ArrayList<InfoDestaque>();
@@ -33,11 +34,10 @@ public class DestaqueBean {
 		
 		ArrayList<Destaque> destaques = new DestaqueDAO().getDestaques(Destaque.DESTAQUE_INFERIOR);
 		
+		//Embaralha
+		Collections.shuffle(destaques);
 		
-		
-		
-		
-		for(int i=0;(i<destaques.size()&& i<10);i++)
+		for(int i=0;(i<destaques.size()&& i<=MAX_DESTAQUE_INFERIOR);i++)
 		{	
 			
 		 info =  dao.getInforDestaque(destaques.get(i).getCodVeiculo(),destaques.get(i).getId());	
@@ -66,7 +66,7 @@ public class DestaqueBean {
 		
 		ArrayList<Destaque> destaques = new DestaqueDAO().getDestaques(Destaque.DESTAQUE_BANNER);
 		
-		for(int i=0;i<destaques.size();i++)
+		for(int i=0;(i<destaques.size() && i<=MAX_DESTAQUE_BANNER);i++)
 		{	
 			
 		 info = dao.getInforDestaque(destaques.get(i).getCodVeiculo(),destaques.get(i).getId());	

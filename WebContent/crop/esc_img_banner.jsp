@@ -96,12 +96,53 @@ function comprova_extensao(formulario) {
 
 <div class="content">
 
+<div class="tabs_wrapper">
+				   <ul class="tabs">
+						    	<li class="current">
+						    	1º Escolha uma Imagem
+						    	</li>
+						    	<li>
+						    	2º Recorte a Imagem
+						    	</li>
+						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
+						    	
+						 	</ul>
+						 	
+						  	<div class="box visible">
+						  	
+						  	
+					
+							<p>Veículo no <strong>Banner - Destaque</strong></p>
+						  	<jsp:include page="../tumb_veiculo.jsp?">
+						  	<jsp:param value="<%=id_veiculo%>" name="id_veiculo"/>
+						  	<jsp:param value="150" name="tam_img"/>
+						  	<jsp:param value="9" name="tam_font"/>
+						  	</jsp:include>
 
-<h2><strong>Escolha uma imagem para o Banner</strong></h2>
 
 <br></br>
 
-<% 
+
+
+	
+	                            
+	                           <div class="message">
+	                         
+	                          <h3><strong>Por favor, Escolha uma imagem para o Banner</strong></h3>
+	                            
+                               <form name="form" action="../ServBanner" method="POST" enctype="multipart/form-data" onsubmit="return comprova_extensao(this);">
+								<input type="hidden" name="id_veiculo" value="<%=id_veiculo%>"/>
+								<p><input class="btn red"  name="arq"   type="file" id="arq"/></p>
+								
+								<p><input  class="btn blue" type="image" value="Próximo"/></p>
+								</form>
+								
+	                             <p>Por favor, escolha a imagem do veículo a ser exibida no banner da página inicial.</p>
+	                             <p>Dicas: </p>
+	                             <p>*Não escolha imagens com resoluções muito baixas.</p>
+	                             <p>*Escolha a imagem que melhor descreve o perfil do veículo.</p>
+								
+								<% 
     if(existeBannerDestaque)
     {
     
@@ -112,23 +153,6 @@ function comprova_extensao(formulario) {
 
 <img width="400"  src="../ServImg?SOLI=11&&mostra_step=0&&ID_VEICULO=<%=id_veiculo%>"   />
    <% }%>
-
-	
-	                             <p>Por favor, escolha a imagem do veículo a ser exibida no banner da página inicial.</p>
-	                             <p>Dicas: </p>
-	                             <p>*Não escolha imagens com resoluções muito baixas.</p>
-	                             <p>*Escolha a imagem que melhor descreve o perfil do veículo.</p>
-	                            
-	                           <div class="message">
-	                         
-	                          
-	                            
-                               <form name="form" action="../ServBanner" method="POST" enctype="multipart/form-data" onsubmit="return comprova_extensao(this);">
-								<input type="hidden" name="id_veiculo" value="<%=id_veiculo%>"/>
-								<p><input class="btn red"  name="arq"   type="file" id="arq"/></p>
-								
-								<p><input  class="btn blue" type="image" value="Próximo"/></p>
-								</form>
 								</div>
         
                               
@@ -150,7 +174,10 @@ function comprova_extensao(formulario) {
 
 
 
-
+	  	
+						  	</div>
+				
+				  </div>
 
 
 

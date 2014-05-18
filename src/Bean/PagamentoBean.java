@@ -5,11 +5,13 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.jrimum.bopepo.BancosSuportados;
 import org.jrimum.bopepo.Boleto;
 import org.jrimum.bopepo.view.BoletoViewer;
@@ -28,11 +30,14 @@ import org.jrimum.domkee.financeiro.banco.febraban.Titulo;
 
 import Modelo.PagamentoDAO;
 import Modelo.UsuarioDAO;
+import util.BoletoUtil;
+import util.Debug;
 import util.Empresa;
 import util.Pagamento;
 import util.Pessoa;
 import util.Transacao;
 import util.Usuario;
+import util.UsuarioUtil;
 
 
 @ManagedBean
@@ -43,8 +48,17 @@ public class PagamentoBean {
 	private double valor;
 	private int tipo_pagamento;
 	private int tipo_transacao;
+	private long codPagamento;
 	
 	
+	public long getCodPagamento() {
+		return codPagamento;
+	}
+
+	public void setCodPagamento(long codPagamento) {
+		this.codPagamento = codPagamento;
+	}
+
 	public double getValor() {
 		return valor;
 	}
@@ -131,8 +145,10 @@ public class PagamentoBean {
 			pag.setTipo(tipo_transacao);
 			pag.setCodUser(idUser);
 			pag.setDescricao(Transacao.getTextoTransacao(tipo_transacao));
+			pag.setFormaPagamento(Pagamento.PAGAMENTO_BOLETO);
 			
 			new PagamentoDAO().insert(pag);
+			codPagamento = pag.getCod();
 			
 			System.out.println("Detalhes do pagamento");
 			System.out.println("Tipo: "+pag.getTipo());
@@ -191,10 +207,7 @@ public class PagamentoBean {
 				
 				new PagamentoDAO().insert(pag);
 				
-				System.out.println("Detalhes do pagamento");
-				System.out.println("Tipo: "+pag.getTipo());
-				System.out.println("Valor: "+pag.getValor());
-				System.out.println("Usuário: "+pag.getCodUser());
+				codPagamento = pag.getCod();
 				
 				
 				
@@ -236,81 +249,33 @@ public class PagamentoBean {
 		
 		
 
-		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		
-		//Recupera o usuário em sessão
-		Usuario user = (Usuario) sessao.getAttribute("usuario");	System.out.println("Valor: "+valor);
-		
-		
-		int tipo_user = new UsuarioDAO().getTipoUser(user.getId());
+		//O código do pagamento lançado deve estar em sessão
+		if(codPagamento==0)
+		Debug.gerar("", "PagamentoBean","geraPagamentoCreditoBoleto","Código do pagamento  = 0");	
 		
 		
-		String doc;
+		//Recuperação do pagamento
+		Pagamento pg = new PagamentoDAO().getPagamento(codPagamento);
+		
+		if(pg.getCodUser()==0)
+		Debug.gerarDebugPagamento("","PagamentoBean","geraPagamentoCreditoBoleto","O Código do usuário no pagamento é = 0", pg);	
 		
 		
+		//Recuperação do usuário relacionado ao pagamento (sacado)
+		Usuario user = new UsuarioDAO().getUser(pg.getCodUser());
 		
-		if(tipo_user==Usuario.PESSOA)
-		doc  = ((Pessoa) user).getCpf();
-		else
-		doc  = ((Empresa) user).getCnpj();	
+		//Recuperação do documento, cpf ou cnpj
+		String doc = UsuarioUtil.getDoc(user);
 		
-		Cedente cedente = new Cedente("Grupo Estrada Real", "00.000.208/0001-00");
+	
+	    //Preenchimento dos dados do Boleto
+		Boleto bol  =  new BoletoUtil().getBoleto(user, doc,pg.getValor(),pg.getCod(),0);
 		
-		Sacado sacado = new Sacado(user.getNome(),doc);
+		
 
-		// Informando o endereço do sacado.
-		Endereco enderecoSac = new Endereco();
-		enderecoSac.setUF(UnidadeFederativa.RN);
-		enderecoSac.setLocalidade("Natal");
-		enderecoSac.setCep(new CEP("59064-120"));
-		enderecoSac.setBairro("Grande Centro");
-		enderecoSac.setLogradouro("Rua poeta dos programas");
-		enderecoSac.setNumero("1");
-		sacado.addEndereco(enderecoSac);
-		
-		SacadorAvalista sacadorAvalista = new SacadorAvalista("JRimum Enterprise", "00.000.000/0001-91");
-
-		// Informando o endereço do sacador avalista.
-		Endereco enderecoSacAval = new Endereco();
-		enderecoSacAval.setUF(UnidadeFederativa.DF);
-		enderecoSacAval.setLocalidade("Brasília");
-		enderecoSacAval.setCep(new CEP("59000-000"));
-		enderecoSacAval.setBairro("Grande Centro");
-		enderecoSacAval.setLogradouro("Rua Eternamente Principal");
-		enderecoSacAval.setNumero("001");
-		sacadorAvalista.addEndereco(enderecoSacAval);
+		BoletoViewer boletoViewer = new BoletoViewer(bol);
 		
 		
-		// Informando dados sobre a conta bancária do título.
-		ContaBancaria contaBancaria = new ContaBancaria(BancosSuportados.BANCO_BRADESCO.create());
-		contaBancaria.setNumeroDaConta(new NumeroDaConta(123456, "0"));
-		contaBancaria.setCarteira(new Carteira(30));
-		contaBancaria.setAgencia(new Agencia(1234, "1"));
-		
-		
-		Titulo titulo = new Titulo(contaBancaria, sacado, cedente, sacadorAvalista);
-		titulo.setNumeroDoDocumento("123456");
-		titulo.setNossoNumero("99345678912");
-		titulo.setDigitoDoNossoNumero("5");
-		titulo.setValor(BigDecimal.valueOf(valor));
-		titulo.setDataDoDocumento(new Date());
-		titulo.setDataDoVencimento(new Date());
-		titulo.setTipoDeDocumento(TipoDeTitulo.DM_DUPLICATA_MERCANTIL);
-		//titulo.setAceite(new Aceite());
-		titulo.setDesconto(new BigDecimal(0.05));
-		titulo.setDeducao(BigDecimal.ZERO);
-		titulo.setMora(BigDecimal.ZERO);
-		titulo.setAcrecimo(BigDecimal.ZERO);
-		titulo.setValorCobrado(BigDecimal.valueOf(valor));
-		
-		Boleto boleto = new Boleto(titulo);
-        
-		boleto.setLocalPagamento("Pagável preferencialmente na Rede X ou em " +
-		                "qualquer Banco até o Vencimento.");
-		
-		
-		
-		BoletoViewer boletoViewer = new BoletoViewer(boleto);
         
         byte[] pdfAsBytes = boletoViewer.getPdfAsByteArray();
         

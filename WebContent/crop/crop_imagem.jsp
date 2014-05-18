@@ -26,6 +26,19 @@
 <script type="text/javascript">
 
 
+
+Query(document).ready(function($){
+    $('#target').addimagezoom({
+ zoomrange: [2, 10],
+ magnifiersize: [200,200],
+ magnifierpos: 'right',
+ cursorshade: true,
+ largeimage: ''
+ })}
+ 
+ )
+
+
 function  valida(){
 
 
@@ -33,7 +46,9 @@ function  valida(){
    if(verificaTamanhoImagem())
    {
      
-     return false;
+     if(validaAreaSelecao())
+     return true;
+     else return false;
    
    }
    
@@ -42,82 +57,89 @@ function  valida(){
 
 }
 
+
+function validaAreaSelecao(){
+
+  var w  = document.getElementById('w').value;
+  var h  = document.getElementById('h').value;
+  
+  if(w<500 || h<200)
+  {
+  
+  window.alert("A área selecionada é muito pequena!");
+  return false;
+  
+  }
+  else return true;
+ 
+
+}
+
 function verificaTamanhoImagem(){
 
-var largura = document.getElementById("target").width;
-var altura = document.getElementById("target").height;
+var largura = document.getElementById("target").naturalWidth;
+var altura = document.getElementById("target").naturalHeight;
+
+
+
+
 
 if(largura<700 || altura < 400)
+{
 window.alert("Está imagem é muito pequena para o Banner Destaque ("+largura+"x"+altura+")\nÉ necessário uma imagem de tamanho minimo: 700x400.\nPor favor Selecione outra imagem.");
-
-
-
 return false;
+}
+else
+return true;
+
+
 
 }
 
 </script>
 
 <script type="text/javascript">
+
+   // 
+
   jQuery(function($){
 
-      $('#target').Jcrop({
-      // start off with jcrop-light class
-      bgOpacity: 0.5,
-      bgColor: 'white',
-      addClass: 'jcrop-light',
-       onSelect: updateCoords
-    },
-    function(){
-      api = this;
-      api.setSelect([130,65,130+350,65+285]);
-      api.setOptions({ bgFade: true });
-      api.ui.selection.addClass('jcrop-selection');
-    });
+    var jcrop_api;
 
-
-    // Create variables (in this scope) to hold the API and image size
-    var jcrop_api,
-        boundx,
-        boundy,
-
-        // Grab some information about the preview pane
-        $preview = $('#preview-pane'),
-        $pcnt = $('#preview-pane .preview-container'),
-        $pimg = $('#preview-pane .preview-container img'),
-
-        xsize = $pcnt.width()+200,
-        ysize = $pcnt.height();
-    
-    console.log('init',[xsize,ysize]);
     $('#target').Jcrop({
-      
-      aspectRatio: xsize / ysize
+    addClass: 'jcrop-light',
+      onChange:   updateCoords,
+      onRelease:  clearCoords
     },function(){
-      // Use the API to get the real image size
-      var bounds = this.getBounds();
-      boundx = bounds[0];
-      boundy = bounds[1];
-      // Store the API in the jcrop_api variable
       jcrop_api = this;
-
-      // Move the preview into the jcrop container for css positioning
-      $preview.appendTo(jcrop_api.ui.holder);
     });
 
-   
-   
+    $('#coords').on('change','input',function(e){
+      var x = $('#x').val(),
+          y = $('#y').val(),
+          w = $('#w').val(),
+          h = $('#h').val();
+     
+    });
 
   });
-  
-  //getting the cordinats of the box
-                function updateCoords(c){
-                    $('#x').val(c.x);
-                    $('#y').val(c.y);
-                    $('#w').val(c.w);
-                    $('#h').val(c.h);
-                };
 
+  // Simple event handler, called from onChange and onSelect
+  // event handlers, as per the Jcrop invocation above
+  function updateCoords(c)
+  {
+    $('#x').val(c.x);
+    $('#y').val(c.y);
+    $('#w').val(c.w);
+    $('#h').val(c.h);
+   
+  };
+
+  function clearCoords()
+  {
+    $('#coords input').val('');
+  };
+  
 
 </script>
 <link rel="stylesheet" href="demo_files/main.css" type="text/css" />
@@ -189,10 +211,38 @@ return false;
   <div id="content">
   
   
-<a class="btn blue" href="esc_img_banner.jsp?ID_VEICULO=<%=id_veiculo%>"> << Escolher outra image</a>
+  
+  
+
 <div class="content">
+
+
+<div class="tabs_wrapper">
+				   <ul class="tabs">
+				                 
+						    	<li>
+						    	<a href="esc_img_banner.jsp?ID_VEICULO=<%=id_veiculo%>">1º Escolha uma Imagem</a>
+						    	</li>
+						    	<li  class="current">
+						    	2º Recorte a Imagem
+						    	</li>
+						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
+						    	
+						 	</ul>
+						 	
+						  	<div class="box visible">
+						  	
+						  	
+						  	
+						  
+							<p>Veículo no <strong>Banner - Destaque</strong></p>
+						  	<jsp:include page="../tumb_veiculo.jsp?">
+						  	<jsp:param value="<%=id_veiculo%>" name="id_veiculo"/>
+						  	<jsp:param value="150" name="tam_img"/>
+						  	<jsp:param value="9" name="tam_font"/>
+						  	</jsp:include>
 <div class="message">
-<h3>Por favor, recorte a imagem para adaptação no banner</h3>
+<h4>Por favor, recorte a imagem para adaptação no banner</h4>
 <p>Dicas: </p>
 <p>*Tente selecionar as partes mais importantes do seu veículo.</p>
 <p>*O objetivo do banner-destaque não é mostrar a imagem em sua totalidade mas sim destacar determinada região de maior valor no seu veículo.</p>
@@ -202,9 +252,14 @@ return false;
 </div>
   
 
-  <img  src="../ServImg?SOLI=10&&mostra_step=0&&ID_VEICULO=<%=id_veiculo%>" id="target" alt="[Jcrop Example]" />
+
+ 
+  <img   src="../ServImg?SOLI=10&&mostra_step=0&&ID_VEICULO=<%=id_veiculo%>" id="target" alt="Jcrop Image">
 
   <form action="../ServBanner" method="get" onsubmit="return valida();">
+ 
+  
+  
 
                         <input type="hidden" id="x" name="l" />
                         <input type="hidden" id="y" name="t" />
@@ -215,7 +270,7 @@ return false;
                           <input type="hidden"  name="page_pos" value="<%=page_pos%>" />
                         <input type="hidden"  id="ID_VEICULO" name="ID_VEICULO" value="<%=id_veiculo %>" />
                       
-                        <input type="submit" class="btn blue" value="Próximo" />
+                        <input type="submit" class="btn blue" value="Finalizar!" />
                         
                         <input type="hidden" id="itemName" name="itemName" value="teste" />
                         </form>
@@ -237,6 +292,8 @@ return false;
 
 <div class="clearfix"></div>
 
+</div>
+</div>
 </div>
 </div>
 
