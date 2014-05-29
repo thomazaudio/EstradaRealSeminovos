@@ -24,7 +24,7 @@ import Modelo.PagamentoDAO;
 import Modelo.UsuarioDAO;
 
 
-//CLASSE PARA PAGAMENTO DE ANÚNCIO NO ATO DE CADASTRO
+//CLASSE PARA PAGAMENTO DE ANï¿½NCIO NO ATO DE CADASTRO
 
 @ManagedBean
 @SessionScoped
@@ -36,6 +36,7 @@ public class PagamentoAnuncio {
 	private double valor;
 	private long codVeiculo;
 	private long codPagamento;
+	private boolean isReemissao;
 	
 	
 	
@@ -49,9 +50,11 @@ public class PagamentoAnuncio {
 	}
 
 
-		//Escolha do tipo de pagamento (Caso: pagamentoo logo após cadastramento dos dados do anúncio)
+		//Escolha do tipo de pagamento (Caso: pagamentoo logo apï¿½s cadastramento dos dados do anï¿½ncio)
 		 public void escTipoPagamentoCadastro(){
-				
+			    
+			     isReemissao = false;
+			 
 				Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 				
 				
@@ -64,7 +67,7 @@ public class PagamentoAnuncio {
 		        
 		        
 		         //Tipo de plano
-		         //COMO ESTÁ NO ATO DE CADASTRO O DADO SE ENCONTRA EM SESSÃO
+		         //COMO ESTï¿½ NO ATO DE CADASTRO O DADO SE ENCONTRA EM SESSï¿½O
 		         prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");
 		          
 		         //Codigo do veiculo
@@ -74,15 +77,10 @@ public class PagamentoAnuncio {
 		        
 		         //Valor 
 		         valor = Plano.getPrecoPlano(prioridade_anuncio);
-		        
-		        
-		        //Tipo de transação
-		         tipo_transacao = Integer.parseInt(p.get("tipo_transacao"));
-		         
-		         
+	
 		     	
 		         
-		        //verificação do tipo de pagamento escolhido
+		        //verificaï¿½ï¿½o do tipo de pagamento escolhido
 				switch(tipo_pagamento){
 				
 				case Pagamento.PAGAMENTO_BOLETO: this.pagamentoBoleto();
@@ -107,6 +105,7 @@ public class PagamentoAnuncio {
 		 public void reemitePagamento(){
 			 
 			 
+			 isReemissao = true;
 			 
 			 Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 				
@@ -125,7 +124,7 @@ public class PagamentoAnuncio {
 		        valor = Plano.getPrecoPlano(prioridade_anuncio);
 		     
 		        
-		        //Tipo de transação (Reemissão de pagamento)
+		        //Tipo de transaï¿½ï¿½o (Reemissï¿½o de pagamento)
 		        tipo_transacao = Transacao.REEMITE_PAGAMENTO;
 		        
 		 
@@ -140,7 +139,7 @@ public class PagamentoAnuncio {
 			 
 		 }
 		 
-		 //Reemissão de pagamento para este veículo
+		 //Reemissï¿½o de pagamento para este veï¿½culo
 		 public void escTipoPagamentoReemissao(){
 				
 				Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -157,7 +156,7 @@ public class PagamentoAnuncio {
 		        valor = Plano.getPrecoPlano(prioridade_anuncio);
 		        
 		        
-		        //verificação do tipo de pagamento escolhido
+		        //verificaï¿½ï¿½o do tipo de pagamento escolhido
 				switch(tipo_pagamento){
 				
 				case Pagamento.PAGAMENTO_BOLETO: this.pagamentoBoleto();
@@ -183,29 +182,29 @@ public class PagamentoAnuncio {
 		 
 		 
 
-		    //Método escolhido  = PAGAMENTO_BOLETO
-			//Tipo de Transação  = CREDITO_DEBITO
+		    //Mï¿½todo escolhido  = PAGAMENTO_BOLETO
+			//Tipo de Transaï¿½ï¿½o  = CREDITO_DEBITO
 			//Tipo de pagamento  = PAGAMENTO_BOLETO
 		    public void pagamentoBoleto(){
 		    	
 
-		    	//Lança o pagamento no sistema
-		    	//Definição do pagamento:boleto bancário
+		    	//Lanï¿½a o pagamento no sistema
+		    	//Definiï¿½ï¿½o do pagamento:boleto bancï¿½rio
 				int tipo_pagamento = Pagamento.PAGAMENTO_BOLETO;
 				
 				
-				//Recupera usuario pra preenchimento das informações
+				//Recupera usuario pra preenchimento das informaï¿½ï¿½es
 				HttpSession sessao;
 		        sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		        long idUser = ((Usuario)sessao.getAttribute("usuario")).getId();
 		    	
 
-				//Lança um novo pagamento no sistema
+				//Lanï¿½a um novo pagamento no sistema
 				Pagamento pag = new Pagamento();
 				pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
 				pag.setValor(Plano.getPrecoPlano(prioridade_anuncio));
 				pag.setPrioridade(prioridade_anuncio);
-				pag.setTipo(Transacao.CREDITO_DEBITO);//Pagamento de anúncio
+				pag.setTipo(Transacao.CREDITO_DEBITO);//Pagamento de anï¿½ncio
 				pag.setCodUser(idUser);
 				pag.setIdVeiculo(codVeiculo);
 				pag.setDescricao(Transacao.getTextoTransacao(Transacao.CREDITO_DEBITO));
@@ -217,7 +216,7 @@ public class PagamentoAnuncio {
 			
 				
 				
-		    	//Atribuição do codigo do pagamento para sessao
+		    	//Atribuiï¿½ï¿½o do codigo do pagamento para sessao
 				codPagamento = pag.getCod();
 		    	
 				
@@ -234,24 +233,24 @@ public class PagamentoAnuncio {
 		    
 		    
 		    
-		    //Método escolhido = PAGAMENTO_PAG_SEGURO
-			//Tipo de Transação  = CREDITO_DEBITO
+		    //Mï¿½todo escolhido = PAGAMENTO_PAG_SEGURO
+			//Tipo de Transaï¿½ï¿½o  = CREDITO_DEBITO
 	    	//Tipo de pagamento  = PAGAMENTO_PAG_SEGURO
 		    public void pagamentoPagSeguro(){
 		    	
-	             //Lança o pagamento no sistema
+	             //Lanï¿½a o pagamento no sistema
 		    	
-		    	//Atribuição do codigo do pagamento para sessao
+		    	//Atribuiï¿½ï¿½o do codigo do pagamento para sessao
 		    	
-		    	//Redireciona para a página definida
+		    	//Redireciona para a pï¿½gina definida
 		    	
 		    }
 		    
 		    
 		    
 		
-		    //Método escolhido = Debito na conta
-		    //Tipo de Transação  = ALT_PLANO_CREDITO
+		    //Mï¿½todo escolhido = Debito na conta
+		    //Tipo de Transaï¿½ï¿½o  = ALT_PLANO_CREDITO
 		    //Tipo de pagamento  = PAGAMENTO_CREDITO_CONTA
 		    public void debitoConta(){
 		    	
@@ -261,7 +260,7 @@ public class PagamentoAnuncio {
 		    	System.out.println("Tipo de pagamento escolhido:Credito na conta");
 		        
 				
-		    	//Definição do pagamento: utilizando crédito existente em conta
+		    	//Definiï¿½ï¿½o do pagamento: utilizando crï¿½dito existente em conta
 				int tipo_pagamento = Pagamento.PAGAMENTO_CREDITO_CONTA;
 				
 				
@@ -271,12 +270,12 @@ public class PagamentoAnuncio {
 		        Usuario user = (Usuario)sessao.getAttribute("usuario");
 		    	
 
-				//Lança um novo pagamento no sistema
+				//Lanï¿½a um novo pagamento no sistema
 				Pagamento pag = new Pagamento();
 				pag.setStatus(Pagamento.AGUARDANDO_APROVACAO);
 				pag.setValor(Plano.getPrecoPlano(prioridade_anuncio));
 				pag.setPrioridade(prioridade_anuncio);
-				pag.setTipo(Transacao.CREDITO_DEBITO);//Alteração de plano
+				pag.setTipo(Transacao.CREDITO_DEBITO);//Alteraï¿½ï¿½o de plano
 				pag.setCodUser(user.getId());
 				pag.setIdVeiculo(codVeiculo);
 				pag.setDescricao(Transacao.getTextoTransacao(Transacao.CREDITO_DEBITO));
@@ -286,7 +285,7 @@ public class PagamentoAnuncio {
 				new PagamentoDAO().insert(pag);
 				
 				
-				//Verifica se o saldo do usuário é suficiente
+				//Verifica se o saldo do usuï¿½rio ï¿½ suficiente
 				double saldo =  new FinanDAO().getSaldo(user.getId());
 				
 				if(saldo>=pag.getValor())
@@ -296,10 +295,20 @@ public class PagamentoAnuncio {
 				pag.aprovar();
 			
 				
-				//Encaminha para página adequada
+				//Encaminha para pÃ¡gina adequada
 
 			    try {
-					FacesContext.getCurrentInstance().getExternalContext().redirect("alt_sucesso.jsf");
+			    	
+			    	//AnÃºncio jÃ¡ cadastrado mas o pagamento foi realizado novamente
+			    	if(isReemissao)
+					FacesContext.getCurrentInstance().getExternalContext().redirect(new ContextoBean().getContextoInicial()+"/arearestritausuario/alt_sucesso.jsf");
+			    	
+			    	
+			    	//Pagamento no ato de cadastro do anÃºncio
+			    	else
+			    	FacesContext.getCurrentInstance().getExternalContext().redirect(new ContextoBean().getContextoInicial()+"/cad_veiculo/cad_anuncio_sucesso.xhtml");	
+			    		
+			    	
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -309,7 +318,7 @@ public class PagamentoAnuncio {
 				{
 	
 					msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-					msg.setSummary("Saldo insuficiente pada realizar esta operação.");
+					msg.setSummary("Saldo insuficiente pada realizar esta operaï¿½ï¿½o.");
 					FacesContext.getCurrentInstance().addMessage(null,msg);
 				}
 		    	
@@ -319,7 +328,7 @@ public class PagamentoAnuncio {
 		  
 			
 			
-			//Método para geração de boleto de um pagamento para dowload
+			//Mï¿½todo para geraï¿½ï¿½o de boleto de um pagamento para dowload
 	    	public void geraBoleto(long codPagamento){
 	    		
 	    		
@@ -329,20 +338,20 @@ public class PagamentoAnuncio {
 		        sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		        Usuario user = (Usuario)sessao.getAttribute("usuario");
 	    		
-	    		//O código do pagamento lançado deve estar em sessão
+	    		//O cï¿½digo do pagamento lanï¿½ado deve estar em sessï¿½o
 	    		if(codPagamento==0)
-	    		Debug.gerar("", "AltPlanoBean","geraBoleto","Código do pagamento  = 0");	
+	    		Debug.gerar("", "AltPlanoBean","geraBoleto","Cï¿½digo do pagamento  = 0");	
 	    		
 	    		
-	    		//Recuperação do pagamento
+	    		//Recuperaï¿½ï¿½o do pagamento
 	    		Pagamento pg = new PagamentoDAO().getPagamento(codPagamento);
 	    		
 	    		if(pg.getCodUser()==0)
-	    		Debug.gerarDebugPagamento("","AltPlanoBean","geraBoleto","O Código do usuário no pagamento é = 0", pg);	
+	    		Debug.gerarDebugPagamento("","AltPlanoBean","geraBoleto","O Cï¿½digo do usuï¿½rio no pagamento ï¿½ = 0", pg);	
 	    		
 	    		
 	    		
-	    		//Recuperação do documento, cpf ou cnpj
+	    		//Recuperaï¿½ï¿½o do documento, cpf ou cnpj
 	    		String doc = UsuarioUtil.getDoc(user);
 	    		
 	    	

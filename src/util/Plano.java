@@ -7,9 +7,14 @@ public class Plano {
 	
 	
 	
-	//Quantidade de dias que o destaque ficara no ar
+	//Quantidade de dias que o anuncio ficara no ar
+	public static final int DIAS_GRATIS =30;
 	public static final int DIAS_MEGA =30;
-	public static final int DIAS_ULTRA=20;
+	public static final int DIAS_ULTRA=30;
+	
+	//Quantiidade de dias que o destaque ficarÃ¡ no ar
+	public static final int DIAS_DESTAQUE_MEGA=15;
+	public static final int DIAS_DESTAQUE_ULTRA=7;
 	
 	//Nomes
 	public static final String NOME_ANUNCIO_ULTRA="DESTAQUE ULTRA + HOME + BANNER";
@@ -22,7 +27,7 @@ public class Plano {
 	public static final int PRIORIDADE_GRATIS=5;
 	
 	
-	//Preços
+	//Preï¿½os
 	public static final double PRECO_MEGA=30;
 	public static final double PRECO_ULTRA=50;
 	
@@ -36,7 +41,7 @@ public class Plano {
 		case PRIORIDADE_ULTRA :return PRECO_ULTRA;
 		
 		default :
-		Debug.gerar("","Plano","getPrecoPlano","Preço não definido para o plano: "+tipo);
+		Debug.gerar("","Plano","getPrecoPlano","PreÃ§o nï¿½o definido para o plano: "+tipo);
 		return 0;
 		
 		
@@ -44,27 +49,33 @@ public class Plano {
 	}
 	
 	
-	//Recupera a data final de cada plano lançado no sistema
-	public static Calendar getDataFim(int prioridade_anuncio){
+	//Recupera a data final de cada anÃºncio lanï¿½ado no sistema
+	public static Calendar getDataFimAnuncio(Calendar ini,int prioridade_anuncio){
 		
 		
-		Calendar fim = Calendar.getInstance();
-		
-		
-		
-		
+		Calendar fim = ini;
+	
 		
 		switch(prioridade_anuncio){
 	
-		case PRIORIDADE_MEGA :fim.add(Calendar.DAY_OF_MONTH,DIAS_MEGA);
+		case PRIORIDADE_MEGA : fim.add(Calendar.DAY_OF_MONTH,DIAS_MEGA); 
 		break;
 		
 		case PRIORIDADE_ULTRA :fim.add(Calendar.DAY_OF_MONTH,DIAS_ULTRA);
+		break;
+		
+		case PRIORIDADE_GRATIS: fim.add(Calendar.DAY_OF_MONTH,DIAS_GRATIS);
+		break;
 		
 		}
 		
 		return fim;
 	}
+	
+
+	
+	
+	
 	
 	
 	

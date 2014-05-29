@@ -11,15 +11,15 @@
         <property name="connection.driver_class"
 >org.gjt.mm.mysql.Driver</property>
         <property name="connection.url"
->jdbc:mysql://localhost/estrada_real</property>
+>jdbc:mysql://localhost/estradar_principal</property>
         <property name="connection.username"
->root</property>
+>estradar_real</property>
         <property name="connection.password"
 >leghacy123</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size"
->1</property>
+>3</property>
 
         <!-- SQL dialect -->
         <property name="dialect"

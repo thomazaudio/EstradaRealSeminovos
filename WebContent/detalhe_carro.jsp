@@ -423,36 +423,34 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 						
 							
 					        <div class="calculator_2"  >
-					         <div class="fundo_laranja">
-							 <h3  class="texto_branco">Envie sua proposta!</h3>
-							 </div>
-							<form action="EnviaPergunta" method="POST" id="form_pergunta">
+					         
+							<form  id="form_pergunta">
 							<label><strong>Nome:</strong></label>
 						<div class="select_box_1">
-							<input  required="true" type="text" class="select_3" />
+							<input name="nome"  required="true" type="text" class="select_3" />
 
 
 						</div>
 						<label><strong>Email:</strong></label>
 						<div class="select_box_1">
-							<input required="true" type="email" class="select_3" />
+							<input required="true" type="email" name="email" class="select_3" />
 
 
 						</div>
 						<label><strong>Telefone:</strong></label>
 						<div class="select_box_1">
-							<input type="text" class="select_3" />
+							<input name="telefone" type="text" class="select_3" />
 
 
 						</div>
 							
 							<input type="hidden" name="id_veiculo" value="<%=car.getId()%>"/>
-							<input type="hidden" name="id_destinatario" value="<%=user.getId()%>"/>
-							<input type="hidden" name="id_anuncio" value="<%=an.getId()%>"/>
+							<input type="hidden" name="id_usuario" value="<%=user.getId()%>"/>
 							
-							<textarea required="true"   rows="3" cols="82" id="pg" name="pergunta"></textarea>
 							
-						     <input  type="submit"  value="enviar" onclick="limpaP();"  class="btn blue" />
+							<textarea required="true"   rows="3" cols="82" id="pg" name="msg"></textarea>
+							
+						     <input  type="submit"  value="Enviar Proposta"   class="btn blue" />
 							
 							</form>
 							
@@ -464,60 +462,8 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 					</div>
 					
 					
-					<% 
 					
-					//RECUPERA TODAS AS PERGUNTAS DO ANUNCIO
-					ArrayList<Pergunta> perguntas =  new PerguntaDAO().getPerguntasAnuncio(an.getId());
 					
-					%>
-					
-					<div class="comments">
-					             
-					        <% 
-					        
-					        if(perguntas.size()>0)
-					        out.write("<h4>Perguntas sobre o veículo.</h4>");
-					        else
-					        out.write("<h4>Esse veículo não possue perguntas ainda.</h4>");
-					        
-					        
-					        %> 
-							
-							
-							<% for(int i=0;i<perguntas.size();i++)
-								{%>
-							<ul>
-								<li class="first">
-									<div class="wrapper">
-									<div class="date"><p><%=perguntas.get(i).getDataPerguntaFormated()%></p></div>
-										<img  src="images/icon_pergunta.png" alt="">
-										<div class="comment_data">
-											<div class="comment_author">
-												<div class="author"><%=perguntas.get(i).getPergunta()%></div>
-												
-											</div>
-											
-											<% 
-											if(perguntas.get(i).getStatus()==Pergunta.RESPONDIDA)
-											out.write("<div class=\"comment\"><strong>"+user.getNome()+": </strong>"+perguntas.get(i).getResposta()+"</div>");
-											else
-											{
-											out.write("<div class=\"comment\">Pergunta não respondida.</div>");	
-											}
-												
-								             %>
-								             
-								         
-											
-										</div>
-										<div class="clear"></div>
-									</div>
-									
-								</li>
-								
-							</ul>
-							<% }%>
-						</div>
 						
 						
 						<br></br>
@@ -591,7 +537,7 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 		    $.ajax({
 		        type        : "POST",
 		        cache       : false,
-		        url         : "EnviaPergunta",
+		        url         : "EnviaProposta",
 		        data        : $(this).serializeArray(),
 		        success: function(data) {
 		        	
@@ -610,7 +556,7 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 		    		    'type'          : 'iframe',
 		    		    'onClosed': function() {
 		    		         
-		    		    	window.location.reload();
+		    		    	
 		    		    	
 		    		        }
 		    		      	

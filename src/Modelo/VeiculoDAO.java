@@ -20,6 +20,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import util.Carro;
+import util.Comunicacao;
 import util.Debug;
 import util.ItemVeiculo;
 import util.Ordenacao;
@@ -139,7 +140,63 @@ public class VeiculoDAO {
 	 * @param classe
 	 */
 	
-	//Classe para teste de paginação
+	
+	//Desativa um veÃ­culo
+	public void desativaVeiculo(long id_veiculo){
+		
+
+		try{
+			
+			Connection con =  Banco.abreBanco();
+			Statement  stm =  con.createStatement();
+			stm.executeUpdate("UPDATE veiculo set STATUS=0 WHERE ID_VEICULO="+id_veiculo);
+			
+			stm.close();
+			
+					
+			
+			//Envia a mensagem para o usuÃ¡rio dizendo que o anuncio doi desativado
+			new Comunicacao().sendMensagemAnuncioDesativado(id_veiculo);
+			
+			
+		}catch(Exception e){
+			
+			Debug.gerar("Modelo","DestaqueDAO","desativaVeiculo", e.getMessage());
+			
+		}
+		
+		
+	}
+	
+	
+		//Ativa
+		public void ativaVeiculo(long id_veiculo){
+			
+
+			try{
+				
+				Connection con =  Banco.abreBanco();
+				Statement  stm =  con.createStatement();
+				stm.executeUpdate("UPDATE veiculo set STATUS=1 WHERE ID_VEICULO="+id_veiculo);
+				
+				stm.close();
+				
+						
+				
+				//Envia a mensagem para o usuÃ¡rio dizendo que o anuncio foi reativado
+			
+				
+				
+			}catch(Exception e){
+				
+				Debug.gerar("Modelo","DestaqueDAO","desativaVeiculo", e.getMessage());
+				
+			}
+			
+			
+		}
+	
+	//Classe para teste de paginaï¿½ï¿½o
 	public List testePaginacao(int quant_reg_pagina){
 		
 		
@@ -236,26 +293,29 @@ public class VeiculoDAO {
 		cri.add(Restrictions.eq("class",classe));
 		
 		
-		//Paginação
+		//Paginaï¿½ï¿½o
 		cri.setFirstResult(ini);
 		cri.setMaxResults(total);
 		
-		//Somente os veiculos que estão validados
+		//Somente os veiculos que estï¿½o validados
 		cri.add(Restrictions.eq("statusValidacao",Pagamento.VALIDACAO_OK));
 		
 		//Somente anuncios pagos
 		cri.add(Restrictions.eq("statusPagamento",Pagamento.CONFIRMADO));
 		
+		//Somente veÃ­culos nÃ£o vencidos
+		cri.add(Restrictions.eq("status",1));
 		
 		
-		//Adicona as restrições restantes
+		
+		//Adicona as restriï¿½ï¿½es restantes
 		for(int i=0;i<rest.size();i++)
 		cri.add(rest.get(i));
 		
 		
 		
 		
-		//Tipo de ordenação
+		//Tipo de ordenaï¿½ï¿½o
 		
 		if(ordem==Ordenacao.CRESCENTE)
 		{
@@ -296,7 +356,7 @@ public class VeiculoDAO {
 		}
 		
 		
-		System.out.println("Quantidade de veículos: "+this.count(classe,rest));
+		System.out.println("Quantidade de veï¿½culos: "+this.count(classe,rest));
 		
 		
 		veiculos = (ArrayList<Veiculo>) cri.list();
@@ -578,7 +638,7 @@ public class VeiculoDAO {
 	}
 	
 	
-	//RECUPERA A QUANTIDADE TOTAL DE REGISTROS OBEDECENDO UMA RESTRIÇÃO
+	//RECUPERA A QUANTIDADE TOTAL DE REGISTROS OBEDECENDO UMA RESTRIï¿½ï¿½O
 		public long count(String classe,ArrayList<Criterion> rest){
 			
 			long size = 0;
@@ -588,7 +648,7 @@ public class VeiculoDAO {
 			
 			criteria.add(Restrictions.eq("class",classe));
 			
-			//Adiciona o restante das restrições
+			//Adiciona o restante das restriï¿½ï¿½es
 			for(int i=0;i<rest.size();i++)
 			criteria.add(rest.get(i));	
 			
@@ -627,6 +687,31 @@ public class VeiculoDAO {
 				return true;
 				
 			}
+			
+		}
+		
+		
+		//RECUPERA O VALOR DA PRIORIDADE DE UM VEÃCULO
+		public int getPrioridadeVeiculo(long idVeiculo){
+			
+			int prioridade = 0;
+			
+			try{
+				
+				Connection con = Banco.abreBanco();
+				Statement stm =  con.createStatement();
+				ResultSet res =  stm.executeQuery("select PRIORIDADE_ANUNCIO from veiculo WHERE ID_VEICULO="+idVeiculo);
+				
+				if(res.next())
+				prioridade = res.getInt("PRIORIDADE_ANUNCIO");
+				
+			}catch(Exception e){
+				
+				Debug.gerar("Modelo","VeiculoDAO","getPrioridadeVeiculo", e.getMessage());
+			}
+			
+			return prioridade;
+			
 			
 		}
 	

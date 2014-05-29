@@ -20,7 +20,7 @@
 						    	<li class="current">
 						    	O que você procura?
 						    	</li>
-						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
+						    	<li><img alt="" width="30" src="images/lupa.png" /></li>
 						    	
 						 	</ul>
 						 	
@@ -37,7 +37,7 @@
 						  
 					
 					        <h:form prependId="false">
-					        <p:selectOneRadio id="customRadio" value="#{buscaBean.codTipo}"  valueChangeListener="#{buscaBean.alteraTipoVeiculo}">  
+					        <p:selectOneRadio  value="#{buscaBean.codTipo}"  valueChangeListener="#{buscaBean.alteraTipoVeiculo}">  
 					        
 					      
 					       
@@ -60,13 +60,14 @@
 
 				
 					
-  					<p:panel>
+  					
  				   <h:form id="form_fab_model" >
  				   
  				 
 		           <label><strong>Fabricante:</strong></label>
                    
-                   <h:selectOneMenu  id="fabricantes"  value="#{buscaBean.codFabricante}" valueChangeListener="#{buscaBean.alteraFab}" styleClass="n_2" >  
+                  
+                   <h:selectOneMenu  id="fabricantes"  value="#{buscaBean.codFabricante}" valueChangeListener="#{buscaBean.alteraFab}" styleClass="select_box_1" >  
             
             	    <f:selectItem itemValue="0" itemLabel="Todos" ></f:selectItem>
                     <f:selectItems 
@@ -77,13 +78,14 @@
             
                  <p:ajax update=":form_model:modelos"   event="change"></p:ajax>
                  </h:selectOneMenu>  
+                
                </h:form>
 					
 				 <h:form id="form_model" prependId="false">
                  <label><strong>Modelo:</strong></label>
                  
                
-				 <h:selectOneMenu id="modelos"  value="#{buscaBean.codModelo}" styleClass="n_3" valueChangeListener="#{buscaBean.alteraModelo}" >
+				 <h:selectOneMenu id="modelos"  value="#{buscaBean.codModelo}" styleClass="select_box_1" valueChangeListener="#{buscaBean.alteraModelo}" >
 				 
 				 <f:selectItem itemValue="0" itemLabel="Todos" ></f:selectItem>
 				
@@ -93,6 +95,8 @@
 				 <p:ajax event="change" update="modelo" ></p:ajax>		
 								
 		         </h:selectOneMenu>
+		         
+		         
 					 
 			  
 				<h:inputHidden id="modelo"></h:inputHidden>
@@ -101,7 +105,7 @@
                      <h:form prependId="false">
 					<label><strong>Cidade:</strong></label>
 					
-					<h:selectOneMenu value="#{buscaBean.codCidade}" styleClass="n_3" >
+					<h:selectOneMenu value="#{buscaBean.codCidade}" styleClass="select_box_1" >
 					<f:selectItem itemValue="0" itemLabel="Todas as cidades"></f:selectItem>
 					<f:selectItems  value="#{buscaBean.cidades}" >
 					
@@ -115,7 +119,9 @@
 					<label><strong>Ano:</strong></label>
 					<div class="select_box_2">
                         <h:form>
-						<h:selectOneMenu styleClass="n_3" value="#{buscaBean.anoDe}">
+                       
+                        
+						<h:selectOneMenu styleClass="select_box_2" value="#{buscaBean.anoDe}">
 							<f:selectItem itemValue="0" itemLabel="De todos"></f:selectItem>
 							<f:selectItem itemValue="1999" itemLabel="1999"></f:selectItem>
 							<f:selectItem itemValue="2000" itemLabel="2000"></f:selectItem>
@@ -125,7 +131,7 @@
 						
 
 						
-						<h:selectOneMenu styleClass="n_3" value="#{buscaBean.anoAte}">
+						<h:selectOneMenu styleClass="select_box_2" value="#{buscaBean.anoAte}">
 							<f:selectItem itemValue="0" itemLabel="Até todos"></f:selectItem>
 							<f:selectItem itemValue="1999" itemLabel="1999"></f:selectItem>
 							<f:selectItem itemValue="2000" itemLabel="2000"></f:selectItem>
@@ -143,7 +149,7 @@
 					<label><strong>Preço:</strong></label>
 					<div class="select_box_2">
                          <h:form>
-						<h:selectOneMenu styleClass="n_3" value="#{buscaBean.precoDe}" >
+						<h:selectOneMenu styleClass="select_box_2" value="#{buscaBean.precoDe}" >
 							<f:selectItem itemValue="5.0" itemLabel="De todos"></f:selectItem>
 							<f:selectItem  itemValue="24000.0" itemLabel="24000"></f:selectItem>
 							<f:selectItem  itemValue="25000.0" itemLabel="25000"></f:selectItem>
@@ -152,10 +158,8 @@
 							<f:ajax></f:ajax>
 						</h:selectOneMenu>
 
-							</h:form>
 							
-							 <h:form>
-						<h:selectOneMenu styleClass="n_3" value="#{buscaBean.precoAte}" >
+						<h:selectOneMenu styleClass="select_box_2" value="#{buscaBean.precoAte}" >
 							<f:selectItem itemValue="500000.0" itemLabel="Até todos"></f:selectItem>
 							<f:selectItem  itemValue="24000.0" itemLabel="24000"></f:selectItem>
 							<f:selectItem  itemValue="25000.0" itemLabel="25000"></f:selectItem>
@@ -172,17 +176,17 @@
 					<label><strong>Quilometragem:</strong></label>
 					<div class="select_box_2">
 
-						<h:selectOneMenu styleClass="n_3">
+						<h:selectOneMenu styleClass="select_box_2">
 							<f:selectItem itemLabel="De"></f:selectItem>
 						</h:selectOneMenu>
 
-						<h:selectOneMenu styleClass="n_3">
+						<h:selectOneMenu styleClass="select_box_2">
 							<f:selectItem itemLabel="Até"></f:selectItem>
 						</h:selectOneMenu>
 
 						<div class="clear"></div>
 					</div>
-					</p:panel>
+					
 
 
  						<br></br>
@@ -204,19 +208,19 @@
 
 
 					
-					
+					<div class="clear"></div>
 					
         
-			
+			        <h:form>
 				
-					<p:commandButton  action="#{buscaBean.buscar}" value="Buscar" styleClass="btn_search" >
+					<h:commandLink   action="#{buscaBean.buscar}"  value="Buscar" styleClass="btn blue" >
 					
 				
 					
 					
 					
-					</p:commandButton>
-					
+					</h:commandLink>
+					</h:form>
 					
 				
 				<div class="clear"></div>

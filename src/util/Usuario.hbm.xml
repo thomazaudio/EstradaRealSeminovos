@@ -6,7 +6,7 @@
 
 	
 	
-<class name="util.Usuario" table="USUARIO">
+<class name="util.Usuario" table="usuario">
 
 
 <id name="id" column="ID_USUARIO" type="long">

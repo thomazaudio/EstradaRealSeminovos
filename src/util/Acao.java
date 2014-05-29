@@ -19,7 +19,7 @@ public class Acao {
 	
 
 
-	//Executa uma ação referente a um pagamento
+	//Executa uma aï¿½ï¿½o referente a um pagamento
 	public void executaAcaoPagamento(Pagamento pagamento){
 		
 		this.pg = pagamento;
@@ -27,16 +27,16 @@ public class Acao {
 		if(pg.getStatus()!=Pagamento.CONFIRMADO)
 		{
 			
-		System.out.println("O código do pagamento é: "+pg.getCod());
-		System.out.println("O tipo é"+pg.getTipo());
-		System.out.println("O id do veículo  é"+pg.getIdVeiculo());
-		System.out.println("A prioridade é"+pg.getPrioridade());
+		System.out.println("O cï¿½digo do pagamento ï¿½: "+pg.getCod());
+		System.out.println("O tipo ï¿½"+pg.getTipo());
+		System.out.println("O id do veï¿½culo  ï¿½"+pg.getIdVeiculo());
+		System.out.println("A prioridade ï¿½"+pg.getPrioridade());
 		
 		//MARCA O PAGAMENTO COMO APROVADO
 		new PagamentoDAO().aprovaPagamento(pg.getCod());
 
 
-		//VERIFICAÇÃO DO TIPO 
+		//VERIFICAï¿½ï¿½O DO TIPO 
 		switch(pg.getTipo()){
 
 		case Transacao.CREDITO: executAcaoCredito();
@@ -59,7 +59,7 @@ public class Acao {
 		
 	}
 	else 
-	Debug.gerarDebugPagamento("","Acao","executaAcaoPagamento","O pagamento já está confimado", pg);
+	Debug.gerarDebugPagamento("","Acao","executaAcaoPagamento","O pagamento jï¿½ estï¿½ confimado", pg);
 		
 		
 }
@@ -69,11 +69,11 @@ public class Acao {
 
 
 
-	//Caso : alteração do plano de um veículo já cadastrado(Boleto ou Pag-seguro)
+	//Caso : alteraï¿½ï¿½o do plano de um veï¿½culo jï¿½ cadastrado(Boleto ou Pag-seguro)
 	public void executaAcaoAltPlano(){
 
 
-		//Mudança da prioridade do anúncio	
+		//Mudanï¿½a da prioridade do anï¿½ncio	
 		try{
 
 			
@@ -91,11 +91,11 @@ public class Acao {
 
 		}
 
-		//Liberaçao finaceira do anúncio
+		//Liberaï¿½ao finaceira do anï¿½ncio
 		new  AnuncioAdmDAO().confirmaPagamento(pg.getIdVeiculo());
 		
 		
-		//Se o método de pagamento for Débito em conta já debita o valor da conta de usuário
+		//Se o mï¿½todo de pagamento for Dï¿½bito em conta jï¿½ debita o valor da conta de usuï¿½rio
 		System.out.println("Pagamento escolhido: "+pg.getFormaPagamento());
 		if(pg.getFormaPagamento()==Pagamento.PAGAMENTO_CREDITO_CONTA)
 		new FinanDAO().debitar(pg.getCodUser(),pg.getValor());
@@ -104,29 +104,37 @@ public class Acao {
 	}
 
 
-	//CASO:  uso do dinheiro em caixa para pagar um anúncio
+	//CASO:  uso do dinheiro em caixa para pagar um anï¿½ncio
 	public void executaAcaoDebitoCredito(){
 
 
-		//Liberaçao finaceira do anúncio
+		//Liberaï¿½ao finaceira do anï¿½ncio
 		new  AnuncioAdmDAO().confirmaPagamento(pg.getIdVeiculo());
 
-		//Debitar valor correspondente da conta do usuário
+		//Debitar valor correspondente da conta do usuï¿½rio
 		new FinanDAO().debitar(pg.getCodUser(),pg.getValor());
+		
+		
+		System.out.println("Valor: "+pg.getValor()+" Debitado da conta do usuÃ¡rio: "+pg.getCodUser());
 
 
 	}
 
 
-	//Caso: Pagamento de veículo no ato de cadastro
+	//Caso: Pagamento de veï¿½culo no ato de cadastro
 	public void executaAcaoCreditoDebito(){
 
-		//Liberaçao finaceira do anúncio
+		//Liberaï¿½ao finaceira do anï¿½ncio
 		new  AnuncioAdmDAO().confirmaPagamento(pg.getIdVeiculo());
+		
+		//Se o mï¿½todo de pagamento for Dï¿½bito em conta jï¿½ debita o valor da conta de usuï¿½rio
+		System.out.println("Pagamento escolhido: "+pg.getFormaPagamento());
+		if(pg.getFormaPagamento()==Pagamento.PAGAMENTO_CREDITO_CONTA)
+		new FinanDAO().debitar(pg.getCodUser(),pg.getValor());
 
 	}
 
-	//Caso: Adicionar crédito na conta
+	//Caso: Adicionar crï¿½dito na conta
 	public void executAcaoCredito(){
 
 		//Adiciona o valor na conta
@@ -137,7 +145,7 @@ public class Acao {
 
 	public void executaAcaoReemitePagamento(){
 
-		//Liberaçao finaceira do anúncio
+		//Liberaï¿½ao finaceira do anï¿½ncio
 		new  AnuncioAdmDAO().confirmaPagamento(pg.getIdVeiculo());
 	}
 

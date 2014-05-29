@@ -113,7 +113,7 @@ function comprova_extensao(formulario) {
 						  	
 					
 							<p>Veículo no <strong>Banner - Destaque</strong></p>
-						  	<jsp:include page="../tumb_veiculo.jsp?">
+						  	<jsp:include page="../tumb_veiculo.jsp?"   >
 						  	<jsp:param value="<%=id_veiculo%>" name="id_veiculo"/>
 						  	<jsp:param value="150" name="tam_img"/>
 						  	<jsp:param value="9" name="tam_font"/>

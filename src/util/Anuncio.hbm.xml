@@ -2,14 +2,13 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
 
-<class name="util.Anuncio" table="ANUNCIO">
+<class name="util.Anuncio" table="anuncio">
 
 <id name="id" column="ID_ANUNCIO" type="long">
 <generator class="native"></generator>
  </id>
  <property name="idUsuario" column="ID_USUARIO" ></property>
  <property name="dataIni" column="DATA_INI" type="java.util.Calendar" ></property>
- <property name="dataFim" column="DATA_FIM" type="java.util.Calendar" ></property>
  <property name="quantVisualizacoes" column="QUANT_VISUALIZACOES" ></property>
   
   <many-to-one name="veiculo" class="util.Veiculo" fetch="select">

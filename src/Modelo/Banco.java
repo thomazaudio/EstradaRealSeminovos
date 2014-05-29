@@ -16,7 +16,7 @@ public class Banco {
 		try{
 			
 		Class.forName("com.mysql.jdbc.Driver");
-	    con =	DriverManager.getConnection("jdbc:mysql://localhost/estrada_real","root", "leghacy123");
+	    con =	DriverManager.getConnection("jdbc:mysql://localhost/estradar_principal","estradar_real", "leghacy123");
 		
 		}catch(Exception e){
 			Debug.gerar("Modelo", "Banco","abreBanco", e.getMessage());

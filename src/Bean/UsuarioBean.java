@@ -48,7 +48,7 @@ public class UsuarioBean {
 	private ArrayList<Pagamento> pgs;
 	
 	
-	//PAGAMENTOS DO USUÁRIO (EXTRATO)
+	//PAGAMENTOS DO USUï¿½RIO (EXTRATO)
     public ArrayList<Pagamento> getPgs() {
 		
 		pgs =  new PagamentoDAO().getAllPagamentos(this.getUser().getId());
@@ -98,7 +98,7 @@ public class UsuarioBean {
 		
 
 		if(this.getUser().getContato().getConfirmado()==0)
-		textoIniUsuario = "O seu email '"+this.getUser().getContato().getEmail()+"' ainda não foi confirmado.";
+		textoIniUsuario = "O seu email '"+this.getUser().getContato().getEmail()+"' ainda nï¿½o foi confirmado.";
 		
 		return textoIniUsuario;
 	}
@@ -176,7 +176,7 @@ public class UsuarioBean {
 	}
 
 
-	//RECUPERA O USUÁRIO EM SESSÃO
+	//RECUPERA O USUï¿½RIO EM SESSï¿½O
 	public Usuario getUser() {
           
 		try{
@@ -213,7 +213,7 @@ public class UsuarioBean {
 		this.user = user;
 	}
 
-	//SALVA ALTERAÇÕES GERAIS (CLASSE PRINCIPAL)
+	//SALVA ALTERAï¿½ï¿½ES GERAIS (CLASSE PRINCIPAL)
 	public void salvar(){
 
 		System.out.println("Nome: "+user.getNome());
@@ -222,7 +222,7 @@ public class UsuarioBean {
 
 	}
 
-	//SALVA ALTERAÇÕES DE CONTATO
+	//SALVA ALTERAï¿½ï¿½ES DE CONTATO
 	public void salvarContato(){
 
 		System.out.println("Nome: "+user.getNome());
@@ -241,12 +241,12 @@ public class UsuarioBean {
 
 	//ADICIONA UMA MENSAGEM AO CONTEXTO
 	public void addMessage(String summary) {  
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);  
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null); 
 		FacesContext.getCurrentInstance().addMessage(null, message);  
 	} 
 
 
-	//RECUPERA A LOGO DO USUÁRIO (IMAGEM DE PERFIL)
+	//RECUPERA A LOGO DO USUï¿½RIO (IMAGEM DE PERFIL)
 	public DefaultStreamedContent getLogo() {
 
 		try{
@@ -270,7 +270,7 @@ public class UsuarioBean {
 
 
 	
-    //SALVA ALTERAÇÕES NO EMAIL 
+    //SALVA ALTERAï¿½ï¿½ES NO EMAIL 
 	public void salvarEmail(){
 
 
@@ -282,7 +282,7 @@ public class UsuarioBean {
 
 		  
 			
-			//Lança um novo pedido de alteração
+			//Lanï¿½a um novo pedido de alteraï¿½ï¿½o
 			TrocaEmail troca = new TrocaEmail();
 			troca.setIdUsuario(user.getId());
 			troca.setIdContato(user.getContato().getId());
@@ -290,11 +290,11 @@ public class UsuarioBean {
 			
 			new TrocaEmailDAO().insert(troca);
 			
-			addMessage("Enviamos um email para '"+email1+"' com um link de atiavação.");
+			addMessage("Enviamos um email para '"+email1+"' com um link de ativaÃ§Ã£o para o novo email, as alteraÃ§Ã£o estarÃ¡ ativa apÃ³s a confirmaÃ§Ã£o.");
 	}
 	
 	
-	//Recupera as todo as as perguntas recebidas do Usuário
+	//Recupera as todo as as perguntas recebidas do Usuï¿½rio
 	public ArrayList<Pergunta> getPerguntasRecebidas(){
 		
 		
@@ -382,7 +382,7 @@ public class UsuarioBean {
 		}
 		
 		if(count>0)
-		texto = "("+count+" não respondidas)";
+		texto = "("+count+" nï¿½o respondidas)";
 		
 		return texto;
 	}

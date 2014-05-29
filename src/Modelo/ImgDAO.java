@@ -61,7 +61,7 @@ public class ImgDAO {
 	public boolean delete(long id_img) {
 		
 		
-		//Verifica se a imagem é capa
+		//Verifica se a imagem ï¿½ capa
 		boolean isCapa = isCapa(id_img);
 		
 		System.out.println("isCapa="+isCapa);
@@ -197,6 +197,9 @@ public class ImgDAO {
 	    tumb.setImg(res.getBinaryStream("IMG"));
 	    tumb.setCapa(res.getInt("CAPA"));
 	    
+	    if(tumb.getImg()==null)
+	    tumb.setImg(this.getNoImg().getImg());	
+	    
 	    return tumb;
 	    	
 	    }
@@ -212,7 +215,9 @@ public class ImgDAO {
 	    }
 		
 		
-		//Converte a imagem para Tumb
+	    
+	    if(tumb.getImg()==null)
+	    tumb.setImg(this.getNoImg().getImg());	
 		
         return tumb;
 		
@@ -260,7 +265,9 @@ public class ImgDAO {
 	    }
 		
 		
-		//Converte a imagem para Tumb
+	    
+	    if(tumb.getImg()==null)
+	    tumb.setImg(this.getNoImg().getImg());	
 		
         return tumb;
 		
@@ -302,7 +309,8 @@ public class ImgDAO {
 	    }
 		
 		
-		//Converte a imagem para Tumb
+	    
+	    
 		
         return img;
 		
@@ -357,6 +365,10 @@ public class ImgDAO {
 	    tumb.setImg(res.getBinaryStream("IMG"));
 	    tumb.setCapa(res.getInt("CAPA"));
 	    
+	    
+	    
+	    if(tumb.getImg()==null)
+	    tumb.setImg(this.getNoImg().getImg());	
 	    return tumb;
 	    	
 	    }
@@ -372,8 +384,9 @@ public class ImgDAO {
 	    }
 		
 		
-		//Converte a imagem para Tumb
-		
+	    
+	    if(tumb.getImg()==null)
+	    tumb.setImg(this.getNoImg().getImg());	
         return tumb;
 		
 	}
@@ -405,7 +418,7 @@ public class ImgDAO {
 	    	
 	    }
 	    else
-	    Debug.gerar("Modelo","ImgDAO","getTumb","A imagem de id "+id_img+" não foi encontrada");
+	    Debug.gerar("Modelo","ImgDAO","getTumb","A imagem de id "+id_img+" nï¿½o foi encontrada");
 	    
 	    stm.close();
 	    res.close();
@@ -416,8 +429,9 @@ public class ImgDAO {
 	    }
 		
 		
-		//Converte a imagem para Tumb
-		
+	    
+	    if(tumb.getImg()==null)
+	    tumb.setImg(this.getNoImg().getImg());	
         return tumb;
 		
 	}
@@ -448,7 +462,7 @@ public class ImgDAO {
 	    	
 	    }
 	    else
-	    Debug.gerar("Modelo","ImgDAO","getTumb","A imagem de id "+id_img+" não foi encontrada");
+	    Debug.gerar("Modelo","ImgDAO","getTumb","A imagem de id "+id_img+" nï¿½o foi encontrada");
 	    
 	    stm.close();
 	    res.close();
@@ -461,7 +475,9 @@ public class ImgDAO {
 		
 	    
 	    
-		//Converte a imagem para Tumb
+	    
+	    if(tumb.getImg()==null)
+	    tumb.setImg(this.getNoImg().getImg());	
 		
         return tumb;
 	}
@@ -517,7 +533,7 @@ public class ImgDAO {
 	  
 	   
 	
-	    //ORDENAÇÃO DO VETOR
+	    //ORDENAï¿½ï¿½O DO VETOR
 	    ids = this.ordByCapa(ids, id_veiculo);
 	   
 	    
@@ -563,7 +579,7 @@ public class ImgDAO {
 	}
 	
 	
-	//Verifica se uma imagem é capa
+	//Verifica se uma imagem ï¿½ capa
 	public boolean isCapa(long id_img){
 		
 		int capa=0;
@@ -590,7 +606,7 @@ public class ImgDAO {
 		
 	}
 	
-	//Recupera a logo de um usuário
+	//Recupera a logo de um usuï¿½rio
 	public Imagem getLogo(long id_user){
 		
 
@@ -615,7 +631,7 @@ public class ImgDAO {
 	    	
 	    
 	    else
-	    Debug.gerar("Modelo","getLogo","","A imagem do usuario "+id_user+" não foi encontrada");
+	    Debug.gerar("Modelo","getLogo","","A imagem do usuario "+id_user+" nï¿½o foi encontrada");
 	    
 	    stm.close();
 	    res.close();
@@ -626,7 +642,10 @@ public class ImgDAO {
 	    }
 		
 		
-		//Converte a imagem para Tumb
+		
+	    
+	    if(tumb.getImg()==null)
+	    tumb.setImg(this.getNoImg().getImg());	
 		
         return tumb;
 		
@@ -662,7 +681,7 @@ public class ImgDAO {
 		return img;
 	}
 	
-	//MÉTODO PARA ORDENAR OS IDS DAS IMAGENS de acordo com  a capa
+	//Mï¿½TODO PARA ORDENAR OS IDS DAS IMAGENS de acordo com  a capa
 	public long [] ordByCapa(long[] ids,long id_veiculo){
 		
 		  
@@ -685,7 +704,7 @@ public class ImgDAO {
 	
 	
 	
-	//Método para recuperação de uma imagem de banner temporária
+	//Mï¿½todo para recuperaï¿½ï¿½o de uma imagem de banner temporï¿½ria
 	 public byte[] getImgTempBanner(long id_veiculo){
 		
 		
@@ -705,7 +724,7 @@ public class ImgDAO {
 				img =  res.getBytes("IMG_BANNER");
 					
 				else
-				Debug.gerar("","ImgDAO","getImgTempBanner","Erro ao recupera imagem de banner temporária(Não existe) id_veiculo+"+id_veiculo);
+				Debug.gerar("","ImgDAO","getImgTempBanner","Erro ao recupera imagem de banner temporï¿½ria(Nï¿½o existe) id_veiculo+"+id_veiculo);
 					
 				
 				
@@ -718,7 +737,7 @@ public class ImgDAO {
 	}
 	
 	
-	//Método para inserçao de imagem temporária para o banner destaque
+	//Mï¿½todo para inserï¿½ao de imagem temporï¿½ria para o banner destaque
 	public void insertImgTempBanner(byte[] img,long id_veiculo){
 		
 
@@ -779,7 +798,7 @@ public class ImgDAO {
 		
 	}
 	
-	//MÉTODO PARA TESTAR A INTEGRIDADE DAS IMAGENS NO BANCO DE DADOS
+	//Mï¿½TODO PARA TESTAR A INTEGRIDADE DAS IMAGENS NO BANCO DE DADOS
 	public File getFile( int id ){
 	    Connection c = Banco.abreBanco();//busca uma conexao com o banco
 	    File f = null;

@@ -2,6 +2,22 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
+    
+<class name="util.Proposta" table="proposta">
+
+<id name="id" column="ID_PROPOSTA" type="long">
+<generator class="native"></generator>
+</id> 
+
+<property name="idUser" ></property>
+<property name="idVeiculo" ></property>
+<property name="emailRemetente" ></property>
+<property name="telefoneRemetente"></property>
+<property name="msg" ></property>
+<property name="nome" ></property>
+
+
+</class>
 
   
  <class name="util.Finan" table="financeiro">
@@ -61,7 +77,7 @@
 
 
 
-<class name="util.Contato" table="CONTATO">
+<class name="util.Contato" table="contato">
 
 <id name="id" column="ID_CONTATO" type="long">
 <generator class="native"></generator>
@@ -76,7 +92,7 @@
 
 </class>
 
-<class name="util.Localizacao" table="LOCALIZACAO">
+<class name="util.Localizacao" table="localizacao">
 
 <id name="id" column="ID_LOCALIZACAO" type="long" >
 
@@ -88,7 +104,7 @@
 
 </class>
 
-<class name="util.Imagem" table="IMAGENS">
+<class name="util.Imagem" table="imagens">
 
 <id name="id" column="ID_IMG" type="long" >
 
@@ -100,7 +116,7 @@
 <property name="capa" column="CAPA" ></property>
 </class>
 
-<class name="util.TrocaEmail" table="TROCA_EMAIL">
+<class name="util.TrocaEmail" table="troca_email">
 <id name="id" column="ID_TROCA_EMAIL" type="long">
 <generator class="identity"></generator>
 </id>
@@ -111,7 +127,7 @@
 </class>
 
 
-<class name="util.Destaque" table="DESTAQUE">
+<class name="util.Destaque" table="destaque">
 
 <id name="id" column="ID_DESTAQUE" type="long" >
 

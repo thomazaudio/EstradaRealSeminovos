@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import util.*;
@@ -24,7 +25,9 @@ public class UsuarioDAO {
 		try{
 		Session sessao = HibernateUtil.getSessaoV().openSession();
 		sessao.save(user);
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.flush();
+		tx.commit();
 		sessao.close();
 		return true;
 		}catch(Exception e){
@@ -46,8 +49,9 @@ public class UsuarioDAO {
 
 		try{
 		Session sessao = HibernateUtil.getSessaoV().openSession();
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.merge(user);
-		
+		tx.commit();
 		sessao.flush();
 		sessao.close();
 	
@@ -60,7 +64,7 @@ public class UsuarioDAO {
 	}
 	
 	
-	//Recupera o tipo de usu·rio
+	//Recupera o tipo de usuÔøΩrio
 	public int getTipoUser(long id){
 		
 		try{
@@ -94,14 +98,14 @@ public class UsuarioDAO {
 		throw new UnsupportedOperationException();
 	}
 	
-	//ConfirmaÁ„o de usu·rio
+	//ConfirmaÔøΩÔøΩo de usuÔøΩrio
 	public boolean confirmaUsuario(long id_user){
 		
 		try{
 		
 		con =  Banco.abreBanco();
 		stm =  con.createStatement();
-		stm.executeUpdate("UPDATE  USUARIO set status=1 WHERE ID_USUARIO="+id_user);
+		stm.executeUpdate("UPDATE  usuario set status=1 WHERE ID_USUARIO="+id_user);
 		stm.close();
 		
 		return true;	
@@ -114,7 +118,7 @@ public class UsuarioDAO {
 		
 	}
 	
-	//Valida a exisitencia de uma chave j· cadastrada no banco de dados
+	//Valida a exisitencia de uma chave jÔøΩ cadastrada no banco de dados
 	public boolean existeChave(Class classe,String nome_chave ,String chave){
 		
 		Session sessao =  HibernateUtil.getSessaoV().openSession();
@@ -156,7 +160,7 @@ public class UsuarioDAO {
     	//Recupera o contato atraves do email
     	con =  new ContatoDAO().getContato(email);
     	
-        //recupera  usu·rio ao qual  o email pertence 
+        //recupera  usuÔøΩrio ao qual  o email pertence 
     	try{
 			
 		Session sessao =  HibernateUtil.getSessaoV().openSession();	
@@ -174,5 +178,45 @@ public class UsuarioDAO {
 		
 		
 	}
+    
+    //RECUPERA A SENHA DE UM USU√ÅRIO
+    public boolean recuperaSenha(String email){
+    	
+    	 String senha;
+    	
+    	//recupera o contato realacionado ao email
+    	 Contato contato =  new ContatoDAO().getContato(email);
+    	 
+    	 
+    	
+    	 try{
+    		 
+    		 Connection con = Banco.abreBanco();
+    		 Statement stm  = con.createStatement();
+    		 
+    		//Recupera  a senha
+    		 ResultSet res = stm.executeQuery("select SENHA from usuario where ID_CONTATO="+contato.getId());
+    		 
+    		 if(res.next())
+    		 senha =  res.getString("SENHA");	 
+    		 else
+    		 return false;	 
+    		 
+    	 }catch(Exception e){
+    		 
+    		 
+    		 Debug.gerar("Modelo","UsuarioDAO","recuperaSenha",e.getMessage());
+    		 return false;
+    	 }
+    	 
+    	 
+    	//REALIZA O ENVIO DO EMAIL PARA O USU√ÅRIO
+    	 
+    	 new Comunicacao().sendMensagemRelembrarSenha(email, senha);
+    	 
+    	 
+    	 return true;
+    	
+    }
 	
 }

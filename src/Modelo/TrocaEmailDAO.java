@@ -2,8 +2,10 @@ package Modelo;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import util.Comunicacao;
 import util.Contato;
 import util.Debug;
 import util.TrocaEmail;
@@ -13,23 +15,23 @@ public class TrocaEmailDAO {
 	
 	
 
-	  //LANÇA UM PEDIDO DE TROCA DE EMAIL PARA O CONTATO
+	  //LANï¿½A UM PEDIDO DE TROCA DE EMAIL PARA O CONTATO
 	  public void insert(TrocaEmail troca){
 		  
 		  
 		     
 			
 			Session sessao =  HibernateUtil.getSessaoV().openSession();
+			Transaction tx = sessao.beginTransaction(); 
 			sessao.save(troca);
+		    tx.commit();
 			sessao.flush();
 			sessao.close();
 			
-			//Envia o email para confirmação
-			StringBuffer html = new StringBuffer();
-			html.append("<p><a href=\"http://localhost:8080/Auto/ChangeEmail?cod_troca="+troca.getId()+"\" />Clique aqui</a> para confirmar o email.</p>");
+			//Envia o email para confirmaÃ§Ã£o
+			new Comunicacao().sendMensagemTrocaEmail(troca);
+				
 			
-			Email e = new Email(troca.getEmailtroca(),"",html,"Estrada Real - Alteração de email");
-			e.sendHtmlEmail();
 			
 		  
 	  }
@@ -40,7 +42,9 @@ public class TrocaEmailDAO {
 		  
 			
 			Session sessao =  HibernateUtil.getSessaoV().openSession();
+			Transaction tx = sessao.beginTransaction(); 
 			sessao.delete(troca);
+			tx.commit();
 			sessao.flush();
 			sessao.close();
 		  
@@ -83,8 +87,12 @@ public class TrocaEmailDAO {
 				//Seta o email no contato
 				con.setEmail(troca.getEmailtroca());
 				
+				
 				//Atualiza o contato
 				new ContatoDAO().update(con);
+				
+				//Marca o contato com confirmado
+				new ContatoDAO().confirmaContato(troca.getIdContato());
 				
 				
 				//Deleta o pedido de troca

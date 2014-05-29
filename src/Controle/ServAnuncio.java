@@ -2,26 +2,15 @@ package Controle;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
 
-
-
-
-import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 
 
 
@@ -67,19 +56,17 @@ public class ServAnuncio extends HttpServlet {
 
 	
 	
-	//Páginas
+	//Pï¿½ginas
 	private final String PAGE_EDIT_CARRO="arearestritausuario/edit_carro.jsp";
 
-	//Constantes com os endereços das paginas de cada etapa
+	//Constantes com os endereï¿½os das paginas de cada etapa
 	public static  final String PAGE_CAD_SECESSO = "cad_veiculo/cad_anuncio_sucesso.jsf";
 	public static final String PAGE_ESC_ANUNCIO="edit_veiculo.jsp?page=cad_veiculo/esc_anuncio.jsp";
 	public static final String PAGE_CAD_INFO_CARRO="edit_veiculo.jsp?page=cad_veiculo/cad_info_carro.jsp";
 	public static final String PAGE_CAD_INFO_MOTO="edit_veiculo.jsp?page=cad_veiculo/cad_info_moto.jsp";
-	public static final String PAGE_STEP_2="edit_veiculo.jsp?page=cad_veiculo/esc_contato.jsp";
 	public static final String PAGE_STEP_3="edit_veiculo.jsp?page=edit_img.jsp?id_veiculo=";
-	public static final String PAGE_STEP_4="edit_veiculo.jsp?page=cad_veiculo/pre_carro.jsp";//Carro
-	public static final String PAGE_STEP_5="edit_veiculo.jsp?page=cad_veiculo/pre_moto.jsp";//Moto
     public static final String PAGE_ESC_PAGAMENTO="cad_veiculo/esc_pagamento.jsf";
+    
 
 	//Constantes de etapas
 	private final int STEP_0=0;
@@ -91,6 +78,7 @@ public class ServAnuncio extends HttpServlet {
 	private final int EDIT_ANUNCIO=10;
 	private final int DELETE_ANUNCIO=11;
 	private final int CADASTRA_BANNER=12;
+	private final int FINALIZA_ANUNCIO=13;
 	private int step;
 
 	private int mostra_step;
@@ -117,13 +105,10 @@ public class ServAnuncio extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-
-
 		HttpSession sessao = request.getSession();
 
 
-		//RECEBE A SOLICITAÇÃO
+		//RECEBE A SOLICITAï¿½ï¿½O
 		try{
 			//Tenta resgatar no request	
 			step = Integer.parseInt(request.getParameter("STEP"));
@@ -131,7 +116,7 @@ public class ServAnuncio extends HttpServlet {
 		}
 		catch(Exception e){
 
-			//Tenta resgatar na sessão	
+			//Tenta resgatar na sessï¿½o	
 			step = (Integer) sessao.getAttribute("STEP");	
 			mostra_step = 0;
 		}
@@ -141,14 +126,14 @@ public class ServAnuncio extends HttpServlet {
 		if(step==this.STEP_0)
 		{
 
-			//Reseta a sessão
+			//Reseta a sessï¿½o
 			this.resetSessaoAnuncio(sessao);	
 			
 			
-			//Sessão em modo de cadastro
+			//Sessï¿½o em modo de cadastro
 			sessao.setAttribute("edit","false");
 
-			//Encaminha para página de escolha o da plano e do tipo de veículo	
+			//Encaminha para pï¿½gina de escolha o da plano e do tipo de veï¿½culo	
             request.getRequestDispatcher(this.PAGE_ESC_ANUNCIO).forward(request, response);
 
 		}
@@ -179,16 +164,7 @@ public class ServAnuncio extends HttpServlet {
 			request.getRequestDispatcher(this.getCadInfo()+"?mostra_step="+mostra_step).forward(request,response);
 		}
 
-		//ESCOLHA DE CONTATO
-		else if(step==this.STEP_2)
-		{
-
-			//Recupera os steps
-			sessao.setAttribute("step",getStepsHtml(sessao,2));
-
-			request.getRequestDispatcher(this.PAGE_STEP_2+"?mostra_step="+mostra_step).forward(request,response);
-
-		}
+		
 
 		
 		//ESCOLHA DE FOTOS
@@ -197,7 +173,7 @@ public class ServAnuncio extends HttpServlet {
 			//Recupera os steps
 			sessao.setAttribute("step",getStepsHtml(sessao,3));
 
-			//Recupera o veiculo em sessao para recuepração de id
+			//Recupera o veiculo em sessao para recuepraï¿½ï¿½o de id
 			Veiculo carro = (Veiculo) sessao.getAttribute("carro");
 
 
@@ -206,163 +182,33 @@ public class ServAnuncio extends HttpServlet {
 
 		}
 
-		//PRÉ- VISUALIZAÇÃO
-		else if(this.step==this.STEP_4){
-
-			//Permite voltar para essa pagina novamente
-			sessao.setAttribute(""+this.STEP_4,1);
-			
-			int tipo = (Integer) sessao.getAttribute("tipo_veiculo");
-			
-			//Carro
-			if(tipo==1)
-			request.getRequestDispatcher(this.PAGE_STEP_4+"?mostra_step="+mostra_step).forward(request,response);
-			
-			//Moto 
-			else if(tipo==2)
-			request.getRequestDispatcher(this.PAGE_STEP_5+"?mostra_step="+mostra_step).forward(request,response);	
-		}
-		
-		//ESCOLHA DE PAGAMENTO E FINALIZAÇÃO
-		else if(this.step==this.STEP_5)
-		{
-			
-		
-	
-			
-	    Usuario user = (Usuario) sessao.getAttribute("usuario");	
-		if(user!=null)	
-		{
-		 //Recupera o anuncio da sessão	
-		Anuncio an = (Anuncio) sessao.getAttribute("anuncio");	
-		
-		
-		
-		
-		//Joga o id do veiculo na sessão
-		sessao.setAttribute("cod_veiculo",an.getVeiculo().getId());
-		
-		
-	
-		
-		//Seta o usuário responsável pelo anúncio
-		an.setIdUsuario(user.getId());
-		
-		String edit_mode = (String.format("%s",sessao.getAttribute("edit")));
-		
-		System.out.println("edit_mode: "+edit_mode);
-		
-		if(edit_mode.equals("true"))
-		{
-			
-		//Prioridade do anúncio	
-		int prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");
-		System.out.println("A prioridade do anúncio é:");
-		an.getVeiculo().setPrioridade_anuncio(prioridade_anuncio);	
-			
-		//Status de pagamento	
-		int status_pagamento = (Integer) sessao.getAttribute("status_pagamento");
-		System.out.println("O status do pagamento é: "+status_pagamento);
-		an.getVeiculo().setStatusPagamento(status_pagamento);
-			
-		new VeiculoDAO().update(an.getVeiculo());
-		new AnuncioDAO().update(an);
-	
-		}
-		else
-		{
-			
-		//RECUPERA O TIPO DE PLANO INFORMADO NO INICIO
-		int prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");	
-			
-		//----SE O PLANO FOR GRÁTIS----	
-		//*OS DADOS DO VEÍCULOS SÃO SALVOS EM ESPERA PARA ANALISE DOS AGENTES DO SISTEMA
-		//*REDIRECIONA PARA A PÁGINA DE ANÚNCIO CADASTRADO COM SUCESSO	
-		if(prioridade_anuncio==Plano.PRIORIDADE_GRATIS)
-		{
-			
-		//CONFIGURAÇÃO DOS STATUS PARA GRATIS
-		an.getVeiculo().setStatusPagamento(Pagamento.CONFIRMADO);
-		an.getVeiculo().setStatusValidacao(Pagamento.VALIDACAO_EM_ANALISE);
-			
-		new VeiculoDAO().update(an.getVeiculo());
-		new AnuncioDAO().insert(an);	
-		response.sendRedirect(this.PAGE_CAD_SECESSO);	
-		}
-		
-		//----SE O PLANO FOR PAGO----		
-		//*REDIRECIONA PARA A PÁGINA DE PAGAMENTO E CONFIRMAÇÃO DE PAGAMENTO
-		//REDIRECIONA PARA A PÁGINA DE ANÚNCIO CADASTRADO MAS AGUARDANDO PAGAMENTO	
-		else {
-		
-			
-			
-			//Configuração dos dados para prioridade Mega
-			an.getVeiculo().setStatusPagamento(Pagamento.AGUARDANDO_APROVACAO);
-			an.getVeiculo().setStatusValidacao(Pagamento.VALIDACAO_EM_ANALISE);
-			
-			//Prioridade do anúncio
-			an.getVeiculo().setPrioridade_anuncio(prioridade_anuncio);
 				
-			new VeiculoDAO().update(an.getVeiculo());
-			new AnuncioDAO().insert(an);	
-			response.sendRedirect(this.PAGE_ESC_PAGAMENTO);	
-			
-			
-			
-		}
-			
-			
-			
-     
 		
-		
-		}
-	
-		
-		
-		}
-		
-		else 
-		{
-			
-			Debug.gerar("Controle","ServAnuncio","SOLI=5(GET)","usuario na sesssão = null");
-		}
-		
-		
-		
-		this.resetSessaoAnuncio(sessao);
-			
-		}
-
-		
-		
-		
-		//EDIÇÃO DE ANÚNCIO
+		//EDIï¿½ï¿½O DE ANï¿½NCIO
 		else if(this.step==this.EDIT_ANUNCIO)
 		{
 			
 			
-			//Sessão em modo de edição
+			//Sessï¿½o em modo de ediï¿½ï¿½o
 			sessao.setAttribute("edit","true");
 		
-			//Recupera o usuário em sessão
+			//Recupera o usuï¿½rio em sessï¿½o
 			Usuario user = (Usuario) sessao.getAttribute("usuario");
 			
-			//Recupera o id do anúncio
+			//Recupera o id do anï¿½ncio
 			long id_veiculo = Integer.parseInt(request.getParameter("id_veiculo"));
 			
 			//Recupera o anuncio
 			Anuncio an = new AnuncioDAO().getAnuncio(id_veiculo);
 			
 			
-			//Recupera o tipo de veículo
+			//Recupera o tipo de veï¿½culo
 			String tipo =  new VeiculoDAO().getTipo(id_veiculo);
 			
-			//Verifica se o anuncio pertence ao usário em sessão
+			//Verifica se o anuncio pertence ao usï¿½rio em sessï¿½o
 			
 			
-			//Joga o anuncio em sessão para edição dos dados
+			//Joga o anuncio em sessï¿½o para ediï¿½ï¿½o dos dados
 			sessao.setAttribute("anuncio",an);
 			
 			
@@ -390,13 +236,20 @@ public class ServAnuncio extends HttpServlet {
 			
 			}
 			else
-			response.getWriter().write("Página de destino não definida");	
+			response.getWriter().write("Pï¿½gina de destino nï¿½o definida");	
 			
 			
 		} 
 		
 		
 		
+		//CADASTRO DE UM ANÃšNCIO NO BANCO
+		else if(step==this.FINALIZA_ANUNCIO){
+			
+			
+			this.finalizarAnuncio(sessao, request, response);
+			
+		}
 		
 	}
 
@@ -409,7 +262,7 @@ public class ServAnuncio extends HttpServlet {
 		HttpSession sessao = request.getSession();
 
 
-		//RECEBE A SOLICITAÇÃO
+		//RECEBE A SOLICITAï¿½ï¿½O
 		step = Integer.parseInt(request.getParameter("STEP"));
 
 		try{
@@ -423,7 +276,7 @@ public class ServAnuncio extends HttpServlet {
 		if(step==this.STEP_0)
 		{
 
-			//Reseta a sessão
+			//Reseta a sessï¿½o
 			this.resetSessaoAnuncio(sessao);	
 			
 			//Recebe o tipo de veiculo escolhido
@@ -433,7 +286,7 @@ public class ServAnuncio extends HttpServlet {
 			sessao.setAttribute("tipo_veiculo",tipoVeiculo);
 
 
-			//Encaminha para página de escolha o da plano	
+			//Encaminha para pï¿½gina de escolha o da plano	
 			request.getRequestDispatcher(this.PAGE_ESC_ANUNCIO+"?mostra_step=1").forward(request, response);
 
 		}
@@ -454,18 +307,18 @@ public class ServAnuncio extends HttpServlet {
 			
 
 
-			//Recupera o tipo de vepiculo da sessão
+			//Recupera o tipo de vepiculo da sessï¿½o
 			tipoVeiculo = (Integer)sessao.getAttribute("tipo_veiculo");
 
 			//Joga os dados na sessao para serem facilmente utilizados com get
 			sessao.setAttribute("prioridade_anuncio",prioridade_anuncio); 
 			
 
-			//Atribuição de valores de acordo com o plano escolhido
+			//Atribuiï¿½ï¿½o de valores de acordo com o plano escolhido
 
 			//Recupera o buffer de passos
 
-			//Atribuição do veiculo ao anuncio
+			//Atribuiï¿½ï¿½o do veiculo ao anuncio
 			an.setVeiculo(this.getTipoVeiculo(tipoVeiculo));
 
 			//Salva o anuncio em sessao
@@ -474,7 +327,7 @@ public class ServAnuncio extends HttpServlet {
 			//Recupera os steps
 			sessao.setAttribute("step",getStepsHtml(sessao,1));
 
-			//Emcaimnha para a proxima etapa (Cadastro de informações basicas)
+			//Emcaimnha para a proxima etapa (Cadastro de informaï¿½ï¿½es basicas)
 			if(tipoVeiculo==1)
 		    this.setCadInfo(this.PAGE_CAD_INFO_CARRO);	
 			else if(tipoVeiculo==2)
@@ -511,7 +364,7 @@ public class ServAnuncio extends HttpServlet {
 				
                  Carro carro = new Carro();
 
-                 //Se os dados já estiverem em sessao
+                 //Se os dados jï¿½ estiverem em sessao
 				if(sessao.getAttribute("carro")!=null)
 				{	
 					Carro car = (Carro) sessao.getAttribute("carro");	
@@ -542,7 +395,7 @@ public class ServAnuncio extends HttpServlet {
 				
 
 				
-				//preço
+				//preï¿½o
 				String preco = request.getParameter("valor");
 				preco = preco.replace(".","");
 				preco = preco.replace(",",".");
@@ -564,7 +417,7 @@ public class ServAnuncio extends HttpServlet {
 				carro.setTipoVenda(2);
 				
 				
-				//VERIFICAÇÃO MODO DE EDIÇÃO
+				//VERIFICAï¿½ï¿½O MODO DE EDIï¿½ï¿½O
 				
 				String edit_mode="";
 				try{
@@ -577,21 +430,21 @@ public class ServAnuncio extends HttpServlet {
 				if(edit_mode.equals("true"))
 				{
 					
-				//Prioridade do anúncio	
+				//Prioridade do anï¿½ncio	
 				int prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");
-				System.out.println("A prioridade do anúncio é:");
+				System.out.println("A prioridade do anï¿½ncio ï¿½:");
 				carro.setPrioridade_anuncio(prioridade_anuncio);	
 					
 				//Status de pagamento	
 				int status_pagamento = (Integer) sessao.getAttribute("status_pagamento");
-				System.out.println("O status do pagamento é: "+status_pagamento);
+				System.out.println("O status do pagamento ï¿½: "+status_pagamento);
 				carro.setStatusPagamento(status_pagamento);
 					
 				
 			
 				}
 				
-				//FIM VERIFICAÇÃO MODO DE EDIÇÃO
+				//FIM VERIFICAï¿½ï¿½O MODO DE EDIï¿½ï¿½O
 				
 
 				//Salva o veiculo no banco de dados
@@ -609,7 +462,7 @@ public class ServAnuncio extends HttpServlet {
 			}
 			
 			
-			System.out.println("O tipo de veículo é "+tipo);
+			System.out.println("O tipo de veï¿½culo ï¿½ "+tipo);
 			
 			//Moto
 			
@@ -649,7 +502,7 @@ public class ServAnuncio extends HttpServlet {
 				
 
 				
-				//preço
+				//preï¿½o
 				String preco = request.getParameter("valor");
 				preco = preco.replace(".","");
 				preco = preco.replace(",",".");
@@ -691,9 +544,13 @@ public class ServAnuncio extends HttpServlet {
 
 			//Joga o anuncio atualizado na sessao
 			sessao.setAttribute("anuncio",an);
+			
+			//Joga o cÃ³digo do veÃ­culo na sessÃ£o
+			sessao.setAttribute("cod_veiculo",an.getVeiculo().getId());
 
+			//Vai para pï¿½gina de escolha de fotos 
 			if(mostra_step==1)	 
-				response.sendRedirect(this.PAGE_STEP_2+"?STEP=2&&mostra_step="+mostra_step);	 
+				response.sendRedirect(this.PAGE_STEP_3+an.getVeiculo().getId()+"&&mostra_step="+mostra_step);	 
 			//request.getRequestDispatcher(this.PAGE_STEP_2+"?STEP=2&&mostra_step="+mostra_step).forward(request,response);
 			else
 			{
@@ -715,7 +572,7 @@ public class ServAnuncio extends HttpServlet {
 			sessao.setAttribute("step",getStepsHtml(sessao,3));
 
 			
-			//RECUPERA O TIPO DE VEÍCULO QUE ESTÁ SENDO CADASTRADO
+			//RECUPERA O TIPO DE VEï¿½CULO QUE ESTï¿½ SENDO CADASTRADO
 			int tipo = (Integer) sessao.getAttribute("tipo_veiculo");
 			
 			//CARRO
@@ -726,13 +583,13 @@ public class ServAnuncio extends HttpServlet {
 
 
 
-			//Recupera o anuncio em sessão
+			//Recupera o anuncio em sessï¿½o
 			Anuncio an = (Anuncio) sessao.getAttribute("anuncio");
 
 			//Atualiza o carro em anuncio
 			an.setVeiculo(carro);
 
-			//Joga novamente o anuncio em sessão
+			//Joga novamente o anuncio em sessï¿½o
 			sessao.setAttribute("anuncio",an);
 
 			//Redireciona para a pagina de escolha de imagens
@@ -758,24 +615,24 @@ public class ServAnuncio extends HttpServlet {
 				Moto moto = (Moto) sessao.getAttribute("moto");
 
 
-				 System.out.println("Moto na sessão: "+moto);
+				 System.out.println("Moto na sessï¿½o: "+moto);
 				
 				
 
-				//Recupera o anuncio em sessão
+				//Recupera o anuncio em sessï¿½o
 				Anuncio an = (Anuncio) sessao.getAttribute("anuncio");
 
 				//Atualiza a moto em anuncio
 				an.setVeiculo(moto);
 
-				//Joga novamente o anuncio em sessão
+				//Joga novamente o anuncio em sessï¿½o
 				sessao.setAttribute("anuncio",an);
 				
 				
 
 				//Redireciona para a pagina de escolha de imagens
 				if(mostra_step==1)	
-					response.sendRedirect(this.PAGE_STEP_3+moto.getId()+"&&mostra_step=1");	 
+					response.sendRedirect(this.PAGE_STEP_3+"?id_veiculo="+moto.getId()+"&&mostra_step=1");	 
 
 				//request.getRequestDispatcher(this.PAGE_STEP_3+carro.getId()).forward(request,response);
 				else
@@ -794,7 +651,7 @@ public class ServAnuncio extends HttpServlet {
 		else if(step== this.DELETE_ANUNCIO)
 		{
 			
-			//Recebe o id do anúncio
+			//Recebe o id do anï¿½ncio
 			long id_anuncio =  Integer.parseInt(request.getParameter("id_anuncio"));
 			
 			Anuncio an = new Anuncio();
@@ -813,7 +670,7 @@ public class ServAnuncio extends HttpServlet {
 	
 	
 	
-	//Configura a sessão de anúncio para edição
+	//Configura a sessï¿½o de anï¿½ncio para ediï¿½ï¿½o
 	private void resetSessaoAnuncioForEdit(HttpSession sessao){
 
 	
@@ -825,13 +682,13 @@ public class ServAnuncio extends HttpServlet {
 			sessao.setAttribute(""+this.STEP_5,1);	
 			
 			
-			//Modo de edição
+			//Modo de ediï¿½ï¿½o
 			sessao.setAttribute("edit","true");
 		
 
 	}
 
-	//Define na sessão os parametros iniciais para anunciar um veículo
+	//Define na sessï¿½o os parametros iniciais para anunciar um veï¿½culo
 	private void resetSessaoAnuncio(HttpSession sessao){
 		
 		
@@ -843,7 +700,7 @@ public class ServAnuncio extends HttpServlet {
 		
 		
 
-		//Define as paginas que já foram preenchidas
+		//Define as paginas que jï¿½ foram preenchidas
 		{
 			sessao.setAttribute(""+this.STEP_0,0);
 			sessao.setAttribute(""+this.STEP_1,0);
@@ -858,7 +715,7 @@ public class ServAnuncio extends HttpServlet {
 
 		Anuncio an = new Anuncio();
 		
-		//Define a data de cadastro do anúncio
+		//Define a data de cadastro do anï¿½ncio
 		an.setDataIni(Calendar.getInstance());
 		
 		
@@ -872,7 +729,7 @@ public class ServAnuncio extends HttpServlet {
 		Contato con = new Contato();
 		new ContatoDAO().insert(con);
 		
-		//Localização generica para o anuncio
+		//Localizaï¿½ï¿½o generica para o anuncio
 		Localizacao loc = new Localizacao();
 		new LocalizacaoDAO().insert(loc);
 
@@ -884,7 +741,7 @@ public class ServAnuncio extends HttpServlet {
 
 	private Veiculo getTipoVeiculo(int tipoVeiculo){
 
-		//Atribuição do veiculo ao anuncio
+		//Atribuiï¿½ï¿½o do veiculo ao anuncio
 		switch(tipoVeiculo){
 
 		//Carro
@@ -893,7 +750,7 @@ public class ServAnuncio extends HttpServlet {
 		//Moto
 		case 2:return new Moto();
 
-		//Caminhão	 
+		//Caminhï¿½o	 
 		case 3:return new Caminhao();
 
 		default: return null;
@@ -910,44 +767,44 @@ public class ServAnuncio extends HttpServlet {
 		switch(atual_page){
 
 		case 1:
-			step1="<span>1. Informações básicas</span>";
+			step1="<span>1. Informaï¿½ï¿½es bï¿½sicas</span>";
 			step2="<a href=\""+this.getLinkStep(2,sessao)+"\"><span>2. Contato</span></a>";
 			step3="<a href=\""+this.getLinkStep(3,sessao)+"\"><span>3. Imagens</span></a>";
-			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Pré-Visualizar</span></a>";
-			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluído com sucesso!</span></a>";
+			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Prï¿½-Visualizar</span></a>";
+			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluï¿½do com sucesso!</span></a>";
 			break;
 
 
 		case 2:
 			step2="<span>2. Contato</span>";
-			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informações básicas</span></a>";
+			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informaï¿½ï¿½es bï¿½sicas</span></a>";
 			step3="<a href=\""+this.getLinkStep(3,sessao)+"\"><span>3. Imagens</span></a>";
-			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Pré-Visualizar</span></a>";
-			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluído com sucesso!</span></a>";
+			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Prï¿½-Visualizar</span></a>";
+			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluï¿½do com sucesso!</span></a>";
 			break;
 
 		case 3:
 			step3="<span>3. Imagens</span>";
 			step2="<a href=\""+this.getLinkStep(2,sessao)+"\"><span>2. Contato</span></a>";
-			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informações básicas</span></a>";
-			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Pré-Visualizar</span></a>";
-			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluído com sucesso!</span></a>";   
+			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informaï¿½ï¿½es bï¿½sicas</span></a>";
+			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Prï¿½-Visualizar</span></a>";
+			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluï¿½do com sucesso!</span></a>";   
 			break;	
 
 		case 4:
-			step4="<span>4. Pré-Visualizar</span>";
+			step4="<span>4. Prï¿½-Visualizar</span>";
 			step2="<a href=\""+this.getLinkStep(2,sessao)+"\"><span>2. Contato</span></a>";
-			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informações básicas</span></a>";
+			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informaï¿½ï¿½es bï¿½sicas</span></a>";
 			step3="<a href=\""+this.getLinkStep(3,sessao)+"\"><span>3. Imagens</span></a>";
-			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluído com sucesso!</span></a>";    
+			step5="<a href=\""+this.getLinkStep(5,sessao)+"\"><span>5. Concluï¿½do com sucesso!</span></a>";    
 			break;	
 
 		case 5:
-			step5="<span>5. Concluído com sucesso!</span>";
+			step5="<span>5. Concluï¿½do com sucesso!</span>";
 			step2="<a href=\""+this.getLinkStep(2,sessao)+"\"><span>2. Contato</span></a>";
-			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informações básicas</span></a>";
+			step1="<a href=\""+this.getLinkStep(1,sessao)+"\"><span>1. Informaï¿½ï¿½es bï¿½sicas</span></a>";
 			step3="<a href=\""+this.getLinkStep(3,sessao)+"\"><span>3. Imagens</span></a>";
-			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Pré-Visualizar</span></a>";    
+			step4="<a href=\""+this.getLinkStep(4,sessao)+"\"><span>4. Prï¿½-Visualizar</span></a>";    
 			break;		
 
 		}
@@ -961,7 +818,7 @@ public class ServAnuncio extends HttpServlet {
 
 	}
 
-	//RECUPERA O ESTADO DE PREENCHIMENTO DE UMA PÁGINA
+	//RECUPERA O ESTADO DE PREENCHIMENTO DE UMA Pï¿½GINA
 	private int pagePre(int step,HttpSession sessao){
 
 		return (Integer) sessao.getAttribute(""+step);
@@ -970,7 +827,7 @@ public class ServAnuncio extends HttpServlet {
 
 	private String getLinkStep(int step,HttpSession sessao){
 
-		//Verifica se a pagina já foi preenchida
+		//Verifica se a pagina jï¿½ foi preenchida
 		if(pagePre(step,sessao)==1)
 			return	getLinkForStep(step,sessao);
 
@@ -992,10 +849,7 @@ public class ServAnuncio extends HttpServlet {
 		case 3:return "ServAnuncio?STEP=3&&mostra_step=1";
 
 
-		case 4:return this.PAGE_STEP_4;
-
-
-		case 5:return this.PAGE_STEP_5;
+		
 
 		default :return "#n";
 
@@ -1003,7 +857,7 @@ public class ServAnuncio extends HttpServlet {
 
 	}
 
-	//Tranforma um vetor de String e um vetor de Integer (Para obtenção dos acessórios do veículo)
+	//Tranforma um vetor de String e um vetor de Integer (Para obtenï¿½ï¿½o dos acessï¿½rios do veï¿½culo)
 	private long[] toLong(String vet[]){
 
 		long itens[] =  new long[vet.length];
@@ -1030,7 +884,7 @@ public class ServAnuncio extends HttpServlet {
 		carro.setMotor(request.getParameter("motor"));
 		carro.setPlaca(request.getParameter("placa"));
 		carro.setVersao(request.getParameter("versao"));
-		System.out.println("Versão: "+carro.getVersao());
+		System.out.println("Versï¿½o: "+carro.getVersao());
 		carro.setTransmissao(request.getParameter("transmissao"));
 		carro.setCor(request.getParameter("cor"));
 		carro.setDescricao(request.getParameter("descricao"));
@@ -1063,7 +917,7 @@ public class ServAnuncio extends HttpServlet {
 			//carro.setMotor(request.getParameter("motor"));
 			carro.setPlaca(request.getParameter("placa"));
 			carro.setVersao(request.getParameter("versao"));
-			System.out.println("Versão: "+carro.getVersao());
+			System.out.println("Versï¿½o: "+carro.getVersao());
 			//carro.setTransmissao(request.getParameter("transmissao"));
 			carro.setCor(request.getParameter("cor"));
 			carro.setDescricao(request.getParameter("descricao"));
@@ -1083,6 +937,125 @@ public class ServAnuncio extends HttpServlet {
 		}
 
 
+		//MÃ©todo para finalizar o cadastro de um anÃºncio
+		public void finalizarAnuncio(HttpSession sessao,HttpServletRequest request,HttpServletResponse response) throws IOException{
+			
+		
+			
+			
+		
+				
+		    Usuario user = (Usuario) sessao.getAttribute("usuario");	
+			if(user!=null)	
+			{
+			 //Recupera o anuncio da sessï¿½o	
+			Anuncio an = (Anuncio) sessao.getAttribute("anuncio");	
+			
+			
+			
+			
+			//Joga o id do veiculo na sessï¿½o
+			sessao.setAttribute("cod_veiculo",an.getVeiculo().getId());
+			
+			
+		
+			
+			//Seta o usuï¿½rio responsï¿½vel pelo anï¿½ncio
+			an.setIdUsuario(user.getId());
+			
+			String edit_mode = (String.format("%s",sessao.getAttribute("edit")));
+			
+			System.out.println("edit_mode: "+edit_mode);
+			
+			if(edit_mode.equals("true"))
+			{
+				
+			//Prioridade do anï¿½ncio	
+			int prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");
+			System.out.println("A prioridade do anï¿½ncio ï¿½:");
+			an.getVeiculo().setPrioridade_anuncio(prioridade_anuncio);	
+				
+			//Status de pagamento	
+			int status_pagamento = (Integer) sessao.getAttribute("status_pagamento");
+			System.out.println("O status do pagamento ï¿½: "+status_pagamento);
+			an.getVeiculo().setStatusPagamento(status_pagamento);
+				
+			new VeiculoDAO().update(an.getVeiculo());
+			new AnuncioDAO().update(an);
+		
+			}
+			else
+			{
+				
+			//RECUPERA O TIPO DE PLANO INFORMADO NO INICIO
+			int prioridade_anuncio = (Integer) sessao.getAttribute("prioridade_anuncio");	
+				
+			//----SE O PLANO FOR GRï¿½TIS----	
+			//*OS DADOS DO VEï¿½CULOS Sï¿½O SALVOS EM ESPERA PARA ANALISE DOS AGENTES DO SISTEMA
+			//*REDIRECIONA PARA A Pï¿½GINA DE ANï¿½NCIO CADASTRADO COM SUCESSO	
+			if(prioridade_anuncio==Plano.PRIORIDADE_GRATIS)
+			{
+				
+			//CONFIGURAï¿½ï¿½O DOS STATUS PARA GRATIS
+			an.getVeiculo().setStatusPagamento(Pagamento.CONFIRMADO);
+			an.getVeiculo().setStatusValidacao(Pagamento.VALIDACAO_EM_ANALISE);
+				
+			new VeiculoDAO().update(an.getVeiculo());
+			new AnuncioDAO().insert(an);	
+			response.sendRedirect(this.PAGE_CAD_SECESSO);	
+			}
+			
+			//----SE O PLANO FOR PAGO----		
+			//*REDIRECIONA PARA A Pï¿½GINA DE PAGAMENTO E CONFIRMAï¿½ï¿½O DE PAGAMENTO
+			//REDIRECIONA PARA A Pï¿½GINA DE ANï¿½NCIO CADASTRADO MAS AGUARDANDO PAGAMENTO	
+			else {
+			
+				
+				
+				//Configuraï¿½ï¿½o dos dados para prioridade Mega
+				an.getVeiculo().setStatusPagamento(Pagamento.AGUARDANDO_APROVACAO);
+				an.getVeiculo().setStatusValidacao(Pagamento.VALIDACAO_EM_ANALISE);
+				
+				//Prioridade do anï¿½ncio
+				an.getVeiculo().setPrioridade_anuncio(prioridade_anuncio);
+					
+				new VeiculoDAO().update(an.getVeiculo());
+				new AnuncioDAO().insert(an);	
+				response.sendRedirect(this.PAGE_ESC_PAGAMENTO);	
+				
+				
+				
+			}
+				
+				
+				
+	     
+			
+			
+			}
+		
+			
+			
+			}
+			
+			else 
+			{
+				
+				Debug.gerar("Controle","ServAnuncio","SOLI=5(GET)","usuario na sesssï¿½o = null");
+			}
+			
+			
+			
+			this.resetSessaoAnuncio(sessao);
+				
+			
+
+			
+			
+			
+			
+			
+		}
 
 
 }

@@ -128,10 +128,7 @@
  String page_pos="";
  int tipo_veiculo= (Integer) session.getAttribute("tipo_veiculo");
  
- if(tipo_veiculo==1)
- page_pos = ServAnuncio.PAGE_STEP_4+"?mostra_step=1";
- else if(tipo_veiculo==2)
- page_pos = ServAnuncio.PAGE_STEP_5+"?mostra_step=1";	 
+ page_pos = "ServAnuncio?mostra_step=0&&STEP=13";
   
   
   %>

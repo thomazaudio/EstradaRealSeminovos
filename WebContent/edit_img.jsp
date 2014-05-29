@@ -5,6 +5,7 @@
       <%@page import="util.Anuncio"%>
       <%@page import="util.Plano"%>
       <%@page import="util.Debug"%>
+        <%@page import="Controle.ServAnuncio"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -60,7 +61,7 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 					if(step==null)
 					step = new StringBuffer();	
 					out.write(step.toString());
-					nome_bt = "Continuar";
+					nome_bt = "Finalizar";
 					}
 					else
 					nome_bt = "Salvar";	
@@ -105,6 +106,8 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 					
 					
 					//Banner Destaque
+					//Vai para página de edição da imagem do banner
+					
 					if(prioridade_anuncio==Plano.PRIORIDADE_ULTRA)
 					{
 					%>
@@ -118,11 +121,14 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 					
 					<% 
 					}
+					
+					//Finaliza o anúncio
+					
 					else {
 					%>
 					
 					<form action="ServAnuncio" method="GET" >
-					<input type="hidden" name="STEP" value="4">
+					<input type="hidden" name="STEP" value="13">
 					<input type="hidden" name="mostra_step" value="<%=mostra_step%>">
 					<input class="btn_2 blue" type="submit" value="<%=nome_bt%>">
 					</form>

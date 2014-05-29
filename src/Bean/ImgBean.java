@@ -96,7 +96,7 @@ public class ImgBean {
     
     
     
-    //RECUPERA A CAPA DO VEÍCULO E TAMANHO TUMB
+    //RECUPERA A CAPA DO VEï¿½CULO E TAMANHO TUMB
     public StreamedContent getTumbCapaVeiculo() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -107,17 +107,31 @@ public class ImgBean {
         	
 
             String id = context.getExternalContext().getRequestParameterMap().get("idVeiculo");
-          
+            
+            if(id!=null)
+            {
+            System.out.println("O id do veiculo Ã©: "+id);
         	
 			imgCapa = new DefaultStreamedContent();
 			imgCapa.setContentType("image/jpeg");
 			
-			InputStream img_original = new ImgDAO().getTumbImgCapa(Long.parseLong(id)).getImg();
+			InputStream img_original = new ImgDAO().getImgCapa(Long.parseLong(id)).getImg();
 			
 			
 			//Altera oo tamanho da imagem
 			imgCapa.setStream(new ImgUtil().alteraTamanho(img_original,ImgUtil.WIDTH_TUMB,ImgUtil.HEIGHT_TUMB));
-        	
+            }
+            
+            else 
+            {
+            	
+
+    		imgCapa = new DefaultStreamedContent();
+    		imgCapa.setContentType("image/jpeg");	
+            imgCapa.setStream(new ImgDAO().getNoImg().getImg());	
+            
+            }
+            	
         }catch(Exception e){
         	imgCapa = new DefaultStreamedContent();
         	imgCapa.setStream(null);
@@ -134,7 +148,7 @@ public class ImgBean {
     }
 
     
-  //RECUPERA A LOGO DO USUÁRIO (IMAGEM DE PERFIL)
+  //RECUPERA A LOGO DO USUï¿½RIO (IMAGEM DE PERFIL)
     public StreamedContent getLogo() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -144,15 +158,18 @@ public class ImgBean {
         try{
         	
 
-            String id = context.getExternalContext().getRequestParameterMap().get("id");
-          
-            System.out.println("Id:"+id );
-        	
+            String id;
+         
+            
+            id = context.getExternalContext().getRequestParameterMap().get("id_user");
+            System.out.println("id_user:"+id );
+            
 			imgCapa = new DefaultStreamedContent();
 			imgCapa.setContentType("image/jpeg");
 			
+			InputStream capa = new ImgDAO().getLogo(Long.parseLong(id)).getImg();
 			
-			imgCapa.setStream(new ImgDAO().getLogo(Long.parseLong(id)).getImg());
+			imgCapa.setStream(capa);
         	
         }catch(Exception e){
         	imgCapa = new DefaultStreamedContent();

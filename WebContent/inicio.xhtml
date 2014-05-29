@@ -6,16 +6,39 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
-<meta http-equiv="pragma" content="no-cache"></meta>
+	<meta http-equiv="pragma" content="no-cache"></meta>
 
 
-<title>Home</title>
+	<!-- Start WOWSlider.com HEAD section -->
+	<link rel="stylesheet" type="text/css" href="banner/engine1/style.css" />
+	<script type="text/javascript" src="banner/engine1/jquery.js"></script>
+	<!-- End WOWSlider.com HEAD section -->
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	
-	
-	
-	
-	
+	<link rel="stylesheet" type="text/css" href="css/style980.css" />
+	<link rel="stylesheet" type="text/css" href="css/style800.css" />
+	<link rel="stylesheet" type="text/css" href="css/style700.css" />
+	<link rel="stylesheet" type="text/css" href="css/style600.css" />
+	<link rel="stylesheet" type="text/css" href="css/style500.css" />
+	<link rel="stylesheet" type="text/css" href="css/style400.css" />
+	<link rel="stylesheet" type="text/css"
+		href="css/jquery.fancybox-1.3.4.css" media="screen" />
+	<!--[if IE]>
+	<link href="css/style_ie.css" rel="stylesheet" type="text/css">
+	<![endif]-->
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="js/jquery.selectik.js"></script>
+	<script type="text/javascript" src="js/jquery.mousewheel-3.0.4.pack.js"></script>
+	<script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript" src="js/jquery.countdown.js"></script>
+	<script type="text/javascript" src="js/jquery.checkbox.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+
 	<script>
 	
 	
@@ -46,326 +69,131 @@
 	
 
 	</script>
-	
 
 
-<!-- CSS do Banner Destaque
- 				================================================== -->
 
 
-<link rel="stylesheet" href="rs-plugin/css/settings.css" media="screen"/>
-<link rel="stylesheet" href="css/style_2.css"/>
+
 </h:head>
 
 <h:body>
 
-<!-- CABEÇALHO -->
-<ui:include src="header.xhtml"></ui:include>
-
-
-<!-- BANNER DESTAQUE -->
-<img src="images/img_d.jpg"></img>
-<div class="fullwidthbanner-container slider-wrapper">
-
-		<div class="fullwidthbanner slider tp-simpleresponsive hovered"
-			style="height: 300px;">
-			<ul>
-
-				<ui:repeat var="d" value="#{destaqueBean.destaqueBanner}">
-
-
-				<li class="slide" data-transition="boxfade" data-slotamount="7"
-					style="visibility: visible; left: 0px; top: 0px; z-index: 18; opacity: 1;">
-					<div class="slotholder">
-					
-					
-					<a target="_blank" href="anuncio.jsp?id_veiculo=#{d.codVeiculo}">
-					<p:graphicImage styleClass="defaultimg" style="width:1354 px; height: 562.8515928515928px; position: absolute; left: -25px; opacity: 0;"  value="#{imgBean.imgBanner}">
-                     
-                   <f:param name="idDestaque" value="#{d.idDestaque}"></f:param>
-                   
-                    </p:graphicImage>
-					 </a>  
-					
-					
-					
-					</div>
-					<h2 class="caption sft heading-a start" data-x="0" data-y="100"
-						data-start="1700"
-						style="font-size: 26px; padding: 0px; margin: 0px; border: 0px; line-height: 0px; white-space: nowrap; opacity: 0; left: 172px; top: 50px;">
-						<span>#{d.titulo}</span>
-					</h2>
-					<h2 class="caption lfb heading-b start" data-x="0" data-y="150"
-						data-start="2500"
-						style="font-size: 26px; padding: 8px 29px 8px 8px; margin: 0px; border: 0px; line-height: 0px; white-space: nowrap; opacity: 0.800000011920929; left: 172px; top: 407px;">#{d.anoFabricacao}/#{d.anoModelo}</h2>
-					<h2 class="caption lfr heading-c start" data-x="0" data-y="200"
-						data-start="3000"
-						style="font-size: 16px; padding: 0px; margin: 0px; border: 0px; line-height: 0px; white-space: nowrap; opacity: 1; left: 1309px; top: 200px;">
-						<span>R$ #{d.preco}</span>
-					</h2>
-				</li>
-
-				</ui:repeat>
-
-			</ul>
-			<div class="tp-loader" style="display: none;"></div>
-		</div>
-
-		
-	</div>
-
-
-	<!-- CONTAINER-->
-
-
-
-
-
-
-	<!--Footer-->
-
-	<!--End Footer-->
-
-
-
-
-
-
+	<!-- CABEÇALHO -->
+	<ui:include src="header.xhtml"></ui:include>
 
 
 	<!-- Scripts -->
 	<script src="js/jquery-1.7.1.min.js"></script>
-	<script src="rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
-	<script src="rs-plugin/js/jquery.themepunch.revolution.js"></script>
-	<script src="js/jquery.isotope.min.js"></script>
-	<script src="js/jquery-cycle.js"></script>
-	<script src="js/jquery-ui.js"></script>
-	<script src="js/jquery.selectBox.js"></script>
-	<script src="js/timeline.js"></script>
-	<script src="js/custom.js"></script>
 
 
 
 
 
 
-	
-	
+
+
+
 	<!-- FIM DO BANNER DESTAQUE -->
-	
-	
-	
-	 <div class="esquerdo_header">
-                       
-                        
- <p><img src="images/img_pub.jpg" alt="" /></p>
-                        
-<script type="text/javascript"><!--
-google_ad_client = "ca-pub-2319715661262324";
-/* ewqwe */
-google_ad_slot = "6227740595";
-google_ad_width = 120;
-google_ad_height = 240;
-//-->
-</script>
-<script type="text/javascript"
-src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-                                                  
-                       
-                        
-                        </div>
-	
-	<div class="content_z conteiner-hv2">
-	
-	
-	
-	<div class="container-top clearfix">
-	                            <div class="esquerdo_inicio">
-	                            
-	                          
-	                            <div class="fundo_azul">
-                                <h2 class="texto_branco"><strong>Os melhores veículos da região estão aqui!</strong></h2>
-                                </div>
-                              <div class="message">
-                              
-                                <p>O veículo que você está procurando pode estar bem pertinho de você!
-                                </p>
-                                <p></p>
-                                
-                         <div class="features_table">
-					  
-					  
-					  
-					   
-					
-					
-						    <div class="fundo_laranja">
-							<h3 class="texto_branco"><strong>Não perca tempo!</strong></h3>
-							</div>
-							<p>Anúncie já seu veículo conosco, acesse o público alvo da sua região!
-                                </p>
-                                <p>Se você é revendedora de veículos temos planos especiais para você.</p>
-						
-						<p:lightBox  iframe="true" width="1200px" height="700px">                       
-                                         <h:outputLink  value="#{contextoBean.contextoInicial}/action.jsp">
-						
-						<f:param name="page_pos" value="cad_veiculo/index.jsp"></f:param>
-						<f:param name="text_page_pos" value="Cadastro de novo Veiculo"></f:param>
-						
-						<h:outputText styleClass="btn blue" value="Anuncie  seu veículo agora!"></h:outputText>
-						
-						</h:outputLink>
-                              </p:lightBox> 
-						
-					</div>
-                              
-                              
-                              </div>
-                              
-                              
-                                                              </div> 
-                                                                <img src="images/logo_2.png" alt="" /> 
-                                                                <h2><strong>Quer vender seu veículo?</strong></h2>
-                                                                <h3><strong>É rápido!</strong></h3>
-                                                                <h3><strong>É fácil!</strong></h3>
-                                          
-                                
-                        </div>
-                        
-                        
-                        
-                        </div>
-                        
-                        <div class="direito_header">
-                       
-                        
-                        <!-- Publicidade da direita -->
-                       	 <p><img src="images/img_pub.jpg" alt="" /></p>
-                                                  
-                       <script type="text/javascript"><!--
-						google_ad_client = "ca-pub-2319715661262324";
-						/* ewqwe */
-						google_ad_slot = "6227740595";
-						google_ad_width = 120;
-						google_ad_height = 240;
-						//-->
-						</script>
-						<script type="text/javascript"
-						src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-						</script>
-                  
-                        
-                        </div>
-                        
-                        
-                        
-	
-	<canvas id="linha_ini" width="1900" height="5"></canvas>
-							<script>
-      						var canvas = document.getElementById('linha_ini');
-     					    var context = canvas.getContext('2d');
-      						var rectWidth = 1900;
-     					    var rectHeight = 5;
-
-      						
-
-      						context.fillStyle = '#f28633';
-     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
-    					</script>
-	
-	<canvas id="linha_ini_2" width="2500" height="5"></canvas>
-							<script>
-      						var canvas = document.getElementById('linha_ini_2');
-     					    var context = canvas.getContext('2d');
-      						var rectWidth = 2500;
-     					    var rectHeight = 5;
-
-      						
-
-      						context.fillStyle = 'blue';
-     						 context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
-    					</script>
-	
-	
 	<div id="content">
 
-<div class="content_2">
+		<div class="content">
 
-<div class="main_wrapper">
 
-					
-					<div class="search_auto_wrapper">
-						
-						<ui:include src="componente_busca.xhtml"></ui:include>
-						
-						<div class="esquerdo_header">
-						
-						
-						<!-- Publicidade inferior -->
-						 <p><img src="images/img_pub.jpg" alt="" /></p>
-						<script type="text/javascript"><!--
-						google_ad_client = "ca-pub-2319715661262324";
-						/* ewqwe */
-						google_ad_slot = "6227740595";
-						google_ad_width = 120;
-						google_ad_height = 240;
-						//-->
-</script>
-<script type="text/javascript"
-src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-          
-						
+			<div class="wrapper_1">
+			
+			<ui:include src="propagandas/index.xhtml"></ui:include>
+			 
+			 <br>
+			 </br>
+			
+				<div class="slider_wrapper">
+					<div class="home_slider">
+
+
+						<div class="tabs_wrapper">
+							<ul class="tabs">
+								<li class="current">Principais Destaques</li>
+								<li><h:outputLink
+										value="#{contextoBean.contextoInicial}/action.jsp">
+
+										<f:param name="page_pos" value="cad_veiculo/index.jsp"></f:param>
+										<f:param name="text_page_pos" value="Cadastro de novo Veiculo"></f:param>
+
+										<h:outputText value="Coloque seu Veículo aqui!"></h:outputText>
+
+									</h:outputLink></li>
+
+							</ul>
+
+							<div class="box visible">
+
+
+								<ui:include src="banner/banner.xhtml"></ui:include>
+
+
+ <img width="200" height="250" src="images/caixa_anuncie.gif" alt="" /> 
+ <img width="200" height="250" src="images/caixa_anuncie.gif" alt="" /> 
+ <img width="200" height="250" src="images/caixa_anuncie.gif" alt="" /> 
+
+
+							</div>
+
 						</div>
-						
+
+
+
+
+
+
 					</div>
-					
 
-					
-					</div>
-					
-					
-					<div class="main_catalog">
-					
-					<ui:include src="destaque.xhtml"></ui:include>
-					
-					</div>
-					
-					<!-- Restante da página -->
-					
-					<div class="main_catalog">
-					
-					<!-- PARCEIROS -->
-					
-					<div class="left">
-					<ui:include src="parceiros.xhtml"></ui:include>
-					</div>
-					
-					
-					</div>
-				
-				
-				
-				
-				
-				
-				
-				
-				
+				</div>
+				<div class="search_auto_wrapper">
+
+					<ui:include src="componente_busca.xhtml"></ui:include>
+
+				</div>
+				<div class="clear"></div>
+			</div>
+
+
+			<div class="recent_blog">
+				<ui:include src="destaque.xhtml"></ui:include>
+
+			</div>
+
+			<div class="clear"></div>
+			<br></br>
+
+			<div class="recent_blog">
+				<ui:include src="parceiros.xhtml"></ui:include>
+
+			</div>
 
 
 
 
 
 
-</div>
 
-</div>
 
-<div class="clear"></div>
 
-<ui:include src="rodape.xhtml"></ui:include>
+
+
+
+
+
+
+
+
+		</div>
+
+	</div>
+
+
+	<div class="clear"></div>
+
+	<ui:include src="rodape.xhtml"></ui:include>
 
 
 </h:body>

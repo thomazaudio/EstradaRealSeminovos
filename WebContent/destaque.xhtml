@@ -4,64 +4,97 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
+
 <h:head>
+
+
+	<!-- jQuery library (served from Google) -->
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<!-- bxSlider Javascript file -->
+	<script
+		src="#{contextoBean.contextoInicial}/banner/jquery.bxslider.min.js"></script>
+	<!-- bxSlider CSS file -->
+	<link href="#{contextoBean.contextoInicial}/banner/jquery.bxslider.css"
+		rel="stylesheet" />
+
+
+	<script>
+$(document).ready(function(){
+	  $('.slider1').bxSlider({
+	    slideWidth: 200,
+	    minSlides: 5,
+	    maxSlides: 5,
+	    slideMargin: 10,
+	    swipeThreshold:10,
+	    oneToOneTouch:false,
+	    preventDefaultSwipeX:false,
+	    preventDefaultSwipeY:false,
+	    pager:false
+	  });
+	});
+</script>
 
 </h:head>
 <h:body>
 
 
-<div class="recent">
 
-<div class="tabs_wrapper home_tabs section">
-				<ul class="tabs">
-						    	<li class="current">Veículos em destaque</li>
-						    	
-						 	</ul>
-						 	
-						 	
-						 	
-						 	
-						 	
-						 	
-						 	
-				<div class="recent_carousel">
-				
-				
-				
-				      <ui:repeat var="d" value="#{destaqueBean.destaqueInferior}">
-						<div class="slide">
-							<a href="anuncio.jsp?id_veiculo=#{d.codVeiculo}">
-								
-								<p:graphicImage  value="#{imgBean.tumbCapaVeiculo}">
-                        
-                   				<f:param name="idVeiculo" value="#{d.codVeiculo}"></f:param>
-                    			</p:graphicImage>
-								
-								<div class="description">
-									<p>#{d.anoFabricacao}/#{d.anoModelo}<br></br><br></br><span class="price"></span><br></br></p>
-									
-								</div>
-								<div class="title">
-									<p>
-										<span>#{d.titulo}</span>
-									
-									</p>
-									
-									<p>	<span class="price">R$ #{d.preco}</span></p>
-								</div>
-							</a>
-						</div>
-						</ui:repeat>
-						
-						
-					
-					
-					</div>
-					
-					</div>
-					
-					</div>
-				
+
+
+
+	<div class="tabs_wrapper">
+		<ul class="tabs">
+			<li class="current">Outros destaques</li>
+			<li><img alt="" width="30" src="images/logo_2.png" /></li>
+		</ul>
+
+
+
+
+	</div>
+
+
+
+
+
+	<div class="slider1">
+
+
+
+		<ui:repeat var="d" value="#{destaqueBean.destaqueInferior}">
+			<div class="slide">
+
+
+				<p:graphicImage value="#{imgBean.tumbCapaVeiculo}">
+
+					<f:param id="idVeiculo" name="idVeiculo" value="#{d.codVeiculo}"></f:param>
+				</p:graphicImage>
+
+
+				<div class="title">
+					<p>
+						<span>#{d.titulo}</span>
+
+					</p>
+
+					<p>
+						<span class="price">R$ #{d.preco}</span>
+					</p>
+				</div>
+
+			</div>
+		</ui:repeat>
+
+	</div>
+
+
+
+
+
+
+
+
 
 
 

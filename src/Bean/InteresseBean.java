@@ -24,8 +24,11 @@ public class InteresseBean {
 	public ArrayList<Veiculo> veiculos =  new ArrayList<Veiculo>();
 	private Map<Long, Boolean> selecionados = new HashMap<Long, Boolean>();
 	
+	
 	public Map<Long, Boolean> getSelecionados() {
 		return selecionados;
+		
+
 	}
 
 	public void setSelecionados(Map<Long, Boolean> selecionados) {
@@ -53,6 +56,15 @@ public class InteresseBean {
 		this.veiculos = veiculos;
 	}
 	
+	
+	
+	public boolean liberaCheckBox(){
+		
+		if(this.getVeiculosSelecionados().size()<3)
+			return true;
+		
+		return false;
+	}
 	
 	public void addVeiculo(){
 		  
@@ -101,11 +113,7 @@ public class InteresseBean {
 		 
 		 for(int i=0;i<veiculos.size();i++)
 		 {
-			 
-			System.out.println("O id do veiculo é :"+veiculos.get(i).getId());
 			
-			System.out.println("Selecionados: ");
-			System.out.println(selecionados);
 			
 			
 			if(selecionados.get(veiculos.get(i).getId())!=null)
@@ -113,8 +121,13 @@ public class InteresseBean {
 			boolean selected = selecionados.get(veiculos.get(i).getId());
 			
 		    if(selected)
+		    {	
+		    if(veiculos_selecionados.size()<3)	
 			veiculos_selecionados.add(veiculos.get(i));
+		    }
+		    
 			}
+			
 		 }
 
 		        

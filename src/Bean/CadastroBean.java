@@ -29,7 +29,28 @@ public class CadastroBean {
 
 	
 	private Usuario usuarioSessionCad; 
-     public Usuario getUsuarioSessionCad() {
+	private String pagePosSession;
+	
+     public String getPagePosSession() {
+    	 
+    	 HttpSession sessao =((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)); 
+    	 
+     	pagePosSession =(String) sessao.getAttribute("pagePosSession");
+    	 
+		return pagePosSession;
+	}
+
+
+	public void setPagePosSession(String pagePosSession) {
+		
+		HttpSession sessao =((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)); 
+		sessao.setAttribute("pagePosSession",pagePosSession);
+		this.pagePosSession = pagePosSession;
+		this.pagePosSession = pagePosSession;
+	}
+
+
+	public Usuario getUsuarioSessionCad() {
     	 
     	
     	HttpSession sessao =((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)); 
@@ -48,7 +69,7 @@ public class CadastroBean {
 
 	
 	
-	//Cadastro de usuário
+	//Cadastro de usuï¿½rio
 	public void cad() throws IOException{
 	 
 	
@@ -59,7 +80,7 @@ public class CadastroBean {
 	 //Recupera os parametros do contexto
 	 Map<String,String> ats =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		
-	 //Salva um contato genérico
+	 //Salva um contato genï¿½rico
 	 Contato c = new Contato();
 	 c.setTel1(ats.get("tel"));
 	 c.setTel2("");
@@ -67,13 +88,14 @@ public class CadastroBean {
 	 
 	 
 	 
-	 String page_pos = ats.get("page_pos2");
+	 //JOGA A Pï¿½GINA DE OrIGEM NA SESSï¿½O
+	 this.setPagePosSession(ats.get("page_pos2"));
 	 
 	 
-	 //verifica o tipo de usuário(Verificação se é cnpj ou cpf)
+	 //verifica o tipo de usuï¿½rio(Verificaï¿½ï¿½o se ï¿½ cnpj ou cpf)
 	 String doc = ats.get("doc");
 	
-	 //Retira pontos e traços
+	 //Retira pontos e traï¿½os
 	 doc = doc.replace(".","");
 	 doc = doc.replace("-","");
 	 doc = doc.replace("/","");
@@ -87,10 +109,10 @@ public class CadastroBean {
 	 //PESSOA FISICA 
 	 case Validacao.IS_CPF :
 	 
-	 //Verifica se o documento está cadastrado no sistema
+	 //Verifica se o documento estï¿½ cadastrado no sistema
 	 if(new UsuarioDAO().existeChave(Usuario.class,"cpf",doc))	
 	 {
-		 msg.setSummary("O cpf'"+doc+"' já está em uso no sistema. Por favor, insira outro cpf ou cnpj.");
+		 msg.setSummary("O cpf'"+doc+"' jï¿½ estï¿½ em uso no sistema. Por favor, insira outro cpf ou cnpj.");
 		 FacesContext.getCurrentInstance().addMessage(null,msg);	 
 	 }
 	 
@@ -103,17 +125,17 @@ public class CadastroBean {
      this.setUsuarioSessionCad(pessoa);
      
      
-     //redireciona para próxima etapa de cadastro
-     FacesContext.getCurrentInstance().getExternalContext().redirect("cad_step2.jsf?page_pos="+page_pos);
+     //redireciona para prï¿½xima etapa de cadastro
+     FacesContext.getCurrentInstance().getExternalContext().redirect("cad_step2.jsf");
 	 }
 	 
      break;
 	 
 	 case Validacao.IS_CNPJ:
-	 //Verifica se o documento está cadastrado no sistema
+	 //Verifica se o documento estï¿½ cadastrado no sistema
 	 if(new UsuarioDAO().existeChave(Usuario.class,"cnpj",doc))	
 	 {
-		msg.setSummary("O cnpj'"+doc+"' já está em uso no sistema. Por favor, insira outro cpf ou cnpj.");
+		msg.setSummary("O cnpj'"+doc+"' jï¿½ estï¿½ em uso no sistema. Por favor, insira outro cpf ou cnpj.");
 		FacesContext.getCurrentInstance().addMessage(null,msg);	 
 	 }	 
 	 else
@@ -124,14 +146,14 @@ public class CadastroBean {
 	     
 	     this.setUsuarioSessionCad(emp);	
 	     
-	     //redireciona para próxima etapa de cadastro
-	     FacesContext.getCurrentInstance().getExternalContext().redirect("cad_step2_empresa.jsf?page_pos="+page_pos);
+	     //redireciona para prï¿½xima etapa de cadastro
+	     FacesContext.getCurrentInstance().getExternalContext().redirect("cad_step2_empresa.jsf");
 	 }
 	 break;
 	 
 	 default: 
 	
-	 msg.setSummary("Por favor, insira um cpf ou um cnpj válido.");
+	 msg.setSummary("Por favor, insira um cpf ou um cnpj vï¿½lido.");
 	 FacesContext.getCurrentInstance().addMessage(null,msg);
 	 break;	 
 	 
@@ -140,7 +162,7 @@ public class CadastroBean {
 	}
 	
 	
-	//Cadastro de usuário em segunda etapa
+	//Cadastro de usuï¿½rio em segunda etapa
 	public void cadstep2() throws IOException{
 		
 		
@@ -157,7 +179,7 @@ public class CadastroBean {
 		//Recupera o cadastro em Sessao
 		Usuario user = this.getUsuarioSessionCad();
 		
-		//Salva uma localizacao genérica para o usuário
+		//Salva uma localizacao genï¿½rica para o usuï¿½rio
 		Localizacao loc = new Localizacao();
 		loc.setCod_cidade(Integer.parseInt(ats.get("cidade")));
 		new LocalizacaoDAO().insert(loc);
@@ -170,10 +192,10 @@ public class CadastroBean {
 		user.setSenha(ats.get("senha1"));
 		
 		
-		//Validação dos dados
+		//Validaï¿½ï¿½o dos dados
 	    if( new UsuarioDAO().existeChave(Contato.class,"email",user.getContato().getEmail()))
 	    {
-	    	msg.setSummary("O email '"+user.getContato().getEmail()+"' já está em uso no sistema. Por favor, insira outro email ou faça login.");
+	    	msg.setSummary("O email '"+user.getContato().getEmail()+"' jï¿½ estï¿½ em uso no sistema. Por favor, insira outro email ou faï¿½a login.");
 	       FacesContext.getCurrentInstance().addMessage(null,msg);	
 	    }
 	    else
@@ -182,16 +204,23 @@ public class CadastroBean {
 		//Atualiza o contato
 		new ContatoDAO().update(user.getContato());
 		
+		
+		
 		//Salva o usuario no banco de dados
 		new UsuarioDAO().insert(user);
 	
-		//Envia o email de confirmação
+		//Envia o email de confirmaï¿½ï¿½o
 		new Comunicacao().sendConfirmacaoUser(this.getUsuarioSessionCad());;
 		
-		//Redireciona pra a pagina de cadastrado com sucesso
-		FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsp?page=cadastro_sucesso.jsp?email="+user.getContato().getEmail());
+		//Loga o usuï¿½rio
+		HttpSession sessao =((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)); 
+		sessao.setAttribute("usuario",new UsuarioDAO().logar(user.getContato().getEmail(),user.getSenha()));
+		
+		//Redireciona pra a pagina que o usuï¿½rio havia solicitado
+		FacesContext.getCurrentInstance().getExternalContext().redirect(this.getPagePosSession());
 	
 	    }
+	    
 	    }
 	
 	public void red(){
@@ -210,7 +239,7 @@ public class CadastroBean {
 		}
 	}
 	
-	//VALIDAÇÕES
+	//VALIDAï¿½ï¿½ES
 	
 	
 }

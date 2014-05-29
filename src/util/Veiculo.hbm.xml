@@ -6,7 +6,7 @@
 
 
 
-<class name="util.Item" table="Item">
+<class name="util.Item" table="item">
 
 
 
@@ -18,13 +18,13 @@
 
 
 
-<property name="item" column="ITEM"/>
+<property name="item" column="item"/>
 
-<property name="tipo" column="TIPO_ITEM"/>
+<property name="tipo" column="tipo_item"/>
 
 </class>
 
-<class name="util.Veiculo" table="VEICULO">
+<class name="util.Veiculo" table="veiculo">
 
  
 
@@ -54,7 +54,6 @@
 <property name="cod_fabricante" column="COD_FABRICANTE"/>
 <property name="img" column="IMG" type="blob" />
 <property name="fumante" column="FUMANTE"/>
-<property name="sexo_condutor" column="SEXO_CONDUTOR"/>
 <property name="cod_estado" column="COD_ESTADO"/>
 <property name="cod_cidade" column="COD_CIDADE"/>
 <property name="descricao" column="DESCRICAO"/>
@@ -74,7 +73,7 @@
 
 <subclass name="util.Carro" discriminator-value="CARRO">
     
-  <set name="itens" table="ITENS">
+  <set name="itens" table="itens">
         <key column="ID_VEICULO"/>
         <many-to-many column="ID_ITEM"
             class="util.Item"/>
@@ -93,7 +92,7 @@
 
 <subclass name="util.Moto" discriminator-value="MOTO">
     
-    <set name="itens" table="ITENS">
+    <set name="itens" table="itens">
         <key column="ID_VEICULO"/>
         <many-to-many column="ID_ITEM"
             class="util.Item"/>

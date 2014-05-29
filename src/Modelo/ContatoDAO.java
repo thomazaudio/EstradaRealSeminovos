@@ -1,5 +1,6 @@
 package Modelo;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import util.Contato;
@@ -14,7 +15,9 @@ public class ContatoDAO {
 		
 		try{
 		Session sessao = HibernateUtil.getSessaoV().openSession();
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.save(contato);
+		tx.commit();
 		sessao.flush();
 		sessao.close();
 		}catch(Exception e){
@@ -29,7 +32,9 @@ public class ContatoDAO {
 
 		try{
 		Session sessao = HibernateUtil.getSessaoV().openSession();
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.merge(contato);
+		tx.commit();
 		sessao.flush();
 		sessao.close();
 		}catch(Exception e){
@@ -63,7 +68,7 @@ public class ContatoDAO {
 		sessao.close();
 		
 		}
-	//Recupera o  contato padrão de determinado usuário
+	//Recupera o  contato padrï¿½o de determinado usuï¿½rio
 	
 	public Contato getContato(long id){
 		

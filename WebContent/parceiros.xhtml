@@ -6,46 +6,72 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 
+
+	
+	<!-- jQuery library (served from Google) -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!-- bxSlider Javascript file -->
+<script src="#{contextoBean.contextoInicial}/banner/jquery.bxslider.min.js"></script>
+<!-- bxSlider CSS file -->
+<link href="#{contextoBean.contextoInicial}/banner/jquery.bxslider.css" rel="stylesheet" />
+
+
+<script>
+$(document).ready(function(){
+	  $('.slider2').bxSlider({
+	    slideWidth: 200,
+	    minSlides: 2,
+	    maxSlides: 2,
+	    slideMargin: 10
+	  });
+	});
+</script>
+
+
 </h:head>
 
 <h:body>
 
-<div class="tabs_wrapper home_tabs section">
-						  	<ul class="tabs">
-						    	<li class="current">Parceiros</li>
-						    	
+<div class="tabs_wrapper">
+				<ul class="tabs">
+						    	<li class="current">Nosso Parceiros</li>
+						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
 						 	</ul>
-						 	<div class="box visible">
-						 		<a href="#" class="all">Ver todos...</a>
-						   		<div class="results"><span>---</span></div>
-						   		<div class="clear"></div>
-						   		<div class="bx-wrapper" style="max-width: 660px;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 148px;"><div class="tabs_carousel" style="width: 2580%; position: relative; -webkit-transition: 0s; transition: 0s; -webkit-transform: translate3d(0px, 0px, 0px);">
+						 	
+						 	
+						 	
+						 	
+						 	</div>
 						   			
 									
 									
-									
+									 <div class="slider2">
 									<ui:repeat var="p" value="#{parceiroBean.parceiros}">
+									<div class="slide">
 									
-									<div class="slide" style="float: left; list-style: none; position: relative; width: 150px; margin-right: 20px;">
-										<a href="dealer" class="img">
+										
 										
 										<p:graphicImage  height="90" value="#{imgBean.logo}">
                         
-                  						<f:param name="id" value="#{p.cod}"></f:param>
+                  						<f:param  name="id_user" value="#{p.cod}"></f:param>
                   						
                   					    </p:graphicImage>
 										
+										<p>#{p.nome}</p>
 										
-										</a>
-										<a href="dealer" class="title">#{p.nome}</a>
+										
+										
+									
+									
 									</div>
 									</ui:repeat>
 									
-								</div></div></div>
-						  	</div>
+									</div>
+									
+								
 						  	
 						  	
-						</div>
+						
 
 </h:body>
 </html>

@@ -1,9 +1,16 @@
 package Modelo;
 
+import java.util.Calendar;
+
 import org.apache.commons.mail.HtmlEmail;
+
 import util.Debug;
+import util.SystemEmpresa;
 
 public class Email {
+	
+	
+	
 
 	private String destinatario;
 	private String nome_destinatario;
@@ -19,41 +26,15 @@ public class Email {
 		
 	}
 	
-	public void sendHtmlEmail() {
-	       
-		   try{
-		   
-		   HtmlEmail email = new HtmlEmail();
-		   //Utilize o hostname do seu provedor de email
-		   System.out.println("alterando hostname...");
-		   email.setHostName("smtp.gmail.com");
-		   //Quando a porta utilizada não é a padrão (gmail = 465)
-		   email.setSmtpPort(587);
-		   //Adicione os destinatários
-		   email.addTo(this.getDestinatario(),this.getNome_destinatario());
-		   //Configure omail.com seu email do qual enviará
-		   email.setFrom("thomazrd@gmail.com", "Estrada Real");
-		   //Adicione um assunto
-		   email.setSubject(this.getAssunto());
-		   //Adicione a mensagem do email
+	public Email(){
+		
+		
+	}
+	
+	
 		 
 	       
-		   email.setHtmlMsg(this.getMensagem().toString());
-		   
-		 
-		   
-		   //Para autenticar no servidor é necessário chamar os dois métodos abaixo
-		   System.out.println("autenticando...");
-		   email.setSSL(true);
-		   email.setAuthentication("thomazrd", "magda...");
-		   System.out.println("enviando...");
-		   email.send();
-		   System.out.println("Email enviado!");
-		   }catch(Exception e){
-			   
-			   Debug.gerar("Modelo","Email","sendHtmlEmail", e.getMessage());
-		   }
-		}
+		  
 	
 	
 	
@@ -89,6 +70,49 @@ public class Email {
 		this.nome_destinatario = nome_destinatario;
 	}
 	
+	
+	
+	public void enviaEmail(String destinatario,String nome_destinatario,StringBuffer mensagem,String assunto){
+		
+		
+		  try{
+			   
+			   HtmlEmail email = new HtmlEmail(); 
+			  
+			   email.setHostName("mail.estradarealseminovos.com.br");
+			 
+			   
+			   email.setSmtpPort(587);
+			 
+			   
+			   email.addTo(destinatario,nome_destinatario);
+			
+			   
+			   email.setFrom(SystemEmpresa.EMAIL,SystemEmpresa.NOME_EMPRESA);
+			  
+			   
+			   email.setSubject(assunto);
+			  
+			   
+			   
+			   //Conteudo da mensagem de confirmaï¿½ï¿½o de ponto
+		        email.setHtmlMsg(mensagem.toString());
+			   
+			 
+			   
+			   //AUTENTICAï¿½ï¿½ES
+			   System.out.println("autenticando...");
+			  // email.setSSL(true);
+			   email.setAuthentication("sistema@estradarealseminovos.com.br","leghacy");
+			   System.out.println("enviando...");
+			   email.send();
+			   System.out.println("Email enviado!");
+			   }catch(Exception e){
+				   
+				   Debug.gerar("Modelo","Email","sendHtmlEmail", e.getMessage());
+			   }
+		
+	}
 	
 	
 }

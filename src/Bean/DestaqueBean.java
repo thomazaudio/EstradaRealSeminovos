@@ -34,8 +34,7 @@ public class DestaqueBean {
 		
 		ArrayList<Destaque> destaques = new DestaqueDAO().getDestaques(Destaque.DESTAQUE_INFERIOR);
 		
-		//Embaralha
-		Collections.shuffle(destaques);
+		
 		
 		for(int i=0;(i<destaques.size()&& i<=MAX_DESTAQUE_INFERIOR);i++)
 		{	

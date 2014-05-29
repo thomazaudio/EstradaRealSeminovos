@@ -33,13 +33,28 @@
 
 <div class="content">
 
-<div class="fundo_azul">
 
-<h2 class="texto_branco">Olá <strong>#{usuarioBean.user.nome}!</strong> Por favor, escolha uma forma de pagamento para prosseguir com seu pedido.</h2>
+<div class="tabs_wrapper">
+				   <ul class="tabs">
+						    	<li class="current">
+						    	Forma de Pagamento
+						    	</li>
+						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
+						    	</ul>
+						 	
+						  	<div class="box visible">
+						  	
+						  	<h2>Obrigado pela compra <strong>#{usuarioBean.user.nome}!</strong> Por favor, escolha uma forma de pagamento para prosseguir com seu pedido.</h2>
+						  	
+						  	</div>
+				
+				  </div>
 
-</div>
 
-<p:panel header="Escolha uma forma de pagamento">
+
+
+
+<p:panel>
 
 <p:panelGrid columns="4">
 <p:panel header="Boleto Bancário">

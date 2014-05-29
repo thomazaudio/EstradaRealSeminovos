@@ -108,6 +108,28 @@
 
 </p:panel>
 
+
+
+<p:panel header="Crédito em conta">
+<p:panelGrid columns="2"> 
+
+
+<h:outputText value="Saldo: R$ #{usuarioBean.saldo}"></h:outputText>
+
+<h:form prependId="false">
+<p:commandButton  value="Pagar utilizando saldo da conta" action="#{pagamentoAnuncio.escTipoPagamentoReemissao}" >
+
+<f:param  name="tipo_pagamento"  value="2"></f:param>
+
+
+</p:commandButton>
+
+</h:form>
+
+</p:panelGrid>
+
+</p:panel>
+
 </p:panelGrid>
 </p:panel>
 

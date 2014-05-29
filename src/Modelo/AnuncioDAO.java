@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 
@@ -35,6 +34,48 @@ public class AnuncioDAO {
 	 * 
 	 * @param anuncio
 	 */
+	
+	
+	//Desativa um anÃºncio(STATUS=0)
+	
+	public void desativaAnuncio(long id_anuncio){
+		
+         long id_veiculo;		
+ 
+		try{
+			
+			Connection con =  Banco.abreBanco();
+			Statement  stm =  con.createStatement();
+			
+			ResultSet res =     stm.executeQuery("select ID_VEICULO from anuncio where ID_ANUNCIO="+id_anuncio);
+			
+			if(res.next())
+			{
+				
+			id_veiculo =  res.getLong("ID_VEICULO");	
+			
+			//Desativa o veiculo
+				
+			}
+			
+			
+			
+			stm.close();
+			
+					
+			
+			//Envia a mensagem para o usuÃ¡rio dizendo que o anÃºncio foi desativado
+			new Comunicacao().sendMensagemAnuncioDesativado(id_anuncio);
+			
+			
+		}catch(Exception e){
+			
+			Debug.gerar("Modelo","DestaqueDAO","desativaDestaque", e.getMessage());
+			
+		}
+		
+	}
+	
 	public boolean update(Anuncio anuncio) {
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
@@ -65,7 +106,7 @@ public class AnuncioDAO {
 	}
 	
 	
-	//Recupera a lista de anuncio de um usuário
+	//Recupera a lista de anuncio de um usuï¿½rio
 	@SuppressWarnings("unchecked")
 	public ArrayList<Anuncio> getAnunciosForUser(long id_usuario){
 		
@@ -98,7 +139,7 @@ public ArrayList<Anuncio> getAllAnuncios(){
 	}
 	
 	
-	//Atualiza a quantidade de visualizações
+	//Atualiza a quantidade de visualizaï¿½ï¿½es
 	public void incrementVi(long id_anuncio){
 		
 		int quant_vi=0;

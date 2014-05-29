@@ -15,6 +15,14 @@ public class Pergunta {
 	private long id_destinatario;
 	private long id_anuncio;
 	private long id_veiculo;
+	private String pergunta;
+	private String resposta;
+	private Calendar dataPergunta;
+	private Calendar dataResposta;
+	private int status;
+	
+	
+	
 	public long getId_veiculo() {
 		return id_veiculo;
 	}
@@ -23,11 +31,7 @@ public class Pergunta {
 	}
 
 
-	private String pergunta;
-	private String resposta;
-	private Calendar dataPergunta;
-	private Calendar dataResposta;
-	private int status;
+	
     
 	public long getId() {
 		return id;

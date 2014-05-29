@@ -36,7 +36,6 @@ public abstract class Veiculo {
 	private int cod_fabricante;
 	private byte[] img;
 	private int fumante;
-	private String sexo_condutor;
 	private int cod_estado;
 	private int cod_cidade;
 	private String descricao;
@@ -116,15 +115,15 @@ public abstract class Veiculo {
 		
 		
 		
-		//Verifica se os dados já foram validados
+		//Verifica se os dados jï¿½ foram validados
 		if(this.statusPagamento==Pagamento.CONFIRMADO)
 		{
 			
 			if(this.statusValidacao==Pagamento.VALIDACAO_OK)
-			return "ANÚNCIO PUBLICADO!";
+			return "ANï¿½NCIO PUBLICADO!";
 			
 			else 
-			return "ANALISANDO DADOS DO ANÚNCIO";	
+			return "ANALISANDO DADOS DO ANï¿½NCIO";	
 		}
 
 		else
@@ -310,12 +309,7 @@ public abstract class Veiculo {
 	public void setFumante(int fumante) {
 		this.fumante = fumante;
 	}
-	public String getSexo_condutor() {
-		return sexo_condutor;
-	}
-	public void setSexo_condutor(String sexo_condutor) {
-		this.sexo_condutor = sexo_condutor;
-	}
+	
 	public int getCod_estado() {
 		return cod_estado;
 	}
@@ -409,7 +403,7 @@ public abstract class Veiculo {
         VeiculoDAO v = new VeiculoDAO();
 		
        
-        System.out.println("Id do veículo: "+this.getId());
+        System.out.println("Id do veï¿½culo: "+this.getId());
 		if(v.getTipo(this.getId()).equals("CARRO"))
 		{
 			Carro c = (Carro)this;
@@ -419,7 +413,7 @@ public abstract class Veiculo {
 			
 		}
 		
-		else return "Titulo não definido para este tipo de veículo";
+		else return "Titulo nï¿½o definido para este tipo de veï¿½culo";
 		
 		
 		
@@ -437,7 +431,7 @@ public abstract class Veiculo {
 	
 
 	
-	//Recupera a imagem de capa do veículo
+	//Recupera a imagem de capa do veï¿½culo
 	
 	public StreamedContent getImgCapa() {
 
@@ -490,7 +484,7 @@ public abstract class Veiculo {
 	//Verificacao de acessorios
 	public boolean temDirecao(){
 		
-		return this.nomeItens().contains("DIREÇÃO HIDRÁULICA");
+		return this.nomeItens().contains("DIREï¿½ï¿½O HIDRï¿½ULICA");
 		
 		
 	}
@@ -510,7 +504,7 @@ public abstract class Veiculo {
    
 	public boolean temRetrovisor(){
 		
-		return this.nomeItens().contains("RETOVISORES ELÉTRICOS");
+		return this.nomeItens().contains("RETOVISORES ELï¿½TRICOS");
 		
 	}
 

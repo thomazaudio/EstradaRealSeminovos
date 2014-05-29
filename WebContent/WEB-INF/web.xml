@@ -187,7 +187,7 @@
     <description></description>
     <display-name>ChangeEmail</display-name>
     <servlet-name>ChangeEmail</servlet-name>
-    <servlet-class>Bean.ChangeEmail</servlet-class>
+    <servlet-class>Controle.ChangeEmail</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ChangeEmail</servlet-name>
@@ -205,12 +205,12 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>EnviaPergunta</display-name>
-    <servlet-name>EnviaPergunta</servlet-name>
-    <servlet-class>Controle.EnviaPergunta</servlet-class>
+    <display-name>EnviaProposta</display-name>
+    <servlet-name>EnviaProposta</servlet-name>
+    <servlet-class>Controle.EnviaProposta</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>EnviaPergunta</servlet-name>
-    <url-pattern>/EnviaPergunta</url-pattern>
+    <servlet-name>EnviaProposta</servlet-name>
+    <url-pattern>/EnviaProposta</url-pattern>
   </servlet-mapping>
 </web-app>

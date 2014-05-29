@@ -1,6 +1,6 @@
 package Modelo;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 
 import org.hibernate.Session;
@@ -11,6 +11,7 @@ import util.Pergunta;
 public class PerguntaDAO {
 
 	
+	//INSERE UMA NOVA PROPOSTA
 	public void insert(Pergunta pergunta){
 		
 		

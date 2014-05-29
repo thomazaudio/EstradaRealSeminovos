@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import util.Anuncio;
 import util.Debug;
@@ -32,6 +33,8 @@ public class ItemDAO {
 	public Collection<Item> getAllItens(){
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
+		Transaction tx = sessao.beginTransaction(); 
+		tx.commit();
 		return sessao.createCriteria(Item.class).list();
 		
 		 

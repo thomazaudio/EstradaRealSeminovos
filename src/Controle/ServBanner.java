@@ -49,16 +49,16 @@ public class ServBanner extends HttpServlet  {
 		
 		
 		
-		     //Id do veículo
+		     //Id do veï¿½culo
              long id_veiculo = Long.parseLong(req.getParameter("ID_VEICULO"));
 		
-		     //Verifica se o pagamento do veículo está ok
+		     //Verifica se o pagamento do veï¿½culo estï¿½ ok
 		     boolean  pagamento_ok = new VeiculoDAO().pagamentoOK(id_veiculo); 
 		
 		     Destaque d = new Destaque();
 		
 		
-		      //Recebe a solicitação
+		      //Recebe a solicitaï¿½ï¿½o
 		      int soli = Integer.parseInt(req.getParameter("soli"));
 		      
 		        
@@ -69,13 +69,13 @@ public class ServBanner extends HttpServlet  {
 		      else d.setStatus(0);
 		      
   
-		      //Página a ser encaminhada após cadastro do banner
-			  String page_pos = req.getParameter("page_pos");
+		       //Pï¿½gina a ser encaminhada apï¿½s cadastro do banner
+			   String page_pos = req.getParameter("page_pos");
 				
 			 	
 		
 		
-	           //CADASTRO DO BANNER DESTAQUE COM A IMAGEM JÁ ALTERADA
+	           //CADASTRO DO BANNER DESTAQUE COM A IMAGEM Jï¿½ ALTERADA
 	            try{
 			 
                double t,l,w,h;
@@ -98,7 +98,7 @@ public class ServBanner extends HttpServlet  {
 	          
 	           
 	            
-	            //Inicio das transformações 
+	            //Inicio das transformaï¿½ï¿½es 
 	            BufferedImage outImage=ImageIO.read(in);
 	            BufferedImage cropped = Scalr.crop(outImage,(int) t,(int) l,(int) w,(int) h,null);
 	            
@@ -118,14 +118,14 @@ public class ServBanner extends HttpServlet  {
 	 
 				 System.out.println("Chegou aqui 5");
 	            
-	            //Lança o banner detaque no sistema
+	            //Lanï¿½a o banner detaque no sistema
 	           
 	            d.setTipoDestaque(Destaque.DESTAQUE_BANNER);
 	            d.setCodVeiculo(id_veiculo);
 	            d.setDataIni(Calendar.getInstance());
-	            d.setDataFim(Plano.getDataFim(Plano.PRIORIDADE_ULTRA));
+	            d.setDataFim(Destaque.getDataFimDestaque(Calendar.getInstance(),Plano.PRIORIDADE_ULTRA));
 	           
-	           //Lança o destaque no sistema 
+	           //Lanï¿½a o destaque no sistema 
 	            if(soli==CADASTRA_BANNER)
 	            new DestaqueDAO().insert(d);
 	            
@@ -176,7 +176,7 @@ public class ServBanner extends HttpServlet  {
 						   try {
 							   
 				
-						  //Salva uma imagem de banner temporária no sistema	
+						  //Salva uma imagem de banner temporï¿½ria no sistema	
 							   
 						  InputStream img = item.getInputStream();	   
 						  
@@ -192,7 +192,7 @@ public class ServBanner extends HttpServlet  {
 				          if(soli==1)
 				          response.sendRedirect("cad_veiculo/crop_imagem.jsp?ID_VEICULO="+id_veiculo);	
 				          
-						  //Redireciona para página de crop
+						  //Redireciona para pï¿½gina de crop
 				          else
 						  response.sendRedirect("crop/crop_imagem.jsp?ID_VEICULO="+id_veiculo);	
 							

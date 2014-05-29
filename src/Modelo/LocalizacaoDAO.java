@@ -1,6 +1,7 @@
 package Modelo;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import util.Debug;
@@ -17,8 +18,10 @@ public class LocalizacaoDAO {
 public void insert(Localizacao loc) {
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
+		
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.save(loc);
-		sessao.flush();
+		tx.commit();
 		sessao.close();
 		
 	}
@@ -26,7 +29,9 @@ public void insert(Localizacao loc) {
 public void insertOrUpdate(Localizacao loc){
 	
 	Session sessao = HibernateUtil.getSessaoV().openSession();
+	Transaction tx = sessao.beginTransaction(); 
 	sessao.saveOrUpdate(loc);
+	tx.commit();
 	sessao.flush();
 	sessao.close();
 }
@@ -48,7 +53,9 @@ public Localizacao getLocalizacao(long id){
 		
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.merge(loc);
+		tx.commit();
 		sessao.flush();
 		sessao.close();
 	}

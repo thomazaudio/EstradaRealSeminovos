@@ -21,7 +21,6 @@ public class Anuncio {
 	private String status;
 	private int ativo;
 	private Contato contato;
-	private Calendar dataFim;
 	private Veiculo veiculo;
 	private int quantVisualizacoes;
 	private Localizacao localizacao;
@@ -83,12 +82,7 @@ public class Anuncio {
 	public void setContato(Contato contato) {
 		this.contato = contato;
 	}
-	public Calendar getDataFim() {
-		return dataFim;
-	}
-	public void setDataFim(Calendar dataFim) {
-		this.dataFim = dataFim;
-	}
+	
 	public Veiculo getVeiculo() {
 		return veiculo;
 	}

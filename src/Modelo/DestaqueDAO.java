@@ -7,9 +7,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
+import util.Comunicacao;
 import util.Debug;
 import util.Destaque;
 import util.InfoDestaque;
@@ -19,7 +22,7 @@ public class DestaqueDAO {
 	
 	
 	
-	//Verifica se já esxiste um banner destaque cadastrado para o veículo
+	//Verifica se jï¿½ esxiste um banner destaque cadastrado para o veï¿½culo
 	
 	public boolean existeBannerDestaque(long id_veiculo){
 		
@@ -42,12 +45,23 @@ public class DestaqueDAO {
 	}
 
 	
+	
+	//RECUPERA UM DESTAQUE
+	public Destaque getDestaque(long id){
+		
+		
+		Session  sessao  =  HibernateUtil.getSessaoV().openSession();
+		
+		return (Destaque) sessao.createCriteria(Destaque.class).add(Restrictions.eq("id",id)).uniqueResult();
+		
+	}
+	
 	public void insert(Destaque d){
 		
 		//REGRAS
-		//1-Não é permitido adicionar um veiculo mais de uma vez no destaque
-		//2-O veículo inserirdo no plano BANNER é automaticamente inserido no PLANO_INFERIOR também
-		//3-No caso de inserção de um veciulo já existente, acontece a prorrogação de data final
+		//1-Nï¿½o ï¿½ permitido adicionar um veiculo mais de uma vez no destaque
+		//2-O veï¿½culo inserirdo no plano BANNER ï¿½ automaticamente inserido no PLANO_INFERIOR tambï¿½m
+		//3-No caso de inserï¿½ï¿½o de um veciulo jï¿½ existente, acontece a prorrogaï¿½ï¿½o de data final
 		
 		     
 		    System.out.println("Inserindo novo destaque");
@@ -62,7 +76,7 @@ public class DestaqueDAO {
 			sessao.save(d);
 			
 			
-			//Se for destaque banner é inserido como destaque Inferior tambem
+			//Se for destaque banner ï¿½ inserido como destaque Inferior tambem
 			if(d.getTipoDestaque()==Destaque.DESTAQUE_BANNER){
 				
 				Destaque destaque_inf = new Destaque();
@@ -72,13 +86,13 @@ public class DestaqueDAO {
 				
 				
 
-			     //Verifica se o pagamento do veículo está ok
+			     //Verifica se o pagamento do veï¿½culo estï¿½ ok
 			    boolean  pagamento_ok = new VeiculoDAO().pagamentoOK(d.getCodVeiculo()); 
 			    
 			    if(pagamento_ok)
 				destaque_inf.setStatus(1);//Confirmado
 				else
-				destaque_inf.setStatus(0);//Não confirmado
+				destaque_inf.setStatus(0);//Nï¿½o confirmado
 				
 				
 				destaque_inf.setTipoDestaque(Destaque.DESTAQUE_INFERIOR);
@@ -106,7 +120,7 @@ public class DestaqueDAO {
 			stm.executeUpdate("DELETE  FROM destaque WHERE COD_VEICULO="+id_veiculo+" && TIPO_DESTAQUE="+tipo_destaque);
 			
 			
-			//Ser for destaque banner, deleta também oo inferior
+			//Ser for destaque banner, deleta tambï¿½m oo inferior
 			if(tipo_destaque==Destaque.DESTAQUE_BANNER)
 			stm.executeUpdate("DELETE  FROM destaque WHERE COD_VEICULO="+id_veiculo+" && TIPO_DESTAQUE="+Destaque.DESTAQUE_INFERIOR);
 		
@@ -156,7 +170,7 @@ public class DestaqueDAO {
 		
 		 try{
 			    Date data_ini =  new Date(Calendar.getInstance().getTimeInMillis()); 
-			    Date data_fim =  new Date(Plano.getDataFim(Plano.PRIORIDADE_MEGA).getTimeInMillis());
+			    Date data_fim =  new Date(Destaque.getDataFimDestaque(Calendar.getInstance(),Destaque.DESTAQUE_INFERIOR).getTimeInMillis());
 				
 				Connection con = Banco.abreBanco();
 				PreparedStatement stm =  con.prepareStatement("UPDATE destaque set DATA_INI=?,DATA_FIM=?,STATUS =1 WHERE COD_VEICULO=? && TIPO_DESTAQUE="+Destaque.DESTAQUE_INFERIOR);
@@ -187,7 +201,7 @@ public class DestaqueDAO {
         try{
         	
         	Date data_ini =  new Date(Calendar.getInstance().getTimeInMillis()); 
-			Date data_fim =  new Date(Plano.getDataFim(Plano.PRIORIDADE_MEGA).getTimeInMillis());
+			Date data_fim =  new Date(Destaque.getDataFimDestaque(Calendar.getInstance(),Destaque.DESTAQUE_BANNER).getTimeInMillis());
 			
 			Connection con = Banco.abreBanco();
 			PreparedStatement stm =  con.prepareStatement("UPDATE destaque set DATA_INI=?,DATA_FIM=?,STATUS = ? WHERE COD_VEICULO=? && TIPO_DESTAQUE="+Destaque.DESTAQUE_BANNER);
@@ -211,9 +225,36 @@ public class DestaqueDAO {
 		    }
 		
 	}
-  
 	
-	//COLOCA TODOS OS VEÍCULOS COMO DESTAQUE INFERIOR
+	
+	//DESTATIVA UM DESTAQUE CADASTRADO
+	//Comunica o usuÃ¡rio sobre o destaque desativado
+	public void desativaDestaque(long idDestaque){
+		
+		
+		
+		try{
+			
+			Connection con =  Banco.abreBanco();
+			Statement  stm =  con.createStatement();
+			stm.executeUpdate("UPDATE destaque set STATUS=0 WHERE ID_DESTAQUE="+idDestaque);
+			
+			stm.close();
+			
+					
+			
+			//Envia a mensagem para o usuÃ¡rio dizendo que o destaque doi desativado
+			new Comunicacao().sendMensagemDestaqueDesativado(idDestaque);;
+			
+			
+		}catch(Exception e){
+			
+			Debug.gerar("Modelo","DestaqueDAO","desativaDestaque", e.getMessage());
+			
+		}
+	}
+	
+	//COLOCA TODOS OS VEï¿½CULOS COMO DESTAQUE INFERIOR
 	public void setAllDestaqueInferior(Calendar dataFim)
 	{
 		
@@ -273,7 +314,7 @@ public class DestaqueDAO {
 	
 	
 	
-	//RECUPERA AS INFORMAÇÕES DE CADA DESTAQUE
+	//RECUPERA AS INFORMAï¿½ï¿½ES DE CADA DESTAQUE
 	public InfoDestaque getInforDestaque(long codVeiculo,long idDestaque){
 		
 		InfoDestaque info = new InfoDestaque();

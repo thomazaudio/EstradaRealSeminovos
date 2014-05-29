@@ -85,6 +85,23 @@
 								
 								<p:ajax update="msgs" event="keyup" listener="#{validacaoBean.validaemailtemp}"></p:ajax>
 								</p:inputText> 
+								
+								
+								<h:outputText value="Estado: " />
+					          <h:selectOneMenu id="estado">
+
+
+						        <f:selectItem itemLabel="Minas Gerais" itemValue="-" />
+
+					          </h:selectOneMenu>
+					          
+					          <h:outputText value="Cidade: " />
+					<h:selectOneMenu id="cidade" required="true" requiredMessage="Por favor, escolha uma cidade."
+						>
+						<f:selectItem itemLabel="Selecione uma cidade" itemValue="" />
+						<f:selectItems var="cidades" value="#{localizacaoBean.cidades}"
+							itemValue="#{cidades.id}" itemLabel="#{cidades.cidade}"></f:selectItems>
+					</h:selectOneMenu>
 
 								<h:outputText value="Senha: " />
 								<p:inputText validator="#{validacaoBean.validaSenha}" required="true" requiredMessage="Por favor, insira uma senha." type="password" id="senha1" />
