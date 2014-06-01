@@ -10,6 +10,7 @@ import java.util.Calendar;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import util.Comunicacao;
@@ -68,12 +69,16 @@ public class DestaqueDAO {
 		      
 		    //Remove o destaque caso ele exista
 		    removeDestaque(d.getCodVeiculo(),d.getTipoDestaque());
-		
+		    
+		     
 		
 		    Session sessao = HibernateUtil.getSessaoV().openSession();
 		    
-	
+		    Transaction tx = sessao.beginTransaction(); 
+		    
 			sessao.save(d);
+			
+			tx.commit();
 			
 			
 			//Se for destaque banner � inserido como destaque Inferior tambem
@@ -97,10 +102,11 @@ public class DestaqueDAO {
 				
 				destaque_inf.setTipoDestaque(Destaque.DESTAQUE_INFERIOR);
 				
-				
+				 tx = sessao.beginTransaction(); 
 			
 				sessao.save(destaque_inf);
 				
+				tx.commit();
 				
 				
 			}
@@ -125,6 +131,7 @@ public class DestaqueDAO {
 			stm.executeUpdate("DELETE  FROM destaque WHERE COD_VEICULO="+id_veiculo+" && TIPO_DESTAQUE="+Destaque.DESTAQUE_INFERIOR);
 		
 			
+			stm.close();
 			
 			
 			
@@ -213,6 +220,7 @@ public class DestaqueDAO {
 			
 			stm.executeUpdate();
 			
+			stm.close();
 			
 			System.out.println("Destaque ativado com sucesso!");
 		
@@ -281,6 +289,8 @@ public class DestaqueDAO {
 				
 			}
 			
+			stm.close();
+			res.close();
 			
 		}catch(Exception e){
 			

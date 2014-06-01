@@ -12,13 +12,13 @@
 <h:head>
 
 <title></title>
-	<link rel="stylesheet" type="text/css" href="../css/style.css" />
-	<link rel="stylesheet" type="text/css" href="../css/style980.css" />
-	<link rel="stylesheet" type="text/css" href="../css/style800.css" />
-	<link rel="stylesheet" type="text/css" href="../css/style700.css" />
-	<link rel="stylesheet" type="text/css" href="../css/style600.css" />
-	<link rel="stylesheet" type="text/css" href="../css/style500.css" />
-	<link rel="stylesheet" type="text/css" href="../css/style400.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style980.css" />
+	<link rel="stylesheet" type="text/css" href="css/style800.css" />
+	<link rel="stylesheet" type="text/css" href="css/style700.css" />
+	<link rel="stylesheet" type="text/css" href="css/style600.css" />
+	<link rel="stylesheet" type="text/css" href="css/style500.css" />
+	<link rel="stylesheet" type="text/css" href="css/style400.css" />
 	<link rel="stylesheet" type="text/css"
 		href="../css/jquery.fancybox-1.3.4.css" media="screen" />
 	
@@ -29,7 +29,7 @@
 
 <p:growl id="msg" autoUpdate="true"></p:growl>
 
-<ui:include src="../simple_header.xhtml"></ui:include>
+<ui:include src="simple_header.xhtml"></ui:include>
 
 <div class="content">
 
@@ -60,14 +60,19 @@
 <p:panel header="Boleto Bancário">
 <p:panelGrid columns="1"> 
 <h:outputText></h:outputText>
-<h:form prependId="false">
-<p:commandButton  value="Pagar via Boleto bancário" action="#{altPlanoBean.pagar}" >
 
-<f:param  name="tipo_pagamento"  value="1"></f:param>
+<h:form prependId="false">
+<p:commandButton   value="Pagar via Boleto bancário" action="#{pagamentoBean.pagamentoBoleto}" >
+
+<f:param  name="cod_pagamento"  value="#{escPagamentoBean.codPagamento}"></f:param>
 
 </p:commandButton>
 
 </h:form>
+
+
+
+
 </p:panelGrid>
 
 
@@ -83,13 +88,7 @@
 <p:panelGrid columns="2"> 
 
 <!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
-<form action="https://pagseguro.uol.com.br/checkout/v2/payment.html" method="post" onsubmit="PagSeguroLightbox(this); return false;">
-<!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
-<input type="hidden" name="code" value="24E056B99191623774FEAF8716D5CE37" />
-<input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/209x48-pagar-laranja-assina.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
-</form>
-<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
-<!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
+
 
 
 </p:panelGrid>
@@ -97,16 +96,16 @@
 
 <!-- Pagamento utilizando credito -->
 
-<p:panel header="Crédito em conta">
+<p:panel header="Crédito em conta" >
 <p:panelGrid columns="2"> 
 
 
 <h:outputText value="Saldo: R$ #{usuarioBean.saldo}"></h:outputText>
 
 <h:form prependId="false">
-<p:commandButton  value="Pagar utilizando saldo da conta" action="#{altPlanoBean.pagar}" >
+<p:commandButton  value="Pagar utilizando saldo da conta" action="#{pagamentoBean.pagamentoCreditoConta}" >
 
-<f:param  name="tipo_pagamento"  value="2"></f:param>
+<f:param  name="cod_pagamento"  value="#{escPagamentoBean.codPagamento}"></f:param>
 
 
 </p:commandButton>
@@ -127,7 +126,7 @@
 <br></br>
 <br></br>
 
-<ui:include src="../rodape.xhtml"></ui:include>
+<ui:include src="rodape.xhtml"></ui:include>
 </h:body>
 
 

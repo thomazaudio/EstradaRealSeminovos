@@ -154,8 +154,8 @@
 								</div>
 								
 								
-								<p:commandButton rendered="#{ans.veiculo.statusPagamento!=1}" value="Realizar pagamento" action="#{pagamentoAnuncio.reemitePagamento}" >
-								<f:param name="prioridade_anuncio" value="#{ans.veiculo.prioridade_anuncio}" />
+								<p:commandButton rendered="#{ans.veiculo.statusPagamento!=1}" value="Realizar pagamento" action="#{pagamentoBean.reemitirPagamento}" >
+								
 								<f:param name="cod_veiculo" value="#{ans.veiculo.id}" />
 								
 								

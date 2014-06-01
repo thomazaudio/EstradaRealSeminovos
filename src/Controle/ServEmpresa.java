@@ -31,9 +31,9 @@ public class ServEmpresa extends HttpServlet {
 	public static final int GET_LOGO=3; 
 	public final String PAGE_DEFAULT="index.jsp?page=ini_usuario.jsp";
 	
-	private StringBuffer result;//Resultado da solicitação
-	private int soli;//Solicitação recebida
-	private String page_pos;//Pagina a ser encaminhada apos o processamento da solicitação
+	private StringBuffer result;//Resultado da solicitaï¿½ï¿½o
+	private int soli;//Solicitaï¿½ï¿½o recebida
+	private String page_pos;//Pagina a ser encaminhada apos o processamento da solicitaï¿½ï¿½o
 	private Empresa empresa;
 
 	/**
@@ -61,11 +61,11 @@ public class ServEmpresa extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//Controle da sessão
+		//Controle da sessï¿½o
 		HttpSession sessao = request.getSession();
 
 
-		//Recebe a solicitação
+		//Recebe a solicitaï¿½ï¿½o
 		soli =Integer.parseInt(request.getParameter("SOLI"));
 
 		page_pos =  request.getParameter("page_pos");
@@ -90,22 +90,22 @@ public class ServEmpresa extends HttpServlet {
 			
 			empresa.setContato(contato);
           
-			//Marca com usuário não confirmado
+			//Marca com usuï¿½rio nï¿½o confirmado
 			empresa.setStatus(0);
 			
-			//Tentativa de realização de cadastro
+			//Tentativa de realizaï¿½ï¿½o de cadastro
 		    result = cadastrarEmpresa(empresa);
 		    request.setAttribute("result",result);
 		     
 		     
-		    //Encaminha para a página novamente
+		    //Encaminha para a pï¿½gina novamente
 		    if(result!=null)
 		     request.getRequestDispatcher("index.jsp?page=cadastro_pessoa_juridica.jsp").forward(request,response);
 		     
 		    else
 		    request.getRequestDispatcher("index.jsp?page=cadastro_sucesso.jsp?email="+contato.getEmail()).forward(request,response);	 
 		    
-		}//Fim da solicitação de cadastro
+		}//Fim da solicitaï¿½ï¿½o de cadastro
 		
 		
 		else if(soli==LOGAR)
@@ -127,11 +127,11 @@ public class ServEmpresa extends HttpServlet {
 	    	 
 	    	 else 
 	    	 {
-	    	 //Joga o usuário na sessão
+	    	 //Joga o usuï¿½rio na sessï¿½o
 	    	 sessao.setAttribute("usuario",emp);
 	    	 
 	    	 if(page_pos!=null)
-	    	 //Encaminha para a página solicitada anteriormente
+	    	 //Encaminha para a pï¿½gina solicitada anteriormente
 	    	 request.getRequestDispatcher(page_pos).forward(request, response);	 
 	    	 
 	    	 else
@@ -146,7 +146,7 @@ public class ServEmpresa extends HttpServlet {
 
 	private StringBuffer cadastrarEmpresa(Empresa empresa){
 
-		//Validações
+		//Validaï¿½ï¿½es
 
 		//Valida CNPJ
         if(new UsuarioDAO().existeChave(Usuario.class,"cnpj",empresa.getCnpj()))
@@ -160,26 +160,26 @@ public class ServEmpresa extends HttpServlet {
 		else
 		{
 
-			//Salva uma localização generica para a empresa
+			//Salva uma localizaï¿½ï¿½o generica para a empresa
 			Localizacao loc =  new Localizacao();	
 			new LocalizacaoDAO().insert(loc);
 
 			//Salva um contato generico para a empresa
 			new ContatoDAO().insert(empresa.getContato());
 
-			//Seta a localização da empresa
+			//Seta a localizaï¿½ï¿½o da empresa
 			empresa.setLocalizacao(loc);
 
 			if(new EmpresaDAO().insert(empresa))
 			{
 
-				//Envia o email de confirmação para o email cadastrado	 
+				//Envia o email de confirmaï¿½ï¿½o para o email cadastrado	 
 			 	 
 				 //Recupera o buffer de email
 				 StringBuffer buffer_email = new EmpresaUtil().getBufferEmailCadSucesso(empresa.getNome(),empresa.getId());
 				
-				 //Realiza o envio de email de confirmação
-				 new Email(empresa.getContato().getEmail(),empresa.getNome(),buffer_email,"Confirmação de Usuário").sendHtmlEmail();
+				 //Realiza o envio de email de confirma
+				 new Email(empresa.getContato().getEmail(),empresa.getNome(),buffer_email,"Confirmaï¿½ï¿½o de Usuï¿½rio").sendHtmlEmail();
 				 
 				 return null;	 
 			}

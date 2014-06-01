@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import util.Debug;
@@ -23,7 +24,7 @@ public class FinanDAO {
 		
 		System.out.println("Valor a ser debitado: "+valor);
 		
-		Session sessao =  HibernateUtil.getSessaoV().openSession();
+		
 		
 		if(f!=null)
 		{
@@ -35,7 +36,7 @@ public class FinanDAO {
 	    	Statement stm = con.createStatement();
 	    	stm.executeUpdate("UPDATE financeiro SET SALDO="+(f.getSaldo()-valor)+" WHERE ID_FINAN="+f.getId());
 	    	
-	    	
+	    	stm.close();
 	    }catch(Exception e){
 	    	
 	    	Debug.gerar("","FinanDAO", "debitar", e.getMessage());
@@ -54,6 +55,7 @@ public class FinanDAO {
 		Finan f = getFinan(user);
 		
 		Session sessao =  HibernateUtil.getSessaoV().openSession();
+		Transaction tx = sessao.beginTransaction(); 
 		
 		if(f==null)
 		{
@@ -63,6 +65,10 @@ public class FinanDAO {
 			f.setIdUser(user);
 			f.setSaldo(valor);
 			sessao.save(f);
+			tx.commit();
+			
+			sessao.flush();
+			sessao.close();
 		}
 		else
 		{
@@ -74,6 +80,7 @@ public class FinanDAO {
 			    	Statement stm = con.createStatement();
 			    	stm.executeUpdate("UPDATE financeiro SET SALDO="+(f.getSaldo()+valor)+" WHERE ID_USER="+user);
 			    	
+			    	stm.close();
 			    	
 			    }catch(Exception e){
 			    	
@@ -108,6 +115,7 @@ public class FinanDAO {
 			Statement stm =  con.createStatement();
 			stm.executeUpdate("UPDATE financeiro SET saldo="+(getSaldo(user)+valor)+" WHERE ID_USER="+user);
 			
+			stm.close();
 			
 		}catch(Exception e){
 			

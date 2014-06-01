@@ -32,6 +32,9 @@ public class ParceiroDAO {
 	 				
 	 				
 	 			}
+	 			
+	 			stm.close();
+	 			res.close();
 	 			}catch(Exception e){
 	 				
 	 				Debug.gerar("Modelo", "ParceiroDAO","getAllParceiros", e.getMessage());

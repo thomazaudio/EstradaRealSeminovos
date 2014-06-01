@@ -14,6 +14,7 @@ import org.hibernate.SessionFactory;
 
 
 
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -44,7 +45,9 @@ public class VeiculoDAO {
 	public void insert(Veiculo v){
 
 		Session sessao =  factory.openSession();
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.save(v);
+		tx.commit();
 		sessao.flush();
 		sessao.close();
 
@@ -68,7 +71,9 @@ public class VeiculoDAO {
 	public void saveOrUpdate(Veiculo v){
 		
 		Session sessao =  factory.openSession();
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.saveOrUpdate(v);
+		tx.commit();
 		sessao.flush();
 		sessao.close();
 		

@@ -63,7 +63,9 @@ public class ContatoDAO {
 		public void saveOrUpdate(Contato c){
 		
 		Session sessao =  HibernateUtil.getSessaoV().openSession();
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.saveOrUpdate(c);
+		tx.commit();
 		sessao.flush();
 		sessao.close();
 		

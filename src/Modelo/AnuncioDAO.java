@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.hibernate.Session;
 
 
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import util.*;
@@ -23,8 +24,10 @@ public class AnuncioDAO {
 	public boolean insert(Anuncio anuncio) {
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.evict(Anuncio.class);
 		sessao.save(anuncio);
+		tx.commit();
 		sessao.flush();
 		sessao.close();
 		return true;
@@ -79,8 +82,9 @@ public class AnuncioDAO {
 	public boolean update(Anuncio anuncio) {
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
-	
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.merge(anuncio);
+		tx.commit();
 		sessao.flush();
 		sessao.close();
 		return true;
@@ -96,6 +100,7 @@ public class AnuncioDAO {
 			for(int i=0;i<sem_int.size();i++)
 			stm.executeUpdate("DELETE FROM  anuncio WHERE ID_ANUNCIO="+sem_int.get(i));
 			
+			stm.close();
 			
 		}catch(Exception e){
 			
@@ -113,7 +118,7 @@ public class AnuncioDAO {
 		ArrayList<Anuncio> anuncios;
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
-	   anuncios = (ArrayList<Anuncio>)sessao.createCriteria(Anuncio.class).add(Restrictions.eq("idUsuario",id_usuario)).list();
+	    anuncios = (ArrayList<Anuncio>)sessao.createCriteria(Anuncio.class).add(Restrictions.eq("idUsuario",id_usuario)).list();
 		
 		   
 	   
@@ -157,6 +162,9 @@ public ArrayList<Anuncio> getAllAnuncios(){
 		quant_vi++;
 		stm.executeUpdate("UPDATE anuncio SET QUANT_VISUALIZACOES="+quant_vi+" WHERE id_anuncio="+id_anuncio);
 		}
+		
+		stm.close();
+		res.close();
 			
 		}catch(Exception e){
 			
@@ -172,8 +180,9 @@ public ArrayList<Anuncio> getAllAnuncios(){
 	public void delete(Anuncio anuncio) {
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
-		
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.delete(anuncio);
+		tx.commit();
 		sessao.flush();
 		sessao.close(); 
 		

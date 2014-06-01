@@ -401,4 +401,13 @@ public class UsuarioBean {
 	
 	}
 	
+	public static Usuario getUserSession(){
+		
+		
+		HttpSession sessao = (HttpSession)	FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+	    
+		return (Usuario) sessao.getAttribute("usuario");
+	}
+	
+	
 }

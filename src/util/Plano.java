@@ -38,6 +38,7 @@ public class Plano {
 		switch(tipo){
 		case PRIORIDADE_MEGA: return PRECO_MEGA;
 		
+		
 		case PRIORIDADE_ULTRA :return PRECO_ULTRA;
 		
 		default :

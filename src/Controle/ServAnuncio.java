@@ -4,11 +4,21 @@ import java.io.IOException;
 import java.util.Calendar;
 
 
+
+
+
+
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+
+
+
+
 
 
 
@@ -26,11 +36,18 @@ import org.apache.commons.io.IOUtils;
 
 
 
+
+
+
+
+
 import Modelo.AnuncioDAO;
 import Modelo.ContatoDAO;
+import Modelo.DestaqueDAO;
 import Modelo.ImgDAO;
 import Modelo.ItemDAO;
 import Modelo.LocalizacaoDAO;
+import Modelo.PagamentoDAO;
 import Modelo.UsuarioDAO;
 import Modelo.VeiculoDAO;
 import util.Anuncio;
@@ -38,6 +55,7 @@ import util.Caminhao;
 import util.Carro;
 import util.Contato;
 import util.Debug;
+import util.Destaque;
 import util.Empresa;
 import util.Localizacao;
 import util.Moto;
@@ -45,6 +63,7 @@ import util.Pagamento;
 import util.Pessoa;
 import util.Plano;
 import util.Sessao;
+import util.Transacao;
 import util.Usuario;
 import util.Veiculo;
 
@@ -65,7 +84,7 @@ public class ServAnuncio extends HttpServlet {
 	public static final String PAGE_CAD_INFO_CARRO="edit_veiculo.jsp?page=cad_veiculo/cad_info_carro.jsp";
 	public static final String PAGE_CAD_INFO_MOTO="edit_veiculo.jsp?page=cad_veiculo/cad_info_moto.jsp";
 	public static final String PAGE_STEP_3="edit_veiculo.jsp?page=edit_img.jsp?id_veiculo=";
-    public static final String PAGE_ESC_PAGAMENTO="cad_veiculo/esc_pagamento.jsf";
+    public static final String PAGE_ESC_PAGAMENTO="esc_pagamento.jsf";
     
 
 	//Constantes de etapas
@@ -142,19 +161,14 @@ public class ServAnuncio extends HttpServlet {
 		else if(step==this.STEP_1)
 		{
 			
-			
-			
-
+		
 			//Recupera os steps
 			sessao.setAttribute("step",getStepsHtml(sessao,1));
 			
-			Anuncio an =  (Anuncio) sessao.getAttribute("anuncio");
+			
 			
 			//Recebe o tipo de veiculo escolhido
 		    int	tipoVeiculo = (Integer) sessao.getAttribute("tipo_veiculo");
-		    
-		    
-		    
 		    
 		    if(tipoVeiculo==1)
 			this.setCadInfo(this.PAGE_CAD_INFO_CARRO);	
@@ -287,7 +301,7 @@ public class ServAnuncio extends HttpServlet {
 
 
 			//Encaminha para p�gina de escolha o da plano	
-			request.getRequestDispatcher(this.PAGE_ESC_ANUNCIO+"?mostra_step=1").forward(request, response);
+			request.getRequestDispatcher(PAGE_ESC_ANUNCIO+"?mostra_step=1").forward(request, response);
 
 		}
 
@@ -305,8 +319,7 @@ public class ServAnuncio extends HttpServlet {
 		
 			int prioridade_anuncio = Integer.parseInt(request.getParameter("prioridade_anuncio"));
 			
-
-
+			
 			//Recupera o tipo de vepiculo da sess�o
 			tipoVeiculo = (Integer)sessao.getAttribute("tipo_veiculo");
 
@@ -719,12 +732,6 @@ public class ServAnuncio extends HttpServlet {
 		an.setDataIni(Calendar.getInstance());
 		
 		
-		
-		
-	
-		
-		
-		
 		//Contato generico para o anuncio
 		Contato con = new Contato();
 		new ContatoDAO().insert(con);
@@ -838,22 +845,13 @@ public class ServAnuncio extends HttpServlet {
 	//Recupera o link atraves de um step
 	private String getLinkForStep(int step,HttpSession sessao){
 
-		switch(step){
-
-		case 1:return "ServAnuncio?STEP=1&&mostra_step=1";
-
-
-		case 2:return "ServAnuncio?STEP=2&&mostra_step=1";
-
-
-		case 3:return "ServAnuncio?STEP=3&&mostra_step=1";
-
+		
 
 		
 
-		default :return "#n";
+       return "#n";
 
-		}
+	
 
 	}
 
@@ -927,7 +925,7 @@ public class ServAnuncio extends HttpServlet {
 			
 
 
-			//recupera os itens do carro	
+			//recupera os itens da moto	
 			String itens[]  = request.getParameterValues("idAcessorio");
 
 			if(itens!=null)
@@ -940,10 +938,7 @@ public class ServAnuncio extends HttpServlet {
 		//Método para finalizar o cadastro de um anúncio
 		public void finalizarAnuncio(HttpSession sessao,HttpServletRequest request,HttpServletResponse response) throws IOException{
 			
-		
-			
-			
-		
+	
 				
 		    Usuario user = (Usuario) sessao.getAttribute("usuario");	
 			if(user!=null)	
@@ -996,6 +991,10 @@ public class ServAnuncio extends HttpServlet {
 			if(prioridade_anuncio==Plano.PRIORIDADE_GRATIS)
 			{
 				
+			//Prioridade do an�ncio
+			an.getVeiculo().setPrioridade_anuncio(prioridade_anuncio);
+						
+				
 			//CONFIGURA��O DOS STATUS PARA GRATIS
 			an.getVeiculo().setStatusPagamento(Pagamento.CONFIRMADO);
 			an.getVeiculo().setStatusValidacao(Pagamento.VALIDACAO_EM_ANALISE);
@@ -1012,6 +1011,42 @@ public class ServAnuncio extends HttpServlet {
 			
 				
 				
+				//Configuração o banner destaque
+				
+				if(prioridade_anuncio==Plano.PRIORIDADE_ULTRA)
+				{
+					
+				 Destaque d =  new Destaque();	
+				 
+				 d.setCodVeiculo(an.getVeiculo().getId());
+				 d.setDataIni(Calendar.getInstance());
+				 d.setDataFim(Destaque.getDataFimDestaque(Calendar.getInstance(),prioridade_anuncio ));
+				 d.setStatus(0);
+				 d.setTipoDestaque(Destaque.DESTAQUE_BANNER);
+				
+				 new DestaqueDAO().insert(d);
+				 
+				//Apos inserir o destaque, altera a imagem logo em sequida
+		        new ImgDAO().updateImgBannerDestaque(IOUtils.toByteArray(new ImgDAO().getImgCapa(an.getVeiculo().getId()).getImg()),an.getVeiculo().getId());
+		            
+					
+					
+				}
+				
+				
+				//Lança o pagamento no sistema
+				Pagamento pg =  new Pagamento();
+				pg.setCodUser(user.getId());
+				pg.setData(Calendar.getInstance());
+				pg.setDescricao("Pagamento de anúncio");
+				pg.setIdVeiculo(an.getVeiculo().getId());
+				pg.setPrioridade(prioridade_anuncio);
+				pg.setStatus(Pagamento.AGUARDANDO_APROVACAO);
+				pg.setTipo(Transacao.REEMITE_PAGAMENTO);
+				pg.setValor(Plano.getPrecoPlano(prioridade_anuncio));
+				
+				new PagamentoDAO().insert(pg);
+				
 				//Configura��o dos dados para prioridade Mega
 				an.getVeiculo().setStatusPagamento(Pagamento.AGUARDANDO_APROVACAO);
 				an.getVeiculo().setStatusValidacao(Pagamento.VALIDACAO_EM_ANALISE);
@@ -1021,7 +1056,7 @@ public class ServAnuncio extends HttpServlet {
 					
 				new VeiculoDAO().update(an.getVeiculo());
 				new AnuncioDAO().insert(an);	
-				response.sendRedirect(this.PAGE_ESC_PAGAMENTO);	
+				response.sendRedirect(this.PAGE_ESC_PAGAMENTO+"?tipo_transacao=6&&cod_pagamento="+pg.getCod());	
 				
 				
 				

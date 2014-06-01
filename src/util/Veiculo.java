@@ -403,7 +403,7 @@ public abstract class Veiculo {
         VeiculoDAO v = new VeiculoDAO();
 		
        
-        System.out.println("Id do ve�culo: "+this.getId());
+        System.out.println("Id do veículo: "+this.getId());
 		if(v.getTipo(this.getId()).equals("CARRO"))
 		{
 			Carro c = (Carro)this;
@@ -413,7 +413,13 @@ public abstract class Veiculo {
 			
 		}
 		
-		else return "Titulo n�o definido para este tipo de ve�culo";
+		else if(v.getTipo(this.getId()).equals("MOTO"))
+		{
+			Moto m = (Moto)this;
+			return v.getNomeFabricanteMoto(this.getCod_fabricante())+" "+v.getNomeModeloMoto(this.getCodModelo())+" "+m.getCilindradas()+" cilindradas";
+		}
+		
+		else return "Titulo não definido para este tipo de veículo";
 		
 		
 		
@@ -484,7 +490,7 @@ public abstract class Veiculo {
 	//Verificacao de acessorios
 	public boolean temDirecao(){
 		
-		return this.nomeItens().contains("DIRE��O HIDR�ULICA");
+		return this.nomeItens().contains("DIREÇÃO HIIDRÁULICA");
 		
 		
 	}
@@ -504,7 +510,7 @@ public abstract class Veiculo {
    
 	public boolean temRetrovisor(){
 		
-		return this.nomeItens().contains("RETOVISORES EL�TRICOS");
+		return this.nomeItens().contains("RETOVISORES ELÉTRICOS");
 		
 	}
 

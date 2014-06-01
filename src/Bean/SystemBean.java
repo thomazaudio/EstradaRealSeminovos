@@ -5,6 +5,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import util.Debug;
 import util.Pessoa;
 import util.Usuario;
 
@@ -49,6 +50,13 @@ public class SystemBean {
 		this.sessao = sessao;
 	}
 	
+	
+	//Encaminha para página de sessão expirada
+	public void sessionExpired(){
+		
+		Debug.gerar("","","","A sessão do usuário expirou!");
+		
+	}
 	
 	
 }

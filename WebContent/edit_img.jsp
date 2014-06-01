@@ -92,40 +92,12 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 						
 					</div>
 					
-					<% 
-					
-					//Se prioridade =  Ultra ->Vou para escolha de Destaque Banner
-					int prioridade_anuncio =-1;
-					try{
-					 prioridade_anuncio = (Integer) session.getAttribute("prioridade_anuncio");
-					}catch(Exception e){
-						
-						Debug.gerar("","edit_img.jsp","","A prioridade_anuncio não foi recuperada");
-						
-					}
-					
-					
-					//Banner Destaque
-					//Vai para página de edição da imagem do banner
-					
-					if(prioridade_anuncio==Plano.PRIORIDADE_ULTRA)
-					{
-					%>
-				    
-				    <form action="cad_veiculo/esc_img_banner.jsp" method="GET" >
-					<input type="hidden" name="ID_VEICULO" value="<%=id_veiculo%>">
-					<input class="btn_2 blue" type="submit" value="Continuar">
-					</form>
 					
 					
 					
-					<% 
-					}
 					
-					//Finaliza o anúncio
 					
-					else {
-					%>
+	        
 					
 					<form action="ServAnuncio" method="GET" >
 					<input type="hidden" name="STEP" value="13">
@@ -133,7 +105,7 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 					<input class="btn_2 blue" type="submit" value="<%=nome_bt%>">
 					</form>
 					
-					<% }%>
+				
 					
 					<h3><a id="iframe" class="btn red"  href="upload_imagem/index.html?id_veiculo=<%=id_veiculo%>">+Adicionar Imagens</a></h3>
 					<%
@@ -226,6 +198,21 @@ for(int i=1;i<ids_imgs.length;i++)
 </div>
 
 <% 
+
+}
+
+if(ids_imgs.length==0)
+{
+%>
+
+<div class="teste">
+
+<img src="ServImg?SOLI=15" alt="nenhuma imagem cadastrada" />
+
+</div>
+
+
+<%
 
 }
 %>

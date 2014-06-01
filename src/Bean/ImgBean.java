@@ -120,6 +120,8 @@ public class ImgBean {
 			
 			//Altera oo tamanho da imagem
 			imgCapa.setStream(new ImgUtil().alteraTamanho(img_original,ImgUtil.WIDTH_TUMB,ImgUtil.HEIGHT_TUMB));
+           
+            
             }
             
             else 

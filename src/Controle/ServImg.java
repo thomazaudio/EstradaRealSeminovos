@@ -48,6 +48,8 @@ public class ServImg extends HttpServlet {
 	public final int GET_IMG_TEMP_BANNER =10;
 	public final int GET_IMG_BANNER=11;
 	public final int GET_CAPA_TUMB =13;
+	public final int GET_NO_IMG =15;
+	
 	public int soli; 
 	public int mostra_step=0;
 
@@ -71,7 +73,7 @@ public class ServImg extends HttpServlet {
 			mostra_step=1;	 
 		}
 
-		//Solicitação para recuperação de imagens em tamanho TUMB
+		//Solicitaï¿½ï¿½o para recuperaï¿½ï¿½o de imagens em tamanho TUMB
 		if(soli==this.GET_TUMB)
 		{
 
@@ -98,7 +100,7 @@ public class ServImg extends HttpServlet {
 		}
 
 
-		//Solicitação para recuperação de imagens em tamanho IMAGEM
+		//Solicitaï¿½ï¿½o para recuperaï¿½ï¿½o de imagens em tamanho IMAGEM
 		else if(soli==this.GET_IMG)
 		{
 			long id_img = Long.parseLong(request.getParameter("ID_IMG"));
@@ -131,6 +133,11 @@ public class ServImg extends HttpServlet {
 			
 			Imagem imagem = new ImgDAO().getImgCapa(id_veiculo);
 			
+			if(imagem==null || imagem.getImg()==null)
+				imagem =  new ImgDAO().getNoImg();
+				
+			
+			
 			InputStream in =  imagem.getImg();
 			
 			//Converte a imagem para tumb
@@ -144,7 +151,7 @@ public class ServImg extends HttpServlet {
 		}
 
 		
-		//Logo de um usuário
+		//Logo de um usuï¿½rio
 		else if(soli==this.GET_LOGO){
 			
 			long id_usuario = Long.parseLong(request.getParameter("ID_USUARIO"));
@@ -197,6 +204,19 @@ public class ServImg extends HttpServlet {
 			
 		}
 		
+		//NO-IMG
+		else if(soli==this.GET_NO_IMG){
+			
+            byte[] img = IOUtils.toByteArray( new ImgDAO().getNoImg().getImg());
+            
+            if(img==null)
+            	System.out.println("A imagem Ã© nula");
+			
+			response.setContentType("image/jpeg");
+			response.setContentLength(img.length);
+			response.getOutputStream().write(img);	
+			
+		}
 	
 
 	}
@@ -218,7 +238,7 @@ public class ServImg extends HttpServlet {
 			mostra_step=1;
 		}
 
-		//Solicitação para deletar uma imagem
+		//Solicitaï¿½ï¿½o para deletar uma imagem
 		if(soli==this.DELETE_IMG){
 
 
@@ -250,7 +270,7 @@ public class ServImg extends HttpServlet {
 		
 		
 		
-		//Seta a logo do usuário
+		//Seta a logo do usuï¿½rio
 		else if(soli==this.SET_LOGO){
 			
 			

@@ -54,6 +54,8 @@ public class Acao {
 
 		case Transacao.REEMITE_PAGAMENTO : executaAcaoReemitePagamento();
 		break;
+		
+		default :Debug.gerar("","","","O tipo de transação do pagamento é inválido, pagamento: "+pg.getIdVeiculo()); ;
 
 		}
 		
@@ -72,8 +74,10 @@ public class Acao {
 	//Caso : altera��o do plano de um ve�culo j� cadastrado(Boleto ou Pag-seguro)
 	public void executaAcaoAltPlano(){
 
+		
+		System.out.println("Iníncio da execução de alteração de plano");
 
-		//Mudan�a da prioridade do an�ncio	
+		//Mudanã na prioridade do anúncio
 		try{
 
 			
@@ -100,6 +104,7 @@ public class Acao {
 		if(pg.getFormaPagamento()==Pagamento.PAGAMENTO_CREDITO_CONTA)
 		new FinanDAO().debitar(pg.getCodUser(),pg.getValor());
     
+		System.out.println("Final da execução de alteração de plano");
 
 	}
 

@@ -465,10 +465,11 @@
 				<h2>
 					<strong>Acessórios</strong>
 				</h2>
-				<p>
-					<input type="button" value="Completo" class="btn_comp" />
-				</p>
-				<jsp:include page="get_acessorios.jsp"></jsp:include>
+				
+				
+				<jsp:include page="get_acessorios_moto.jsp"></jsp:include>
+				
+				
 				<div class="clear"></div>
 			</div>
 

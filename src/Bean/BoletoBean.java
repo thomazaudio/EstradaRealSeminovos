@@ -58,14 +58,14 @@ public void geraBoleto(){
 	     Map<String,String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 	
 	
-	    //Recebe o código do pagamento
-	    long id_pagamento = Long.parseLong(p.get("id_pagamento"));
+	    //Recebe o cï¿½digo do pagamento
+	    long id_pagamento = Long.parseLong(p.get("cod_pagamento"));
 	    
-	    System.out.println("O id do pagamento é: "+id_pagamento);
+	    System.out.println("O id do pagamento ï¿½: "+id_pagamento);
 		
 		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		
-		//Recupera o usuário em sessão
+		//Recupera o usuï¿½rio em sessï¿½o
 		Usuario user = (Usuario) sessao.getAttribute("usuario");
 		
 		

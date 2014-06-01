@@ -154,15 +154,33 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 				
 					
 					%>
-
+					
+                   
 					<div class="img_c">
 						<div class="big_image">
+						
+						
+						    <% if(ids_imgs.length>0){%>
 							<a href="ServImg?SOLI=2&&ID_IMG=<%=ids_imgs[0]%>" rel="car_group">
 								<img src="images/zoom.png" alt="" class="zoom" /> <img
 								src="ServImg?SOLI=4&&ID_IMG=<%=ids_imgs[0]%>" alt="" />
 							</a>
+							<% }
+							
+						    else {
+							%>
+							<a href="ServImg?SOLI=15" rel="car_group">
+								<img src="images/zoom.png" alt="" class="zoom" /> <img
+								src="ServImg?SOLI=15" alt="" />
+							</a>
+							
+							
+							<% }%>
+							
 						</div>
 						<div class="small_img">
+						
+						
 
 							<% for(int i=0;i<ids_imgs.length;i++){ %>
 

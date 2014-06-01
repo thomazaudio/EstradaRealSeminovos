@@ -16,9 +16,9 @@ public class Moto extends Veiculo {
 	
 	
 	
-	//Recupera o modelo  do veiculo
 	
-    public Collection<Item> getItens() {
+
+	public Collection<Item> getItens() {
 		return itens;
 	}
 

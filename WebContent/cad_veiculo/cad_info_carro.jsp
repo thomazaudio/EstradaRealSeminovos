@@ -9,7 +9,7 @@
 <head>
 
 <!-- Page Title -->
-	<title>Home</title>
+	<title>Estrada Real  Seminovos - Cadastro de anúncio </title>
 	<link rel="stylesheet" type="text/css" href="../css/style.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style980.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style800.css" />
@@ -49,16 +49,16 @@ function validaPlaca()
 	
 var placa =  document.getElementById('placa').value;	
 
-window.alert(placa);
+
 	
   var er = /[a-z]{3}-?\d{4}/gim;
   er.lastIndex = 0;
   if(er.test(placa))
   {
-	window.alert("Plca ok");  
+	//window.alert("Plca ok");  
   }	  
-  else
-	  window.alert("Placa inválida"); 
+  //else
+	  //window.alert("Placa inválida"); 
 }
 
 
@@ -165,7 +165,8 @@ window.alert(placa);
 							            
 							            quilometragem:{
 							            	
-							            	required: true
+							            	required: true,
+							            	number:true
 							        			
 				
 							            	
@@ -267,13 +268,9 @@ window.alert(placa);
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body class="sell">
-	<!--BEGIN HEADER-->
-	<div id="header"></div>
-
-
-	<!--EOF HEADER-->
-	<!--BEGIN CONTENT-->
-
+	
+	<jsp:include page="../simple_header.jsp"></jsp:include>
+	
 	<div class="main_wrapper">
 		<div class="steps">
 
@@ -685,7 +682,7 @@ window.alert(placa);
            	 
         	   var $select = $('#model');                           
                $select.find('option').remove();    
-                $('<option>').val('').text('Selecione um modelo 1').appendTo($select);                      
+                $('<option>').val('').text('Selecione um modelo').appendTo($select);                      
                $.each(responseJson, function(key, value) {               
                    $('<option>').val(key).text(value).appendTo($select);      
                     });

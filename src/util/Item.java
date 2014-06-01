@@ -10,7 +10,14 @@ public class Item {
 	private long id;
 	private int tipo;
 	private String item;
+	private int tipoVeiculo;
 	
+	public int getTipoVeiculo() {
+		return tipoVeiculo;
+	}
+	public void setTipoVeiculo(int tipoVeiculo) {
+		this.tipoVeiculo = tipoVeiculo;
+	}
 	public int getTipo() {
 		return tipo;
 	}

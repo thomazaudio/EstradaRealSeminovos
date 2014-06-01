@@ -130,10 +130,50 @@
 
 								<ui:include src="banner/banner.xhtml"></ui:include>
 
+<div class="car_characteristics">
 
- <img width="200" height="250" src="images/caixa_anuncie.gif" alt="" /> 
- <img width="200" height="250" src="images/caixa_anuncie.gif" alt="" /> 
- <img width="200" height="250" src="images/caixa_anuncie.gif" alt="" /> 
+
+
+					<div class="clear"></div>
+				
+					 
+					  <h:form prependId="false">
+
+						<p:growl id="msgs2"></p:growl>
+                      
+                      
+                         <h:inputHidden id="page_pos" value="#{page}" ></h:inputHidden>
+                        
+						<p:panel>
+							<h:panelGrid styleClass="painel_lado"  columns="2" columnClasses="column" cellpadding="5">
+
+                             
+								<h:outputText value="Email: " />
+
+								<p:inputText id="email" />
+
+								<h:outputText value="Senha: " />
+
+								<p:inputText type="password" id="senha">
+								</p:inputText>
+
+								<p:commandButton update="msgs2" action="#{loginBean.logar}" value="Logar"></p:commandButton>
+								<h:panelGrid columns="2">
+								
+								<h:outputText value="ou" ></h:outputText>
+								
+								<a href="esc_login.jsf"><strong>Cadastre-se</strong></a>
+								
+								</h:panelGrid>
+								
+								
+							</h:panelGrid>
+						</p:panel>
+						
+						</h:form>
+				</div>
+ <img width="200" height="150" src="images/caixa_anuncie.gif" alt="" /> 
+ 
 
 
 							</div>

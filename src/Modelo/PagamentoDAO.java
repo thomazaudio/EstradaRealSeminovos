@@ -5,6 +5,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import util.Debug;
@@ -18,12 +19,25 @@ public class PagamentoDAO {
 		
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
-		
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.save(pagamento);
+		tx.commit();
+		sessao.flush();
+		sessao.close();
 		
 		
 	}
 	
+	
+	public void update(Pagamento pagamento){
+		
+
+		Session sessao = HibernateUtil.getSessaoV().openSession();
+		Transaction tx = sessao.beginTransaction(); 
+		sessao.merge(pagamento);
+		tx.commit();
+		sessao.flush();sessao.close();
+	}
 	
 	//Aprova um pagamento
 	public void aprovaPagamento(long codPagamento){
@@ -50,6 +64,20 @@ public class PagamentoDAO {
 	}
 	
 	
+	//Recupera a ultima transação relacionada a um veículo
+	public Pagamento getLastPagamentVeiculo(long id_veiculo){
+		
+		Pagamento pg = null;
+		
+		Session sessao = HibernateUtil.getSessaoV().openSession();
+		ArrayList<Pagamento> pgs = (ArrayList<Pagamento>) sessao.createCriteria(Pagamento.class).add(Restrictions.eq("idVeiculo",id_veiculo)).list();
+		
+		if(pgs.size()>0)
+		pg = pgs.get(0);	
+		
+		return pg;
+	}
+	
 	
 	//RECUPERA TODOS OS PAGAMENTOS 
 	public ArrayList<Pagamento> getAllPagamentos(){
@@ -62,7 +90,7 @@ public class PagamentoDAO {
 }
 	
 	
-	//RECUPERA TODOS OS PAGAMENTOS DE UM USU�RIO
+	//RECUPERA TODOS OS PAGAMENTOS DE UM USU�RIO
 	public ArrayList<Pagamento> getAllPagamentos(long idUser){
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();

@@ -22,7 +22,12 @@
 
 <property name="tipo" column="tipo_item"/>
 
+<property name="tipoVeiculo" column="tipo_veiculo"/>
+
 </class>
+
+
+
 
 <class name="util.Veiculo" table="veiculo">
 

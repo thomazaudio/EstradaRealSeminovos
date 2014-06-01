@@ -30,6 +30,8 @@ public class ImgUtil {
 	public InputStream alteraTamanho(InputStream img_original,int w, int h) throws IOException{
 		
 		
+		
+		
 		 BufferedImage img = Scalr.resize(ImageIO.read(img_original), Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC,
                              w, h, Scalr.OP_ANTIALIAS);
 		 
@@ -51,7 +53,7 @@ public class ImgUtil {
 	
 	
 	
-	//Valida a resolução minima de uma imagem de banner
+	//Valida a resoluï¿½ï¿½o minima de uma imagem de banner
 	public boolean validaResolucaoImgBanner(InputStream img) throws IOException{
 		
 		 BufferedImage buffe_img = ImageIO.read(img);

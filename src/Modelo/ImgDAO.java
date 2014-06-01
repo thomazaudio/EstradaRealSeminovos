@@ -34,6 +34,9 @@ public class ImgDAO {
 		stm.setBytes(1,IOUtils.toByteArray(img.getImg()));
 		stm.setLong(2,img.getId_veiculo());
 		stm.execute();
+		
+		stm.close();
+	
 		return true;
 			
 		}catch(Exception e){
@@ -95,7 +98,7 @@ public class ImgDAO {
 		
 		stm.close();
 		
-		
+		res.close();
 		
 		return true;
 
@@ -216,9 +219,11 @@ public class ImgDAO {
 		
 		
 	    
-	    if(tumb.getImg()==null)
+	    if(tumb==null || tumb.getImg()==null)
+	    {
+	    tumb = new Imagem();	
 	    tumb.setImg(this.getNoImg().getImg());	
-		
+	    }
         return tumb;
 		
 	}
@@ -536,12 +541,7 @@ public class ImgDAO {
 	    //ORDENA��O DO VETOR
 	    ids = this.ordByCapa(ids, id_veiculo);
 	   
-	    
-	    if(ids.length==0)
-	    {
-	    ids =  new long[1];	
-	    ids[0]=583;
-	    }
+	    //No caso de nenumha imagem cadastrada
 	    return ids;
 		
 	}
@@ -727,6 +727,8 @@ public class ImgDAO {
 				Debug.gerar("","ImgDAO","getImgTempBanner","Erro ao recupera imagem de banner tempor�ria(N�o existe) id_veiculo+"+id_veiculo);
 					
 				
+				stm.close();
+				res.close();
 				
 	     }catch(Exception e){
 	    	 
@@ -760,7 +762,8 @@ public class ImgDAO {
 			
 			System.out.println("Imagem de banner temporaria inserida com sucesso!");
 		
-			
+			stm_.close();
+			stm.close();
 			
 		}catch(Exception e){
 			
@@ -784,6 +787,7 @@ public class ImgDAO {
 			
 			stm.executeUpdate();
 			
+			stm.close();
 			
 			System.out.println("Logo alterada com sucesso!");
 		
@@ -842,6 +846,8 @@ try{
 			
 			stm.executeUpdate();
 			
+			
+			stm.close();
 			
 			System.out.println("Imagem de banner alterada com sucesso!");
 		

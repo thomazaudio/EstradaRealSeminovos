@@ -17,7 +17,7 @@
 
 <% 
 
-ArrayList itens = (ArrayList<Item>) new ItemDAO().getAllItensCarro();
+ArrayList itens = (ArrayList<Item>) new ItemDAO().getAllItensMoto();
 
 ArrayList<Item> n_lista;
 

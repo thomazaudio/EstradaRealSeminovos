@@ -35,19 +35,17 @@
 
 <div class="content">
 
-<div class="content_z conteiner-hv2">
-<div class="container-top clearfix">
 
-<h2><strong>Escolha um plano</strong></h2>
+
+<h2>Por favor, escolha um plano abaixo para promover seu anúncio.</h2>
 
 <br></br>
-<div class="content_z conteiner-hv2">
-	<div class="container-top clearfix">
-	                            <div class="car_characteristics">
+
+	                            <div class="header_esquerdo">
 	                            
 	                          
 	                            <div class="fundo_laranja">
-                               <h2 class="texto_branco">Anúcio <strong>Ultra</strong> + Home + Banner-Destaque</h2>
+                               <h2 class="texto_branco">Destaque <strong>Ultra</strong> + Home + Banner-Destaque</h2>
                                </div>
                               
                               
@@ -58,17 +56,42 @@
                          <div class="features_table">
 					  
 					  
+					        <div class="message">
+					        <p>
+					        Escolhendo o plano <strong>Destaque Ultra + Home + Banner-Destaque</strong>
+					        </p>
+					        
+					        </div>
+					        
+					       <h:form>
+					        
+					        <p:commandLink action="#{altPlanoBean.escPagamento}">
+					        
+					      
+					        <img width="390" src="#{contextoBean.contextoInicial}/images/destaque_ultra.png"></img>
+					        
+					        <f:param name="prioridade_anuncio"  value="1"></f:param>
+                              
+					        </p:commandLink>
+					        
+					        </h:form>
+					       
+					       
+					       
 					  
 					   
+					        
 					
-					
-						
-							<h3><strong>Vantagens</strong></h3>
-							<p><span>*</span>Destaque na página inicial.</p>
-							<p><span>*</span>Até 15 fotos por anúncio.</p>
-							<p><span>*</span>O veículo permance cadastrado até a venda.</p>
+						  
 						
 						
+						      <h:form>
+                              <p:commandButton  ajax="false"  styleClass="btn_plano blue"  value="Escolher este" action="#{altPlanoBean.escPagamento}">
+                              
+                              <f:param name="prioridade_anuncio" value="1"></f:param>
+                              
+                              </p:commandButton>
+                              </h:form>
 						
 					</div>
                               
@@ -77,21 +100,13 @@
                               
                               
                                                               </div> 
-                                                                <img src="images/logo_2.png" alt="" /> 
+                                                              
                               
-                              <h:form>
-                              <p:commandButton ajax="false"  styleClass="btn blue" value="Escolher este" action="#{altPlanoBean.escPagamento}">
                               
-                              <f:param name="prioridade_anuncio" value="1"></f:param>
-                              
-                              </p:commandButton>
-                              </h:form>
                             
                                
                                 
-                        </div>
                         
-                        </div>
                         
                         
                         <!-- MEGA -->
@@ -101,14 +116,13 @@
                        
                         <br></br>
                         
-                        <div class="content_z conteiner-hv2" rendered="true">
-	<div class="container-top clearfix">
-	                            <div class="car_characteristics">
+                        
+	                            <div class="header_direito">
 	                            
 	                          
 	                            
                                <div class="fundo_azul">
-                               <h2 class="texto_branco">Anúcio Mega + Home</h2>
+                               <h2 class="texto_branco">Destaque Mega + Home</h2>
                                </div>
                               <div class="message">
                               
@@ -118,72 +132,37 @@
 					  
 					  
 					  
+					        <div class="message">
+					        <p>
+					        Escolhendo o plano <strong>Destaque Mega + Home</strong>
+					        </p>
+					        
+					        </div>
+					  
+					         <h:form>
+					        
+					        <p:commandLink action="#{altPlanoBean.escPagamento}">
+					        
+					      
+					        <img width="390" src="#{contextoBean.contextoInicial}/images/destaque_mega.png"></img>
+					        
+					        <f:param name="prioridade_anuncio"  value="2"></f:param>
+                              
+					        </p:commandLink>
+					        
+					        </h:form>
 					   
 					
 					
 						
-							<h3><strong>Vantagens</strong></h3>
-							<p><span>*</span>Destaque na página inicial.</p>
-							<p><span>*</span>Até 15 fotos por anúncio.</p>
-							<p><span>*</span>O veículo permance cadastrado até a venda.</p>
 						
-						
-						
-					</div>
-                              
-                              
-                              </div>
-                              
-                              
-                                                              </div> 
-                                                                <img src="images/logo_2.png" alt="" /> 
-                              
-                              <h:form>
-                              <p:commandButton ajax="false"  styleClass="btn blue" value="Escolher este" action="#{altPlanoBean.escPagamento}">
+						<h:form>
+                              <p:commandButton ajax="false"  styleClass="btn_plano blue" value="Escolher este" action="#{altPlanoBean.escPagamento}">
                               
                               <f:param name="prioridade_anuncio" value="2"></f:param>
                               
                               </p:commandButton>
                               </h:form>
-                            
-                               
-                                
-                        </div>
-                        
-                        </div>
-                        
-                        
-                        <!-- Anuncio Gratuito -->
-                        <div class="clear"></div>
-                        
-                        <div class="content_z conteiner-hv2">
-	<div class="container-top clearfix">
-	                            <div class="car_characteristics">
-	                            
-	                          
-	                            <div class="fundo_laranja">
-                               <h2 class="texto_branco">Anúcio <strong>Gratuito</strong></h2>
-                               </div>
-                              
-                              
-                              <div class="message">
-                              
-                              
-                                
-                         <div class="features_table">
-					  
-					  
-					  
-					   
-					
-					
-						
-							<h3><strong>Vantagens</strong></h3>
-							<p><span>*</span>Destaque na página inicial.</p>
-							<p><span>*</span>Até 15 fotos por anúncio.</p>
-							<p><span>*</span>O veículo permance cadastrado até a venda.</p>
-						
-						
 						
 					</div>
                               
@@ -192,21 +171,19 @@
                               
                               
                                                               </div> 
-                                                                <img src="images/logo_2.png" alt="" /> 
+                                                             
                               
-                              <h:form>
-                              <p:commandButton ajax="false"  styleClass="btn blue" value="Escolher este" action="#{altPlanoBean.escPagamento}">
                               
-                              <f:param name="prioridade_anuncio" value="5"></f:param>
-                              
-                              </p:commandButton>
-                              </h:form>
                             
                                
                                 
-                        </div>
+                     
                         
-                        </div>
+                        
+                        <!-- Anuncio Gratuito -->
+                        <div class="clear"></div>
+                        
+                        
 
 
 </div>
@@ -215,11 +192,7 @@
 
 
 
-</div>
 
-
-
-</div>
 
 
 <div class="clear"></div>
