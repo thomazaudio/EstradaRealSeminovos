@@ -33,6 +33,7 @@ Query(document).ready(function($){
  magnifiersize: [200,200],
  magnifierpos: 'right',
  cursorshade: true,
+ 
  largeimage: ''
  })}
  
@@ -142,8 +143,7 @@ return true;
   
 
 </script>
-<link rel="stylesheet" href="demo_files/main.css" type="text/css" />
-<link rel="stylesheet" href="demo_files/demos.css" type="text/css" />
+
 <link rel="stylesheet" href="css/jquery.Jcrop.css" type="text/css" />
 <style type="text/css">
 
@@ -224,7 +224,7 @@ return true;
 						    	<a href="esc_img_banner.jsp?ID_VEICULO=<%=id_veiculo%>">1º Escolha uma Imagem</a>
 						    	</li>
 						    	<li  class="current">
-						    	2º Recorte a Imagem
+						    	2º Confirmação
 						    	</li>
 						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
 						    	
@@ -242,21 +242,14 @@ return true;
 						  	<jsp:param value="9" name="tam_font"/>
 						  	</jsp:include>
 <div class="message">
-<h4>Por favor, recorte a imagem para adaptação no banner</h4>
-<p>Dicas: </p>
-<p>*Tente selecionar as partes mais importantes do seu veículo.</p>
-<p>*O objetivo do banner-destaque não é mostrar a imagem em sua totalidade mas sim destacar determinada região de maior valor no seu veículo.</p>
-<p>*Tente destacar rodas, painél.</p>
-<p>*Você poderá alterar a imagem do <strong>banner-destaque</strong> a qualquer momento!</p>
+<h4>Imagem escolhida:</h4>
+<p>*Você pode alterar a imagem do <strong>banner-destaque</strong> a qualquer momento!</p>
 
 </div>
   
+  <img  width="500"  src="../ServImg?SOLI=10&&mostra_step=0&&ID_VEICULO=<%=id_veiculo%>" id="target" alt="Jcrop Image">
 
-
- 
-  <img   src="../ServImg?SOLI=10&&mostra_step=0&&ID_VEICULO=<%=id_veiculo%>" id="target" alt="Jcrop Image">
-
-  <form action="../ServBanner" method="get" onsubmit="return valida();">
+  <form action="../ServBanner" method="get">
  
   
   

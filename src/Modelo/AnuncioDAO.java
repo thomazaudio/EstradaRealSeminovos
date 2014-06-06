@@ -118,6 +118,7 @@ public class AnuncioDAO {
 		ArrayList<Anuncio> anuncios;
 		
 		Session sessao = HibernateUtil.getSessaoV().openSession();
+		
 	    anuncios = (ArrayList<Anuncio>)sessao.createCriteria(Anuncio.class).add(Restrictions.eq("idUsuario",id_usuario)).list();
 		
 		   

@@ -10,6 +10,7 @@ public class Imagem {
 	private int capa =0;
 	
 	public long getId() {
+				 
 		return id;
 	}
 	public void setId(long id) {

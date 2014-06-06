@@ -20,8 +20,7 @@
 $(document).ready(function(){
 	  $('.slider2').bxSlider({
 	    slideWidth: 200,
-	    minSlides: 2,
-	    maxSlides: 2,
+	    maxSlides: 5,
 	    slideMargin: 10
 	  });
 	});
@@ -50,7 +49,7 @@ $(document).ready(function(){
 									<div class="slide">
 									
 										
-										
+										<a target="_blank" href="#{contextoBean.contextoInicial}/loja/index.jsf?cod_revenda=#{p.cod}">
 										<p:graphicImage  height="90" value="#{imgBean.logo}">
                         
                   						<f:param  name="id_user" value="#{p.cod}"></f:param>
@@ -59,7 +58,7 @@ $(document).ready(function(){
 										
 										<p>#{p.nome}</p>
 										
-										
+										</a>
 										
 									
 									
@@ -69,7 +68,6 @@ $(document).ready(function(){
 									</div>
 									
 								
-						  	
 						  	
 						
 

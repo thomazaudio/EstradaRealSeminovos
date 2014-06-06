@@ -3,17 +3,18 @@ package util;
 import Modelo.DestaqueDAO;
 import Modelo.Email;
 import Modelo.UsuarioDAO;
+import Modelo.VeiculoDAO;
 
 public class Comunicacao {
 	
 	//-----ASSUNTO----
 	//PROPOSTA
 	public static final String ASSUNTO_PROPOSTA_RECEBIDA="Nova Proposta Recebida";//Assunto do email enviado ao anunciante em caso de nova proposta
-	public static final String ASSUNTO_PROPOSTA_ENVIADA="C�pia da Proposta";//Assunto do email que ser� enviado a quem est� fazendo a proposta(C�pia da Proposta)
+	public static final String ASSUNTO_PROPOSTA_ENVIADA="Cópia da Proposta Enviada";//Assunto do email que ser� enviado a quem est� fazendo a proposta(C�pia da Proposta)
    
 	
 	//--CCONFIRMACAO DE USU�RIO
-	public static final String ASSUNTO_CONFIRMACAO_USUARIO="Confirma��o de usu�rio";
+	public static final String ASSUNTO_CONFIRMACAO_USUARIO="Confirmação de usuário";
 	
 	
 	//--RELEMBRAR SENHA
@@ -26,23 +27,43 @@ public class Comunicacao {
 	
 	//-----Textos--
 	//Recebimento de nova proposta
-	public static final StringBuffer TEXTO_PROPOSTA_RECEBIDA(String nome){
+	public  static StringBuffer TEXTO_PROPOSTA_RECEBIDA(Proposta p){
 		
 		StringBuffer texto =  new StringBuffer();
 		
-		texto.append("<h4>OlÁ "+nome+"!</h4>");
-		texto.append("<p>Voc� acaba de receber um proposta referente a um ve�culo cadastrado no nosso site.</p>");
+		 Veiculo v = (Veiculo) new VeiculoDAO().getVeiculo(p.getIdVeiculo(),Veiculo.class);
+	        
+	    Usuario user  = new UsuarioDAO().getUser(p.getIdUser()); 
+		
+		texto.append("<h4>Olá "+user.getNome()+"!</h4>");
+		texto.append("<p>Você acaba de receber uma proposta relacionada ao veículo <a href=\"http://www.estradarealseminovos.com.br/Auto/anuncio.jsp?id_veiculo="+v.getId()+"\">"+v.getTitulo()+"</a></p>");
+		texto.append("<p>Dados do interessado:</>");
+		texto.append("<p>Nome: "+p.getNome()+"</p>");
+		texto.append("<p>Tefefone: "+p.getTelefoneRemetente()+"</p>");
+		texto.append("<p>Email: "+p.getEmailRemetente()+"</p>");
+		texto.append("<p>Proposta:</p>");
+		texto.append("<code>"+p.getMsg()+"</code>");
 		
     	return texto;
     }
 	
 	//Proposta enviada(cópia da proposta)
-	public static final StringBuffer TEXTO_PROPOSTA_ENVIADA(String nome){
+	public  static final StringBuffer TEXTO_PROPOSTA_ENVIADA(Proposta p){
 		
 		StringBuffer texto =  new StringBuffer();
 		
-		texto.append("<h4>Ol� "+nome+"!</h4>");
-		texto.append("<p>Obrigado por utilizar nosso sitema!.</p>");
+        Veiculo v = (Veiculo) new VeiculoDAO().getVeiculo(p.getIdVeiculo(),Veiculo.class);
+        
+        Usuario user  = new UsuarioDAO().getUser(p.getIdUser()); 
+        
+       
+	    
+		texto.append("<h4>Olá "+p.getNome()+"!</h4>");
+		texto.append("<p>Você enviou uma proposta relacionada ao veículo <a href=\"http://www.estradarealseminovos.com.br/Auto/anuncio.jsp?id_veiculo="+v.getId()+"\">"+v.getTitulo()+"</a>, seus dados"
+				+ ""
+				+ " já foram enviados ao cadastrante, em breve sua mensagem será respondida.</p>");
+		texto.append("<p>Obrigado por utilizar nosso serviços.");
+		
 		
     	return texto;
     }
@@ -59,18 +80,23 @@ public class Comunicacao {
 	}
 	
 	
-	//MENSAGEM DE CONFIRMAÇÃO DE USUÁROP EM CASO DE CADASTRO
+	    //MENSAGEM DE CONFIRMAÇÃO DE USUÁRIO EM CASO DE CADASTRO
 		public StringBuffer getHtmlConfirmacaoUser(Usuario user){
 			
 			
 			StringBuffer buffer  = new StringBuffer();
 			
-			buffer.append("<p>Olá "+user.getNome()+".</p>");
+			buffer.append("<h3>Olá "+user.getNome()+".</h3>");
 			
-			String link_confirmacao = SystemEmpresa.DOMINIO+"/Auto/confirma_usuario.jsp?id_usuario="+user.getId();
+			String link_confirmacao = SystemEmpresa.DOMINIO+"confirma_usuario.jsp?id_usuario="+user.getId();
 			
-			buffer.append("<a href=\""+link_confirmacao+"\" >Clique aqui para confirmar o email</a>");
-			buffer.append("<p>Caso o link acima não funcione digite este endereço no navegador: "+link_confirmacao+"</p>");
+			buffer.append("<p>Por favor, </p>");
+			
+			buffer.append("<a href=\""+link_confirmacao+"\" >Clique aqui para confirmar o seu email</a>");
+			buffer.append("<p>Caso o link acima não funcione, digite este endereço no navegador: "+link_confirmacao+"</p>");
+			buffer.append("<p><strong>Importante: </strong>Os seus anúncios se tornarão visíveis no site somente após a confirmação do email.</p>");
+			buffer.append("<p>Em caso de dúvidas, estaremos a disposição para ajudá-lo(a).</p>");
+			buffer.append("<p>Caso não tenha efetuado essa solicitação, favor desconsiderar esse email.</p>");
 			
 			return buffer;
 			
@@ -95,7 +121,7 @@ public class Comunicacao {
 		
 	////////-------ENVIOS----	
 	 
-	//Envia um email para confirma��o de usu�rio
+	//Envia um email para confirmação de usuário
 	public void sendConfirmacaoUser(Usuario user){
 		
 		

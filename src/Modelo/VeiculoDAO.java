@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -15,11 +16,15 @@ import org.hibernate.SessionFactory;
 
 
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 
+import util.Anuncio;
 import util.Carro;
 import util.Comunicacao;
 import util.Debug;
@@ -284,7 +289,7 @@ public class VeiculoDAO {
 	
 	
 	//PARA BUSCA
-	public ArrayList<Veiculo> getVeiculosBusca(int cod_fab,int cod_modelo,int ano_de,int ano_ate,int qui_de,int aqui_ate,int tipo_venda,double preco_de,double preco_ate,String classe,int ini, int total,ArrayList<Criterion> rest,int ordem,int tipoOrdem)
+	public ArrayList<Veiculo> getVeiculosBusca(int cod_fab,int cod_modelo,int ano_de,int ano_ate,int qui_de,int aqui_ate,int tipo_venda,double preco_de,double preco_ate,String classe,int ini, int total,ArrayList<Criterion> rest,int ordem,int tipoOrdem,long id_revenda)
 	{	
 		ArrayList<Veiculo> veiculos;
 		Session sessao;
@@ -293,10 +298,32 @@ public class VeiculoDAO {
 		sessao = HibernateUtil.getSessaoV().openSession();
 		
 		
-		cri = sessao.createCriteria(Veiculo.class);
+		cri = sessao.createCriteria(Veiculo.class,"v");
 		
 		cri.add(Restrictions.eq("class",classe));
 		
+		
+	   
+	   	
+	 
+	   //RESTRIÇÃO RELACIONADA A UMA REVENDA ESPECIFICA
+	   if(id_revenda!=0)
+	   {
+	   System.out.println("Busca relacionada a revenda: "+id_revenda);	   
+	   DetachedCriteria c =     DetachedCriteria.forClass(Anuncio.class, "a");
+	   c.setProjection(Projections.distinct(Projections.property("veiculo.id")));
+	   c.add(Restrictions.eqProperty("a.veiculo.id","v.id"));
+	   c.add(Restrictions.eq("a.idUsuario",id_revenda));
+	 
+	   cri.add(Subqueries.propertyIn("id",c));
+	   }
+	   else
+	   {
+		  System.out.println("Busca Normal");  
+	   }
+	
+	 
+	 
 		
 		//Pagina��o
 		cri.setFirstResult(ini);
@@ -361,11 +388,12 @@ public class VeiculoDAO {
 		}
 		
 		
-		System.out.println("Quantidade de ve�culos: "+this.count(classe,rest));
+		
 		
 		
 		veiculos = (ArrayList<Veiculo>) cri.list();
 		
+		System.out.println("Quantidade de veículos: "+veiculos.size());
 		
 		
 		return veiculos;
@@ -643,7 +671,7 @@ public class VeiculoDAO {
 	}
 	
 	
-	//RECUPERA A QUANTIDADE TOTAL DE REGISTROS OBEDECENDO UMA RESTRI��O
+	    //RECUPERA A QUANTIDADE TOTAL DE REGISTROS OBEDECENDO UMA RESTRI��O
 		public long count(String classe,ArrayList<Criterion> rest){
 			
 			long size = 0;
@@ -652,6 +680,8 @@ public class VeiculoDAO {
 		    Criteria criteria =  HibernateUtil.getSessaoV().openSession().createCriteria(Veiculo.class);
 			
 			criteria.add(Restrictions.eq("class",classe));
+			
+		
 			
 			//Adiciona o restante das restri��es
 			for(int i=0;i<rest.size();i++)

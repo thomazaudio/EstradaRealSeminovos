@@ -112,13 +112,17 @@
             </p:column> 
             
             
+            <p:column headerText="Cilindradas"  >  
+                <h:outputText  value="#{car.cilindradas}" rendered="#{car.tipo==1}" />  
+            </p:column> 
+            
             <p:column headerText="Motor"  >  
-                <h:outputText  value="#{car.motor}" />  
+                <h:outputText  value="#{car.motor}" rendered="#{car.tipo==2}" />  
             </p:column> 
             
             <p:column headerText="Acessórios"  >  
                
-            <ui:repeat var="it" value="#{car.itensFiltered}" size="4">
+            <ui:repeat var="it" value="#{car.itensFiltered}" >
 						
 			 <p:outputLabel value="#{it.item}-"></p:outputLabel>
 			 
@@ -597,20 +601,24 @@
 						</div>
 						<div class="clear"></div>
 						<div class="grey_area">
-						<div class="fundo_azul">
-						<ui:repeat var="it" value="#{res.itensFiltered}" size="4">
 						
-						<strong class="texto_branco">#{it.item} </strong>
+						<ui:repeat var="it" value="#{res.itensFiltered}">
+						
+						<strong>#{it.item} </strong>
 						</ui:repeat>
 						
-						</div>
 						
 						<div class="clear"></div>
 						<br></br>
 						<strong> *#{res.anoFabricacao}/#{res.anoModelo}  -  </strong>
 						<strong> *#{res.quilometragem} km  -  </strong>
 						<strong> *#{res.cor}  -  </strong>
-						<strong> *#{res.quantPortas} portas</strong>
+						
+						<strong>
+						<h:outputText  value="#{res.quantPortas} portas" rendered="#{res.tipo==2}" ></h:outputText>
+					   
+					    <h:outputText value="#{res.cilindradas} Cilindradas" rendered="#{res.tipo==1}" ></h:outputText>
+					    </strong>  
 						
 						</div>
 						

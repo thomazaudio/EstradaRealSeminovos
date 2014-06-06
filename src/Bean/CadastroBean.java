@@ -210,14 +210,14 @@ public class CadastroBean {
 		new UsuarioDAO().insert(user);
 	
 		//Envia o email de confirma��o
-		new Comunicacao().sendConfirmacaoUser(this.getUsuarioSessionCad());;
+		new Comunicacao().sendConfirmacaoUser(this.getUsuarioSessionCad());
 		
 		//Loga o usu�rio
 		HttpSession sessao =((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)); 
 		sessao.setAttribute("usuario",new UsuarioDAO().logar(user.getContato().getEmail(),user.getSenha()));
 		
-		//Redireciona pra a pagina que o usu�rio havia solicitado
-		FacesContext.getCurrentInstance().getExternalContext().redirect(this.getPagePosSession());
+		//Redireciona pra a pagina de anúncios
+		FacesContext.getCurrentInstance().getExternalContext().redirect("arearestritausuario/lista_anuncios.jsf");
 	
 	    }
 	    

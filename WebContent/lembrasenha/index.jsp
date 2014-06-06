@@ -8,8 +8,13 @@
 </head>
 <body>
 
-<form action="lembra_senha.jsp">
+<div class="message">
 
+<p>Por favor, Digite o email cadastrado no sistema.</p>
+
+</div>
+
+<form action="lembra_senha.jsp">
 <input type="email" name="email">
 <input type="submit"  class="btn blue" value="Enviar">
 

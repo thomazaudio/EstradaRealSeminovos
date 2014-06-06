@@ -38,10 +38,35 @@ public class UsuarioDAO {
 		
 	}
 
-	/**
-	 * 
-	 * @param user
-	 */
+	
+	//RECUPERA O NOME DE UM USUÁRIO
+	public String getNomeUsuario(long id){
+		
+		
+		String nome="";
+		
+		try{
+			
+		Connection con =  Banco.abreBanco();
+		Statement stm = con.createStatement();
+		
+		ResultSet res =  stm.executeQuery("select NOME from usuario where ID_USUARIO="+id);
+		
+		if(res.next())
+		nome =  res.getString("NOME");
+		
+		stm.close();
+		res.close();
+			
+		}catch(Exception e){
+			
+			Debug.gerar("","UsuarioDAO","getNomeUsuario", e.getMessage());
+		}
+		
+		return nome;
+	}
+	
+	
 	public void update(Usuario user) {
 		
 		

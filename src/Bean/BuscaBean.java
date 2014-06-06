@@ -48,7 +48,19 @@ public class BuscaBean {
 	private boolean revenda;
 	private long idVeiculo =0;
 	private String textoBusca;
+	private long codRevenda=0;
+		
 	
+	
+	public long getCodRevenda() {
+		
+		
+	    codRevenda  = Long.parseLong(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("cod_revenda"));
+		return codRevenda;
+	}
+	public void setCodRevenda(long codRevenda) {
+		this.codRevenda = codRevenda;
+	}
 	public String getTextoBusca() {
 		
 		return textoBusca;
@@ -68,18 +80,8 @@ public class BuscaBean {
 	
 	private List<SelectItem> fabricantes = new ArrayList<SelectItem>();
 	private List<SelectItem> modelos =new ArrayList<SelectItem>();
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
 	ArrayList<SelectItem> cidades =  new ArrayList<SelectItem>();
+	
 	
 	public ArrayList<SelectItem> getCidades() {
 		
@@ -102,18 +104,67 @@ public class BuscaBean {
 		this.codCidade = codCidade;
 	}
 	
+	
+	
+	//RESULTADO DA BUSCA POR C√ìDIGO DA CONCESION√ÅRIA
+	 public List<Veiculo> getResultadoBuscaByUser() {
+		
+		 
+		
+	 
+		//Classe de ve√≠culo
+		String classe = null;
+	    if(codTipo==1)
+		classe =  "Moto";	
+	    else if(codTipo==2)
+		classe =  "Carro";	
+	    
+	    pag = new Paginacao(new VeiculoDAO().count(classe,this.recuperaRestricoesParaBusca()),this.getQuantPorPagina());
+				
+	    System.out.println("Index Inicial: "+pag.getIndexIni(this.getPage()));
+				
+				
+				
+				TesteTime tempo = new TesteTime();
+				tempo.getTimeini();
+				
+				//SOMENTE PARA REVENDAS
+				int tipo_venda=2;	
+				
+				System.out.println("Ordem: "+this.getOrdem());
+				System.out.println("Tipo de ordem: "+this.getTipoOrdem());
+				
+			    //recupera os veiculos
+				List<Veiculo> 	resultadoBusca =  new VeiculoDAO().getVeiculosBusca(codFabricante,codModelo, anoDe, anoAte, quilometragemDe, quilometragemAte, tipo_venda, precoDe, precoAte,classe,pag.getIndexIni(this.getPage()),this.getQuantPorPagina(),recuperaRestricoesParaBusca(),this.getOrdem(),this.getTipoOrdem(),this.getCodRevenda());
+			
+		
+		if(resultadoBusca.size()==0)
+		this.setTextoBusca("A busca nÔøΩo retornou nenhum resultado.");
+		else
+		this.setTextoBusca(String.format("Mostrando a pÔøΩgina '%d' de um total de '%d' pÔøΩgina(s).",this.getPage(),this.pag.getTotalPaginas()));
+			
+		
+		System.out.println("Tempo Total para buscar: "+tempo.getTotalTime());
+		
+		return resultadoBusca;
+	}
+	
+	
+	//RESULTADO DA BUSCA GERAL
 	public List<Veiculo> getResultadoBusca() {
 		
 		TesteTime t = new TesteTime();
 		
 		//Pagina
 	 
-		//Classe de veÌculo
+		//Classe de ve√≠culo
 		String classe = null;
 	    if(codTipo==1)
 		classe =  "Moto";	
 	    else if(codTipo==2)
 		classe =  "Carro";	
+	    
+	    System.out.println("Classe do ve√≠culo na busca: "+classe);
 	    
 	    pag = new Paginacao(new VeiculoDAO().count(classe,this.recuperaRestricoesParaBusca()),this.getQuantPorPagina());
 				
@@ -139,13 +190,13 @@ public class BuscaBean {
 				System.out.println("Tipo de ordem: "+this.getTipoOrdem());
 				
 			    //recupera os veiculos
-				List<Veiculo> 	resultadoBusca =  new VeiculoDAO().getVeiculosBusca(codFabricante,codModelo, anoDe, anoAte, quilometragemDe, quilometragemAte, tipo_venda, precoDe, precoAte,classe,pag.getIndexIni(this.getPage()),this.getQuantPorPagina(),recuperaRestricoesParaBusca(),this.getOrdem(),this.getTipoOrdem());
+				List<Veiculo> 	resultadoBusca =  new VeiculoDAO().getVeiculosBusca(codFabricante,codModelo, anoDe, anoAte, quilometragemDe, quilometragemAte, tipo_venda, precoDe, precoAte,classe,pag.getIndexIni(this.getPage()),this.getQuantPorPagina(),recuperaRestricoesParaBusca(),this.getOrdem(),this.getTipoOrdem(),0);
 			
 		
 		if(resultadoBusca.size()==0)
-		this.setTextoBusca("A busca n„o retornou nenhum resultado.");
+		this.setTextoBusca("A busca nÔøΩo retornou nenhum resultado.");
 		else
-		this.setTextoBusca(String.format("Mostrando a p·gina '%d' de um total de '%d' p·gina(s).",this.getPage(),this.pag.getTotalPaginas()));
+		this.setTextoBusca(String.format("Mostrando a pÔøΩgina '%d' de um total de '%d' pÔøΩgina(s).",this.getPage(),this.pag.getTotalPaginas()));
 			
 		
 		System.out.println("Tempo Total para buscar: "+tempo.getTotalTime());
@@ -179,7 +230,7 @@ public class BuscaBean {
 		}
 	}
 	
-	//OP«’ES DE FABRICANTE
+	//OPÔøΩÔøΩES DE FABRICANTE
 	public List<SelectItem> getFabricantes() {
 		
 		//Carro
@@ -251,45 +302,31 @@ public class BuscaBean {
 		
 	}
 	
-	//REALIZA A BUSCA DO VEÕCULO
+	//REALIZA A BUSCA DO VE√çCULO(RESETAR)
 	public void buscar(){
 		
 		
 		String pagina_busca="";
 		
+		//P√ÅGINA QUE VAI APARECER O RESULTADO DA BUSCA
+		pagina_busca = "resultado_busca.jsf";
 		
-		//Classe de veÌculo
-		
+		//Classe de ve√≠culo
 		String classe = null;
 		
 		if(codTipo==1)
-		{
 		classe =  "Moto";
-		pagina_busca = "resultado_busca_moto.jsf";
-		}
-		else if(codTipo==2)
-		{
-		classe =  "Carro";	
-		pagina_busca = "resultado_busca.jsf";
-		}
-			
 		
+		else if(codTipo==2)
+		classe =  "Carro";	
+		
+		//COME√áANDO NA P√ÅGINA 1
 		this.setPage(1);
 		
 		pag = new Paginacao(new VeiculoDAO().count(classe,this.recuperaRestricoesParaBusca()),this.getQuantPorPagina());
 		
-		TesteTime t = new TesteTime();
 		
-		int tipo_venda;
 		
-		if(revenda&&particular)
-		tipo_venda=3;
-		else if(revenda)
-		tipo_venda=2;
-		else if(particular)
-		tipo_venda = 1;
-		else 
-		tipo_venda=3;	
 		
 		
 		this.setQuantPorPagina(10);
@@ -308,6 +345,48 @@ public class BuscaBean {
 		}
 		
 		
+		
+	}
+	
+	
+	      
+	    //BUSCA RELACIONADA A UMA REVENDA ESPEC√çFICA (RESETAR)
+        public void buscarByUsuario(){
+		
+        	
+      
+		
+    	System.out.println("O codigo da revenda √© :"+codRevenda);
+    	
+		String pagina_busca="";
+		
+		//P√ÅGINA QUE VAI APARECER O RESULTADO DA BUSCA
+		pagina_busca = new ContextoBean().getContextoInicial()+"/loja/index.jsf?cod_revenda="+this.getCodRevenda();
+		
+		//Classe de ve√≠culo
+		String classe = null;
+		
+		if(codTipo==1)
+		classe =  "Moto";
+		
+		else if(codTipo==2)
+		classe =  "Carro";	
+		
+		//COME√áANDO NA P√ÅGINA 1
+		this.setPage(1);
+		
+		pag = new Paginacao(new VeiculoDAO().count(classe,this.recuperaRestricoesParaBusca()),this.getQuantPorPagina());
+		
+		this.setQuantPorPagina(10);
+		
+		try {
+			
+			
+			FacesContext.getCurrentInstance().getExternalContext().redirect(pagina_busca);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		
 	}
 	
@@ -383,7 +462,7 @@ public class BuscaBean {
 	
 	
 	
-	//Recupera a imagem de capa do veÌculo
+	//Recupera a imagem de capa do veÔøΩculo
 	
 			public DefaultStreamedContent getImgCapa() {
 
@@ -419,7 +498,7 @@ public class BuscaBean {
 			}
 	
 	
-	//ITENS DE PAGINA«√O
+	//ITENS DE PAGINAÔøΩÔøΩO
 		private Paginacao pag;
 		private ArrayList<Pagina> paginas;
 		private int page=1;
@@ -448,7 +527,7 @@ public class BuscaBean {
 		}
 		public long getTotalRegistros() {
 			
-			//Classe de veÌculo
+			//Classe de veÔøΩculo
 			
 			String classe = null;
 			
@@ -495,7 +574,7 @@ public class BuscaBean {
 			page--;
 		}
 		
-		//Passa para a prÛxima pagina
+		//Passa para a prÔøΩxima pagina
 		public void proximaPagina(){
 			
 			page++;
@@ -505,7 +584,7 @@ public class BuscaBean {
 		
 		    paginas =   new ArrayList<Pagina>();
 		    
-			//Configura a paginaÁ„o
+			//Configura a paginaÔøΩÔøΩo
 			pag = new Paginacao(this.getTotalRegistros(),this.getQuantPorPagina());
 			
 			this.setQuantPaginas(pag.getTotalPaginas());
@@ -551,7 +630,7 @@ public class BuscaBean {
 			this.page = page;
 		}
 
-		//AlteraÁ„o da pagina
+		//AlteraÔøΩÔøΩo da pagina
 		public void alterarPage()
 		{
 	       
@@ -565,13 +644,12 @@ public class BuscaBean {
 	
 	
 		
-	//RECUPERA AS RETRI«’ES PARA BUSCA
+	//RECUPERA AS RETRI√áOES PARA BUSCA
 	public ArrayList<Criterion>	recuperaRestricoesParaBusca(){
 		
 		ArrayList<Criterion> cri =  new ArrayList<Criterion>();
 		
-		
-
+         		
 		
 		if(this.getCodFabricante()!=0)
 		cri.add(Restrictions.eq("cod_fabricante",this.getCodFabricante()));
@@ -585,7 +663,7 @@ public class BuscaBean {
 		
 		cri.add(Restrictions.ge("anoFabricacao",this.getAnoDe()));
 		
-		//PreÁo
+		//PreÔøΩo
 		cri.add(Restrictions.ge("preco",this.getPrecoDe()));
 		
 		if(this.getPrecoAte()!=0)
@@ -611,5 +689,50 @@ public class BuscaBean {
 		return cri;
 		
 	}
+	
+	
+	    //RECUPERA AS RETRI√áOES PARA BUSCA RELACIONADA A UMA REVENDA ESPEC√çFICA
+		public ArrayList<Criterion>	recuperaRestricoesParaBuscaByUser(long cod_revenda){
+			
+			ArrayList<Criterion> cri =  new ArrayList<Criterion>();
+			
+			if(this.getCodFabricante()!=0)
+			cri.add(Restrictions.eq("cod_fabricante",this.getCodFabricante()));
+			//Eqs 
+			if(this.getCodModelo()!=0)
+			cri.add(Restrictions.eq("codModelo", this.getCodModelo()));
+			
+			//Ano
+			if(this.getAnoAte()!=0)
+			cri.add(Restrictions.le("anoModelo",this.getAnoAte()));	
+			
+			cri.add(Restrictions.ge("anoFabricacao",this.getAnoDe()));
+			
+			//PreÔøΩo
+			cri.add(Restrictions.ge("preco",this.getPrecoDe()));
+			
+			if(this.getPrecoAte()!=0)
+			cri.add(Restrictions.le("preco",this.getPrecoAte()));
+			
+			
+
+			int tipo_venda;
+			
+			if(revenda&&particular)
+			tipo_venda=3;
+			else if(revenda)
+			tipo_venda=2;
+			else if(particular)
+			tipo_venda = 1;
+			else 
+			tipo_venda=3;
+			
+			if(tipo_venda!=3)
+			cri.add(Restrictions.eq("tipoVenda", tipo_venda));	
+			
+			
+			return cri;
+			
+		}
 	
 }

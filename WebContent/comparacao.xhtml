@@ -95,7 +95,14 @@
 								<div class="left">Motor:</div>
 								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
 								
-								<div class="right">#{v.motor}</div>
+								<div class="right" >
+								
+								<h:outputText  value="#{v.motor}" rendered="#{v.tipo==2}"></h:outputText>
+								
+								<h:outputText  value="#{v.cilindradas} Cilindradas" rendered="#{v.tipo==1}"></h:outputText>
+								
+								</div>
+								
 								</ui:repeat>
 							</div>
 							
@@ -104,7 +111,12 @@
 								
 								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
 								
-								<div class="right">#{v.transmissao}</div>
+								<div class="right">
+								
+								<h:outputText value="#{v.transmissao}" rendered="#{v.tipo==2}"></h:outputText>
+								
+								
+								</div>
 								</ui:repeat>
 								
 								
@@ -122,7 +134,13 @@
 								<div class="left">Quantidade de portas:</div>
 								
 								<ui:repeat var="v" value="#{interesseBean.veiculosSelecionados}">
-								<div class="right">#{v.quantPortas}</div>
+								<div class="right">
+								
+								<h:outputText value="#{v.quantPortas}" rendered="#{v.tipo==2}"></h:outputText>
+								
+								<h:outputText value="N/A" rendered="#{v.tipo==1}"></h:outputText>
+								
+								</div>
 								</ui:repeat>
 								
 								

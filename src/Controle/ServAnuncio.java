@@ -30,17 +30,6 @@ import javax.servlet.http.HttpSession;
 
 
 import org.apache.commons.io.IOUtils;
-
-
-
-
-
-
-
-
-
-
-
 import Modelo.AnuncioDAO;
 import Modelo.ContatoDAO;
 import Modelo.DestaqueDAO;
@@ -62,7 +51,6 @@ import util.Moto;
 import util.Pagamento;
 import util.Pessoa;
 import util.Plano;
-import util.Sessao;
 import util.Transacao;
 import util.Usuario;
 import util.Veiculo;

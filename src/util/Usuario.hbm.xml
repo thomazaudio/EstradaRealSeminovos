@@ -19,7 +19,7 @@
 <property name="senha" column="SENHA"></property>
 
 
-<property name="img_perfil" column="IMG_PERFIL" type="binary" />
+
 
 
 

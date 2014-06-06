@@ -46,7 +46,7 @@ $("input:checkbox").click(function() {
 			<figcaption>
 				${fileName} <br/>
 				<span>Tamanho original: ${fileOriSize} KB</span><br/>
-				<span>Tamanho após upload: ${fileUploadSize} KB</span>
+				<span>Tamanho apï¿½s upload: ${fileUploadSize} KB</span>
 			</figcaption>
             
 		</figure>
@@ -74,7 +74,7 @@ $(document).ready(function() {
 
 <div id="droparea">
 	<div class="dropareainner">
-		<p class="dropfiletext">Arraste os arquivos para cá</p>
+		<p class="dropfiletext">Arraste os arquivos para cï¿½</p>
 		<p>ou</p>
 		<p><input id="uploadbtn" class="uploadbtn" type="button" value="Selecione os arquivos"/></p>
 		
@@ -85,7 +85,7 @@ $(document).ready(function() {
 		    <input type="hidden" name="soli" value="2"/>
 			<input id="fancybox-close"  onclick="fechar();" type="submit" class="btn_2 red" Value="Finalizar" >
 			</form>
-		<p id="err">Parece que o JavaScript não está funcionando!</p>
+		<p id="err">Parece que o JavaScript nï¿½o estï¿½ funcionando!</p>
 	</div>
 	
 	<input id="upload" type="file" multiple />
@@ -107,6 +107,11 @@ $(document).ready(function() {
 <script>
 
 
+var max;
+
+var count=0;
+
+
 function fechar(){
 parent.jQuery.fancybox.close();
 }
@@ -114,6 +119,8 @@ parent.jQuery.fancybox.close();
 var id_veiculo = window.location.search.replace( "?", "" );
 id_veiculo = id_veiculo.replace("=","");
 id_veiculo = id_veiculo.replace("id_veiculo","");
+
+
 
 
 $(document).ready(function() {
@@ -367,7 +374,7 @@ $(document).ready(function() {
 			$('#err').text('');
 		} else {
 			//some message for wrong file format
-			$('#err').text('*Este tipo de arquivo não é suportado!');
+			$('#err').text('*Este tipo de arquivo nï¿½o ï¿½ suportado!');
 		}
 	}
 	
@@ -455,7 +462,7 @@ $(document).ready(function() {
 	****************************/
 	var uploadToServer = function(oldFile, newFile) {
 		
-		
+
 		
 		// prepare FormData
 		var formData = new FormData();  

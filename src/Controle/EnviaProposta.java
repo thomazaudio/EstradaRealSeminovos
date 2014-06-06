@@ -58,11 +58,11 @@ public class EnviaProposta extends HttpServlet {
 			proposta.setEmailRemetente(request.getParameter("email"));
 			proposta.setIdUser(Long.parseLong(request.getParameter("id_usuario")));
 			proposta.setMsg(request.getParameter("msg"));
-			proposta.setTelefoneRemetente("telefone");
+			proposta.setTelefoneRemetente(request.getParameter("telefone"));
 			proposta.setNome(request.getParameter("nome"));
 			
 			
-	        //Lança a proposta
+	        //Lanï¿½a a proposta
 		    new PropostaDAO().insert(proposta);
 		    
 		   response.sendRedirect("proposta_sucesso.jsp");

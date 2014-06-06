@@ -3,6 +3,7 @@ package Modelo;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import util.Comunicacao;
@@ -16,13 +17,15 @@ public class PropostaDAO {
 	public void insert(Proposta p){
 		
 		Session sessao  = HibernateUtil.getSessaoV().openSession();
+		Transaction tx = sessao.beginTransaction(); 
 		sessao.save(p);
+		tx.commit();
 		
 		
-		//Recupera o usuário recebedor da proposta
+		//Recupera o usuï¿½rio recebedor da proposta
 		Usuario user =  new UsuarioDAO().getUser(p.getIdUser());
 		
-		System.out.println("Id do usuário: "+user.getId());
+		System.out.println("Id do usuï¿½rio: "+user.getId());
 		
 		Email email = new Email();
 		
@@ -35,11 +38,11 @@ public class PropostaDAO {
 		
 		
 		//Envia um email para o recebedor da proposta
-		//email.enviaEmail(p.getEmailRemetente(),user.getNome(),Comunicacao.TEXTO_PROPOSTA_RECEBIDA(user.getNome()),Comunicacao.ASSUNTO_PROPOSTA_RECEBIDA);
+		email.enviaEmail(destinatario.getEmail(),user.getNome(),Comunicacao.TEXTO_PROPOSTA_RECEBIDA(p),Comunicacao.ASSUNTO_PROPOSTA_RECEBIDA);
 		
 		
-		//Envia uma cópia da proposta para o solicitante
-		email.enviaEmail(p.getEmailRemetente(),p.getNome(),Comunicacao.TEXTO_PROPOSTA_ENVIADA(p.getNome()),Comunicacao.ASSUNTO_PROPOSTA_ENVIADA);
+		//Envia uma cï¿½pia da proposta para o solicitante
+		email.enviaEmail(p.getEmailRemetente(),p.getNome(),Comunicacao.TEXTO_PROPOSTA_ENVIADA(p),Comunicacao.ASSUNTO_PROPOSTA_ENVIADA);
 		
 		
 		
@@ -48,7 +51,7 @@ public class PropostaDAO {
 		
 	}
 	
-	//PROPOSTAS DE UM USUÁRIO
+	//PROPOSTAS DE UM USUï¿½RIO
 	public ArrayList<Proposta> getPropostas(long idUser){
 		
 		Session sessao  = HibernateUtil.getSessaoV().openSession();
@@ -58,7 +61,7 @@ public class PropostaDAO {
 		
 	}
 	
-	//PROPOSTAS DE UM VEÍCULO
+	//PROPOSTAS DE UM VEï¿½CULO
 	public ArrayList<Proposta> getPropostasForVeiculo(long idVeiculo){
 		
 		

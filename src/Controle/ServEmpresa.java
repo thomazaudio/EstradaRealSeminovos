@@ -179,7 +179,7 @@ public class ServEmpresa extends HttpServlet {
 				 StringBuffer buffer_email = new EmpresaUtil().getBufferEmailCadSucesso(empresa.getNome(),empresa.getId());
 				
 				 //Realiza o envio de email de confirma
-				 new Email(empresa.getContato().getEmail(),empresa.getNome(),buffer_email,"Confirma��o de Usu�rio").sendHtmlEmail();
+				 //new Email(empresa.getContato().getEmail(),empresa.getNome(),buffer_email,"Confirma��o de Usu�rio").sendHtmlEmail();
 				 
 				 return null;	 
 			}

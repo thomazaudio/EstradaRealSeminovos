@@ -12,6 +12,11 @@ public class Plano {
 	public static final int DIAS_MEGA =30;
 	public static final int DIAS_ULTRA=30;
 	
+    //QUANTIDADE MÁXIMA DE FOTOS PARA CADA PLANO
+	public static final int QUANT_FOTOS_MEGA =8;
+	public static final int QUANT_FOTOS_ULTRA =14;
+	public static final int QUANT_FOTOS_GRATIS =5;
+	
 	//Quantiidade de dias que o destaque ficará no ar
 	public static final int DIAS_DESTAQUE_MEGA=15;
 	public static final int DIAS_DESTAQUE_ULTRA=7;
@@ -98,6 +103,23 @@ public class Plano {
 		
 		default :return "";
 		
+		
+		}
+		
+	}
+	
+	//RECUPERA A QUANTIDADE MÁXIMA DE FOTOS DE ACORDO COM O PLANO
+	public static int getQuantFotos(int prioridade_anuncio){
+		
+		switch(prioridade_anuncio){
+		
+		case PRIORIDADE_MEGA :return QUANT_FOTOS_MEGA;
+		
+		case PRIORIDADE_ULTRA :return QUANT_FOTOS_ULTRA;
+		
+		case PRIORIDADE_GRATIS : return QUANT_FOTOS_GRATIS;
+		
+        default: return QUANT_FOTOS_ULTRA;		
 		
 		}
 		

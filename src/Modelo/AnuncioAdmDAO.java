@@ -17,7 +17,7 @@ public class AnuncioAdmDAO {
 	
 	
 	
-	//CONFERE O PAGAMENTO DO VEÕCULO
+	//CONFERE O PAGAMENTO DO VEÔøΩCULO
     public void confirmaPagamento(long id){
     	
     	
@@ -29,7 +29,7 @@ public class AnuncioAdmDAO {
     	
     	int prioridade_anuncio;
     	
-    	//Veririfica qual È o plano do veÌculo
+    	//Veririfica qual ÔøΩ o plano do veÔøΩculo
     	ResultSet res = stm.executeQuery("SELECT PRIORIDADE_ANUNCIO FROM veiculo WHERE ID_VEICULO="+id);
     	
     	
@@ -38,16 +38,22 @@ public class AnuncioAdmDAO {
     		
     		prioridade_anuncio = res.getInt("PRIORIDADE_ANUNCIO");
     		
-    		System.out.println("A prioridade do an˙ncio È:"+prioridade_anuncio);
+    		System.out.println("A prioridade do anÔøΩncio ÔøΩ:"+prioridade_anuncio);
     		
-    		//AtivaÁ„o do banner
+    		//AtivaÔøΩÔøΩo do banner
     		new DestaqueDAO().ativaDestaque(prioridade_anuncio,id);
     		
     		
     	}
     	res.close();
     	
+    	//CONFERE O PAGAMENTO
     	stm.executeUpdate("UPDATE veiculo SET STATUS_PAGAMENTO=1 WHERE ID_VEICULO="+id);
+    	
+    	//VALIDA√á√ÉO DE INTERVALO DE DATA
+    	stm.executeUpdate("UPDATE veiculo SET STATUS=1 WHERE ID_VEICULO="+id);
+    	
+    	
     	stm.close();
     		
     		
@@ -57,7 +63,7 @@ public class AnuncioAdmDAO {
     	}
     	}
     
-    //CONFERE OS DADOS DO VEÕCULO
+    //CONFERE OS DADOS DO VE√çCULO
     public void confereDados(long id){
     	
     	try{
@@ -66,6 +72,10 @@ public class AnuncioAdmDAO {
     		Statement stm  =  con.createStatement();
     	    
     		stm.executeUpdate("UPDATE veiculo SET STATUS_VALIDACAO=1 WHERE ID_VEICULO="+id);
+    		
+    		//VALIDA√á√ÉO DE INTERVALO DE DATA
+        	stm.executeUpdate("UPDATE veiculo SET STATUS=1 WHERE ID_VEICULO="+id);
+    		
     		stm.close();
     		
     		System.out.println("Dados do veiculo '"+id+"' confirmados com sucesso!");

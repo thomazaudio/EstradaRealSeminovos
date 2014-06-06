@@ -1,5 +1,7 @@
 package util;
 
+import java.io.InputStream;
+
 
 
 
@@ -11,13 +13,12 @@ public class Usuario {
 	public static final int EMPRESA =2;
 	
 	private long id;
-	private int status;//status de confirmação de usuario '1'-->confirmado; '0'-->não-confirmado
+	private int status;//status de confirmaï¿½ï¿½o de usuario '1'-->confirmado; '0'-->nï¿½o-confirmado
 	private String nome;
 	private String senha;
 	private String senha2;
 	private Localizacao localizacao;
 	private Contato contato;
-	private byte[] img_perfil;
 	
 	public String getSenha2() {
 		return senha2;
@@ -26,12 +27,7 @@ public class Usuario {
 		this.senha2 = senha2;
 	}
 	
-	public byte[] getImg_perfil() {
-		return img_perfil;
-	}
-	public void setImg_perfil(byte[] img_perfil) {
-		this.img_perfil = img_perfil;
-	}
+	
 	public int getStatus() {
 		return status;
 	}

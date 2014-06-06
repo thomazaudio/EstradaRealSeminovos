@@ -25,9 +25,9 @@ public class ServPessoa extends HttpServlet {
 	public static final int CADASTRAR =1;
 	public static final int LOGAR=2;  
 	
-	private StringBuffer result;//Resultado da solicitação
-	private int soli;//Solicitação recebida
-	private String page_pos;//Pagina a ser encaminhada apos o processamento da solicitação
+	private StringBuffer result;//Resultado da solicitaï¿½ï¿½o
+	private int soli;//Solicitaï¿½ï¿½o recebida
+	private String page_pos;//Pagina a ser encaminhada apos o processamento da solicitaï¿½ï¿½o
 	private Pessoa pessoa;
 	
     /**
@@ -51,11 +51,11 @@ public class ServPessoa extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		    
-		     //Controle da sessão
+		     //Controle da sessï¿½o
 		     HttpSession sessao = request.getSession();
 		     
 		     
-		     //Recebe a solicitação
+		     //Recebe a solicitaï¿½ï¿½o
 		     soli =Integer.parseInt(request.getParameter("SOLI"));
 		     
 		     page_pos =  request.getParameter("page_pos");
@@ -78,10 +78,10 @@ public class ServPessoa extends HttpServlet {
 		     
 		     pessoa.setContato(contato);
 		     
-		     //status de não-confirmado
+		     //status de nï¿½o-confirmado
 		     pessoa.setStatus(0);
 		     
-		     //Tentativa de realização de cadastro
+		     //Tentativa de realizaï¿½ï¿½o de cadastro
 		     result = cadastrarPessoa(pessoa);
 		     request.setAttribute("result",result);
 		     
@@ -122,7 +122,7 @@ public class ServPessoa extends HttpServlet {
 		 {
 			 
 		 buffer2 = new StringBuffer();	 
-		 buffer2.append("<h3>O cpf("+pessoa.getCpf()+") já está cadastrado no sistema.</h3>");
+		 buffer2.append("<h3>O cpf("+pessoa.getCpf()+") jï¿½ estï¿½ cadastrado no sistema.</h3>");
 		 buffer2.append("<p><a href=\"#\">Clique aqui</a> para realizar login.</p>");
 		 
 		  
@@ -133,21 +133,21 @@ public class ServPessoa extends HttpServlet {
 		 {
 			 
 			 buffer2 = new StringBuffer();	 
-			 buffer2.append("<h3>O <strong>email("+pessoa.getContato().getEmail()+")</strong> já está cadastrado no sistema.</h3>");
+			 buffer2.append("<h3>O <strong>email("+pessoa.getContato().getEmail()+")</strong> jï¿½ estï¿½ cadastrado no sistema.</h3>");
 			 buffer2.append("<p><a href=\"#\">Clique aqui</a> para logar.</p>");	 
 			 return buffer2 ;
 		 }
 		 else
 		 {
 		 
-	     //Salva uma localização generica para o usuário
+	     //Salva uma localizaï¿½ï¿½o generica para o usuï¿½rio
 	     Localizacao loc =  new Localizacao();	
 	     new LocalizacaoDAO().insert(loc);
 	     
-	     //Salva um contato generico para o usuário
+	     //Salva um contato generico para o usuï¿½rio
 	     new ContatoDAO().insert(pessoa.getContato());
 	     
-	     //Seta a localização do usuário
+	     //Seta a localizaï¿½ï¿½o do usuï¿½rio
 	     pessoa.setLocalizacao(loc);
 			 
 		 if(new UsuarioDAO().insert(pessoa))
@@ -155,15 +155,15 @@ public class ServPessoa extends HttpServlet {
 		 
 		
 		 	 
-		 //Envia o email de confirmação
+		 //Envia o email de confirmaï¿½ï¿½o
 		 StringBuffer buffer = new StringBuffer();
-		 buffer.append("<h3>Olá <strong>"+pessoa.getNome()+"<strong>!<h3>");
-		 buffer.append("<h4>Recebemos uma solicitação de cadastro para o nosso site</h4>");
-		 buffer.append("<h5>Clique no link abaixo para confirmar sua inscrição no nosso sitema.</h5>");
-		 buffer.append("<h5>Se você não realizou esta solicitação, ignore esta mensagem.</h5>");
+		 buffer.append("<h3>Olï¿½ <strong>"+pessoa.getNome()+"<strong>!<h3>");
+		 buffer.append("<h4>Recebemos uma solicitaï¿½ï¿½o de cadastro para o nosso site</h4>");
+		 buffer.append("<h5>Clique no link abaixo para confirmar sua inscriï¿½ï¿½o no nosso sitema.</h5>");
+		 buffer.append("<h5>Se vocï¿½ nï¿½o realizou esta solicitaï¿½ï¿½o, ignore esta mensagem.</h5>");
 		 buffer.append("<h5><a href=\"http://localhost:8080/EstradaReal3/index.jsp?page=confirma_usuario.jsp&&id_usuario="+pessoa.getId() +"\">Confirmar Cadastro</a></h5>");
 		     
-		 new Email(pessoa.getContato().getEmail(),pessoa.getNome(),buffer,"Confirmação de Usuário").sendHtmlEmail();
+		 //new Email(pessoa.getContato().getEmail(),pessoa.getNome(),buffer,"Confirmaï¿½ï¿½o de Usuï¿½rio").sendHtmlEmail();
 		 	 
 		 return null;
 		 
@@ -171,7 +171,7 @@ public class ServPessoa extends HttpServlet {
 		 else
 		 {
 		 buffer2 = new StringBuffer();	 
-		 buffer2.append("<h3>O sistema encontra-se em manutenção, tente novamente mais tarde.</h3>");	 
+		 buffer2.append("<h3>O sistema encontra-se em manutenï¿½ï¿½o, tente novamente mais tarde.</h3>");	 
 		 return buffer2;
 		 } 
 		 }

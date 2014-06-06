@@ -1,6 +1,11 @@
 package Modelo;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.Calendar;
+
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.mail.HtmlEmail;
 
@@ -96,7 +101,7 @@ public class Email {
 			   
 			   
 			   //Conteudo da mensagem de confirma��o de ponto
-		        email.setHtmlMsg(mensagem.toString());
+		        email.setHtmlMsg(getPadraoEmail(mensagem).toString());
 			   
 			 
 			   
@@ -111,6 +116,65 @@ public class Email {
 				   
 				   Debug.gerar("Modelo","Email","sendHtmlEmail", e.getMessage());
 			   }
+		
+	}
+	
+	
+	//RECUPERA O HTML DO EMAIL NO FORMATO PADRÃO
+	public StringBuffer getPadraoEmail(StringBuffer msg){
+		
+		//Os arquivos base se encontram no src
+		
+		String header = lerArquivo("header.html").toString();
+		
+		String rodape = lerArquivo("rodape.html").toString();
+		
+		StringBuffer pad= new StringBuffer();
+		
+		//Adiciona o header ao buffer
+		pad.append(header);
+		
+		//Adiciona a mensagem(msg)
+		pad.append(msg.toString());
+		
+		//Adiciona o rodape para fechar
+		pad.append(rodape);
+		
+		
+		return pad;
+		
+	}
+	
+	public StringBuffer lerArquivo(String nome){
+		
+		 StringBuffer buffer = new StringBuffer();
+           		
+         try {
+			
+        	
+			
+			FileReader  file = new FileReader(getClass().getResource("").getFile()+nome);
+			
+			BufferedReader b = new BufferedReader(file);
+			
+			while(b.ready())
+			buffer.append(b.readLine());
+			
+			
+			
+			
+			file.close();
+			b.close();
+			
+			
+			
+		} catch (Exception  e) {
+			
+			Debug.gerar("Modelo","Email","lerArquivo",e.getMessage());
+			
+		}
+     
+     return buffer;
 		
 	}
 	

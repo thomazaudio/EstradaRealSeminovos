@@ -59,6 +59,8 @@
 </h:head>
 <h:body>
 
+
+
 <ui:include src="/header.xhtml"></ui:include>
 
 
@@ -236,8 +238,14 @@
 		    
 		    <p:panelGrid columns="1">
 		     <p:outputLabel value="O seu email ainda não foi confirmado!"></p:outputLabel>
-		   
-		    <p:commandButton value="Reenviar email de confirmação." ></p:commandButton>
+		       <p:outputLabel value="Lembramos que seus anúncios serão ativados somente após a confirmação de email."></p:outputLabel>
+		   <h:form>
+		    <p:commandButton update="messages" value="Reenviar email de confirmação." action="#{usuarioBean.enviaEmailConfirmacao}" >
+		    </p:commandButton>
+		    <p:growl id="messages"></p:growl>
+		    </h:form>
+		    
+		  
 		    </p:panelGrid>
 		   
 		    </p:panelGrid>

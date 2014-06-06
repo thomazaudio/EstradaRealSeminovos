@@ -44,7 +44,7 @@
 	
 	<div id="content">
 	<div class="message">
-	<ui:include src="simple_header.xhtml"></ui:include>
+	<ui:include src="header.xhtml"></ui:include>
 	</div>
 		<div class="content">
 
@@ -88,8 +88,14 @@
 
 								<p:inputText type="password" id="senha">
 								</p:inputText>
+								
+								
 
 								<p:commandButton update="msgs2" action="#{loginBean.logar}" value="Logar"></p:commandButton>
+							   <h:outputText></h:outputText>
+							   
+							   <h:outputText value="Esqueceu a senha?"></h:outputText> <a class="iframe"  href="#{contextoBean.contextoInicial}/lembrasenha/index.jsp"><strong> Lembrar senha</strong></a>
+							
 							</h:panelGrid>
 						</p:panel>
 						
@@ -119,7 +125,13 @@
 
 							<p:commandButton update="msgs" action="#{cadastroBean.cad}"
 								value="Cadastrar"></p:commandButton>
+								
+								<h:outputText></h:outputText>
+								
+								Alguma dúvida? <a href="#"><strong> Obter ajuda</strong></a>
 						</h:panelGrid>
+						
+						
 
 					</p:panel>
 					

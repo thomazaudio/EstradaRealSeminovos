@@ -5,6 +5,7 @@
       <%@page import="util.Anuncio"%>
       <%@page import="util.Plano"%>
       <%@page import="util.Debug"%>
+         <%@page import="util.Plano"%>
         <%@page import="Controle.ServAnuncio"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -38,7 +39,7 @@ Anuncio an = (Anuncio) session.getAttribute("anuncio");
 if(an.getVeiculo().getId()!=id_veiculo)
 request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(request,response);
 
-
+int prioridade_anuncio = (Integer) session.getAttribute("prioridade_anuncio");
 
 %>
 
@@ -107,11 +108,30 @@ request.getRequestDispatcher("index.jsp?page=erro_autorizacao.jsp").forward(requ
 					
 				
 					
-					<h3><a id="iframe" class="btn red"  href="upload_imagem/index.html?id_veiculo=<%=id_veiculo%>">+Adicionar Imagens</a></h3>
 					<%
 					
 					long[] ids_imgs = new ImgDAO().getIdsImgs(id_veiculo);
 					
+					%>
+					
+					<% 
+					if(ids_imgs.length<Plano.getQuantFotos(prioridade_anuncio))
+					{
+					%>
+					
+					
+					<h3><a id="iframe" class="btn red"  href="upload_imagem/index.html?id_veiculo=<%=id_veiculo%>">+Adicionar Imagens</a></h3>
+					
+					
+					<%}
+					
+					else{
+					%>
+					
+					<h3>Você já inseriu a quantidade máxima de imagens para o plano escolhido.</h3>
+					
+					<%
+					}
 					
 				    if(ids_imgs.length>0)
 					out.write("<h3><strong>Imagens Cadastradas</strong></h3>");	

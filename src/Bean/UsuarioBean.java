@@ -24,6 +24,7 @@ import Modelo.PagamentoDAO;
 import Modelo.PerguntaDAO;
 import Modelo.TrocaEmailDAO;
 import Modelo.UsuarioDAO;
+import util.Comunicacao;
 import util.Debug;
 import util.Imagem;
 import util.Pagamento;
@@ -46,6 +47,7 @@ public class UsuarioBean {
 	private String linkEditPerfil;
 	private double saldo;
 	private ArrayList<Pagamento> pgs;
+	private boolean enviou_email=false;
 	
 	
 	//PAGAMENTOS DO USU�RIO (EXTRATO)
@@ -409,5 +411,26 @@ public class UsuarioBean {
 		return (Usuario) sessao.getAttribute("usuario");
 	}
 	
+	
+	//REENVIA UM EMAIL DE CONFIRMAÇÃO
+	public void enviaEmailConfirmacao(){
+		
+		
+			
+		if(!enviou_email)
+		{
+		
+	    new Comunicacao().sendConfirmacaoUser(getUserSession());
+				
+	    enviou_email=true;
+	    this.addMessage("Email enviado com sucesso!");
+	   
+		}
+		else
+		this.addMessage("O email já foi enviado, por favor verifique sua caixa de entrada.");
+	
+		
+		
+	}
 	
 }

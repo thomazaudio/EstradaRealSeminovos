@@ -3,7 +3,6 @@ package util;
 
 import java.util.*;
 
-import javax.faces.context.FacesContext;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -12,6 +11,11 @@ import Modelo.ImgDAO;
 import Modelo.VeiculoDAO;
 
 public abstract class Veiculo {
+	
+	public static int MOTO =1;
+	public static int CARRO=2;
+	
+	public static int MAX_ITENS=7;
 
 
 	private long id;
@@ -47,9 +51,32 @@ public abstract class Veiculo {
 	private String classColor;
 	private int statusPagamento;
 	private int statusValidacao;
+	private String textoPlano;
 	
-    private String textoPlano;
 	
+	//RECUPERA O TIPO DE VEICULO
+	
+	public int getTipo(){
+		
+		if(this.getClass()==Carro.class)
+		{
+			System.out.println("Carro");
+			return CARRO;
+		}
+		else if(this.getClass()==Moto.class)
+		{
+			System.out.println("MOTO");
+			return MOTO;
+		}
+		else
+		{
+		Debug.gerar("","Veiculo","getTipo","Tipo de veiculo não definido");	
+		return 0;
+		}
+		
+		
+		
+	}
 	
 	public String getTextoPlano() {
 		
@@ -253,9 +280,13 @@ public abstract class Veiculo {
 		ArrayList<Item> last_itens = new ArrayList<Item>(this.itens);
 		ArrayList<Item> new_itens = new ArrayList<Item>();
 		
-		for(int i=0;i<last_itens.size();i++)
+		
+		
+		for(int i=0;(i<last_itens.size()&& i<MAX_ITENS);i++)
 	    new_itens.add(last_itens.get(i));	
 				
+		
+		System.out.println("Quantidade de itens: "+new_itens.size());
 		
 		return new_itens;
 		

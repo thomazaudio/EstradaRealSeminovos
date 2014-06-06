@@ -78,16 +78,10 @@ public class ServBanner extends HttpServlet  {
 	           //CADASTRO DO BANNER DESTAQUE COM A IMAGEM J� ALTERADA
 	            try{
 			 
-               double t,l,w,h;
-	            t = Double.parseDouble(req.getParameter("t"));
-	            l=  Double.parseDouble(req.getParameter("l"));
-	            w=  Double.parseDouble(req.getParameter("w"));
-	            h=  Double.parseDouble(req.getParameter("h"));
 	            
  
 	         
-	            
-	            System.out.println("Chegou aqui 2");
+	          
 	            
 	            //Recupera a imagem salva temporariamente
 	            byte[] img_temp =  new ImgDAO().getImgTempBanner(id_veiculo);
@@ -98,14 +92,19 @@ public class ServBanner extends HttpServlet  {
 	          
 	           
 	            
-	            //Inicio das transforma��es 
-	            BufferedImage outImage=ImageIO.read(in);
-	            BufferedImage cropped = Scalr.crop(outImage,(int) t,(int) l,(int) w,(int) h,null);
-	            
-	            //BufferedImage cropped=outImage.getSubimage((int)l, (int)t,(int) w,(int) h);
-	            
-	            System.out.println("Chegou aqui 4");
 	           
+	            BufferedImage outImage=ImageIO.read(in);
+	            BufferedImage cropped=null;
+	            
+	           
+	            	
+	            //Deixa a imagem no seu estado original
+	            cropped = outImage;
+	         
+	            
+	         
+	            
+	            
 	            
 	            //Converte a imagem transformada para byte[]
 	            byte img[];
@@ -116,9 +115,8 @@ public class ServBanner extends HttpServlet  {
 				baos.close();
 	            
 	 
-				 System.out.println("Chegou aqui 5");
-	            
-	            //Lan�a o banner detaque no sistema
+				
+	         
 	           
 	            d.setTipoDestaque(Destaque.DESTAQUE_BANNER);
 	            d.setCodVeiculo(id_veiculo);

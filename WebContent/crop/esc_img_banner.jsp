@@ -26,7 +26,7 @@
 
 
 function comprova_extensao(formulario) {
-   extensoes_permitidas = new Array(".png", ".jpg");
+   extensoes_permitidas = new Array(".png", ".jpg",".jpeg",".gif");
    meuerro = "";
    
    var arquivo = formulario.arq.value;
@@ -102,7 +102,7 @@ function comprova_extensao(formulario) {
 						    	1º Escolha uma Imagem
 						    	</li>
 						    	<li>
-						    	2º Recorte a Imagem
+						    	2º Confirmação
 						    	</li>
 						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
 						    	

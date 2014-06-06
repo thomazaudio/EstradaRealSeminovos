@@ -116,6 +116,9 @@
 <property name="capa" column="CAPA" ></property>
 </class>
 
+
+
+
 <class name="util.TrocaEmail" table="troca_email">
 <id name="id" column="ID_TROCA_EMAIL" type="long">
 <generator class="identity"></generator>

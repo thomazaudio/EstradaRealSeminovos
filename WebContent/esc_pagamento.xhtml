@@ -87,7 +87,14 @@
 <!-- Pag seguro para destaque mega -->
 <p:panelGrid columns="2"> 
 
-<!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
+<h:form prependId="false">
+<p:commandButton   value="Pagar com Cartão de crédito (Pag-Seguro UOL)" action="#{pagamentoBean.pagamentoPagSeguro}" >
+
+<f:param  name="cod_pagamento"  value="#{escPagamentoBean.codPagamento}"></f:param>
+
+</p:commandButton>
+
+</h:form>
 
 
 

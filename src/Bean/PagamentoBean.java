@@ -4,6 +4,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import br.com.uol.pagseguro.domain.PaymentRequest;
+import br.com.uol.pagseguro.enums.Currency;
+import br.com.uol.pagseguro.enums.MetaDataItemKey;
+import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+import br.com.uol.pagseguro.properties.PagSeguroConfig;
 import Modelo.FinanDAO;
 import Modelo.PagamentoDAO;
 import Modelo.VeiculoDAO;
@@ -12,6 +17,7 @@ import util.Plano;
 import util.Transacao;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -185,6 +191,54 @@ public class PagamentoBean {
 
 	//PAGAMENTO VIA PAG SEGURO
 	public void pagamentoPagSeguro(){
+		
+		
+		//ID DO PAGAMENTO
+		long id =  Integer.parseInt(getParametros().get("cod_pagamento"));
+
+		System.out.println("Opção escolhida: Pagamento via booleto");
+		System.out.println("Id do pagamento: "+id);
+
+		//RECEBE OS DADOS REFERENTES AO PAGAMENO SOLICITADO
+	    Pagamento pg = new PagamentoDAO().getPagamento(id);
+				
+		//Atualiza a forma de pagamento escolhida, no caso Pag Seguro
+	    pg.setFormaPagamento(Pagamento.PAGAMENTO_PAG_SEGURO);
+		new PagamentoDAO().update(pg);
+		
+		PaymentRequest paymentRequest = new PaymentRequest();
+
+		 
+        paymentRequest.addItem("000"+pg.getPrioridade(),Plano.getPlano(pg.getPrioridade()), Integer.valueOf(1), new BigDecimal(String.format("%.2f",Plano.getPrecoPlano(pg.getPrioridade()))),null,
+                null);
+        
+     
+
+        paymentRequest.setCurrency(Currency.BRL);
+
+        // Sets a reference code for this payment request, it's useful to
+        // identify this payment in future notifications
+        paymentRequest.setReference("REF1234");
+       
+
+        try {
+
+            Boolean onlyCheckoutCode = false;
+
+            // Set your account credentials on src/pagseguro-config.properties
+            String paymentURL = paymentRequest.register(PagSeguroConfig.getAccountCredentials(), onlyCheckoutCode);
+
+            
+            //Redireciona para página de pagamento
+        	FacesContext.getCurrentInstance().getExternalContext().redirect(paymentURL);
+            
+           
+
+        } catch (Exception  e) {
+            System.err.println(e.getMessage());
+        }
+		
+		
 
 	}
 

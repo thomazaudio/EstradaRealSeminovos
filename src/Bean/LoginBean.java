@@ -99,9 +99,6 @@ public class LoginBean {
 
 			System.out.println("Id do contato: "+user.getContato().getId());	
 
-			//Verifica se o contato do usuário esta confirmado
-			if(user.getContato().getConfirmado()==0)
-				faces.getExternalContext().redirect("pagina_confirma_email.jsp?email="+email);	
 
 			//Joga o usuário na sessão
 			HttpSession sessao = (HttpSession)faces.getExternalContext().getSession(false);
