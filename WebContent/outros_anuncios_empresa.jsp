@@ -32,7 +32,6 @@ Collections.shuffle(ans);
 %>
 
 <div class="recent_cars">
-<h2><strong><%=ans.size()%></strong> veículo(s)</h2>
 <ul>
 
 <%

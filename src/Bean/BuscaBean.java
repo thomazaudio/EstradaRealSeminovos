@@ -139,9 +139,9 @@ public class BuscaBean {
 			
 		
 		if(resultadoBusca.size()==0)
-		this.setTextoBusca("A busca n�o retornou nenhum resultado.");
+		this.setTextoBusca("A busca não retornou nenhum resultado.");
 		else
-		this.setTextoBusca(String.format("Mostrando a p�gina '%d' de um total de '%d' p�gina(s).",this.getPage(),this.pag.getTotalPaginas()));
+		this.setTextoBusca(String.format("Mostrando a página '%d' de um total de '%d' página(s).",this.getPage(),this.pag.getTotalPaginas()));
 			
 		
 		System.out.println("Tempo Total para buscar: "+tempo.getTotalTime());
@@ -194,9 +194,9 @@ public class BuscaBean {
 			
 		
 		if(resultadoBusca.size()==0)
-		this.setTextoBusca("A busca n�o retornou nenhum resultado.");
+		this.setTextoBusca("A busca não retornou nenhum resultado.");
 		else
-		this.setTextoBusca(String.format("Mostrando a p�gina '%d' de um total de '%d' p�gina(s).",this.getPage(),this.pag.getTotalPaginas()));
+		this.setTextoBusca(String.format("Mostrando a página '%d' de um total de '%d' página(s).",this.getPage(),this.pag.getTotalPaginas()));
 			
 		
 		System.out.println("Tempo Total para buscar: "+tempo.getTotalTime());
@@ -257,13 +257,14 @@ public class BuscaBean {
 					fabricantes.add(new SelectItem(48,"Renault"));
 					fabricantes.add(new SelectItem(56,"Toyota"));
 					fabricantes.add(new SelectItem(59,"Volkswagem"));
-					
-				
+					fabricantes.add(new SelectItem(1500,"-----------"));
+					fabricantes.add(new SelectItem(1501,"-----------"));
+				    
 					
 					
 					//FABRICANTES RESTANTES
-					//for(int i=0;i<itens.size();i++)
-					//fabricantes.add(new SelectItem(itens.get(i).getCod(),itens.get(i).getNome()));	
+					for(int i=0;i<itens.size();i++)
+					fabricantes.add(new SelectItem(itens.get(i).getCod(),itens.get(i).getNome()));	
 				}
 		
 		return fabricantes;

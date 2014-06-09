@@ -15,11 +15,6 @@ import Modelo.ImgDAO;
 @ApplicationScoped
 public class ImgBean {
 
-	
-	
-	
-	
-    
 
     public StreamedContent getcapaVeiculo() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -51,10 +46,6 @@ public class ImgBean {
         }
         
      
-        	
-            
-            
-      
         
         return imgCapa;
     }

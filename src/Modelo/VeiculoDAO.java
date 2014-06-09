@@ -325,7 +325,7 @@ public class VeiculoDAO {
 	 
 	 
 		
-		//Pagina��o
+		//Paginação
 		cri.setFirstResult(ini);
 		cri.setMaxResults(total);
 		

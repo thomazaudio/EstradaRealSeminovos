@@ -315,17 +315,10 @@ var placa =  document.getElementById('placa').value;
 					}
 					
 					
-					if(mostra_step==1)
-					{
-					//recupera o step
-					StringBuffer step = (StringBuffer) session.getAttribute("step");
-					if(step==null)
-					step = new StringBuffer();	
-					out.write(step.toString());
-					}
+					
 					
 					%>
-
+<a href="#"><span>1. Tipo de Veículo</span></a><a href="#"><span>2. Plano</span></a><span>3. Cadastro das informações</span><a href="#"><span>4. Escolha de Imagens</span></a>
 		</div>
 	</div>
 	<div class="content">
@@ -372,6 +365,88 @@ var placa =  document.getElementById('placa').value;
 						<option value="56">Toyota</option>
 						<option value="59">Volkswagen</option>
 						<option value="">-------------------</option>
+						
+						<option value="1">Acura</option>
+	<option value="10">Cadillac</option>
+	<option value="11">CBT Jipe</option>
+	<option value="12">Chrysler</option>
+	<option value="120">Walk</option>
+	<option value="123">Bugre</option>
+	<option value="125">SSANGYONG</option>
+	<option value="127">LOBINI</option>
+	<option value="13">Citroën</option>
+	<option value="136">CHANA</option>
+	<option value="14">Cross Lander</option>
+	<option value="140">Mahindra</option>
+	<option value="147">EFFA</option>
+	<option value="149">Fibravan</option>
+	<option value="15">Daewoo</option>
+	<option value="152">HAFEI</option>
+	<option value="153">GREAT WALL</option>
+	<option value="154">JINBEI</option>
+	<option value="156">MINI</option>
+	<option value="157">smart</option>
+	<option value="16">Daihatsu</option>
+	<option value="161">CHERY</option>
+	<option value="163">Wake</option>
+	<option value="165">TAC</option>
+	<option value="167">MG</option>
+	<option value="168">LIFAN</option>
+	<option value="17">Dodge</option>
+	<option value="170">Fyber</option>
+	<option value="171">LAMBORGHINI</option>
+	<option value="177">JAC</option>
+	<option value="18">Engesa</option>
+	<option value="182">CHANGAN</option>
+	<option value="19">Envemo</option>
+	<option value="2">Agrale</option>
+	<option value="20">Ferrari</option>
+	<option value="21">Fiat</option>
+	<option value="22">Ford</option>
+	<option value="23">Chevrolet</option>
+	<option value="24">Gurgel</option>
+	<option value="25">Honda</option>
+	<option value="26">Hyundai</option>
+	<option value="27">Isuzu</option>
+	<option value="28">Jaguar</option>
+	<option value="29">Jeep</option>
+	<option value="3">Alfa Romeo</option>
+	<option value="30">JPX</option>
+	<option value="31">Kia Motors</option>
+	<option value="32">Lada</option>
+	<option value="33">Land Rover</option>
+	<option value="34">Lexus</option>
+	<option value="35">Lotus</option>
+	<option value="36">Maserati</option>
+	<option value="37">Matra</option>
+	<option value="38">Mazda</option>
+	<option value="39">Mercedes-Benz</option>
+	<option value="4">AM Gen</option>
+	<option value="40">Mercury</option>
+	<option value="41">Mitsubishi</option>
+	<option value="42">Miura</option>
+	<option value="43">Nissan</option>
+	<option value="44">Peugeot</option>
+	<option value="45">Plymouth</option>
+	<option value="46">Pontiac</option>
+	<option value="47">Porsche</option>
+	<option value="48">Renault</option>
+	<option value="49">Rover</option>
+	<option value="5">Asia Motors</option>
+	<option value="50">Saab</option>
+	<option value="51">Saturn</option>
+	<option value="52">Seat</option>
+	<option value="54">Subaru</option>
+	<option value="55">Suzuki</option>
+	<option value="56">Toyota</option>
+	<option value="57">Troller</option>
+	<option value="58">Volvo</option>
+	<option value="59">VW - VolksWagen</option>
+	<option value="6">Audi</option>
+	<option value="7">BMW</option>
+	<option value="8">BRM</option>
+	<option value="9">Buggy</option>
+						
 
 
 					</select>
@@ -559,7 +634,7 @@ var placa =  document.getElementById('placa').value;
 				<p>
 				  
 				
-					<input type="button" value="Completo" class="btn_comp btn blue" />-<input type="button" value="Completo - Ar" class="btn_comp_sem_ar btn blue" />
+					<input type="button" value="Completo" class="btn_comp btn blue" />
 				</p>
 				<jsp:include page="get_acessorios.jsp"></jsp:include>
 				<div class="clear"></div>
@@ -717,37 +792,28 @@ var placa =  document.getElementById('placa').value;
       
       
   
-  	//Marca os itens de completo -Ar
-       $('.btn_comp_sem_ar').click(function(){
-       		 
-       		   
-                   
-       			$("input[type='checkbox'][value=1]").attr('checked','checked');
-       			$("input[type='checkbox'][value=2]").attr('checked','checked');
-       			$("input[type='checkbox'][value=3]").prop('checked', false).uniform(); 
-       			$("input[type='checkbox'][value=4]").attr('checked','checked');
-       			$("input[type='checkbox'][value=5]").attr('checked','checked');
-       			$("input[type='checkbox'][value=6]").attr('checked','checked');            
-            
-            
-        });
+  	
      
   
      
    	//Marca os itens de completo
-       $('.btn_comp').click(function(){
+      $('.btn_comp').click(function(){
        		 
+       		  
        		   
+       		
                    
-       			$("input[type='checkbox'][value=1]").attr('checked','checked');
-       			$("input[type='checkbox'][value=2]").attr('checked','checked');
-       			$("input[type='checkbox'][value=3]").attr('checked','checked');
-       			$("input[type='checkbox'][value=4]").attr('checked','checked');
-       			$("input[type='checkbox'][value=5]").attr('checked','checked');
-       			$("input[type='checkbox'][value=6]").attr('checked','checked');            
+       			$("input[type='checkbox'][value=14]").attr('checked','checked');
+       			$("input[type='checkbox'][value=15]").attr('checked','checked');
+       			$("input[type='checkbox'][value=16]").attr('checked','checked');
+       			$("input[type='checkbox'][value=17]").attr('checked','checked');
+       			$("input[type='checkbox'][value=19]").attr('checked','checked');
+       			$("input[type='checkbox'][value=21]").attr('checked','checked');            
             
             
         });
+   	
+   	
   
   //Marcação dos selects de acordo com os dados em sessão
   //Seleciona os Acessorios marcados anteriormente

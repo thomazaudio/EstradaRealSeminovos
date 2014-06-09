@@ -20,7 +20,7 @@ public class AnuncioAdmDAO {
 	//CONFERE O PAGAMENTO DO VE�CULO
     public void confirmaPagamento(long id){
     	
-    	
+    	System.out.println("Confirmando o pagamento "+id); 
     	
     	try{
     		
@@ -40,18 +40,22 @@ public class AnuncioAdmDAO {
     		
     		System.out.println("A prioridade do an�ncio �:"+prioridade_anuncio);
     		
-    		//Ativa��o do banner
+    		System.out.println("Ativando o Destaque");
     		new DestaqueDAO().ativaDestaque(prioridade_anuncio,id);
     		
     		
     	}
     	res.close();
     	
+    	System.out.println("Alterando o STATUS_PAGAMENTO");
+    	
     	//CONFERE O PAGAMENTO
     	stm.executeUpdate("UPDATE veiculo SET STATUS_PAGAMENTO=1 WHERE ID_VEICULO="+id);
     	
+    	System.out.println("VALIDANDO O INTERVALO DE DATA (STATUS");
     	//VALIDAÇÃO DE INTERVALO DE DATA
     	stm.executeUpdate("UPDATE veiculo SET STATUS=1 WHERE ID_VEICULO="+id);
+    	
     	
     	
     	stm.close();
@@ -61,6 +65,9 @@ public class AnuncioAdmDAO {
     		
     		Debug.gerar("", "AnuncioAdmDAO","confirmaPagamento", e.getMessage());
     	}
+    	
+    	
+    	System.out.println("Pagamento confirmado com sucesso!");
     	}
     
     //CONFERE OS DADOS DO VEÍCULO

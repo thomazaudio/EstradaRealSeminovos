@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@page import="util.Carro"%>
+<%@page import="util.Moto"%>
 <%@page import="util.Veiculo"%>
 <%@page import="Modelo.VeiculoDAO"%>
 <%@page import="Modelo.ContatoDAO"%>
@@ -59,7 +59,7 @@
 
 ArrayList<Item> itens;
 long id_veiculo=0;
-Carro car =null;
+Moto car =null;
 
 Anuncio an =null;
 
@@ -82,7 +82,7 @@ request.getRequestDispatcher("anuncio_erro.jsp").forward(request, response);
 	request.getRequestDispatcher("anuncio_erro.jsp").forward(request, response);
 }
 	
-car=(Carro) new VeiculoDAO().getVeiculo(an.getVeiculo().getId(),Carro.class);
+car=(Moto) new VeiculoDAO().getVeiculo(an.getVeiculo().getId(),Moto.class);
 
 
 
@@ -226,20 +226,13 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 							<div class="right"><%=car.getCombustivel()%></div>
 						</div>
 						<div class="line">
-							<div class="left">Transmissão:</div>
-							<div class="right"><%=car.getTransmissao()%></div>
+							<div class="left">Cilindradas:</div>
+							<div class="right"><%=car.getCilindradas()%></div>
 						</div>
+						
 						<div class="line grey_area">
-							<div class="left">Motor:</div>
-							<div class="right"><%=car.getMotor()%></div>
-						</div>
-						<div class="line">
 							<div class="left">Cor:</div>
 							<div class="right"><%=car.getCor()%></div>
-						</div>
-						<div class="line grey_area">
-							<div class="left">Portas:</div>
-							<div class="right"><%=car.getQuantPortas()%></div>
 						</div>
 						<div class="line">
 							<div class="left">Início da placa:</div>
@@ -275,11 +268,11 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
       context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
     </script>
     
-                            <strong>Conforto:</strong><br />
-							<%
+                          
+							 <%
 								
 								//Recupera os itens de conforto
-								itens = car.getItensConforto();
+								itens =new ArrayList<Item>(car.getItens());
 								
 								
 							
@@ -289,55 +282,12 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 								
 								%>
 
-							</p>
+							
 
 
 
-							<strong>Desempenho:</strong><br />
-							<%
-								
-								//Recupera os itens de desempenho
-								itens = car.getItensDesempenho();
-								
-								
-
-								
-								
-								for(int i=0;i<itens.size();i++)
-                                out.write(itens.get(i).getItem()+", ");  
-								
-								%>
-
-							</p>
-
-								<strong>Designer:</strong><br />
-							<%
-								
-								//Recupera os itens de Designer
-								itens = car.getItensDesigner();
-
-								
-								
-								for(int i=0;i<itens.size();i++)
-                               out.write(itens.get(i).getItem()+", ");  								
-								
-								%>
-							</p>
-							<p>
-								<strong>Segurança:</strong><br />
-
-								<%
-								
-								//Recupera os itens de segurança
-								itens = car.getItensSeguranca();
-								
-
-								
-								for(int i=0;i<itens.size();i++)
-                               out.write(itens.get(i).getItem()+", ");  
-								
-								%>
-							</p>
+							
+							
 						</div>
 						<div class="info_right">
 							<h2>
@@ -508,11 +458,9 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 						
 						
 						<div class="right">
-							<a target="_blank" href="loja/index.jsf?cod_revenda=<%=user.getId()%>">Ver Todos veículos de <strong><%=user.getNome()%></strong></a>
+							<a target="_blank" href="loja/index.jsf?cod_revenda=<%=user.getId()%>">Vejas Todos veículos da revenda</strong></a>
 						</div>
 					</div>
-					
-					
 
 				<% }%>
 

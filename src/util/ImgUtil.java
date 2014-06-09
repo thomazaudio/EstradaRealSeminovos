@@ -15,8 +15,8 @@ import org.imgscalr.Scalr;
 public class ImgUtil {
 	
 	
-	public static final int WIDTH_TUMB=195;
-	public static final int HEIGHT_TUMB=165;
+	public static final int WIDTH_TUMB=240;
+	public static final int HEIGHT_TUMB=220;
 	
 	
 	//Banner destaque

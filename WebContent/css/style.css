@@ -1,24 +1,49 @@
 
 
 
+.linha_cinza{
+	
+	width: 100%;
+	min-height:3px;
+	margin: 0 auto;
+	text-align:left;
+	background-color:#778899;
+	
+   
+	position: relative;
+	z-index: 100;
+	
+}
+
+.linha_laranja_escuro{
+	
+	width: 100%;
+	min-height:3px;
+	margin: 0 auto;
+	text-align:left;
+	background-color:#FF4500;
+	
+   
+	position: relative;
+	z-index: 100;
+	
+}
+
+.linha_horizontal{
+   
+	width: 100%;
+	min-height:3px;
+	margin: 0 auto;
+	text-align:left;
+	background-color:orange;
+	
+   
+	position: relative;
+	z-index: 100;
+}
 
 
 
-/*
-
-
-
-
-================================================================================
-|                                     TAGS                                     |
-================================================================================
-*/
-
-/*
-================================================================================
-|                                     Alerta                                   |
-================================================================================
-*/
 
 
 
@@ -101,15 +126,6 @@ color: #232429;
 float: left;
 text-shadow: 0 1px 1px #FFFFFF;
 }
-
-
-
-
-
-
-
-
-
 
 
 .section-heading{ font: 700 18px 'Lato',Arial, Helvetica, sans-serif; color:#4c4c50; }

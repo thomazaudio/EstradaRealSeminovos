@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	
+	
+	
+	<h:head></h:head>
+	
+	<h:body>
+	 
+	<p:panel header="Revenda">
+								<p:panelGrid columns="1">
+								
+							
+								<p:graphicImage  height="90" value="#{imgBean.logo}">
+                        
+                  				<f:param  name="id_user" value="#{revendaBean.codRevenda}"></f:param>
+                  						
+                  			    </p:graphicImage>
+                  				 
+                  				 
+                  				
+							    <h:outputText value="#{revendaBean.nomeRevenda}">
+							    
+							    <f:param  name="cod_revenda" value="#{revendaBean.codRevenda}"></f:param>
+							    </h:outputText>
+								
+							   
+								
+								</p:panelGrid>
+								
+								
+								</p:panel>
+	
+	</h:body>
+	</html>

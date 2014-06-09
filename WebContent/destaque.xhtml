@@ -21,7 +21,27 @@
 
 	<script>
 $(document).ready(function(){
-	  $('.slider1').bxSlider({
+	  $('.slider_destaque_1').bxSlider({
+		  
+		  autoDelay:4000, 
+		time:15000,
+		auto:true,
+	    slideWidth: 200,
+	    minSlides: 5,
+	    maxSlides: 5,
+	    slideMargin: 10,
+	    swipeThreshold:10,
+	    oneToOneTouch:false,
+	    preventDefaultSwipeX:false,
+	    preventDefaultSwipeY:false,
+	    pager:false
+	  });
+	});
+	
+$(document).ready(function(){
+	  $('.slider_destaque_2').bxSlider({
+		  
+		  autoDelay:3000,
 		  time:9000,
 		  auto:true,
 	    slideWidth: 200,
@@ -60,14 +80,15 @@ $(document).ready(function(){
 
 
 
-	<div class="slider1">
+	<div class="slider_destaque_1">
 
 
 
-		<ui:repeat var="d" value="#{destaqueBean.destaqueInferior}">
+		<ui:repeat var="d" value="#{destaqueBean.destaqueInferior1}">
 			<div class="slide">
 
-
+                <a target="_blank" href="#{contextoBean.contextoInicial}/anuncio.jsp?id_veiculo=#{d.codVeiculo}">   
+                   
 				<p:graphicImage value="#{imgBean.tumbCapaVeiculo}">
 
 					<f:param id="idVeiculo" name="idVeiculo" value="#{d.codVeiculo}"></f:param>
@@ -84,11 +105,45 @@ $(document).ready(function(){
 						<span class="price">R$ #{d.preco}</span>
 					</p>
 				</div>
-
+				</a>
 			</div>
 		</ui:repeat>
 
 	</div>
+	
+	
+	
+	<div class="slider_destaque_2">
+
+
+
+		<ui:repeat var="d" value="#{destaqueBean.destaqueInferior2}">
+			<div class="slide2">
+
+                
+                <a target="_blank" href="#{contextoBean.contextoInicial}/anuncio.jsp?id_veiculo=#{d.codVeiculo}">  
+				<p:graphicImage value="#{imgBean.tumbCapaVeiculo}">
+
+					<f:param id="idVeiculo" name="idVeiculo" value="#{d.codVeiculo}"></f:param>
+				</p:graphicImage>
+
+
+				<div class="title">
+					<p>
+						<span>#{d.titulo}</span>
+
+					</p>
+
+					<p>
+						<span class="price">R$ #{d.preco}</span>
+					</p>
+				</div>
+                </a>
+			</div>
+		</ui:repeat>
+
+	</div>
+	 <div  class="linha_horizontal"></div>
 
 
 

@@ -41,66 +41,14 @@
 	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body class="page">
-	<!--BEGIN HEADER-->
-		<div id="header">
-			<div class="top_info">
-				<div class="logo">
-					<a href="#">Estrada<span>Real</span></a>
-				</div>
-				<div class="header_contacts">
-					<div class="phone"></div>
-					<div>O melhor site para venda, troca e compra de veículos de Minas Gerais</div>
-				</div>
-				<div class="socials">
-					<%
-					//Recupera o Usuario em sessao
-					Usuario user = (Usuario) session.getAttribute("usuario");
-					
-					if(user!=null)
-					out.write("<p>Bem vindo(a) " +user.getNome()+"!</p>");	
-					
-					%>
-				</div>
-			</div>
-			<div class="bg_navigation">
-				<div class="navigation_wrapper">
-					<div id="navigation">
-						
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	<!--EOF HEADER-->
-	<!--BEGIN CONTENT-->
-		<div id="content">
-		
-		<%
-		
-		
-		%>
-		
-		
-			<div class="content">
-			
-			<div class="">
-							<label><span>* </span><strong>Modelo: </strong></label>
-							<select id="modelo" name="modelo"  class="n">
-								<option value="">Selecionar</option>
-								<option value="2">2</option>
-								
-							
-							</select>
-							 <form action="nada">
-								<input type="image" src="images/bt_salvar.png" >
-								</form>
-						</div>
-			</div>
-		</div>
-	<!--EOF CONTENT-->
-	<!--BEGIN FOOTER-->
-		<div id="footer">
-			</div>
-	<!--EOF FOOTER-->
+
+
+	
+	<div class="linha_horizontal">
+	
+	
+	
+	</div>
+	
 </body>
 </html>

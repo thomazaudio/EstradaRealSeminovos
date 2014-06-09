@@ -21,15 +21,17 @@
 
 	<jsp:include page="../simple_header.jsp"></jsp:include>
 
-	<div id="content">
+	                 <div class="main_wrapper">
+		<div class="steps">
 
-		<div class="content">
+			<a href="#"><span>1. Tipo de Veículo</span></a><span>2. Plano</span><a href="#"><span>3. Cadastro das informações</span></a><a href="#"><span>4. Escolha de Imagens</span></a>
 
-			<div class="content_z conteiner-hv2">
-				<div class="container-top clearfix">
+		</div>
+	     </div>    
+
 
 					<h2>
-						<strong>Escolha um plano</strong>
+						<strong>Escolha de plano</strong>
 					</h2>
 
 					<br></br>
@@ -38,27 +40,32 @@
 
 
 
-					<div class="car_characteristics">
+				
+
+							<div class="fundo_laranja">
+                               <h2 class="texto_branco">Destaque <strong>Ultra</strong> + Home + Banner-Destaque</h2>
+                               </div>
+
+						<form id="d_gratuito" action="ServAnuncio" method="POST">
+							<input type="hidden" name="STEP" value="1"> <input
+								type="hidden" name="prioridade_anuncio" value="1"> <input
+								type="hidden" name="tipo_veiculo" value="1"> <input
+								width="450" src="images/destaque_ultra.png" type="image">
+						</form>
+
+						
+
+                            
+							
+							
+
+                              <br></br>
 
 
-
-						<div class="header_esquerdo">
-
-
-
-							<form id="d_ultra" action="ServAnuncio" method="POST">
-								<input type="hidden" name="STEP" value="1"> <input
-									type="hidden" name="prioridade_anuncio" value="1"> <input
-									type="hidden" name="tipo_veiculo" value="1"> <input
-									width="450" src="images/destaque_ultra.png" type="image">
-							</form>
-
-
-						</div>
-
-
-
-
+                     
+                        <div class="fundo_azul">
+                               <h2 class="texto_branco">Destaque Mega + Home</h2>
+                               </div>
 						<form id="d_mega" action="ServAnuncio" method="POST">
 							<input type="hidden" name="STEP" value="1"> <input
 								type="hidden" name="prioridade_anuncio" value="2"> <input
@@ -67,41 +74,40 @@
 						</form>
 
 
-						<form id="d_gratuito" action="ServAnuncio" method="POST">
-							<input type="hidden" name="STEP" value="1"> <input
-								type="hidden" name="prioridade_anuncio" value="5"> <input
-								type="hidden" name="tipo_veiculo" value="1"> <input
-								width="450" src="images/anuncio_gratuito.png" type="image">
-						</form>
+
+							<div class="fundo_laranja">
+                               <h2 class="texto_branco">Anúncio  <strong>Gratuito</strong></h2>
+                               </div>
+
+							<form id="d_gratuito" action="ServAnuncio" method="POST">
+								<input type="hidden" name="STEP" value="1"> <input
+									type="hidden" name="prioridade_anuncio" value="5"> <input
+									type="hidden" name="tipo_veiculo" value="1"> <input
+									width="450" src="images/anuncio_gratuito.png" type="image">
+							</form>
+
+								
 						
 						
 							<script type="text/javascript">
 								
 								//ESSA PARTE FAZ COM QUE O DESTAQUE GRATUITO SEJA SELECIONADO AUTOMATICAMENTE
 								
-								document.forms["d_gratuito"].submit();
+								//document.forms["d_gratuito"].submit();
 								
 							</script>
 						
 
 
-					</div>
+					
 
 
 
 
 
 
-				</div>
-
-			</div>
 
 
-
-
-
-		</div>
-	</div>
 
 
 

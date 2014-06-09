@@ -45,23 +45,22 @@ int prioridade_anuncio = (Integer) session.getAttribute("prioridade_anuncio");
 
 <body class="car">
 
+<jsp:include page="simple_header.jsp"></jsp:include>
+
 				<div  class="main_wrapper">
 				
 				
 			
 					<div class="steps">
 					
-					<% 
+					<a href="#"><span>1. Tipo de Veículo</span></a><a href="#"><span>2. Plano</span></a><a href="#"><span>3. Cadastro das Informações</span></a><span>4. Escolha de Imagens</span>
+					
+					<%
 					
 					String nome_bt="";
 					
 					if(mostra_step==1)
 					{
-					//recupera o step
-					StringBuffer step = (StringBuffer) session.getAttribute("step");
-					if(step==null)
-					step = new StringBuffer();	
-					out.write(step.toString());
 					nome_bt = "Finalizar";
 					}
 					else
@@ -169,7 +168,7 @@ int prioridade_anuncio = (Integer) session.getAttribute("prioridade_anuncio");
 <input type="hidden" name="mostra_step" value="<%=mostra_step%>">
 <input type="hidden" name="ID_VEICULO" value="<%=id_veiculo%>">
 <input type="hidden" name="ID_IMG" value="<%=ids_imgs[0]%>">
-<p><input class="btn_img red" type="submit" value="Deletar" alt=""></p>
+<p><input class="btn_img red" type="submit" value="X" alt=""></p>
 </form>
 
 
@@ -210,7 +209,7 @@ for(int i=1;i<ids_imgs.length;i++)
 <input type="hidden" name="mostra_step" value="<%=mostra_step%>">
 <input type="hidden" name="ID_VEICULO" value="<%=id_veiculo%>">
 <input type="hidden" name="ID_IMG" value="<%=ids_imgs[i]%>">
-<p><input class="btn_img red" type="submit" value="Deletar" alt=""></p>
+<p><input class="btn_img red" type="submit" value="X" alt=""></p>
 </form>
 
 

@@ -1,14 +1,17 @@
 package util;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.nio.CharBuffer;
 import java.util.ArrayList;
 
 
 public class Transform {
 
 	private char[] tudo = new char[5048];
+	
+	
+	public Transform(String marca){
+		this.ler(marca);		
+	}
 	
 	
 	public  void ler(String marca){
@@ -18,7 +21,7 @@ public class Transform {
 			
 			StringBuffer buffer = new StringBuffer();
 			
-			FileReader  file = new FileReader(marca+".txt");
+			FileReader  file = new FileReader(marca);
 			
 			BufferedReader b = new BufferedReader(file);
 			
@@ -114,5 +117,37 @@ public class Transform {
 		return lista;
 	}
 	
+	
+	public String getSQLInsertModeloCarro(long marca){
+		
+		String sql ="INSERT INTO modelo_moto(nome, marca) VALUES ";
+		
+		ArrayList<String> palavras =  getPalavras();
+		
+		for(int i=0;i<palavras.size();i++){
+			
+			String palavra = palavras.get(i);
+			
+			if(!palavras.get(i).contains("Escolha") && palavra.length()>1)
+			{
+			sql+="('"+palavra+"',"+marca+")";
+			
+			if(i<(palavras.size()-2))
+				sql+=",";
+			}
+			
+			System.out.println("I:"+i);
+			System.out.println("Tamanho: "+palavras.size());
+			
+			
+			
+		
+		}
+		
+		sql+=";";
+		
+		return sql;
+		
+	}
 	
 }

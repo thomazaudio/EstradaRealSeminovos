@@ -34,8 +34,7 @@ public class Destaque {
 	private Calendar dataFim;
 	private int status;
 	
-	
-	
+
 	public int getStatus() {
 		return status;
 	}

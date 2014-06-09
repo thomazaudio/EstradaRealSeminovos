@@ -15,9 +15,6 @@
     <servlet-name>ServPessoa</servlet-name>
     <servlet-class>Controle.ServPessoa</servlet-class>
   </servlet>
-  
-  
-  
   <servlet>
     <description>
 		</description>
@@ -136,8 +133,7 @@
     <error-code>404</error-code>
     <location>/index.jsp?page=erro_404.jsp</location>
   </error-page>
-  
-   <error-page>
+  <error-page>
     <error-code>500</error-code>
     <location>/erro_autorizacao.jsp</location>
   </error-page>

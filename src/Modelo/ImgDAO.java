@@ -837,6 +837,11 @@ public class ImgDAO {
 	public void updateImgBannerDestaque(byte[] img, long id_veiculo){
 		
 		
+		  System.out.println("Atualizando imagem do banner destaque...");
+		  System.out.println("Tamanho da imagem: "+img.length);
+		  System.out.println("Id do veículo: "+id_veiculo);
+		
+		
 try{
 			
 			Connection con = Banco.abreBanco();
@@ -859,6 +864,8 @@ try{
 			
 			Debug.gerar("Modelo", "UsuarioDAO","updateImgBannerdestaque", e.getMessage());
 		}
+
+System.out.println("Imagem de banner atualizada com sucesso");
 		
 	}
 	

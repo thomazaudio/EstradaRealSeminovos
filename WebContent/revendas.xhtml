@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+
+<!-- Start WOWSlider.com HEAD section -->
+	<link rel="stylesheet" type="text/css" href="banner/engine1/style.css" />
+	<script type="text/javascript" src="banner/engine1/jquery.js"></script>
+	<!-- End WOWSlider.com HEAD section -->
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style980.css" />
+	<link rel="stylesheet" type="text/css" href="css/style800.css" />
+	<link rel="stylesheet" type="text/css" href="css/style700.css" />
+	<link rel="stylesheet" type="text/css" href="css/style600.css" />
+	<link rel="stylesheet" type="text/css" href="css/style500.css" />
+	<link rel="stylesheet" type="text/css" href="css/style400.css" />
+	
+
+
+	
+	<!-- jQuery library (served from Google) -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!-- bxSlider Javascript file -->
+<script src="#{contextoBean.contextoInicial}/banner/jquery.bxslider.min.js"></script>
+<!-- bxSlider CSS file -->
+<link href="#{contextoBean.contextoInicial}/banner/jquery.bxslider.css" rel="stylesheet" />
+
+
+<script>
+$(document).ready(function(){
+	  $('.slider2').bxSlider({
+	    slideWidth: 200,
+	    maxSlides: 5,
+	    slideMargin: 10
+	  });
+	});
+</script>
+
+
+</h:head>
+
+<h:body>
+
+
+<ui:include src="header.xhtml"></ui:include>
+
+<div class="content">
+
+
+<div class="message">
+
+<p>Aqui você encontra as concessionárias cadastradas no nosso sistema.</p>
+</div>
+
+<div class="tabs_wrapper">
+				<ul class="tabs">
+						    	<li class="current">Revendas</li>
+						    	<li><img alt="" width="30" src="images/logo_2.png" /></li>
+						 	</ul>
+						 	
+						 	
+						 	
+						 	
+						 	</div>
+						   			
+									
+									
+									 <div class="slider2">
+									<ui:repeat var="p" value="#{parceiroBean.parceiros}">
+									<div class="slide">
+									
+										<a target="_blank" href="#{contextoBean.contextoInicial}/loja/index.jsf?cod_revenda=#{p.cod}">
+										
+										<p:graphicImage  height="90" value="#{imgBean.logo}">
+                        
+                  						<f:param  name="id_user" value="#{p.cod}"></f:param>
+                  						
+                  					    </p:graphicImage>
+										
+										<p>#{p.nome}</p>
+										
+										
+										</a>
+									
+									
+									</div>
+									
+									
+									</ui:repeat>
+									
+									</div>
+									
+								
+						  	
+				</div>		 
+				
+				<div class="clear"></div>
+								
+								<ui:include src="rodape.xhtml"></ui:include>
+						  	 	
+						
+
+</h:body>
+</html>

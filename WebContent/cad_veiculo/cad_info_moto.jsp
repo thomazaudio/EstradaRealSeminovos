@@ -338,6 +338,13 @@
 						<option value="3">BMW</option>
 						<option value="4">Ducati</option>
 						<option value="5">Harley Davidson</option>
+						<option value="6">Honda</option>
+						<option value="7">Kasinsk</option>
+						<option value="8">Kawasaki</option>
+						<option value="9">Sundown</option>
+						<option value="10">Suzuki</option>
+						<option value="11">Triumph</option>
+						<option value="12">Yamaha</option>
 						
 						
 						<option value="">-------------------</option>

@@ -11,6 +11,8 @@ import java.util.Calendar;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import util.Comunicacao;
@@ -18,6 +20,7 @@ import util.Debug;
 import util.Destaque;
 import util.InfoDestaque;
 import util.Plano;
+import util.Veiculo;
 
 public class DestaqueDAO {
 	
@@ -302,7 +305,10 @@ public class DestaqueDAO {
 	}
 	
 	//RECUPERA OS DESTAQUES A PARTIR DO TIPO
-	public ArrayList<Destaque> getDestaques(int tipo){
+	public ArrayList<Destaque> getDestaques(int tipo, int ini, int max){
+		
+		
+		
 		
 		ArrayList<Destaque> destaques;
 		
@@ -314,6 +320,12 @@ public class DestaqueDAO {
 		
 		//Destaques ativos no sistema
 		c.add(Restrictions.eq("status",1));
+		
+		//Posições
+		c.setFirstResult(ini);
+		
+		if(max!=0)
+		c.setMaxResults(max);	
 		
 		destaques = (ArrayList<Destaque>) c.list();
 		
@@ -362,6 +374,37 @@ public class DestaqueDAO {
 		return info;
 		
 	}
+	
+	
+	//Contagem dos destaques ativos
+    public long count(int tipoDestaque){
+		
+		long size = 0;
+		try {
+		
+	    Criteria criteria =  HibernateUtil.getSessaoV().openSession().createCriteria(Destaque.class);
+		
+
+		criteria.add(Restrictions.eq("tipoDestaque", tipoDestaque));
+		
+		//Destaques ativos no sistema
+		criteria.add(Restrictions.eq("status",1));
+		
+		criteria.setProjection(Projections.rowCount());
+		size = (Long) criteria.uniqueResult();
+		//getHibernate().commit();
+		} catch (Exception e) {
+		//getHibernate().rollback();
+		e.printStackTrace();
+		} finally {
+		//getHibernate().close();
+		}
+		
+		System.out.println("Quantidade de destaques do tipo "+tipoDestaque+" no sistema: "+size);
+		return size;
+		}
+	
+	
 	
 	
 }

@@ -18,41 +18,18 @@
 </head>
 <body>
 
-<div id="header">
-		
-		<div class="top_info">
-		 
-           <div class="logo">
-           
-             <img  height="120" src="../images/logo.png" alt="" />
-           </div> 
+<jsp:include page="../simple_header.jsp"></jsp:include>
 
 
+<div id="content">
+<div class="content">
 
-			<div class="header_contacts">
-				<div class="phone"></div>
-
-
-			</div>
-			<div class="socials"></div>
-
-		</div>
-		
-
+<div class="steps">
+		<a href="#"><span>1. Tipo de Veículo</span></a><a href="#"><span>2. Plano</span></a><a href="#"><span>3. Cadastro das Informações</span></a><span>4. Escolha de Imagens</span>
+	
 	</div>
 	
-	<div id="content">
-	<div class="content">
 	
-	
-	
-	<div class="content_z conteiner-hv2">
-	
-	
-	
-	<div class="container-top clearfix">
-
-<p align="center"><img alt="" src="../images/logo_2.png"></p>
 <h2><strong>Qual tipo de veículo você deseja anunciar?</strong></h2>
 </div>
 
@@ -123,9 +100,7 @@
 
 
 </div>
-</div>
 
-</div>
 
 </div>
 </div>
