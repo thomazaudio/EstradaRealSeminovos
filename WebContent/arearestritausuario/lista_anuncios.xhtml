@@ -9,24 +9,27 @@
 
 
 
-<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style980.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style800.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style700.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style600.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style500.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style400.css" />
-	<link rel="stylesheet" type="text/css" href="../css/jquery.fancybox-1.3.4.css" media="screen" />
-	
-	
-	
+	<link rel="stylesheet" type="text/css"
+		href="../css/jquery.fancybox-1.3.4.css" media="screen" />
+
+
+
 	<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.easing.1.3.js"></script>
 	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
 	<script type="text/javascript" src="../js/jquery.mousewheel.js"></script>
 	<script type="text/javascript" src="../js/jquery.selectik.js"></script>
-	<script type="text/javascript" src="../js/jquery.mousewheel-3.0.4.pack.js"></script>
-	<script type="text/javascript" src="../js/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript"
+		src="../js/jquery.mousewheel-3.0.4.pack.js"></script>
+	<script type="text/javascript"
+		src="../js/jquery.fancybox-1.3.4.pack.js"></script>
 	<script type="text/javascript" src="../js/jquery.countdown.js"></script>
 	<script type="text/javascript" src="../js/jquery.checkbox.js"></script>
 	<script type="text/javascript" src="../js/js.js"></script>
@@ -35,247 +38,254 @@
 </h:head>
 <h:body>
 
-<ui:include src="base.xhtml"></ui:include>
+	<ui:include src="base.xhtml"></ui:include>
 
 
-<ui:repeat var="pg" value="#{anuncioBean.paginas}"></ui:repeat>
-<div id="content">
-<div class="content">
-<div class="tabs_wrapper">
-				   <ul class="tabs">
-						    	<li class="current">
-						    	Meus Anúncios
-						    	</li>
-						    	<li><img alt="" width="30" src="../images/logo_2.png" /></li>
-						    	
-						 	</ul>
-						 	
-						  	<div class="box visible">
-						  	
-						  	
-						  	<p:panelGrid columns="3">
+	<ui:repeat var="pg" value="#{anuncioBean.paginas}"></ui:repeat>
+	<div id="content">
+		<div class="content">
+			<div class="tabs_wrapper">
+				<ul class="tabs">
+					<li class="current">Meus Anúncios</li>
+					<li><img alt="" width="30" src="../images/logo_2.png" /></li>
 
-<p:panelGrid columns="1">
-<p:outputLabel for="ord" value="Ordenar por: "></p:outputLabel>
-<h:selectOneMenu   id="ord" styleClass="n"   value="#{anuncioBean.tipoOrdenacao}">
-<f:selectItem itemValue="3" itemLabel="Destaque"></f:selectItem>
-<f:selectItem itemValue="1" itemLabel="Ano"></f:selectItem>
-<f:selectItem itemValue="2" itemLabel="Valor"></f:selectItem>
-<p:ajax update=":form :lista" ></p:ajax>
-</h:selectOneMenu> 
-</p:panelGrid>
-
-<p:panelGrid columns="1">
-<p:outputLabel for="d_c" value="Ordem: "></p:outputLabel>
-<h:selectOneMenu id="d_c"   styleClass="n"   value="#{anuncioBean.ordem}">
-<f:selectItem itemValue="1" itemLabel="Crescente"></f:selectItem>
-<f:selectItem itemValue="2" itemLabel="Decrescente"></f:selectItem>
-
-
-<p:ajax update=":form :lista" ></p:ajax>
-</h:selectOneMenu>
-</p:panelGrid>
-
-<h:form>
-<p:panelGrid columns="1">
-<p:outputLabel for="quant_p_page" value="Quantidade por página: "></p:outputLabel>
-<h:selectOneMenu id="quant_p_page" value="#{anuncioBean.quantPorPagina}" styleClass="n">
-
-<f:selectItem itemValue="10" itemLabel="10 por página"></f:selectItem>
-<f:selectItem itemValue="20" itemLabel="20 por página"></f:selectItem>
-<p:ajax update=":form :lista" ></p:ajax>
-</h:selectOneMenu> 
-</p:panelGrid>
-</h:form>
-
-
-</p:panelGrid>
-						  	
-						  	
-						  	</div>
-				
-				  </div>
-
-<div class="main_catalog">
-
-
-
-
-
-
-
-
-
-
-<div class="clear"></div>
-<div class="clear"></div>
-
-<h:form id="lista">
-<ul class="catalog_table">
-<ui:repeat var="ans" value="#{anuncioBean.anuncios}">
-
-					<li>
-						
-
-						<div class="catalog_desc">
-						 
-						   <div class="fundo_laranja">
-						   
-						   <p class="texto_branco">Código: #{ans.veiculo.id}</p>
-						   </div>
-                               
-							<div class="location">
-								Cadastrado em:
-								<strong><p:outputLabel value="#{ans.dataIniFormated}"></p:outputLabel></strong>
-							</div>
-							
-							
-
-							<div class="title_box">
-							<p:graphicImage  width="100"   value="#{imgBean.capaVeiculo}">
-                        
-                        <f:param name="idVeiculo" value="#{ans.veiculo.id}"></f:param>
-                        </p:graphicImage>
-								<h4>
-									<a href="#"></a>
-									<p:outputLabel value="#{ans.veiculo.titulo}" />
-								</h4>
-								
-							   
-							     
-							   <div class="fundo_azul">
-							<h3 class="texto_branco"><strong>#{ans.veiculo.textoPlano}</strong></h3>
-							</div>
-
-								<div class="price">
-								<div class="fundo_laranja">
-								<p class="texto_branco"><strong>#{ans.veiculo.statusAnuncio}</strong></p>
-								</div>
-								</div>
-								
-								
-								<p:commandButton rendered="#{ans.veiculo.statusPagamento!=1}" value="Realizar pagamento" action="#{pagamentoBean.reemitirPagamento}" >
-								
-								<f:param name="cod_veiculo" value="#{ans.veiculo.id}" />
-								
-								
-								</p:commandButton>
-								
-								
-								
-								
-								
-								
-								
-							<p:lightBox iframe="true">
-							<p:commandLink  styleClass="btn blue"  value="Promova este anúncio!" action="#{altPlanoBean.alteraPlano}" >
-
-								<f:param  name="cod_veiculo"  value="#{ans.veiculo.id}"></f:param>
-
-							</p:commandLink>
-							</p:lightBox>
-							
-							
-							<h:form rendered="#{ans.veiculo.prioridade_anuncio==1}">
-							<a class="btn blue" target="_blank" href="../crop/esc_img_banner.jsp?ID_VEICULO=#{ans.veiculo.id}">Editar banner destaque</a>
-							</h:form>
-							
-							
-								
-								
-							
-								
-								
-								
-								
-							</div>
-							<div class="clear"></div>
-							
-							<div class="grey_area">
-								 <span>Termina em:  <strong>#{ans.dataIniFormated}</strong></span>
-							</div>
-							
-							<div class="grey_area">	
-    						     <h:outputLink class="iframe"  value="../ServAnuncio" styleClass="btn blue" > 
-    						     <f:param name="STEP"   value="10"></f:param>
-    						     <f:param name="mostra_step"   value="0"></f:param>
-    						       <f:param name="id_veiculo"   value="#{ans.veiculo.id}"></f:param>
-    						 <h:outputText value="Editar Anuncio"/> 
-      							
-   								</h:outputLink> 
-  								
-  								
-								
-								
-								
-								
-								
-								 <a
-								class="frame_confirm btn green"	href="alt_plano.jsf">Alterar Plano</a>
-								
-								 
-								
-								<a class="frame_confirm btn red" 
-									href="excluir_anuncio.jsp?id_anuncio=#{ans.id}">Excluir</a>
-
-							</div>
-							<a class="iframe"
-								href="../anuncio.jsp?id_veiculo=#{ans.veiculo.id}">Visualizar
-								anúncio</a>
-						</div>
-
-					</li>
-					<p>---------------------------------------------------------------------------------</p>
-
-				</ui:repeat>
 				</ul>
 
-</h:form>
+				<div class="box visible">
+
+
+					<p:panelGrid columns="3">
+
+						<p:panelGrid columns="1">
+							<p:outputLabel for="ord" value="Ordenar por: "></p:outputLabel>
+							<h:selectOneMenu id="ord" styleClass="n"
+								value="#{anuncioBean.tipoOrdenacao}">
+								<f:selectItem itemValue="3" itemLabel="Destaque"></f:selectItem>
+								<f:selectItem itemValue="1" itemLabel="Ano"></f:selectItem>
+								<f:selectItem itemValue="2" itemLabel="Valor"></f:selectItem>
+								<p:ajax update=":form :lista"></p:ajax>
+							</h:selectOneMenu>
+						</p:panelGrid>
+
+						<p:panelGrid columns="1">
+							<p:outputLabel for="d_c" value="Ordem: "></p:outputLabel>
+							<h:selectOneMenu id="d_c" styleClass="n"
+								value="#{anuncioBean.ordem}">
+								<f:selectItem itemValue="1" itemLabel="Crescente"></f:selectItem>
+								<f:selectItem itemValue="2" itemLabel="Decrescente"></f:selectItem>
+
+
+								<p:ajax update=":form :lista"></p:ajax>
+							</h:selectOneMenu>
+						</p:panelGrid>
+
+						<h:form>
+							<p:panelGrid columns="1">
+								<p:outputLabel for="quant_p_page"
+									value="Quantidade por página: "></p:outputLabel>
+								<h:selectOneMenu id="quant_p_page"
+									value="#{anuncioBean.quantPorPagina}" styleClass="n">
+
+									<f:selectItem itemValue="10" itemLabel="10 por página"></f:selectItem>
+									<f:selectItem itemValue="20" itemLabel="20 por página"></f:selectItem>
+									<p:ajax update=":form :lista"></p:ajax>
+								</h:selectOneMenu>
+							</p:panelGrid>
+						</h:form>
+
+
+					</p:panelGrid>
+
+
+				</div>
+
+			</div>
+
+			<div class="main_catalog">
+
+
+				<div class="clear"></div>
+				<div class="clear"></div>
+
+				<h:form id="lista">
+					<ul class="catalog_table">
+						<ui:repeat var="ans" value="#{anuncioBean.anuncios}">
+
+							<li>
+
+
+								<div class="catalog_desc">
+
+									<div class="fundo_laranja">
+
+										<p class="texto_branco">Código: #{ans.veiculo.id}</p>
+									</div>
+
+									<div class="location">
+										Cadastrado em: <strong><p:outputLabel
+												value="#{ans.dataIniFormated}"></p:outputLabel></strong>
+									</div>
+
+
+
+									<div class="title_box">
+										<p:graphicImage width="100" value="#{imgBean.capaVeiculo}">
+
+											<f:param name="idVeiculo" value="#{ans.veiculo.id}"></f:param>
+										</p:graphicImage>
+										<h4>
+											<a href="#"></a>
+											<p:outputLabel value="#{ans.veiculo.titulo}" />
+										</h4>
+
+
+
+										<div class="fundo_azul">
+											<h3 class="texto_branco">
+												<strong>#{ans.veiculo.textoPlano}</strong>
+											</h3>
+										</div>
+
+										<div class="price">
+											<div class="fundo_laranja">
+												<p class="texto_branco">
+													<strong>#{ans.textoStatusAnuncio}</strong>
+												</p>
+											</div>
+										</div>
+
+
+										<p:commandButton rendered="#{ans.veiculo.statusPagamento!=1}"
+											value="Realizar pagamento"
+											action="#{pagamentoBean.reemitirPagamento}">
+
+											<f:param name="cod_veiculo" value="#{ans.veiculo.id}" />
+
+
+										</p:commandButton>
 
 
 
 
 
-<h:form  id="form">
-
-<p>Exbindo a página <strong> #{anuncioBean.page}</strong> de um total de <strong>#{anuncioBean.quantPaginas}</strong> páginas.</p>
-
-<p:commandLink      value="Anterior  ">
-<p:ajax update=":form :lista"  listener="#{anuncioBean.antPagina}" event="click"/>
-</p:commandLink>
-<ui:repeat var="pg" value="#{anuncioBean.paginas}">
-<p:commandButton   disabled="#{pg.atual}"    value="#{pg.pagina}">
-<f:param name="page" value="#{pg.pagina}"></f:param>
-<p:ajax update=":form :lista"  listener="#{anuncioBean.alterarPage}" event="click">
-</p:ajax>
-</p:commandButton>
-</ui:repeat>
 
 
+										<p:lightBox iframe="true">
+											<p:commandLink styleClass="btn blue"
+												value="Promova este anúncio!"
+												action="#{altPlanoBean.alteraPlano}">
 
-<p:commandLink      value="  Próxima">
-<p:ajax update=":form :lista"  listener="#{anuncioBean.proximaPagina}" event="click"/>
-</p:commandLink>
-</h:form>
+												<f:param name="cod_veiculo" value="#{ans.veiculo.id}"></f:param>
+
+											</p:commandLink>
+										</p:lightBox>
 
 
-</div>
+										<h:form rendered="#{ans.veiculo.prioridade_anuncio==1}">
+											<a class="btn blue" target="_blank"
+												href="../crop/esc_img_banner.jsp?ID_VEICULO=#{ans.veiculo.id}">Editar
+												banner destaque</a>
+										</h:form>
 
 
 
-</div>
-
-
-</div>
 
 
 
-<div class="clear"></div>	
-<br></br>	
 
-<!-- rodapÃ© abaixo   -->	
-<ui:include src="../rodape.xhtml"></ui:include>		
-		
+
+
+									</div>
+									<div class="clear"></div>
+
+									<div class="grey_area">
+										<span>Termina em: <strong>#{ans.dataFimFormated}</strong></span>
+									</div>
+
+									<div class="grey_area">
+										<h:outputLink class="iframe" value="../ServAnuncio"
+											styleClass="btn blue">
+											<f:param name="STEP" value="10"></f:param>
+											<f:param name="mostra_step" value="0"></f:param>
+											<f:param name="id_veiculo" value="#{ans.veiculo.id}"></f:param>
+											<h:outputText value="Editar Anuncio" />
+
+										</h:outputLink>
+
+
+
+                                            
+
+
+
+										<a class="frame_confirm btn green" href="alt_plano.jsf">Alterar
+											Plano</a> <a class="frame_confirm btn red"
+											href="excluir_anuncio.jsp?id_anuncio=#{ans.id}">Excluir</a>
+
+									</div>
+									<a class="iframe"
+										href="../anuncio.jsp?id_veiculo=#{ans.veiculo.id}">Visualizar
+										anúncio</a>
+								</div>
+
+							</li>
+							<p>---------------------------------------------------------------------------------</p>
+
+						</ui:repeat>
+					</ul>
+
+				</h:form>
+
+
+
+
+
+				<h:form id="form">
+
+					<p>
+						Exbindo a página <strong> #{anuncioBean.page}</strong> de um total
+						de <strong>#{anuncioBean.quantPaginas}</strong> páginas.
+					</p>
+
+					<p:commandLink value="Anterior  ">
+						<p:ajax update=":form :lista" listener="#{anuncioBean.antPagina}"
+							event="click" />
+					</p:commandLink>
+					<ui:repeat var="pg" value="#{anuncioBean.paginas}">
+						<p:commandButton disabled="#{pg.atual}" value="#{pg.pagina}">
+							<f:param name="page" value="#{pg.pagina}"></f:param>
+							<p:ajax update=":form :lista"
+								listener="#{anuncioBean.alterarPage}" event="click">
+							</p:ajax>
+						</p:commandButton>
+					</ui:repeat>
+
+
+
+					<p:commandLink value="  Próxima">
+						<p:ajax update=":form :lista"
+							listener="#{anuncioBean.proximaPagina}" event="click" />
+					</p:commandLink>
+				</h:form>
+
+
+			</div>
+
+
+
+		</div>
+
+
+	</div>
+
+
+
+	<div class="clear"></div>
+	<br></br>
+
+	<!-- rodapÃ© abaixo   -->
+	<ui:include src="../rodape.xhtml"></ui:include>
+
 
 </h:body>
 </html>

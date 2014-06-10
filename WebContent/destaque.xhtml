@@ -55,6 +55,25 @@ $(document).ready(function(){
 	    pager:false
 	  });
 	});
+	
+	
+$(document).ready(function(){
+	  $('.slider_destaque_3').bxSlider({
+		  
+		  autoDelay:7000,
+		  time:9000,
+		  auto:true,
+	    slideWidth: 200,
+	    minSlides: 5,
+	    maxSlides: 5,
+	    slideMargin: 10,
+	    swipeThreshold:10,
+	    oneToOneTouch:false,
+	    preventDefaultSwipeX:false,
+	    preventDefaultSwipeY:false,
+	    pager:false
+	  });
+	});
 </script>
 
 </h:head>
@@ -139,6 +158,39 @@ $(document).ready(function(){
 					</p>
 				</div>
                 </a>
+			</div>
+		</ui:repeat>
+
+	</div>
+	
+	
+	
+	<div class="slider_destaque_3">
+
+
+
+		<ui:repeat var="d" value="#{destaqueBean.destaqueInferior3}">
+			<div class="slide">
+
+                <a target="_blank" href="#{contextoBean.contextoInicial}/anuncio.jsp?id_veiculo=#{d.codVeiculo}">   
+                   
+				<p:graphicImage value="#{imgBean.tumbCapaVeiculo}">
+
+					<f:param id="idVeiculo" name="idVeiculo" value="#{d.codVeiculo}"></f:param>
+				</p:graphicImage>
+
+
+				<div class="title">
+					<p>
+						<span>#{d.titulo}</span>
+
+					</p>
+
+					<p>
+						<span class="price">R$ #{d.preco}</span>
+					</p>
+				</div>
+				</a>
 			</div>
 		</ui:repeat>
 

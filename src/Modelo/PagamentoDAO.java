@@ -39,7 +39,7 @@ public class PagamentoDAO {
 		sessao.flush();sessao.close();
 	}
 	
-	//Aprova um pagamento
+	
 	public void aprovaPagamento(long codPagamento){
 		
 		try{

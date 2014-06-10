@@ -16,24 +16,51 @@
 					
 					<ul>
 						
-						<li><a href="#">Início</a></li>
-						<li><a href="#">Anunciar seu veículo</a></li>
-						<li><a href="#">Meus Anúncios</a></li>
-						<li><a href="#">Concessionárias</a></li>
-						<li><a href="#">Ajuda</a></li>
-						<li><a href="#">Fale Conosco</a></li>
+						<li><a href="#{contextoBean.contextoInicial}/inicio.jsf">Início</a></li>
+						<li>
+						
+						<p:lightBox iframe="true" width="1200px" height="700px">  
+    					<h:outputLink  value="#{contextoBean.contextoInicial}/action.jsp">
+						
+						<f:param name="page_pos" value="cad_veiculo/index.jsp"></f:param>
+						<f:param name="text_page_pos" value="Cadastro de novo Veiculo"></f:param>
+						
+						<h:outputText value="Venda seu Veículo!"></h:outputText>
+						
+						</h:outputLink>
+       					
+   						  
+						</p:lightBox>
+						
+						
+						</li>
+						<li>
+						
+						<h:outputLink   value="#{contextoBean.contextoInicial}/action.jsp">
+						
+						<f:param name="page_pos" value="#{contextoBean.contextoInicial}/arearestritausuario/lista_anuncios.jsf"></f:param>
+						<f:param name="text_page_pos" value="Meus Anúncios"></f:param>
+						
+						<h:outputText value="Meus anúncios"></h:outputText>
+						
+						</h:outputLink>
+						
+						</li>
+					    <li><a href="#{contextoBean.contextoInicial}/revendas.jsf">Revendas</a></li>
+						<li><a href="#{contextoBean.contextoInicial}/ajuda.jsf">Ajuda</a></li>
+						<li><a href="#{contextoBean.contextoInicial}/contato.jsf">Contato</a></li>
 						
 					</ul>
 				</div>
 				<div class="f_widget divide">
 				
 					<ul>
-						<li><a href="#">Política de Privacidades</a></li>
-						<li><a href="#">Quem Somos</a></li>
-						<li><a href="#">Parceiros</a></li>
-						<li><a href="#">Detrans</a></li>
-						<li><a href="#">Tabela Fipe</a></li>
-						<li><a href="#">Publicidade</a></li>
+						<li><a href="#{contextoBean.contextoInicial}/politica_privacidade.jsf">Política de Privacidades</a></li>
+						<li><a href="#{contextoBean.contextoInicial}/about.jsf">Quem Somos</a></li>
+						<li><a href="#{contextoBean.contextoInicial}/parceiros.jsf">Parceiros</a></li>
+						<li><a href="#{contextoBean.contextoInicial}/detrans.jsf">Detrans</a></li>
+						<li><a href="">Tabela Fipe</a></li>
+						<li><a href="#{contextoBean.contextoInicial}/anuncie.jsf">Publicidade</a></li>
 						
 					</ul>
 				</div>

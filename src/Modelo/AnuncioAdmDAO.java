@@ -17,10 +17,10 @@ public class AnuncioAdmDAO {
 	
 	
 	
-	//CONFERE O PAGAMENTO DO VE�CULO
+	
     public void confirmaPagamento(long id){
     	
-    	System.out.println("Confirmando o pagamento "+id); 
+    	
     	
     	try{
     		
@@ -53,6 +53,7 @@ public class AnuncioAdmDAO {
     	stm.executeUpdate("UPDATE veiculo SET STATUS_PAGAMENTO=1 WHERE ID_VEICULO="+id);
     	
     	System.out.println("VALIDANDO O INTERVALO DE DATA (STATUS");
+    	
     	//VALIDAÇÃO DE INTERVALO DE DATA
     	stm.executeUpdate("UPDATE veiculo SET STATUS=1 WHERE ID_VEICULO="+id);
     	

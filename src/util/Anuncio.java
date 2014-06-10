@@ -1,19 +1,14 @@
 package util;
 
-import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Anuncio {
 	
-
-	//Processos
-	//Validacao dos dados
-	public static final int VALIDACAO_EM_ANALISE=0;
-	public static final int VALIDACAO_OK=1;
-    
+	public static final int ANUNCIO_ATIVO=1;
+	public static final int ANUNCIO_VENCIDO=2;
 	
 	private long id;
 	private long idUsuario;
@@ -32,10 +27,24 @@ public class Anuncio {
 		
 		Calendar c = this.getDataIni();
 		
-	    dataIniFormated = String.format("%d/%d/%d",c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR));
+	    dataIniFormated = String.format("%02d/%02d/%d - %02d:%02d",c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE));
 		
 		return dataIniFormated;
 	}
+	
+	
+	public String getDataFimFormated(){
+		
+		
+		
+		
+        Calendar c = Plano.getDataFimAnuncio(this.getDataIni(),this.getVeiculo().getPrioridade_anuncio());
+		
+	    return String.format("%02d/%02d/%d",c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH),c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE));
+		
+		
+	}
+	
 	public void setDataIniFormated(String dataFormated) {
 		this.dataIniFormated = dataFormated;
 	}
@@ -102,5 +111,37 @@ public class Anuncio {
 	public void setIdUsuario(long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+	
+	
+	public String getTextoStatusAnuncio(){
+		
+		
+		  if(isVencido())
+		  return "Anúncio Vencido";	  
+		
+		 if(this.getVeiculo().getStatusPagamento()==Pagamento.CONFIRMADO)
+			{
+				
+				if(this.getVeiculo().getStatusValidacao()==Pagamento.VALIDACAO_OK)
+				return "ANÚNCIO PUBLICADO!";
+				
+				else 
+				return "ANALISANDO DADOS DO ANÚNCIO";	
+			}
+
+			else
+			return "AGUARDANDO PAGAMENTO";	
+			
+		}
+	
+	  public boolean isVencido(){
+		  
+		Calendar fim =   Plano.getDataFimAnuncio(this.getDataIni(),this.getVeiculo().getPrioridade_anuncio());
+		
+		if(Calendar.getInstance().after(fim))
+			return true;
+		else return false;
+		  
+	  }
 
 }

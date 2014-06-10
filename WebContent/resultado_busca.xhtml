@@ -120,15 +120,7 @@
                 <h:outputText  value="#{car.motor}" rendered="#{car.tipo==2}" />  
             </p:column> 
             
-            <p:column headerText="Acessórios"  >  
-               
-            <ui:repeat var="it" value="#{car.itensFiltered}" >
-						
-			 <p:outputLabel value="#{it.item}-"></p:outputLabel>
-			 
-			</ui:repeat> 
-               
-            </p:column> 
+            
             
              <p:column >  
               
@@ -204,12 +196,18 @@
 		<div id="overlay-open">
 			<a href="#" class="close"></a>
 		</div>
+		
+		<script type='text/javascript'>
+		
+		document.getElementById('overlay-open').click;
+		
+		
+		</script>
 	</div>
 
 
 
-	<script type='text/javascript'
-		src='script_sup.js'></script>
+	
  
  </p:panel>
  

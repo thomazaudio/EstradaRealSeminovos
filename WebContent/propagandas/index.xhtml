@@ -27,17 +27,15 @@ $(document).ready(function(){
 	
 	$('.slider_prop').bxSlider({
 		
-		  autoDelay:2000,
-		  infiniteLoop:false,
-		  adaptiveHeight: true,
-		  adaptiveWidth:true,
-		  captions: true,
-		  controls:false,
-		  mode: 'fade',
-		   auto:true,
-		   pager:false,
-		   speed:1500,//tempo
-		   
+		 autoDelay:10000,
+		  time:9000,
+		  auto:true,
+	    slideWidth: 200,
+	    minSlides: 5,
+	    maxSlides: 5,
+	    slideMargin: 10,
+	    swipeThreshold:10,
+	    pager:false
 		});
 	  
 	 
@@ -52,15 +50,32 @@ $(document).ready(function(){
 <ul class="slider_prop">
 	
 
+
+
 <li>
-<a target="_blank" href="anuncio.jsp?id_veiculo=#{d.codVeiculo}">
+<img   height="100"  src="images/prop_1.jpg"></img>
 
-<img  width="900" height="150" src="images/logo.png"></img>
-
-
-</a>
 </li>
 
+<li>
+<img   height="100"  src="images/prop_2.jpg"></img>
+
+</li>
+
+<li>
+<img   height="100"  src="images/prop_3.jpg"></img>
+
+</li>
+
+<li>
+<img   height="100"  src="images/prop_4.jpg"></img>
+
+</li>
+
+<li>
+<img   height="100"  src="images/prop_5.jpg"></img>
+
+</li>
 
 
 

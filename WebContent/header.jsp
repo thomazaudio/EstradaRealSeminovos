@@ -45,6 +45,7 @@
 
 			</div>
 		</div>
+		<div  class="linha_horizontal"></div>
 
 	</div>
 

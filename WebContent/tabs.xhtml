@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
+<h:head>
+	<title>ICEmobile</title>
+	<mobi:deviceResource />
+</h:head>
+<h:body>
+	<mobi:pagePanel>
+		<f:facet name="header">#{msgs.header}</f:facet>
+		<f:facet name="body">
+			<h:form id="form">
+				<mobi:tabSet autoWidth="false"
+					currentId="#{navigationBean.selectedTabPane}">
+					<mobi:contentPane id="panelt1" title="#{msgs.tab1}">
+						<h:panelGroup id="panCont1">
+							<fieldset title="#{msgs.tab1}">
+								<legend>Panel 1</legend>
+								<h3>Header for panel 1</h3>
+								<mobi:fieldsetGroup>
+									<h3>Content Panel 1</h3>
+								</mobi:fieldsetGroup>
+							</fieldset>
+						</h:panelGroup>
+					</mobi:contentPane>
+					<mobi:contentPane id="panelt2" title="#{msgs.tab2}">
+						<h:panelGroup id="pan2cont">
+							<fieldset title="#{msgs.tab2}">
+								<legend>Panel 2</legend>
+								<h3>Header for panel 2</h3>
+								<mobi:fieldsetGroup>
+									<h3>Content Panel 2</h3>
+								</mobi:fieldsetGroup>
+							</fieldset>
+						</h:panelGroup>
+					</mobi:contentPane>
+					<mobi:contentPane id="panelt3" title="#{msgs.tab3}">
+						<h:panelGroup id="pan3cont">
+							<fieldset title="#{msgs.tab3}">
+								<legend>Panel 3</legend>
+								<h3>Header for panel 3</h3>
+								<mobi:fieldsetGroup>
+									<h3>Content Panel 3</h3>
+								</mobi:fieldsetGroup>
+							</fieldset>
+						</h:panelGroup>
+					</mobi:contentPane>
+				</mobi:tabSet>
+			</h:form>
+		</f:facet>
+		<f:facet name="footer">
+			#{msgs.footer}
+		</f:facet>
+	</mobi:pagePanel>
+</h:body>
+</html>

@@ -28,6 +28,48 @@ public class DestaqueBean {
 	
 	
 	public ArrayList<InfoDestaque> getDestaqueInferior3() {
+		
+		
+
+		//div 3, div 2
+		InfoDestaque info = null;
+		long max=0;
+		int ini = 0;
+		int div=1;
+		long total =  new DestaqueDAO().count(Destaque.DESTAQUE_INFERIOR);
+		
+		if((total/3)>=5)
+			div=3;
+		else
+		return new ArrayList<InfoDestaque>();	
+		
+        max =  total/div;
+		
+		ini  =(int)(total%div) + (int)max + ((int)max+1) ;
+		
+		System.out.println("Ini no destaque 3: "+ini);
+		
+		
+        DestaqueDAO dao  =  new DestaqueDAO();
+		
+		ArrayList<Destaque> destaques = new DestaqueDAO().getDestaques(Destaque.DESTAQUE_INFERIOR,ini,(int)max);
+		
+		
+		
+		for(int i=0;(i<destaques.size()&& i<=MAX_DESTAQUE_INFERIOR);i++)
+		{	
+			
+		 info =  dao.getInforDestaque(destaques.get(i).getCodVeiculo(),destaques.get(i).getId());	
+		 
+		 if(info!=null)
+		 destaqueInferior3.add(info);
+		 
+			
+		}
+		
+		
+		System.out.println("Qauntidade de veículos no destaque 3: "+destaqueInferior3.size());
+		
 		return destaqueInferior3;
 	}
 	public void setDestaqueInferior3(ArrayList<InfoDestaque> destaqueInferior3) {
@@ -49,6 +91,8 @@ public class DestaqueBean {
 			div=3;
 		else if((total/2)>=5)
 			div=2;
+		else
+		return new ArrayList<InfoDestaque>();
 		
 		max =  total/div;
 		
@@ -77,7 +121,7 @@ public class DestaqueBean {
 		
 		
 		
-		
+		System.out.println("Qauntidade de veículos no destaque 2: "+destaqueInferior2.size());
 		
 		return destaqueInferior2;
 		
@@ -133,7 +177,7 @@ public class DestaqueBean {
 			
 		}
 		
-		
+		System.out.println("Qauntidade de veículos no destaque 1: "+destaqueInferior1.size());
 		
 		return destaqueInferior1;
 	}
@@ -151,6 +195,8 @@ public class DestaqueBean {
 		
 		ArrayList<Destaque> destaques = new DestaqueDAO().getDestaques(Destaque.DESTAQUE_BANNER,0,0);
 		
+		Collections.shuffle(destaques);
+		
 		for(int i=0;(i<destaques.size() && i<=MAX_DESTAQUE_BANNER);i++)
 		{	
 			
@@ -164,7 +210,9 @@ public class DestaqueBean {
 		
 		
 		//Embaralha
-		Collections.shuffle(destaqueBanner);
+		//Collections.shuffle(destaqueBanner);
+		
+		
 		
 		return destaqueBanner;
 	}

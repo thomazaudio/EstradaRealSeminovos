@@ -52,9 +52,7 @@
 					<div class="email detail single_line"><a href="mailto:#" class="markered">contato@estradarealseminovos.com.br.</a></div>
 					</div>
 					<ul class="horizontal">
-						<li><a href="#"><img src="../images/fb_icon.png" alt="" /></a></li>
-						<li><a href="#"><img src="../images/twitter_icon.png" alt="" /></a></li>
-						<li><a href="#"><img src="../images/in_icon.png" alt="" /></a></li>
+						
 					</ul>
 				</div>
 			</div>

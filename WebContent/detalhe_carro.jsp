@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
 <%@page import="util.Carro"%>
 <%@page import="util.Veiculo"%>
 <%@page import="Modelo.VeiculoDAO"%>
@@ -21,41 +23,7 @@
 <html>
 <head>
 
-<link rel="shortcut icon" href="images/favicon.ico" />
-   <link rel="icon" type="image/gif" href="images/animated_favicon1.gif" />
-
-
-<!-- Page Title -->
-<title>Home</title>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
-<link rel="stylesheet" type="text/css" href="css/style980.css" />
-<link rel="stylesheet" type="text/css" href="css/style800.css" />
-<link rel="stylesheet" type="text/css" href="css/style700.css" />
-<link rel="stylesheet" type="text/css" href="css/style600.css" />
-<link rel="stylesheet" type="text/css" href="css/style500.css" />
-<link rel="stylesheet" type="text/css" href="css/style400.css" />
-<link rel="stylesheet" type="text/css"
-	href="css/jquery.fancybox-1.3.4.css" media="screen" />
-<!--[if IE]>
-	<link href="css/style_ie.css" rel="stylesheet" type="text/css">
-	<![endif]-->
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="js/jquery.bxslider.js"></script>
-<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
-<script type="text/javascript" src="js/jquery.selectik.js"></script>
-<script type="text/javascript" src="js/jquery.mousewheel-3.0.4.pack.js"></script>
-<script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>
-<script type="text/javascript" src="js/jquery.countdown.js"></script>
-<script type="text/javascript" src="js/jquery.checkbox.js"></script>
-<script type="text/javascript" src="js/js.js"></script>
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
-
-	<% 
+<% 
 
 ArrayList<Item> itens;
 long id_veiculo=0;
@@ -107,6 +75,42 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 
 
 %>
+
+<link rel="shortcut icon" href="images/favicon.ico" />
+   <link rel="icon" type="image/gif" href="images/animated_favicon1.gif" />
+
+
+<!-- Page Title -->
+<title><%=car.getTitulo()%> - Estrada Real - Seminovos</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/style980.css" />
+<link rel="stylesheet" type="text/css" href="css/style800.css" />
+<link rel="stylesheet" type="text/css" href="css/style700.css" />
+<link rel="stylesheet" type="text/css" href="css/style600.css" />
+<link rel="stylesheet" type="text/css" href="css/style500.css" />
+<link rel="stylesheet" type="text/css" href="css/style400.css" />
+<link rel="stylesheet" type="text/css"
+	href="css/jquery.fancybox-1.3.4.css" media="screen" />
+<!--[if IE]>
+	<link href="css/style_ie.css" rel="stylesheet" type="text/css">
+	<![endif]-->
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.bxslider.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="js/jquery.selectik.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel-3.0.4.pack.js"></script>
+<script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="js/jquery.countdown.js"></script>
+<script type="text/javascript" src="js/jquery.checkbox.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+	
 
 <jsp:include page="header.jsp"></jsp:include>
 	<div id="content">
@@ -440,7 +444,9 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
                        
 						
 							
-					        <div class="calculator_2"  >
+					        <div class="left"  >
+					         <br>
+					         <br>
 					         
 							<form  id="form_pergunta">
 							<label><strong>Nome:</strong></label>
@@ -472,14 +478,25 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 							
 							</form>
 							
+						
+							
 							</div>
 							
-							
-						<div class="right"></div>
+							<div class="right">
+						
+						   
+						   <img width="220" src="images/mascote_proposta.png" alt="">
+						
+						
+						</div>
+						
 						<div class="clear"></div>
+						
+						
 					</div>
 					
 					
+						
 					
 					
 						
@@ -517,13 +534,15 @@ cidade =  new LocalizacaoDAO().getNomeCidade(loc.getCod_cidade());
 				<% }%>
 
 
--------
+
 				</div>
 				<div class="car_sidebar">
 					
 					
-					<jsp:include page="componente_busca.jsf"></jsp:include>
 					
+					<!-- INICIO DA BUSCA -->
+					
+					<!-- FIM DA BUSCA -->
 					
 					<div class="calculator">
 					<img alt="" src="images/img_pub.jpg">

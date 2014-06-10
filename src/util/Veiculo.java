@@ -138,25 +138,7 @@ public abstract class Veiculo {
     	 
      }
 	
-	public String getStatusAnuncio(){
-		
-		
-		
-		//Verifica se os dados j� foram validados
-		if(this.statusPagamento==Pagamento.CONFIRMADO)
-		{
-			
-			if(this.statusValidacao==Pagamento.VALIDACAO_OK)
-			return "AN�NCIO PUBLICADO!";
-			
-			else 
-			return "ANALISANDO DADOS DO AN�NCIO";	
-		}
-
-		else
-		return "AGUARDANDO PAGAMENTO";	
-		
-	}
+	
 
 	
 	
